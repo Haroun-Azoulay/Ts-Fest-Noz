@@ -19,6 +19,7 @@
     <form  @submit.prevent="postCommentary">
       <h2>Laisser un message</h2>
     <textarea v-model="addCommentary.content" placeholder="Votre message" rows="2" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+    <button @click="goToAnnoucementView" type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Retour</button>
     <button
         type="submit"
         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -118,6 +119,7 @@ const postCommentary = async () => {
     console.log("Configuration de la requête :", config, addCommentary);
 
     await ApiService.post(`/commentaries/create-commentary/${articleId}`, addCommentary.value, config);
+    window.location.reload()
     console.log("test")
     console.log(article)
   } catch (error) {
@@ -151,4 +153,7 @@ onMounted(async () => {
     console.error("Erreur lors de la requête :", error);
   }
 });
+const goToAnnoucementView = () => {
+  router.push({ path:'/announcement'})
+};
 </script>

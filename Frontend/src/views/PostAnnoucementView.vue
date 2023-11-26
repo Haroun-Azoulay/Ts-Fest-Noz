@@ -1,14 +1,14 @@
 <template>
   <Navbar />
     <main>
-          <h1 class="text-3xl font-bold underline text-center">Post Article</h1>
+          <h1 class="text-3xl font-bold underline text-center">Post Annoucement</h1>
           <section class="flex justify-center gap-1 mb-8">
   <form  @submit.prevent="postArticles">
     <div class="space-y-12">
       <div class="border-b border-gray-900/10 pb-12">
         <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
           <div class="sm:col-span-4">
-            <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Title</label>
+            <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Titre</label>
             <div class="mt-2">
               <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                 <input v-model="addArticle.title" type="text" name="username" id="username" autocomplete="username" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="janesmith">
@@ -16,7 +16,7 @@
             </div>
           </div>
           <div class="sm:col-span-4">
-            <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Subtitle</label>
+            <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Sous-titre</label>
             <div class="mt-2">
               <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                 <input v-model="addArticle.subtitle" type="text" name="username" id="username" autocomplete="username" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="janesmith">
@@ -25,7 +25,7 @@
           </div>
   
           <div class="col-span-full">
-            <label for="about" class="block text-sm font-medium leading-6 text-gray-900">Content</label>
+            <label for="about" class="block text-sm font-medium leading-6 text-gray-900">Contenu</label>
             <div class="mt-2">
               <textarea v-model="addArticle.content" id="about" name="about" rows="3" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
             </div>
@@ -34,7 +34,7 @@
   
   
           <div class="col-span-full">
-            <label for="cover-photo" class="block text-sm font-medium leading-6 text-gray-900">Cover photo</label>
+            <label for="cover-photo" class="block text-sm font-medium leading-6 text-gray-900">Envoyer une photo</label>
             <div class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
               <div class="text-center">
                 <svg class="mx-auto h-12 w-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -58,8 +58,8 @@
     </div>
   
     <div class="mt-6 flex items-center justify-end gap-x-6">
-      <button @click="goToHomeForumPage" type="button" class="text-sm font-semibold leading-6 text-gray-900">Back</button>
-      <button type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Send</button>
+      <button @click="goToAnnoucementView" type="button" class="text-sm font-semibold leading-6 text-gray-900">Retour</button>
+      <button type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Envoyer</button>
     </div>
   </form>
   </section>
@@ -113,7 +113,7 @@ const postArticles = async () => {
   }
 };
 
-const goToHomeForumPage = () => {
-  router.push({ path:'home'})
+const goToAnnoucementView = () => {
+  router.push({ path:'/announcement'})
 };
 </script>

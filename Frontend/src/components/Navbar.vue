@@ -182,6 +182,7 @@ onMounted(async () => {
 const logout = () => {
   // Supprimer le token en local (localStorage) lors de la déconnexion
   localStorage.removeItem("authToken");
+  window.location.reload();
   // Rediriger vers la page de connexion après la déconnexion
 };
 const goToConnexion = () => {

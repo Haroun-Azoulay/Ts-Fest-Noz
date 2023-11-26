@@ -5,10 +5,12 @@ const express = require("express");
 const cors = require('cors');
 const userRoutes = require('./routes/userRoutes'); 
 const postRoutes = require('./routes/postRoutes');
+const mapsRoutes = require('./routes/mapsRoutes');
 const commentaryRoutes = require('./routes/commentaryRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const UserModel = require('./models/User');
-const PostModel = require("./models/Post"); 
+const PostModel = require("./models/Post");
+const MapsModel = require("./models/Maps"); 
 const CommentaryModel = require('./models/Commentary'); 
 /**
  * Create an express application by running express as a function,
@@ -20,6 +22,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/users', userRoutes);
+app.use('/maps', mapsRoutes);
 app.use('/posts', postRoutes);
 app.use('/commentaries', commentaryRoutes);
 app.use('/admin', adminRoutes);
@@ -59,6 +62,9 @@ const initApp = async () => {
             force: true,
         });
         CommentaryModel.sync({
+            force: true,
+        });
+        MapsModel.sync({
             force: true,
         });
         /**

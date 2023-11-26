@@ -429,6 +429,80 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "maps",
+			"item": [
+				{
+					"name": "create-point",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcwMDk2MjIzOCwiZXhwIjoxNzAxMDQ4NjM4fQ.TzdEIfiotbJiqmoDeYllP3N0Q1bQGh03cQRuCWnwap0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"longitude\": 2.3522,\n  \"latitude\": 48.8566,\n  \"text\": \"Point mis à jour\",\n  \"address\": \"Adresse mise à jour, Paris\",\n  \"color\": \"#0000FF\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/maps/create-point",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"maps",
+								"create-point"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-all-points",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcwMDk2MjIzOCwiZXhwIjoxNzAxMDQ4NjM4fQ.TzdEIfiotbJiqmoDeYllP3N0Q1bQGh03cQRuCWnwap0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/maps/get-all-points",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"maps",
+								"get-all-points"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }

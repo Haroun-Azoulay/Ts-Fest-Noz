@@ -104,7 +104,8 @@
 
         const role = userRoles.value[userId];
 
-        await ApiService.put(`/admin/update-role/${userId}`, { newRole: role }, config);;
+        await ApiService.put(`/admin/update-role/${userId}`, { newRole: role }, config);
+        window.location.reload()
     } catch (error) {
         console.error("Une erreur s'est produite :", error);
     }
