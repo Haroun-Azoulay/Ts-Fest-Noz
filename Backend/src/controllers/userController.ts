@@ -71,6 +71,7 @@ const getUserInfo = async (req: Request, res: Response): Promise<Response> => {
 };
 
 
+
 const signin = async (req: Request, res: Response) => {
   try {
     const { pseudo, password } = req.body;
@@ -130,8 +131,8 @@ const signin = async (req: Request, res: Response) => {
 export default {
   signup,
   signin,
-  //logout,
-  //getAllUsers,
+  // logout,
+  // getAllUsers,
   getUserInfo,
   //updateUserRole,
 };

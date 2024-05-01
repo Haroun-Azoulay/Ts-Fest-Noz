@@ -4,12 +4,12 @@ import { Request, Response } from "express";
 const addPoint = async (req: Request, res: Response) => {
     try {
       
-        const userId = req.userId; 
+        // const userId = req.userId; 
 
     
         const point = await CityModel.create({
             ...req.body,
-            user_id: userId // Utilisez 'user_id' ici au lieu de 'userId'
+            // user_id: userId
         });
 
         const formattedPoint = {
@@ -23,11 +23,12 @@ const addPoint = async (req: Request, res: Response) => {
             zip_code: point.zip_code,
             label: point.label,
             color: point.color,
+            style: point.style, 
             departement_name: point.departement_name,
             departement_number: point.departement_number,
             region_name: point.region_name,
             region_geo_json: point.region_geo_json,
-            user_id: point.user_id, // Assurez-vous d'utiliser 'user_id' pour la réponse également
+            // user_id: point.user_id, 
         };
     
         res.status(201).json(formattedPoint);
@@ -42,17 +43,18 @@ const getAllPoints = async (req: Request, res: Response) => {
         const points = await CityModel.findAll();
   
 
-      const pointsWithUserDetails = await Promise.all(points.map(async (point) => {
-        //const user = await UserModel.findByPk(point.userId, { attributes: ["id", "pseudo"] });
-        return {
-          id: point.id,
-          address: point.address,
-          //userId: point.userId,
-          //user: user ? { id: user.id, pseudo: user.pseudo } : null,
-        };
-      }));
+      // const pointsWithUserDetails = await Promise.all(points.map(async (point) => {
+      //   //const user = await UserModel.findByPk(point.userId, { attributes: ["id", "pseudo"] });
+      //   return {
+      //     id: point.id,
+      //     address: point.address,
+      //     longitude: point.longitude, // Assurez-vous d'ajouter ces propriétés si elles existent
+      //     latitude: point.latitude,
+      //     text: point.text,
+      // };
+      // }));
   
-      return res.json(pointsWithUserDetails);
+      return res.json(points);
     } catch (error) {
       console.error(error);
       return res.status(500).json({ message: "Erreur lors de la récupération des points." });
@@ -68,17 +70,17 @@ const getPointByUser = async (req: Request, res: Response) => {
 
         // Récupérer tous les points associés à cet utilisateur spécifique
         const points = await CityModel.findAll({
-            where: {
-                user_id: userId
-            }
+            // where: {
+            //     user_id: userId
+            // }
         });
 
-        const simplifiedPoints = points.map(point => ({
-            id: point.id,
-            address: point.address,
-        }));
+        // const simplifiedPoints = points.map(point => ({
+        //     id: point.id,
+        //     address: point.address,
+        // }));
 
-        return res.json(simplifiedPoints);
+        return res.json(points);
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: "Erreur lors de la récupération des points par utilisateur." });
@@ -86,34 +88,34 @@ const getPointByUser = async (req: Request, res: Response) => {
 };
 
 
-const updatePoint = async (req: Request, res: Response) => {
-    try {
-        const { pointId } = req.params; 
-        const userId = req.userId; 
+// const updatePoint = async (req: Request, res: Response) => {
+//     try {
+//         const { pointId } = req.params; 
+//         const userId = req.userId; 
 
-        // Effectuer la mise à jour
-        const [updatedRows] = await CityModel.update(
-            { ...req.body, user_id: userId }, // Mettre à jour les champs avec les données de req.body
-            { where: { id: pointId, user_id: userId } } // Condition pour s'assurer que le point appartient à l'utilisateur
-        );
+//         // Effectuer la mise à jour
+//         const [updatedRows] = await CityModel.update(
+//             { ...req.body, user_id: userId }, // Mettre à jour les champs avec les données de req.body
+//         //     { where: { id: pointId, user_id: userId } } // Condition pour s'assurer que le point appartient à l'utilisateur
+//         // );
 
-        if (updatedRows === 0) {
-            return res.status(404).json({ message: "Point non trouvé ou vous n'avez pas la permission de le mettre à jour." });
-        }
+//         // if (updatedRows === 0) {
+//         //     return res.status(404).json({ message: "Point non trouvé ou vous n'avez pas la permission de le mettre à jour." });
+//         // }
 
-        // Récupérer l'instance mise à jour pour la renvoyer
-        const updatedPoint = await CityModel.findOne({ where: { id: pointId } });
+//         // Récupérer l'instance mise à jour pour la renvoyer
+//         const updatedPoint = await CityModel.findOne({ where: { id: pointId } });
 
-        if (!updatedPoint) {
-            return res.status(404).json({ message: "Point mis à jour non trouvé." });
-        }
+//         if (!updatedPoint) {
+//             return res.status(404).json({ message: "Point mis à jour non trouvé." });
+//         }
 
-        res.status(200).json(updatedPoint); // Renvoyer l'instance mise à jour
-    } catch (error) {
-        console.error("Erreur lors de la mise à jour du point :", error);
-        res.status(500).send("Erreur lors de la mise à jour du point.");
-    }
-};
+//         res.status(200).json(updatedPoint); // Renvoyer l'instance mise à jour
+//     } catch (error) {
+//         console.error("Erreur lors de la mise à jour du point :", error);
+//         res.status(500).send("Erreur lors de la mise à jour du point.");
+//     }
+// };
 
 
 
@@ -138,7 +140,6 @@ const deletePoint = async (req: Request, res: Response) => {
   };
   export default {
     addPoint,
-    updatePoint,
     deletePoint,
     getAllPoints,
     getPointByUser

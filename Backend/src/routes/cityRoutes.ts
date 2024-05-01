@@ -13,7 +13,7 @@ router.get("/get-all-points", verifyToken, cityController.getAllPoints);
 
 router.get("/get-point/:id", verifyToken, cityController.getPointByUser);
 
-router.put("/update-point/:pointId", verifyToken, cityController.updatePoint);
+// router.put("/update-point/:pointId", verifyToken, cityController.updatePoint);
 
 router.delete("/delete-point/:pointId", verifyToken, cityController.deletePoint);
 

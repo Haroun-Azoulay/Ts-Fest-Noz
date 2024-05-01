@@ -96,9 +96,9 @@ User.init(
   }
 );
 
-User.hasOne(ArtistProfil, { foreignKey: 'user_id', as: 'artist_profile' });
-User.hasMany(City, { foreignKey: 'user_id', as: 'city' });
+// User.hasOne(ArtistProfil, { foreignKey: 'user_id', as: 'artist_profile' });
+// User.hasMany(City, { foreignKey: 'user_id', as: 'city' });
 //User.hasMany(Comment, { foreignKey: 'user_id', as: 'comment' });
-User.hasMany(OrganizerProfil, { foreignKey: 'user_id', as: 'organizer_profil' });
+// User.hasMany(OrganizerProfil, { foreignKey: 'user_id', as: 'organizer_profil' });
 
 export default User;

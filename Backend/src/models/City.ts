@@ -3,7 +3,7 @@ import sequelizeConnection from "../../config/database";
 
 export type CityAttributes = {
   id: string;
-  user_id: number;
+  // user_id: number;
   insee_code: number;
   city_name: string;
   text: string;
@@ -12,6 +12,7 @@ export type CityAttributes = {
   label: string;
   longitude: number;
   latitude: number;
+  style: string;
   color: string;
   departement_name: string;
   departement_number: number;
@@ -21,7 +22,7 @@ export type CityAttributes = {
 
 class City extends Model<CityAttributes> {
   public id!: string;
-  public user_id!: number;
+  // public user_id!: number;
   public insee_code!: number;
   public city_name!: string;
   public address!: string;
@@ -30,6 +31,7 @@ class City extends Model<CityAttributes> {
   public label!: string;
   public longitude!: number;
   public latitude!: number;
+  public style!: string;
   public color!: string;
   public departement_name!: string;
   public departement_number!: number;
@@ -45,16 +47,17 @@ City.init(
       allowNull: false,
       primaryKey: true,
     },
-    user_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: { 
-        model: 'Users', 
-        key: 'id',
-      },
-      onUpdate: 'CASCADE',
-      onDelete: 'SET NULL' 
-    },
+    // user_id: {
+    //   type: DataTypes.INTEGER,
+    //   allowNull: false,
+    //   references: { 
+    //     model: 'Users', 
+    //     key: 'id',
+    //   },
+    //   onUpdate: 'CASCADE',
+    //   onDelete: 'CASCADE',
+    // },
+    
     insee_code: {
       type: DataTypes.INTEGER,
       allowNull: true,
@@ -85,6 +88,10 @@ City.init(
     },
     latitude: {
       type: DataTypes.FLOAT,
+      allowNull: true,
+    },
+    style: {
+      type: DataTypes.STRING,
       allowNull: true,
     },
     color: {

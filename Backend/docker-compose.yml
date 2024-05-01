@@ -1,0 +1,27 @@
+version: '3.8'
+#docker exec -it backend-music-app-db-1 psql -U root music_app
+services:
+  music-app-db:
+    image: postgres:13
+    volumes:
+      - ./docker_ressources/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5434:5432"  
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: music_app
+
+  api:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - DB_NAME=music_app
+      - DB_USER=root
+      - DB_PASSWORD=root
+      - DB_HOST=music-app-db
+      - DB_DRIVER=postgres
+    depends_on:
+      - music-app-db
