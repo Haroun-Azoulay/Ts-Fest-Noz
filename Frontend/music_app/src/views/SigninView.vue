@@ -2,7 +2,7 @@
     <section class="flex row justify-center content-center">
         <div class="flex">
             <SigninPage></SigninPage>
-            <img src="../assets/authentification.png">
+            <img class="object-contain" src="../assets/authentification.png">
         </div>
     </section>
 </template>

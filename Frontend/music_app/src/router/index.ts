@@ -2,7 +2,9 @@ import { createRouter, createWebHistory } from 'vue-router'
 import SignupView from '@/views/SignupView.vue';
 import SigninView from '@/views/SigninView.vue';
 import HomeView from '@/views/HomeView.vue';
-import MapView from '@/views/MapView.vue'
+import AddEvent from '@/views/AddEventView.vue';
+import CityView from '@/views/CityView.vue'
+import EventView from '@/views/EventView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -23,9 +25,19 @@ const router = createRouter({
       component: SigninView,
     },
     {
-      path: '/map',
-      name: 'map',
-      component: MapView,
+      path: '/add',
+      name: 'add',
+      component: AddEvent,
+    },
+    {
+      path: '/city',
+      name: 'city',
+      component: CityView,
+    },
+    {
+      path: '/event',
+      name: 'event',
+      component: EventView,
     },
   ]
 });

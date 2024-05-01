@@ -2,7 +2,9 @@
     <div class="flex flex-row justify-center items-center">
         <div class="px-16 bg-white rounded-2xl
                   shadow-md flex-col justify-center items-center gap-1 inline-flex">
+                  <a href="/" class="flex items-center justify-center">
             <img src="../../assets/logo.png" style="height: 200px">
+            </a>
             <div class="">
                 Se Connecter
             </div>
@@ -52,7 +54,10 @@
                 <div class="Frame590 px-2 justify-center items-center gap-2.5 inline-flex">
                     <div class="ButtonSecondary text-center
               text-slate-900">
-                        Nouveau venu?<span class="text-violet-600"> Connectez-vous !</span>
+                        Nouveau venu ?
+                        <a href="/signup" class="flex items-center justify-center">
+                        <span class="text-violet-600"> Connectez-vous !</span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -76,10 +81,7 @@ const signin = async () => {
     const response = await ApiService.post('/users/signin', request.value);
     const token = response.data.token;
     router.push({ path: "/" });
-    // Stocker le token en local (localStorage)
     localStorage.setItem('authToken', token);
-    // Ajoutez ici la déclaration pour 'router' s'il n'est pas déjà importé.
-    // router.push({ path: '/forum/home' });
   } catch (error) {
     console.error("Erreur d'authentification :", error);
   }
@@ -90,4 +92,5 @@ const signin = async () => {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 </style>
