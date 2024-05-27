@@ -62,7 +62,7 @@
       const marker = new mapboxgl.Marker({ color: point.color })
         .setLngLat([point.longitude, point.latitude])
         .addTo(map);
-
+        
       const popup = new mapboxgl.Popup({ offset: 25 })
         .setHTML(`<section><h1>${point.text}</h1> <br> <p>${point.region_name}</p> <br> ${point.region_geo_json}</section>`);
         

@@ -6,7 +6,8 @@
                 class="font-inter text-5xl font-extrabold leading-normal tracking-normal text-left text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
                 Les Meilleurs Evenements
                 sont tout autour de vous !</h1>
-            <h3 class="font-inter text-5xl font-extrabold leading-normal tracking-normal text-left">Proposez ou assistez aux
+            <h3 class="font-inter text-5xl font-extrabold leading-normal tracking-normal text-left">Proposez ou assistez
+                aux
                 meilleurs évenements proche de chez vous ou que vous soyez !</h3>
             <div class="flex row">
                 <button class="ButtonPrimary w-80 h-12 px-12 m-5
@@ -29,7 +30,6 @@
                         </span>
                     </div>
                 </button>
-
             </div>
         </div>
         <img src="../assets/home.png">
@@ -55,4 +55,3 @@ const goAddEventPage = () => {
 @tailwind components;
 @tailwind utilities;
 </style>
-  

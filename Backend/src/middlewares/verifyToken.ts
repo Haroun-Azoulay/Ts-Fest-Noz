@@ -22,7 +22,6 @@ function verifyToken(req: Request, res: Response, next: NextFunction) {
         return res.status(401).json({ message: "L'authentification est requise." });
     }
 
-    // Vérifiez le jeton ici en utilisant la bibliothèque jwt.verify
     jwt.verify(token, "RANDOM_SECRET_KEY", (err: jwt.VerifyErrors | null, decoded: any) => {
         if (err) {
             return res.status(401).json({ message: "Token invalide." });
