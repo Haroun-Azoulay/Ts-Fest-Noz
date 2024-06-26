@@ -1,33 +1,33 @@
 <template>
-    <section class="flex justify-center items-center">
-      <div class="border-2 w-2/5 flex justify-center items-center flex-col p-4 bg-violet-600 rounded-md" style="height:430px;">
-        <h1 class="text-white mb-4 text-xl font-bold">Geolocalisation de l'événement</h1>
-        <form @submit.prevent="geocodeAndSubmit" class="w-full max-w-md">
-          <div class="mb-4">
-            <label class="w-96 text-white text-m font-medium leading-tight">Numéro de rue</label>
-            <input class="text-center w-full p-2 border rounded" v-model="geocoding_number" type="text" placeholder="Entrez le numéro" required>
-          </div>
-          <div class="mb-4">
-            <label class="w-96 text-white text-m font-medium leading-tight">Le nom de la rue</label>
-            <input class="text-center w-full p-2 border rounded" v-model="geocoding_address" type="text" placeholder="Entrez la rue" required>
-          </div>
-          <div class="mb-4">
-            <label class="w-96 text-white text-m font-medium leading-tight">Code postal</label>
-            <input class="text-center w-full p-2 border rounded" v-model="geocoding_postal_code" type="text" placeholder="Entrez le code postal" required>
-          </div>
-          <div class="mb-4">
-            <label class="w-96 text-white text-m font-medium leading-tight">Entrer la ville</label>
-            <input class="text-center w-full p-2 border rounded" v-model="geocoding_town" type="text" placeholder="Entrez la ville" required>
-          </div>
-          <div>
-            <button type="submit" class="w-full bg-white text-violet-600 p-2 rounded hover:text-white hover:bg-violet-300 focus:outline-none focus:ring focus:ring-violet-600 focus:ring-opacity-50">
-              Rechercher
-            </button>
-          </div>
-        </form>
-      </div>
-    </section>
-  </template>
+  <section class="flex justify-center items-center mt-4 bg-gray-100">
+    <div class="border-2 w-full max-w-lg flex justify-center items-center flex-col p-4 bg-violet-600 rounded-md">
+      <h1 class="text-white mb-4 text-xl font-bold text-center">Geolocalisation de l'événement</h1>
+      <form @submit.prevent="geocodeAndSubmit" class="w-full">
+        <div class="mb-4">
+          <label class="block text-white text-m font-medium leading-tight">Numéro de rue</label>
+          <input class="text-center w-full p-2 border rounded" v-model="geocoding_number" type="text" placeholder="Entrez le numéro" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-white text-m font-medium leading-tight">Le nom de la rue</label>
+          <input class="text-center w-full p-2 border rounded" v-model="geocoding_address" type="text" placeholder="Entrez la rue" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-white text-m font-medium leading-tight">Code postal</label>
+          <input class="text-center w-full p-2 border rounded" v-model="geocoding_postal_code" type="text" placeholder="Entrez le code postal" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-white text-m font-medium leading-tight">Entrer la ville</label>
+          <input class="text-center w-full p-2 border rounded" v-model="geocoding_town" type="text" placeholder="Entrez la ville" required>
+        </div>
+        <div>
+          <button type="submit" class="w-full bg-white text-violet-600 p-2 rounded hover:text-white hover:bg-violet-300 focus:outline-none focus:ring focus:ring-violet-600 focus:ring-opacity-50">
+            Rechercher
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+</template>
 
 <script setup lang="ts">
 import { ref, computed, onMounted, defineEmits } from 'vue';
@@ -54,9 +54,9 @@ const emit = defineEmits(['geocodeResult']);
 
 const geocodeAndSubmit = async () => {
   try {
-    const { latitude, longitude, streetAddress, postalCode, city, country } = await geocodeAddress(fullAddress.value);
+    const { latitude, longitude, streetAddress, postalCode, city, country, place } = await geocodeAddress(fullAddress.value);
     // Mettez à jour le résultat avec les données de géocodage
-    result.value = { latitude, longitude, streetAddress, postalCode, city, country };
+    result.value = { latitude, longitude, streetAddress, postalCode, city, country, place };
     console.log(result.value);
     emit('geocodeResult', result.value);
 

@@ -5,6 +5,10 @@ import HomeView from '@/views/HomeView.vue';
 import AddEvent from '@/views/AddEventView.vue';
 import CityView from '@/views/CityView.vue'
 import EventView from '@/views/EventView.vue';
+import AdminHomeView from '@/views/AdminHomeView.vue';
+import SingleEventView from '@/views/SingleEventView.vue';
+import SinglePaymentPageView from '@/views/SinglePaymentPageView.vue';
+import SingleTokenView from '@/views/SingleTokenView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -39,6 +43,33 @@ const router = createRouter({
       name: 'event',
       component: EventView,
     },
+    {
+      path: '/admin',
+      name: 'admin',
+      component: AdminHomeView,
+    },
+    {
+      path: '/event',
+      name: 'event',
+      component: EventView,
+    },
+    {
+      path: '/event/:id',
+      name: 'Singleevent',
+      component: SingleEventView,
+    },
+    {
+      path: '/event/:id/:userid',
+      name: 'Singlepayment',
+      component: SinglePaymentPageView,
+    },
+    {
+      path: '/event/token/3AGZEYG&1386SFAFTFDA',
+      name: 'Singletoken',
+      component: SingleTokenView,
+    },
+    
   ]
+  
 });
 export default router

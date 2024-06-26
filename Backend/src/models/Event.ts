@@ -1,13 +1,13 @@
 import { DataTypes, Model } from "sequelize";
 import sequelizeConnection from "../../config/database";
-import Map from "./Map"; // Importez le modèle Map
+import Payment from "./Payment";
 
 interface EventAttributes {
   id: string;
   name: string;
   description: string;
   url: string;
-  mapId: number; // Ajoutez une clé étrangère pour la relation One-to-One
+  mapId: number; 
 }
 
 class Event extends Model<EventAttributes> implements EventAttributes {
@@ -15,7 +15,7 @@ class Event extends Model<EventAttributes> implements EventAttributes {
   public name!: string;
   public description!: string;
   public url!: string;
-  public mapId!: number; // Ajoutez une clé étrangère pour la relation One-to-One
+  public mapId!: number;
 }
 
 Event.init(
@@ -49,6 +49,7 @@ Event.init(
   }
 );
 
-// Event.belongsTo(Map, { foreignKey: 'mapId', as: 'map' });
+Event.hasMany(Payment, { foreignKey: "payment_id", as: "payment" });
+Payment.belongsTo(Event, { foreignKey: 'payment_id' });
 
 export default Event;

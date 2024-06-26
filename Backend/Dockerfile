@@ -1,4 +1,3 @@
-
 FROM debian:bookworm
 
 WORKDIR /app
@@ -10,8 +9,15 @@ RUN apt-get update && apt-get upgrade -y \
     && rm -rf /var/lib/apt/lists/*
 
 COPY package*.json ./
+COPY .env ./
 
 RUN npm install
+
+# Install dev dependencies for TypeScript type declarations
+RUN npm install --save-dev @types/cors @types/express-session @types/axios @types/simple-oauth2
+
+# Install other necessary packages
+RUN npm install jwt-decode
 
 COPY . .
 

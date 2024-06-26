@@ -128,11 +128,55 @@ const signin = async (req: Request, res: Response) => {
   }
 };
 
+const logout = async (req: Request, res: Response) => {
+  res.status(200).json({ message: "Déconnexion réussie" });
+};
+
+
+function getAllUsers(req: Request, res: Response) {
+  UserModel.findAll()
+    .then((result) => {
+      return res.json(result);
+    })
+    .catch((error) => {
+      console.log(error);
+      return res.json({});
+    });
+}
+
+const updateUserRole = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params;
+    const { newRole } = req.body;
+    console.log(userId);
+    console.log(newRole);
+
+    if (!newRole) {
+      return res.status(400).json({ message: "Le nouveau rôle est requis." });
+    }
+
+    const updateSuccess = await UserModel.updateUserRole(userId, newRole);
+    
+    if (updateSuccess) {
+      return res.status(200).json({ message: "Rôle mis à jour avec succès." });
+    } else {
+      return res
+        .status(403)
+        .json({ message: "Le rôle 'admin' ne peut pas être mis à jour." });
+    }
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: "Impossible de mettre à jour le rôle de l'utilisateur.",
+    });
+  }
+};
+
 export default {
   signup,
   signin,
-  // logout,
-  // getAllUsers,
+  logout,
+  getAllUsers,
   getUserInfo,
-  //updateUserRole,
+  updateUserRole,
 };
