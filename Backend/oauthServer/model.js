@@ -41,7 +41,7 @@ module.exports = {
       expiresAt: code.expiresAt,
       client: client,
       user: user,
-      redirectUri: code.redirectUri // Assurez-vous d'inclure le redirectUri ici
+      redirectUri: code.redirectUri
     };
     callback(null, authCode);
   },

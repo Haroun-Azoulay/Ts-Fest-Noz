@@ -33,7 +33,7 @@ app.all('/oauth/token', (req, res, next) => {
     });
 });
 
-// Route to display the authorization form
+
 app.get('/oauth/authorize', (req, res) => {
   const clientId = req.query.client_id;
   const redirectUri = req.query.redirect_uri;
