@@ -22,7 +22,7 @@ COPY model.js /app/
 
 COPY . .
 
-COPY .env ./
+
 
 EXPOSE 4000
 

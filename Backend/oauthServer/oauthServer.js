@@ -1,6 +1,6 @@
 const express = require('express'); 
 const bodyParser = require('body-parser');
-const OAuth2Server = require('oauth2-server'); /
+const OAuth2Server = require('oauth2-server');
 
 const app = express(); 
 app.use(bodyParser.urlencoded({ extended: true }));

@@ -9,6 +9,7 @@ import AdminHomeView from '@/views/AdminHomeView.vue';
 import SingleEventView from '@/views/SingleEventView.vue';
 import SinglePaymentPageView from '@/views/SinglePaymentPageView.vue';
 import SingleTokenView from '@/views/SingleTokenView.vue';
+import ForumView from '@/views/ForumView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -27,6 +28,11 @@ const router = createRouter({
       path: '/signin',
       name: 'signin',
       component: SigninView,
+    },
+    {
+      path: '/forum',
+      name: 'forum',
+      component: ForumView,
     },
     {
       path: '/add',

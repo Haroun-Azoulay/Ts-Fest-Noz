@@ -25,6 +25,13 @@
                             Proposer un evenement
                         </span>
                     </button>
+                    <button
+                        class="ButtonPrimary w-full md:w-80 h-12 px-6 m-2 py-2.5 bg-violet-600 rounded-lg flex justify-center items-center"
+                        @click="goForumPage">
+                        <span class="ButtonSecondary text-center text-white text-base font-bold font-['Roboto']">
+                            Acceder au forum
+                        </span>
+                    </button>
                 </div>
             </div>
             <img src="../assets/home.png" class="w-full md:w-1/2 mt-6 md:mt-0" alt="Home image">
@@ -44,6 +51,10 @@ const goToCityPage = () => {
 
 const goAddEventPage = () => {
     router.push({ path: "/add" })
+}
+
+const goForumPage = () => {
+    router.push({ path: "/forum" })
 }
 
 </script>

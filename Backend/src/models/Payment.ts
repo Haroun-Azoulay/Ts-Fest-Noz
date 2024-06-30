@@ -1,15 +1,15 @@
 import { DataTypes, Model } from "sequelize";
 import sequelizeConnection from "../../config/database";
-import Event from "./Event"; // Import the Event model to establish associations
+import Event from "./Event";
 
 export type PaymentAttributes = {
-  id?: string;
+  id: string;
   token: string;
   payment: boolean;
 };
 
 class Payment extends Model<PaymentAttributes> {
-  public id?: string;
+  public id!: string;
   public token!: string;
   public payment!: boolean;
 }

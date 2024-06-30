@@ -1,10 +1,10 @@
 import { DataTypes, Model } from "sequelize";
 import sequelizeConnection from "../../config/database";
-  // Assurez-vous d'importer le modèle User
+
 
 export type MapAttributes = {
   id: number;
-  // user_id: string;  // Assurez-vous que le type correspond à celui du modèle User
+  // user_id: string; 
   longitude?: number;
   latitude?: number;
   text?: string;
@@ -14,7 +14,7 @@ export type MapAttributes = {
 
 class Map extends Model<MapAttributes> implements MapAttributes {
   public id!: number;
-  // public user_id!: string;  // Assurez-vous que le type correspond à celui du modèle User
+  // public user_id!: string;  
   public longitude?: number;
   public latitude?: number;
   public text?: string;
@@ -34,7 +34,7 @@ Map.init(
     //   type: DataTypes.UUID,
     //   allowNull: false,
     //   references: { 
-    //     model: 'users',  // Assurez-vous que le nom de la table est correct
+    //     model: 'users',
     //     key: 'id',
     //   },
     //   onUpdate: 'CASCADE',

@@ -3,6 +3,7 @@ import { DataTypes, Model } from "sequelize";
 import sequelizeConnection from "../../config/database";
 import City from "./City";
 import Map from "./Map";
+import Post from "./Post";
 import Payment from "./Payment";
 import OrganizerProfil from "./OrganizerProfil";
 import ArtistProfil from "./ArtistsProfil";
@@ -98,7 +99,6 @@ User.init(
   }
 );
 
-// Définir la relation one-to-many avec Map
 
 User.hasMany(City, {
   foreignKey: "user_id",
@@ -106,7 +106,6 @@ User.hasMany(City, {
   onUpdate: "CASCADE",
 });
 User.hasMany(Map, { foreignKey: "user_id", as: "maps" });
-// Map.belongsTo(User, { foreignKey: 'user_id' });
-User.hasMany(Map, { foreignKey: "user_id", as: "payment" });
-City.belongsTo(User, { foreignKey: 'user_id' });
+User.hasMany(Post, { foreignKey: 'userId' });
+// City.belongsTo(User, { foreignKey: 'user_id' });
 export default User;
