@@ -13,6 +13,7 @@ export type CityAttributes = {
   label: string;
   longitude: number;
   latitude: number;
+  date: Date;
   style: string;
   color: string;
   departement_name: string;
@@ -32,6 +33,7 @@ class City extends Model<CityAttributes> {
   public label!: string;
   public longitude!: number;
   public latitude!: number;
+  public date!: Date;
   public style!: string;
   public color!: string;
   public departement_name!: string;
@@ -89,6 +91,10 @@ City.init(
     },
     latitude: {
       type: DataTypes.FLOAT,
+      allowNull: true,
+    },
+    date: {
+      type: DataTypes.DATE,
       allowNull: true,
     },
     style: {

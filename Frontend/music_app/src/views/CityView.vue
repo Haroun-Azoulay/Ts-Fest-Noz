@@ -14,6 +14,13 @@
       <input type="radio" id="dewey" name="drone" value="dewey" @change="handleChangeMyPoints" />
       <label for="dewey">Mes points</label>
     </div>
+    <div>
+      <label for="startDate">Date de début :</label>
+      <input type="date" id="startDate" v-model="startDate" />
+      <label for="endDate">Date de fin :</label>
+      <input type="date" id="endDate" v-model="endDate" />
+      <button @click="filterPointsByDate">Filtrer</button>
+    </div>
   </fieldset>
   <div id="map" style="position: absolute; width: 100%; height: 100%"></div>
 </template>
@@ -24,8 +31,10 @@ import { ref, onMounted } from 'vue';
 import mapboxgl, { Map } from 'mapbox-gl';  
 import { useJwt } from '@vueuse/integrations/useJwt';
 import ApiService from "@/services/ApiService";
+import { format } from 'date-fns';
 import HeaderPage from '../components/Header/HeaderPage.vue';
 import ModalConfirm from '../components/pModal/ModalConfirm.vue';
+
 
 const showError = ref(false);
 const errorMessage = ref('');
@@ -65,6 +74,20 @@ const markers = ref<mapboxgl.Marker[]>([]);
 let map: Map;
 let userId: string | null = null;
 
+const startDate = ref<string>('');
+const endDate = ref<string>('');
+
+const filterPointsByDate = () => {
+  const filteredPoints = points.value.filter(point => {
+    const pointDate = new Date(point.date);
+    const start = startDate.value ? new Date(startDate.value) : new Date('1900-01-01');
+    const end = endDate.value ? new Date(endDate.value) : new Date('2100-12-31');
+    return pointDate >= start && pointDate <= end;
+  });
+  points.value = filteredPoints;
+  addMarkers();
+};
+
 const createMap = () => {
   const token: string = import.meta.env.VITE_MAPBOX_TOKEN;
   mapboxgl.accessToken = token;
@@ -88,13 +111,14 @@ const addMarkers = () => {
       const marker = new mapboxgl.Marker({ color: point.color })
         .setLngLat([point.longitude, point.latitude])
         .addTo(map);
-        
+      const formatedDate = format(new Date(point.date), "dd/MM/yyyy HH:mm");
       const popup = new mapboxgl.Popup({ offset: 25 })
         .setHTML(`<section>
                     <h1>${point.text}</h1>
                     <p>${point.address}</p>
                     <p>${point.region_name}</p>
-                    <p>${point.region_geo_json}</p>
+                    <p>${formatedDate}</p>
+                     <a href=${point.region_geo_json}>Cliquer ici</a> 
                     <button onclick="window.deletePoint(${point.id})">Remove</button>
                   </section>`);
         

@@ -7,6 +7,7 @@ import CityView from '@/views/CityView.vue'
 import EventView from '@/views/EventView.vue';
 import AdminHomeView from '@/views/AdminHomeView.vue';
 import SingleEventView from '@/views/SingleEventView.vue';
+import SingleForumView from '@/views/SingleForumView.vue';
 import SinglePaymentPageView from '@/views/SinglePaymentPageView.vue';
 import SingleTokenView from '@/views/SingleTokenView.vue';
 import ForumView from '@/views/ForumView.vue';
@@ -33,6 +34,11 @@ const router = createRouter({
       path: '/forum',
       name: 'forum',
       component: ForumView,
+    },
+    {
+      path: '/forum/:idpost',
+      name: 'SingleForum',
+      component: SingleForumView,
     },
     {
       path: '/add',

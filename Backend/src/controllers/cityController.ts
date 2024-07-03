@@ -18,6 +18,7 @@ const addPoint = async (req: Request, res: Response) => {
       id: point.id,
       longitude: point.longitude,
       latitude: point.latitude,
+      date: point.date,
       text: point.text,
       address: point.address,
       insee_code: point.insee_code,
