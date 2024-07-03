@@ -1,8 +1,11 @@
 import express from "express";
 import dotenv from "dotenv";
 import sequelizeConnection from "./config/database";
-import User, { UserAttributes } from "./src/models/User";
+import User from "./src/models/User";
 import City from "./src/models/City";
+import Post from "./src/models/Post";
+import Commentary from "./src/models/Commentary";
+import Payment from "./src/models/Payment";
 import Event from "./src/models/Event";
 import Map from "./src/models/Map";
 import ArtistProfil from "./src/models/ArtistsProfil";
@@ -10,9 +13,15 @@ import OrganizerProfil from "./src/models/OrganizerProfil";
 import userRoutes from "./src/routes/userRoutes";
 import cityRoutes from "./src/routes/cityRoutes";
 import eventRoutes from "./src/routes/eventRoutes";
+import postRoutes from "./src/routes/postRoutes";
+import commentaryRoutes from "./src/routes/commentaryRoutes";
 import adminRoutes from "./src/routes/adminRoutes";
+import cors from "cors";
 
-const cors = require("cors");
+const session = require('express-session');
+const { AuthorizationCode } = require('simple-oauth2');
+const axios = require('axios');
+const crypto = require('crypto');
 
 dotenv.config();
 
@@ -29,38 +38,36 @@ const port = process.env.PORT || 3000;
 
 app.use("/event", eventRoutes);
 app.use("/users", userRoutes);
-// app.use('/admin', adminRoutes);
 app.use("/city", cityRoutes);
+app.use("/admin", adminRoutes);
+app.use("/post", postRoutes);
+app.use("/commentary", commentaryRoutes);
+
 app.get("/", (req, res) => {
   res.send("Express + TypeScript Server");
 });
 
-sequelizeConnection
-  .authenticate()
-  .then(() => {
-    console.log(
-      "[database]: Database connection has been established successfully."
-    );
+async function syncModels() {
+  try {
+    await sequelizeConnection.authenticate();
+    console.log("[database]: Database connection has been established successfully.");
 
-    // Synchroniser les modèles de la base de données
-    User.sync({ force: true }).then(() => {
-      City.sync({ force: true }).then(() => {
-        ArtistProfil.sync({ force: true }).then(() => {
-          OrganizerProfil.sync({ force: true }).then(() => {
-            Map.sync({ force: true }).then(() => {
-              Event.sync({ force: true }).then(() => {
-              app.listen(port, () => {
-                console.log(
-                  `[server]: Server is running at http://localhost:${port}`
-                );
-              });
-            });
-            });
-          });
-        });
-      });
+    await User.sync({ force: true });
+    await Post.sync({ force: true });
+    await Commentary.sync({ force: true });
+    await City.sync({ force: true });
+    await ArtistProfil.sync({ force: true });
+    await OrganizerProfil.sync({ force: true });
+    await Map.sync({ force: true });
+    await Event.sync({ force: true });
+    await Payment.sync({ force: true });
+
+    app.listen(port, () => {
+      console.log(`[server]: Server is running at http://localhost:${port}`);
     });
-  })
-  .catch((err) => {
+  } catch (err) {
     console.error("[database]: Unable to connect to the database:", err);
-  });
+  }
+}
+
+syncModels();

@@ -4,19 +4,11 @@ import verifyToken from "../middlewares/verifyToken";
 
 const router = express.Router();
 
-
-
-router.post("/add-event", verifyToken, eventController.addEvent);
-
-
-router.get("/get-all-event", verifyToken, eventController.getAllEvents);
-
-router.get("/get-event/:id", verifyToken, eventController.getEventById);
-
-
-// // router.put("/update-point/:pointId", verifyToken, cityController.updatePoint);
-
-// router.delete("/delete-point/:pointId", verifyToken, eventController.deletePoint);
-
-
+router.post("/add-event", eventController.addEvent);
+router.get("/get-all-events", verifyToken, eventController.getAllEvents);
+router.get("/get-event/:id", eventController.getEventById);
+router.post("/get-event/:id/payment", verifyToken, eventController.addPayment);
+router.get("/get-event/:eventId/payment/:paymentId", verifyToken, eventController.getPaymentById);
+router.post("/get-event/token", eventController.verifyTokenOATUH);
+router.delete("/delete-token/:token", eventController.deleteToken);
 export default router;

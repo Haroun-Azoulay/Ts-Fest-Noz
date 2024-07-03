@@ -1,7 +1,10 @@
-import { Request } from 'express';
+import { Request } from "express";
 import { DataTypes, Model } from "sequelize";
 import sequelizeConnection from "../../config/database";
 import City from "./City";
+import Map from "./Map";
+import Post from "./Post";
+import Payment from "./Payment";
 import OrganizerProfil from "./OrganizerProfil";
 import ArtistProfil from "./ArtistsProfil";
 
@@ -13,7 +16,7 @@ export type UserAttributes = {
   email: string;
   role: string;
   pseudo: string;
-}
+};
 
 class User extends Model<UserAttributes> {
   public id?: string;
@@ -48,7 +51,7 @@ class User extends Model<UserAttributes> {
 }
 
 export interface UserRequest extends Request {
-  user?: UserAttributes
+  user?: UserAttributes;
 }
 
 User.init(
@@ -76,7 +79,7 @@ User.init(
       unique: true,
       validate: {
         isEmail: true,
-      }
+      },
     },
     role: {
       type: DataTypes.STRING,
@@ -96,9 +99,13 @@ User.init(
   }
 );
 
-// User.hasOne(ArtistProfil, { foreignKey: 'user_id', as: 'artist_profile' });
-// User.hasMany(City, { foreignKey: 'user_id', as: 'city' });
-//User.hasMany(Comment, { foreignKey: 'user_id', as: 'comment' });
-// User.hasMany(OrganizerProfil, { foreignKey: 'user_id', as: 'organizer_profil' });
 
+User.hasMany(City, {
+  foreignKey: "user_id",
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
+User.hasMany(Map, { foreignKey: "user_id", as: "maps" });
+User.hasMany(Post, { foreignKey: 'userId' });
+// City.belongsTo(User, { foreignKey: 'user_id' });
 export default User;

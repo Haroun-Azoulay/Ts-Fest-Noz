@@ -2,40 +2,42 @@ import CityModel from "../models/City";
 import { Request, Response } from "express";
 
 const addPoint = async (req: Request, res: Response) => {
-    try {
-      
-        // const userId = req.userId; 
+  try {
+    const userId = req.userId;
 
-    
-        const point = await CityModel.create({
-            ...req.body,
-            // user_id: userId
-        });
-
-        const formattedPoint = {
-            id: point.id,
-            longitude: point.longitude,
-            latitude: point.latitude,
-            text: point.text,
-            address: point.address,
-            insee_code: point.insee_code,
-            city_name: point.city_name,
-            zip_code: point.zip_code,
-            label: point.label,
-            color: point.color,
-            style: point.style, 
-            departement_name: point.departement_name,
-            departement_number: point.departement_number,
-            region_name: point.region_name,
-            region_geo_json: point.region_geo_json,
-            // user_id: point.user_id, 
-        };
-    
-        res.status(201).json(formattedPoint);
-    } catch (error) {
-      console.error("Erreur lors de l'ajout d'un point :", error);
-      res.status(500).send("Erreur lors de l'ajout d'un point");
+    if (!userId) {
+      return res.status(400).json({ message: "L'utilisateur doit être authentifié." });
     }
+
+    const point = await CityModel.create({
+      ...req.body,
+      user_id: userId
+    });
+
+    const formattedPoint = {
+      id: point.id,
+      longitude: point.longitude,
+      latitude: point.latitude,
+      date: point.date,
+      text: point.text,
+      address: point.address,
+      insee_code: point.insee_code,
+      city_name: point.city_name,
+      zip_code: point.zip_code,
+      label: point.label,
+      color: point.color,
+      style: point.style,
+      departement_name: point.departement_name,
+      departement_number: point.departement_number,
+      region_name: point.region_name,
+      region_geo_json: point.region_geo_json,
+    };
+
+    res.status(201).json(formattedPoint);
+  } catch (error) {
+    console.error("Erreur lors de l'ajout d'un point :", error);
+    res.status(500).send("Erreur lors de l'ajout d'un point");
+  }
 };
 const getAllPoints = async (req: Request, res: Response) => {
     try {
@@ -62,17 +64,15 @@ const getAllPoints = async (req: Request, res: Response) => {
 };
 const getPointByUser = async (req: Request, res: Response) => {
     try {
-        // Vérifier que l'ID de l'utilisateur est fourni
         const userId = req.params.id;
         if (!userId) {
             return res.status(400).json({ message: "L'ID de l'utilisateur est requis." });
         }
 
-        // Récupérer tous les points associés à cet utilisateur spécifique
         const points = await CityModel.findAll({
-            // where: {
-            //     user_id: userId
-            // }
+            where: {
+                user_id: userId
+            }
         });
 
         // const simplifiedPoints = points.map(point => ({
@@ -118,26 +118,30 @@ const getPointByUser = async (req: Request, res: Response) => {
 // };
 
 
-
 const deletePoint = async (req: Request, res: Response) => {
-    try {
-      const { pointId } = req.params;
-  
-      // Vérifier si le commentaire existe
-      const post = await CityModel.findByPk(pointId);
-      if (!post) {
-        return res.status(404).json({ message: "Le point n'existe pas." });
-      }
-  
-      // Supprimer le commentaire
-      await post.destroy();
-  
-      return res.status(200).json({ message: "Le point supprimé avec succès." });
-    } catch (error) {
-      console.error(error);
-      return res.status(500).json({ message: "Erreur lors de la suppression du point." });
+  try {
+    const userId = req.userId;
+    // const isAdmin = req.isAdmin;
+    const { pointId } = req.params;
+
+    const point = await CityModel.findByPk(pointId);
+    if (!point) {
+      return res.status(404).json({ message: "Le point n'existe pas." });
     }
-  };
+
+    if (point.user_id !== userId) {
+      return res.status(403).json({ message: "Vous n'avez pas la permission de supprimer ce point." });
+    }
+
+    await point.destroy();
+
+    return res.status(200).json({ message: "Le point a été supprimé avec succès." });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Erreur lors de la suppression du point." });
+  }
+};
+
   export default {
     addPoint,
     deletePoint,

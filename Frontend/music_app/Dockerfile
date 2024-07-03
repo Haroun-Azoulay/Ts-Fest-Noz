@@ -7,7 +7,8 @@ RUN apt-get update && apt-get upgrade -y \
     && rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update && apt-get upgrade -y && \
-    apt-get install -y npm
+    apt-get install -y npm \
+
 
 WORKDIR /app
 
@@ -15,11 +16,13 @@ WORKDIR /app
 COPY package*.json ./
 
 
-RUN npm install
+RUN npm install \
+    npm install --save jwt-decode \
+    npm install --save @types/jwt-decode
 
 
 COPY . .
-
+# voir une image node js fixe nginx pour file static utiliser proxy
 
 
 EXPOSE 5173

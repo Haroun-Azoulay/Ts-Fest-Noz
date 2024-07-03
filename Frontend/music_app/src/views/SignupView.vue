@@ -1,6 +1,6 @@
 <template>
-    <section class="flex row justify-center content-center">
-        <div class="flex">
+    <section class="min-h-screen flex items-center justify-center bg-slate-50">
+      <div class="flex gap-16">
             <SignupPage></SignupPage>
             <img class="object-contain" src="../assets/authentification.png">
         </div>

@@ -16,11 +16,16 @@
     "docker": "docker run -p 5173:5173 -ti music-app-vue"
   },
   "dependencies": {
+    "@types/jwt-decode": "^3.1.0",
     "axios": "^1.6.7",
+    "date-fns": "^3.6.0",
+    "jwt-decode": "^3.1.2",
     "mapbox-gl": "^3.1.2",
     "pinia": "^2.1.7",
+    "qrcode.vue": "^3.4.1",
     "vue": "^3.4.15",
     "vue-axios": "^3.5.2",
+    "vue-final-modal": "^4.5.4",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {

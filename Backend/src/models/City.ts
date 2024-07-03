@@ -1,9 +1,10 @@
 import { DataTypes, Model } from "sequelize";
 import sequelizeConnection from "../../config/database";
+import User from "./User";
 
 export type CityAttributes = {
   id: string;
-  // user_id: number;
+  user_id: string;
   insee_code: number;
   city_name: string;
   text: string;
@@ -12,6 +13,7 @@ export type CityAttributes = {
   label: string;
   longitude: number;
   latitude: number;
+  date: Date;
   style: string;
   color: string;
   departement_name: string;
@@ -22,7 +24,7 @@ export type CityAttributes = {
 
 class City extends Model<CityAttributes> {
   public id!: string;
-  // public user_id!: number;
+  public user_id!: string;
   public insee_code!: number;
   public city_name!: string;
   public address!: string;
@@ -31,6 +33,7 @@ class City extends Model<CityAttributes> {
   public label!: string;
   public longitude!: number;
   public latitude!: number;
+  public date!: Date;
   public style!: string;
   public color!: string;
   public departement_name!: string;
@@ -47,16 +50,16 @@ City.init(
       allowNull: false,
       primaryKey: true,
     },
-    // user_id: {
-    //   type: DataTypes.INTEGER,
-    //   allowNull: false,
-    //   references: { 
-    //     model: 'Users', 
-    //     key: 'id',
-    //   },
-    //   onUpdate: 'CASCADE',
-    //   onDelete: 'CASCADE',
-    // },
+    user_id: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      references: { 
+        model: 'users', 
+        key: 'id',
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
+    },
     
     insee_code: {
       type: DataTypes.INTEGER,
@@ -90,6 +93,10 @@ City.init(
       type: DataTypes.FLOAT,
       allowNull: true,
     },
+    date: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
     style: {
       type: DataTypes.STRING,
       allowNull: true,
@@ -120,5 +127,8 @@ City.init(
     modelName: "city",
   }
 );
+
+
+// City.belongsTo(User, { foreignKey: 'user_id' });
 
 export default City;
