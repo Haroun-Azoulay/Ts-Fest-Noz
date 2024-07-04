@@ -2,6 +2,13 @@
   <div class="bg-gray-100 min-h-screen">
     <HeaderPage />
     <p class>Bienvenue dans le forum</p>
+    <button
+                        class="ButtonPrimary w-full md:w-80 h-12 px-6 m-2 py-2.5 bg-violet-600 rounded-lg flex justify-center items-center"
+                        @click="goToAddPost">
+                        <span class="ButtonSecondary text-center text-white text-base font-bold font-['Roboto']">
+                            Ecrire un post
+                        </span>
+                    </button>
     <p v-for="item in post">
       {{ item.title }}
   <button
@@ -48,12 +55,15 @@ onMounted(async () => {
 });
 const goTosingleForum = (postId: number) => {
   if (postId) {
-    router.push(`forum/${postId}`);
+    router.push(`/forum/${postId}`);
   } else {
     console.error("L'ID du post manquant");
   }
 };
 
+const goToAddPost = () => {
+  router.push({ path: '/forum/add' });
+}
 
 </script>
 <style>

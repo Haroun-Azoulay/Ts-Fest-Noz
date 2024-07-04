@@ -11,6 +11,7 @@ import SingleForumView from '@/views/SingleForumView.vue';
 import SinglePaymentPageView from '@/views/SinglePaymentPageView.vue';
 import SingleTokenView from '@/views/SingleTokenView.vue';
 import ForumView from '@/views/ForumView.vue';
+import PostView from '@/views/AddPostView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -34,6 +35,11 @@ const router = createRouter({
       path: '/forum',
       name: 'forum',
       component: ForumView,
+    },
+    {
+      path: '/forum/add',
+      name: 'addPost',
+      component: PostView,
     },
     {
       path: '/forum/:idpost',

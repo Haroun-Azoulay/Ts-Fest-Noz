@@ -32,8 +32,6 @@
       </section>
   
       <hr class="my-8 border-gray-200">
-  
-      <!-- New Section: Ce que nous offrons -->
       <section class="max-w-screen-lg mx-auto p-4 md:p-16">
         <h2 class="text-center font-inter text-3xl md:text-4xl font-extrabold mb-12">Ce que nous offrons !</h2>
         <div class="flex flex-col md:flex-row justify-center items-center space-y-8 md:space-y-0 md:space-x-12">
@@ -56,8 +54,6 @@
       </section>
   
       <hr class="my-8 border-gray-200">
-  
-      <!-- New Section: Laissez un message -->
       <section class="max-w-screen-lg mx-auto p-4 md:p-16 flex flex-col md:flex-row items-center space-y-8 md:space-y-0 md:space-x-12">
         <div class="text-center md:text-left flex-1">
           <h2 class="font-inter text-2xl md:text-4xl font-extrabold mb-6">Laissez un message !</h2>
@@ -78,8 +74,7 @@
       </section>
   
       <hr class="my-8 border-gray-200">
-  
-      <!-- New Section: Logos des styles musicaux -->
+
       <section class="max-w-screen-lg mx-auto p-4 md:p-16">
         
         <div class="flex justify-evenly items-center">
@@ -92,8 +87,6 @@
       </section>
   
       <hr class="my-8 border-gray-200">
-  
-      <!-- New Section: Share Your Opinion -->
       <section class="max-w-screen-lg mx-auto p-4 md:p-16 text-center">
         <h2 class="font-inter text-3xl md:text-4xl font-extrabold mb-4">Vous avez votre avis ?</h2>
         <h3 class="font-inter text-2xl md:text-3xl font-extrabold mb-8 text-purple-600">Partagez le !</h3>
