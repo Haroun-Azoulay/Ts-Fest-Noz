@@ -8,6 +8,6 @@ export default function authEvent({ next, router }) {
     if (roleId === 'admin') {
         return next();
     } else {
-        return router.push({ path: '/error' });
+        return router.push({ path: '/' });
     }
 }

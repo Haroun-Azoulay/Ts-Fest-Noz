@@ -16,6 +16,7 @@ import PostView from '@/views/AddPostView.vue';
 import authMiddleware from '@/middlewares/auth';
 import authEvent from '@/middlewares/authEvent';
 import authAdmin from '@/middlewares/authAdmin';
+import auth from '@/middlewares/auth';
 
 const routes = [
   {
@@ -46,7 +47,7 @@ const routes = [
     name: 'addPost',
     component: PostView,
     meta: {
-      middleware: [authMiddleware],
+      middleware: [authEvent],
     },
   },
   {
@@ -75,7 +76,7 @@ const routes = [
     name: 'event',
     component: EventView,
     meta: {
-      middleware: [authEvent],
+      middleware: [auth],
     },
   },
   {
@@ -90,6 +91,9 @@ const routes = [
     path: '/event/:id',
     name: 'Singleevent',
     component: SingleEventView,
+    meta: {
+      middleware: [auth],
+    },
   },
   {
     path: '/event/:id/:userid',

@@ -6,10 +6,6 @@
         <h1 class="text-3xl font-bold mb-6">Détails de l'événement</h1>
         <div v-if="event" class="space-y-4">
           <div class="flex items-center">
-            <span class="text-gray-500 font-semibold">ID:</span>
-            <span class="ml-2">{{ event.id }}</span>
-          </div>
-          <div class="flex items-center">
             <span class="text-gray-500 font-semibold">Nom:</span>
             <span class="ml-2">{{ event.name }}</span>
           </div>

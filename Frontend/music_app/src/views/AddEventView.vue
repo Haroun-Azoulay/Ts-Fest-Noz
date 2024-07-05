@@ -183,6 +183,7 @@ const addPoint = async () => {
     console.log(response.data);
     successMessage.value = "Le point a bien été ajouté";
     showSuccess.value = true;
+    location.reload();
   } catch (error: any) {
     console.error(error);
     errorMessage.value = error.response?.data?.message || error.message;

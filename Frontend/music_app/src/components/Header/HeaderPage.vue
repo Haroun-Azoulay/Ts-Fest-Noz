@@ -42,7 +42,7 @@
               <button @click="goToSignupPage" class="ButtonPrimary">Inscription</button>
             </li>
             <li v-if="!isLoggedIn" class="md:ml-2">
-              <button @click="goToSigninPage" class="ButtonPrimary">Connection</button>
+              <button @click="goToSigninPage" class="ButtonPrimary">Connexion</button>
             </li>
             <li v-if="isLoggedIn" class="md:ml-2 flex items-center space-x-2">
               <button @click="logout" class="ButtonPrimary" style="background-color: red;">Deconnexion</button>

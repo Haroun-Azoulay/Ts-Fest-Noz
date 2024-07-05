@@ -1,24 +1,48 @@
 <template>
-    <div class="bg-gray-100 min-h-screen">
-      <HeaderPage />
-      <p>Ecrire un post</p>
-      <form @submit.prevent="addPost">
-        <label>titre</label>
-        <input type="text" v-model="request.title" />
-        <label>sous titre</label>
-        <input type="text" v-model="request.subtitle" />
-        <label>paragraphe</label>
-        <textarea v-model="request.content"></textarea>
-        <button
-          type="submit"
-          class="mt-1 bg-white text-violet-600 p-2 rounded hover:text-white hover:bg-violet-300 focus:outline-none focus:ring focus:ring-violet-600 focus:ring-opacity-50"
-        >
-          Ajout du post
-        </button>
+  <div class="bg-gray-100 min-h-screen flex flex-col items-center">
+    <HeaderPage />
+    <div class="w-full max-w-2xl p-6 bg-white rounded-lg shadow-md mt-8">
+      <h2 class="text-3xl font-extrabold text-gray-800 mb-6 text-center">Écrire un post</h2>
+      <form @submit.prevent="addPost" class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Titre</label>
+          <input
+            type="text"
+            v-model="request.title"
+            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-violet-600 focus:ring-opacity-50"
+            placeholder="Entrez le titre"
+          />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Sous-titre</label>
+          <input
+            type="text"
+            v-model="request.subtitle"
+            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-violet-600 focus:ring-opacity-50"
+            placeholder="Entrez le sous-titre"
+          />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Paragraphe</label>
+          <textarea
+            v-model="request.content"
+            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-violet-600 focus:ring-opacity-50"
+            rows="5"
+            placeholder="Entrez le contenu"
+          ></textarea>
+        </div>
+        <div class="flex justify-center">
+          <button
+            type="submit"
+            class="mt-1 bg-violet-600 text-white px-4 py-2 rounded-md hover:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-600 focus:ring-opacity-50"
+          >
+            Ajouter le post
+          </button>
+        </div>
       </form>
     </div>
-  </template>
-  
+  </div>
+</template>
   <script setup lang="ts">
   import { ref, onMounted } from 'vue';
   import HeaderPage from '../components/Header/HeaderPage.vue';
