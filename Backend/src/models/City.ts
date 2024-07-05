@@ -5,7 +5,6 @@ import User from "./User";
 export type CityAttributes = {
   id: string;
   user_id: string;
-  insee_code: number;
   city_name: string;
   text: string;
   address: string;
@@ -16,16 +15,14 @@ export type CityAttributes = {
   date: Date;
   style: string;
   color: string;
-  departement_name: string;
   departement_number: number;
   region_name: string;
-  region_geo_json: string;
+  url_point: string;
 }
 
 class City extends Model<CityAttributes> {
   public id!: string;
   public user_id!: string;
-  public insee_code!: number;
   public city_name!: string;
   public address!: string;
   public text!: string;
@@ -36,10 +33,9 @@ class City extends Model<CityAttributes> {
   public date!: Date;
   public style!: string;
   public color!: string;
-  public departement_name!: string;
   public departement_number!: number;
   public region_name!: string;
-  public region_geo_json!: string;
+  public url_point!: string;
 }
 
 City.init(
@@ -59,11 +55,6 @@ City.init(
       },
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE',
-    },
-    
-    insee_code: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
     },
     city_name: {
       type: DataTypes.STRING,
@@ -105,10 +96,6 @@ City.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
-    departement_name: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
     departement_number: {
       type: DataTypes.INTEGER,
       allowNull: true,
@@ -117,7 +104,7 @@ City.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
-    region_geo_json: {
+    url_point: {
       type: DataTypes.STRING,
       allowNull: true,
     },
@@ -128,7 +115,5 @@ City.init(
   }
 );
 
-
-// City.belongsTo(User, { foreignKey: 'user_id' });
 
 export default City;

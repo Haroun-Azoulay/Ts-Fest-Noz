@@ -20,8 +20,8 @@ const createPost = async (req: Request, res: Response) => {
     console.log("addPost:", formattedPost);
     res.status(201).json(formattedPost);
   } catch (error) {
-    console.error("Erreur lors de l'ajout d'un post :", error);
-    res.status(500).send("Erreur lors de l'ajout d'un post");
+    console.error("Error when adding a post:", error);
+    res.status(500).send("Error when adding a post");
   }
 };
 
@@ -55,7 +55,7 @@ const getPostById = async (req: Request, res:Response) => {
         if (result) {
             return res.json(result);
         } else {
-            return res.status(404).json({ message: "Article non trouvé." });
+            return res.status(404).json({ message: "Item not found" });
         }
     })
     .catch((error) => {

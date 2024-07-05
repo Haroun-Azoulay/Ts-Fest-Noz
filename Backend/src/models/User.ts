@@ -27,7 +27,6 @@ class User extends Model<UserAttributes> {
   public role!: string;
   public pseudo!: string;
 
-  // Static method
   public static updateUserRole = async (
     userId: string,
     newRole: string
@@ -85,7 +84,7 @@ User.init(
       type: DataTypes.STRING,
       defaultValue: "user",
       validate: {
-        isIn: [["admin", "artist", "moderator", "user"]],
+        isIn: [["admin", "artist", "organizer", "user"]],
       },
     },
     pseudo: {

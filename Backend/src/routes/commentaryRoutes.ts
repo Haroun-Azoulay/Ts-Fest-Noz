@@ -1,6 +1,5 @@
 import express from "express";
 import commentaryController from '../controllers/commentaryController';
-
 import verifyToken from "../middlewares/verifyToken";
 
 

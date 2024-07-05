@@ -1,31 +1,35 @@
 <template>
-  <div>
+  <div class="min-h-screen flex flex-col">
     <HeaderPage></HeaderPage>
-    <section class="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg mt-6">
-      <h1 class="text-3xl font-bold mb-4">Détails de l'événement</h1>
-      <div v-if="event" class="space-y-4">
-        <div>
-          <span class="text-gray-500 font-semibold">ID:</span>
-          <span class="ml-2">{{ event.id }}</span>
+    <main class="flex-grow">
+      <section class="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg mt-6">
+        <h1 class="text-3xl font-bold mb-6">Détails de l'événement</h1>
+        <div v-if="event" class="space-y-4">
+          <div class="flex items-center">
+            <span class="text-gray-500 font-semibold">ID:</span>
+            <span class="ml-2">{{ event.id }}</span>
+          </div>
+          <div class="flex items-center">
+            <span class="text-gray-500 font-semibold">Nom:</span>
+            <span class="ml-2">{{ event.name }}</span>
+          </div>
+          <div class="flex items-center">
+            <span class="text-gray-500 font-semibold">Description:</span>
+            <span class="ml-2">{{ event.description }}</span>
+          </div>
+          <button @click="goToPaymentPage" class="mt-6 bg-violet-600 text-white py-2 px-6 rounded hover:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-600 focus:ring-opacity-50">
+            Payer
+          </button>
         </div>
-        <div>
-          <span class="text-gray-500 font-semibold">Nom:</span>
-          <span class="ml-2">{{ event.name }}</span>
+        <div v-else class="text-center">
+          <p class="text-gray-500">Chargement des détails de l'événement...</p>
         </div>
-        <div>
-          <span class="text-gray-500 font-semibold">Description:</span>
-          <span class="ml-2">{{ event.description }}</span>
-        </div>
-        <button @click="goToPaymentPage" class="mt-4 bg-violet-600 text-white py-2 px-4 rounded hover:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-600 focus:ring-opacity-50">
-          Payer
-        </button>
-      </div>
-      <div v-else>
-        <p class="text-gray-500">Chargement des détails de l'événement...</p>
-      </div>
-    </section>
+      </section>
+    </main>
+    <FooterPage></FooterPage>
   </div>
 </template>
+
 
 
 <script setup lang="ts">
@@ -35,7 +39,7 @@ import { useRouter, useRoute } from 'vue-router';
 import ApiService from "@/services/ApiService";
 import { useJwt } from '@vueuse/integrations/useJwt';
 import { provide } from 'vue'
-
+import FooterPage from '../components/Footer/FooterPage.vue';
 const router = useRouter();
 const route = useRoute();
 

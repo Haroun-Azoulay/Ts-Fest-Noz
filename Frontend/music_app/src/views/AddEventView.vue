@@ -1,6 +1,16 @@
+
 <template>
   <div>
     <HeaderPage></HeaderPage>
+    <div class="text-center md:mr-8 flex-1 mb-8 md:mb-0">
+      <h1
+        class="font-inter text-2xl md:text-5xl font-extrabold leading-tight tracking-normal text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 mb-6">
+        Le Meilleur de l'évenement musical !
+      </h1>
+      <h3 class="font-inter text-2xl md:text-3xl font-extrabold leading-tight tracking-normal mb-6">
+        Entrez vos informations et situez votre événement sur la carte !
+      </h3>
+    </div>
     <SearchPage @geocodeResult="handleGeocodeResult"></SearchPage>
     <ModalConfirm v-model="showError" title="Erreur" @confirm="confirmError">
       <p>{{ errorMessage }}</p>
@@ -12,7 +22,7 @@
     <section class="flex flex-col lg:flex-row justify-center items-center">
       <div id="map" class="w-full lg:w-3/5 h-64 lg:h-500px" style="height: 600px;"></div>
       <div
-        class="border-2 w-full lg:w-1/5 flex justify-center items-center flex-col bg-violet-600 rounded-md mt-4 lg:mt-0 p-4"
+        class="border-2 w-full lg:w-1/5 flex justify-center items-center flex-col bg-violet-600 rounded-md mt-5 lg:mt-0 p-4"
         v-if="result" style="height: 600px;">
         <h1 class="text-white mb-4 text-xl font-bold text-center">Ajout de l'evenement</h1>
         <label class="text-white text-m font-medium leading-tight text-center">Adresse complète</label>
@@ -48,8 +58,28 @@
         </button>
       </div>
     </section>
+    <section class="max-w-screen-lg mx-auto p-4 md:p-16">
+      <div class="flex justify-evenly items-center">
+        <img src="../assets/jazze.PNG" alt="Jazz Logo" class="w-32 h-32 object-contain mx-4 my-4">
+        <img src="../assets/rock.PNG" alt="Rock Logo" class="w-32 h-32 object-contain mx-4 my-4">
+        <img src="../assets/salsa.PNG" alt="Salsa Logo" class="w-32 h-32 object-contain mx-4 my-4">
+        <img src="../assets/piano.PNG" alt="Classical Logo" class="w-32 h-32 object-contain mx-4 my-4">
+        <img src="../assets/rap.PNG" alt="Rap Logo" class="w-32 h-32 object-contain mx-4 my-4">
+      </div>
+    </section>
+    <FooterPage></FooterPage>
+  
+    <hr class="my-8 border-gray-200">
+    <ModalConfirm v-model="showError" title="Erreur" @confirm="confirmError">
+      <p>{{ errorMessage }}</p>
+    </ModalConfirm>
+    <ModalConfirm v-model="showSuccess" title="Confirmation" @confirm="confirmSuccess">
+      <p>{{ successMessage }}</p>
+    </ModalConfirm>
+    <section></section>
   </div>
 </template>
+
 
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue';
@@ -58,6 +88,7 @@ import ApiService from "@/services/ApiService";
 import HeaderPage from '../components/Header/HeaderPage.vue';
 import SearchPage from '../components/Map/SearchPage.vue';
 import ModalConfirm from '../components/pModal/ModalConfirm.vue';
+import FooterPage from '../components/Footer/FooterPage.vue';
 
 const result = ref(null);
 const event_name = ref('');
@@ -115,16 +146,14 @@ const addPoint = async () => {
       date: meetingTime.value,
       text: event_name.value,
       address: result.value.place,
-      insee_code: 77270,
       city_name: result.value.city,
       zip_code: result.value.postalCode,
       style: selectedStyle.value,
       label: event_label.value,
       color: styleColor.value,
-      departement_name: "Paris",
       departement_number: result.value.postalCode,
       region_name: result.value.country,
-      region_geo_json: ""
+      url_point: ""
     };
 
     const Event = {
@@ -143,7 +172,7 @@ const addPoint = async () => {
 
     const eventId = response_event.data.id;
     const event_url = `http://localhost:5173/event/${eventId}`;
-    Point.region_geo_json = event_url;
+    Point.url_point = event_url;
 
     const response = await ApiService.post('/city/add-point', Point, {
       headers: {

@@ -1,5 +1,5 @@
 module.exports = {
-  getClient: function(clientId, clientSecret, callback) {
+  getClient: function (clientId, clientSecret, callback) {
     const client = {
       clientId: 'your_client_id_here',
       clientSecret: 'your_client_secret_here',
@@ -8,7 +8,7 @@ module.exports = {
     };
     callback(null, client);
   },
-  saveToken: function(token, client, user, callback) {
+  saveToken: function (token, client, user, callback) {
     const accessToken = {
       accessToken: token.accessToken,
       accessTokenExpiresAt: token.accessTokenExpiresAt,
@@ -17,7 +17,7 @@ module.exports = {
     };
     callback(null, accessToken);
   },
-  getAccessToken: function(accessToken, callback) {
+  getAccessToken: function (accessToken, callback) {
     const token = {
       accessToken: accessToken,
       accessTokenExpiresAt: new Date(new Date().getTime() + 3600 * 1000),
@@ -26,7 +26,7 @@ module.exports = {
     };
     callback(null, token);
   },
-  getAuthorizationCode: function(authorizationCode, callback) {
+  getAuthorizationCode: function (authorizationCode, callback) {
     const authCode = {
       code: authorizationCode,
       expiresAt: new Date(new Date().getTime() + 60000),
@@ -35,7 +35,7 @@ module.exports = {
     };
     callback(null, authCode);
   },
-  saveAuthorizationCode: function(code, client, user, callback) {
+  saveAuthorizationCode: function (code, client, user, callback) {
     const authCode = {
       authorizationCode: code.authorizationCode,
       expiresAt: code.expiresAt,
@@ -45,13 +45,13 @@ module.exports = {
     };
     callback(null, authCode);
   },
-  revokeAuthorizationCode: function(code, callback) {
+  revokeAuthorizationCode: function (code, callback) {
     callback(null, true);
   },
-  verifyScope: function(token, scope, callback) {
+  verifyScope: function (token, scope, callback) {
     callback(null, true);
   },
-  getUser: function(username, password, callback) {
+  getUser: function (username, password, callback) {
     const user = {
       id: '123',
       username: username

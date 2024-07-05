@@ -5,7 +5,8 @@ import isAdmin from '../middlewares/isAdmin';
 
 const router = express.Router();
 
-router.get('/all-users', verifyToken, userController.getAllUsers);
-router.put('/update-role/:userId', verifyToken, userController.updateUserRole);
+router.get('/all-users', verifyToken, isAdmin, userController.getAllUsers);
+
+router.put('/update-role/:userId', verifyToken, isAdmin, userController.updateUserRole);
 
 export default router;

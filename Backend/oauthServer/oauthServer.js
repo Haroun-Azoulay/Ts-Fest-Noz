@@ -1,14 +1,14 @@
-const express = require('express'); 
+const express = require('express');
 const bodyParser = require('body-parser');
 const OAuth2Server = require('oauth2-server');
 
-const app = express(); 
+const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json()); 
-console.log("ok let's go")
+app.use(bodyParser.json());
+
 
 const oauth = new OAuth2Server({
-  model: require('./model'), 
+  model: require('./model'),
   grants: ['authorization_code', 'password', 'client_credentials'],
   accessTokenLifetime: 3600,
   allowBearerTokensInQueryString: true
@@ -27,7 +27,7 @@ app.all('/oauth/token', (req, res, next) => {
 
   return oauth.token(request, response)
     .then((token) => {
-      res.json(token); 
+      res.json(token);
     }).catch((err) => {
       res.status(err.code || 500).json(err);
     });
@@ -64,7 +64,7 @@ app.post('/oauth/authorize', (req, res) => {
 
 
   if (username !== 'user' || password !== 'pass') {
-    return res.status(401).send('Invalid credentials'); 
+    return res.status(401).send('Invalid credentials');
   }
 
   const request = new OAuth2Server.Request(req);
@@ -88,7 +88,7 @@ app.get('/user', (req, res) => {
       id: '123',
       name: 'John Doe',
       email: 'john.doe@example.com'
-    }); 
+    });
   }).catch((err) => {
     res.status(err.code || 500).json(err);
   });

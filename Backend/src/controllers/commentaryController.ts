@@ -10,7 +10,7 @@ const createCommentary = async (req: Request, res: Response) => {
 
     const post = await Post.findByPk(postId);
     if (!post) {
-      return res.status(404).json({ message: "Le post associé n'existe pas." });
+      return res.status(404).json({ message: "The associated post does not exist" });
     }
 
     const commentary = await Commentary.create({
@@ -24,7 +24,7 @@ const createCommentary = async (req: Request, res: Response) => {
     });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: "Erreur lors de la création du commentaire." });
+    return res.status(500).json({ message: "Error creating comment" });
   }
 };
 
@@ -36,7 +36,7 @@ const getCommentariesByPost = async (req: Request, res: Response) => {
 
     const post = await Post.findByPk(postId);
     if (!post) {
-      return res.status(404).json({ message: "Le post associé n'existe pas." });
+      return res.status(404).json({ message: "The associated post does not exist" });
     }
 
     const commentaries = await Commentary.findAll({
@@ -54,7 +54,7 @@ const getCommentariesByPost = async (req: Request, res: Response) => {
     return res.json(commentariesWithUserDetails);
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: "Erreur lors de la récupération des commentaires pour le post spécifié." });
+    return res.status(500).json({ message: "Error retrieving comments for the specified post" });
   }
 };
 
@@ -77,7 +77,7 @@ const getAllCommentaries = async (req: Request, res: Response) => {
     return res.json(commentariesWithUserDetails);
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: "Erreur lors de la récupération des commentaires." });
+    return res.status(500).json({ message: "Error retrieving comments" });
   }
 };
 

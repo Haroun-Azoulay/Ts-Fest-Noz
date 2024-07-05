@@ -20,6 +20,7 @@
                     </button>
     </p>
   </div>
+  <FooterPage />
 </template>
 
 <script setup lang="ts">
@@ -27,6 +28,7 @@ import { ref, onMounted } from 'vue';
 import HeaderPage from '../components/Header/HeaderPage.vue';
 import { useRouter } from 'vue-router';
 import ApiService from "@/services/ApiService";
+import FooterPage from '../components/Footer/FooterPage.vue';
 const router = useRouter();
 const post = ref({});
 

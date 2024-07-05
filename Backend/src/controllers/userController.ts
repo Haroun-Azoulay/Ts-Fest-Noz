@@ -3,15 +3,13 @@ import UserModel from "../models/User";
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-// add email refus
-// promise ? 
 const signup = async (req: Request, res: Response): Promise<Response> => {
   try {
     const { lastname, firstname, password, email, role, pseudo } = req.body;
 
     if (!lastname || !firstname || !password || !email || !role || !pseudo) {
       return res.status(400).json({
-        message: "Il y a un des champs manquants qui sont requis.",
+        message: "A required field is missing.",
       });
     }
 
@@ -19,8 +17,10 @@ const signup = async (req: Request, res: Response): Promise<Response> => {
     const isAdmin = email === "admin@example.com";
     const assignedRole = isAdmin ? "admin" : defaultRole;
 
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
+ 
     const newUser = await UserModel.create({
       email,
       lastname,
@@ -30,28 +30,31 @@ const signup = async (req: Request, res: Response): Promise<Response> => {
       role: assignedRole,
     });
 
+ 
     return res.status(201).json({
-      message: "Utilisateur créé avec succès!",
+      message: "User created successfully!",
       user: newUser,
     });
   } catch (error) {
     console.error(error);
     return res.status(500).json({
-      message: "Impossible de créer un utilisateur.",
+      message: "Unable to create user.",
     });
   }
 };
 
 const getUserInfo = async (req: Request, res: Response): Promise<Response> => {
   const userId = req.userId;
- console.log(req.userId)
+  console.log(req.userId)
   try {
-    const user = await UserModel.findOne({ where: { id:userId }});
+
+    const user = await UserModel.findOne({ where: { id: userId } });
 
     if (!user) {
-      return res.status(404).json({ message: "Utilisateur non trouvé" });
+      return res.status(404).json({ message: "User not found" });
     }
 
+  
     const userDetails = {
       id: user.id,
       email: user.email,
@@ -65,23 +68,21 @@ const getUserInfo = async (req: Request, res: Response): Promise<Response> => {
   } catch (error) {
     console.error(error);
     return res.status(500).json({
-      message: "Erreur lors de la récupération des détails de l'utilisateur",
+      message: "Error retrieving user details",
     });
   }
 };
-
-
 
 const signin = async (req: Request, res: Response) => {
   try {
     const { pseudo, password } = req.body;
 
+
     if (!pseudo || !password) {
       return res
         .status(400)
         .json({
-          message:
-            "Le nom d'utilisateur et le mot de passe sont requis pour la connexion.",
+          message: "Username and password are required for login.",
         });
     }
 
@@ -93,8 +94,7 @@ const signin = async (req: Request, res: Response) => {
       return res
         .status(401)
         .json({
-          message:
-            "Identifiants incorrects. Vérifiez votre nom d'utilisateur et votre mot de passe.",
+          message: "Invalid credentials. Check your username and password.",
         });
     }
 
@@ -104,8 +104,7 @@ const signin = async (req: Request, res: Response) => {
       return res
         .status(401)
         .json({
-          message:
-            "Identifiants incorrects. Vérifiez votre nom d'utilisateur et votre mot de passe.",
+          message: "Invalid credentials. Check your username and password.",
         });
     }
 
@@ -116,22 +115,21 @@ const signin = async (req: Request, res: Response) => {
     );
 
     return res.status(200).json({
-      message: "Connexion réussie!",
+      message: "Login successful!",
       user: foundUser,
       token: token,
     });
   } catch (error) {
     console.error(error);
     return res.status(500).json({
-      message: "Impossible de se connecter.",
+      message: "Unable to login.",
     });
   }
 };
 
 const logout = async (req: Request, res: Response) => {
-  res.status(200).json({ message: "Déconnexion réussie" });
+  res.status(200).json({ message: "Logout successful" });
 };
-
 
 function getAllUsers(req: Request, res: Response) {
   UserModel.findAll()
@@ -151,23 +149,25 @@ const updateUserRole = async (req: Request, res: Response) => {
     console.log(userId);
     console.log(newRole);
 
+
     if (!newRole) {
-      return res.status(400).json({ message: "Le nouveau rôle est requis." });
+      return res.status(400).json({ message: "New role is required." });
     }
+
 
     const updateSuccess = await UserModel.updateUserRole(userId, newRole);
     
     if (updateSuccess) {
-      return res.status(200).json({ message: "Rôle mis à jour avec succès." });
+      return res.status(200).json({ message: "Role updated successfully." });
     } else {
       return res
         .status(403)
-        .json({ message: "Le rôle 'admin' ne peut pas être mis à jour." });
+        .json({ message: "Admin role cannot be updated." });
     }
   } catch (error) {
     console.error(error);
     return res.status(500).json({
-      message: "Impossible de mettre à jour le rôle de l'utilisateur.",
+      message: "Unable to update user role.",
     });
   }
 };
