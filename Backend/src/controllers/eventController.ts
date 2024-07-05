@@ -18,11 +18,10 @@ const addEvent = async (req: Request, res: Response) => {
             url: event.url
         };
 
-        console.log("addEvent - formattedEvent:", formattedEvent);
         res.status(201).json(formattedEvent);
     } catch (error) {
-        console.error("Erreur lors de l'ajout d'un événement :", error);
-        res.status(500).send("Erreur lors de l'ajout d'un événement");
+        console.error("Error adding an event:", error);
+        res.status(500).send("Error adding event");
     }
 };
 
@@ -36,28 +35,23 @@ const getEventById = async (req: Request, res: Response) => {
         });
 
         if (event) {
-            console.log("getEventById - event found:", event);
             return res.json(event);
         } else {
-            console.log("getEventById - event not found");
             return res.status(404).json({ message: "Event non trouvé" });
         }
     } catch (error) {
-        console.error("Erreur lors de la récupération de l'événement par ID.", error);
-        return res.status(500).json({ message: "Erreur lors de la récupération de l'événement par ID." });
+        console.error("Error retrieving event by ID", error);
+        return res.status(500).json({ message: "Error retrieving event by ID" });
     }
 };
 
 const getAllEvents = async (req: Request, res: Response) => {
     try {
-        console.log("getAllEvents - fetching all events");
-
         const events = await EventModel.findAll();
-        console.log("getAllEvents - events found:", events);
         return res.json(events);
     } catch (error) {
-        console.error("Erreur lors de la récupération des événements.", error);
-        return res.status(500).json({ message: "Erreur lors de la récupération des événements." });
+        console.error("Error retrieving events", error);
+        return res.status(500).json({ message: "Error retrieving events" });
     }
 };
 
@@ -86,8 +80,8 @@ const addPayment = async (req: Request, res: Response) => {
         console.log("addPayment - formattedPayment:", formattedPayment);
         res.status(201).json(formattedPayment);
     } catch (error) {
-        console.error("Erreur lors de l'ajout d'un paiement :", error);
-        res.status(500).send("Erreur lors de l'ajout d'un paiement");
+        console.error("Error adding a payment:", error);
+        res.status(500).send("Error adding a payment");
     }
 };
 
@@ -104,15 +98,13 @@ const getPaymentById = async (req: Request, res: Response) => {
         });
 
         if (payment) {
-            console.log("getPaymentById - payment found:", payment);
             return res.json(payment);
         } else {
-            console.log("getPaymentById - payment not found");
-            return res.status(404).json({ message: "Paiement non trouvé" });
+            return res.status(404).json({ message: "Payment not found" });
         }
     } catch (error) {
-        console.error("Erreur lors de la récupération du paiement par ID.", error);
-        return res.status(500).json({ message: "Erreur lors de la récupération du paiement par ID." });
+        console.error("Error retrieving payment by ID", error);
+        return res.status(500).json({ message: "Error retrieving payment by ID" });
     }
 };
 
@@ -121,26 +113,25 @@ const verifyTokenOATUH = async (req: Request, res: Response) => {
     try {
         const { token } = req.body;
         if (!token) {
-            return res.status(400).json({ message: "Token manquant" });
+            return res.status(400).json({ message: "Missing token" });
         }
 
         const payment = await PaymentModel.findOne({ where: { token } });
         if (!payment) {
-            return res.status(401).json({ message: "Token invalide ou non trouvé dans la base de données" });
+            return res.status(401).json({ message: "Invalid token or not found in database" });
         }
 
         jwt.verify(token, "RANDOM_SECRET_KEY", (err: any, decoded: any) => {
             if (err) {
-                console.error("Token invalide :", err);
-                return res.status(401).json({ message: "Token invalide" });
+                console.error("Invalid token :", err);
+                return res.status(401).json({ message: "Invalid token" });
             }
 
-            console.log("Token valide :", decoded);
-            return res.status(201).json({ message: "Token valide", data: decoded });
+            return res.status(201).json({ message: "Valid token", data: decoded });
         });
     } catch (error) {
-        console.error("Erreur lors de la vérification du token :", error);
-        return res.status(500).json({ message: "Erreur lors de la vérification du token" });
+        console.error("Error verifying token: :", error);
+        return res.status(500).json({ message: "Error verifying token" });
     }
 };
 const deleteToken = async (req: Request, res: Response) => {
@@ -150,16 +141,15 @@ const deleteToken = async (req: Request, res: Response) => {
 
         const payment = await PaymentModel.findOne({ where: { token } });
         if (!payment) {
-            return res.status(404).json({ message: "Le token n'existe pas." });
+            return res.status(404).json({ message: "The token does not exist" });
         }
 
         await payment.destroy();
-        console.log("deleteToken - payment deleted:", payment);
 
-        return res.status(200).json({ message: "Le token a été supprimé avec succès." });
+        return res.status(200).json({ message: "The token was successfully deleted" });
     } catch (error) {
-        console.error("Erreur lors de la suppression du token :", error);
-        return res.status(500).json({ message: "Erreur lors de la suppression du token." });
+        console.error("Error deleting token :", error);
+        return res.status(500).json({ message: "Error deleting token" });
     }
 };
 

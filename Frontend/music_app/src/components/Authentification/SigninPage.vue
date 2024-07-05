@@ -1,4 +1,4 @@
-<template>
+signinpage.vue:<template>
     <ModalConfirm v-model="show" title="Erreur" @confirm="confirm">
         <p>{{ errorMessage }}</p>
     </ModalConfirm>
@@ -30,7 +30,7 @@
             </button>
             <div class="flex justify-center items-center gap-2.5">
                 <span class="text-slate-900">Nouveau venu ?</span>
-                <a href="/signup" class="text-violet-600">Connectez-vous !</a>
+                <a href="/signup" class="text-violet-600">Inscrivez vous !</a>
             </div>
         </div>
     </div>

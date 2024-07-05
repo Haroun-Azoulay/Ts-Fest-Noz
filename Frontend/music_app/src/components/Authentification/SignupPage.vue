@@ -45,16 +45,17 @@
             <button
                 :class="['w-80 h-12 px-12 py-2.5 rounded-lg flex justify-center items-center gap-2.5 mb-8 mt-8', buttonClass]"
                 :disabled="isButtonDisabled" @click="signup">
-                <span class="text-white text-base font-bold">Connexion</span>
+                <span class="text-white text-base font-bold">S'inscrire</span>
             </button>
             <div class="flex justify-center items-center gap-2.5">
-                <span class="text-slate-900"> Connectez-vous !</span>
-                <a href="/signin" class="text-violet-600">Vous avez deja un compte ?
+                <span class="text-slate-900"> Vous avez deja un compte ? </span>
+                <a href="/signin" class="text-violet-600">Connectez-vous !
                 </a>
             </div>
         </div>
     </div>
 </template>
+
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
 import type { Signup } from '../../../models/authentification';
@@ -92,7 +93,7 @@ const signup = async () => {
     try {
         const response = await ApiService.post('/users/signup', request.value);
         const token = response.data.token;
-        router.push({ path: "/" });
+        router.push({ path: "/signin" });
         localStorage.setItem('authToken', token);
     } catch (error: any) {
         console.error(error);
@@ -106,4 +107,6 @@ const signup = async () => {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
 </style>

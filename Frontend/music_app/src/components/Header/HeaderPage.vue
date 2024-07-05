@@ -1,7 +1,6 @@
 <template>
   <nav class="bg-white border-gray-200 dark:bg-gray-900">
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-      <!-- Button for toggling menu on small screens -->
       <button @click="toggleMenu" type="button"
         class="inline-flex items-center p-2 w-8 h-8 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
         <span class="sr-only">Open main menu</span>
@@ -10,17 +9,12 @@
             d="M1 1h15M1 7h15M1 13h15" />
         </svg>
       </button>
-
-      <!-- Single Div for the Logo and Buttons -->
       <div class="w-full flex items-center justify-between">
-        <!-- Center the Logo -->
         <div class="flex-1 flex justify-center">
           <a href="/" class="flex items-center">
-            <img src="../../assets/logo.png" alt="Logo" class="h-12 w-auto">
+            <img src="../../assets/logo.png" alt="Logo" class="h-20 w-25">
           </a>
         </div>
-
-        <!-- Buttons aligned to the right -->
         <div :class="{'hidden': !isMenuOpen, 'block': isMenuOpen}" class="w-full md:w-auto md:flex md:items-center md:ml-auto">
           <ul class="font-medium flex flex-col md:flex-row p-2 md:p-0 mt-4 md:mt-0 border border-gray-100 md:border-0 rounded-lg bg-gray-50 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             <li class="md:ml-2 relative group">
@@ -33,7 +27,7 @@
               <transition name="dropdown" mode="out-in">
                 <div v-show="isDropdownOpen" class="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-lg shadow-lg z-20">
                   <template v-if="!isHomePage">
-                    <a href="/" class="block px-4 py-2 m-1 text-gray-800 hover:bg-violet-600 hover:text-white rounded-md">Acceuil</a>
+                    <a href="/" class="block px-4 py-2 m-1 text-gray-800 hover:bg-violet-600 hover:text-white rounded-md">Accueil</a>
                     <div class="border-t border-gray-200"></div>
                   </template>
                   <a @click.prevent="goToCityPage" class="block px-4 py-2 m-1 text-gray-800 hover:bg-violet-600 hover:text-white rounded-md cursor-pointer">Rechercher un evenement</a>
@@ -45,17 +39,17 @@
               </transition>
             </li>
             <li v-if="!isLoggedIn" class="md:ml-2">
-              <button @click="goToSignupPage" class="ButtonPrimary">S'inscrire</button>
+              <button @click="goToSignupPage" class="ButtonPrimary">Inscription</button>
             </li>
             <li v-if="!isLoggedIn" class="md:ml-2">
-              <button @click="goToSigninPage" class="ButtonPrimary">Se connecter</button>
+              <button @click="goToSigninPage" class="ButtonPrimary">Connexion</button>
             </li>
-            <li v-if="isLoggedIn" class="md:ml-2">
-              <button @click="logout" class="ButtonPrimary bg-red-600">Deconnexion</button>
-              <div v-if="isAdmin" class="md:ml-2">
-                <button @click="goToAdminHomePage" class="ButtonPrimary bg-red-600">Admin Page</button>
+            <li v-if="isLoggedIn" class="md:ml-2 flex items-center space-x-2">
+              <button @click="logout" class="ButtonPrimary" style="background-color: red;">Deconnexion</button>
+              <div v-if="isAdmin">
+                <button @click="goToAdminHomePage" class="ButtonPrimary" style="background-color: black;">Admin</button>
               </div>
-              <button @click="goToEventsPage" class="ButtonPrimary md:ml-2">Annonces</button>
+              <button @click="goToEventsPage" class="ButtonPrimary">Annonces</button>
             </li>
           </ul>
         </div>
@@ -136,11 +130,13 @@ onMounted(() => {
 onMounted(async () => {
   try {
     const authToken = localStorage.getItem('authToken');
-    const { payload } = useJwt(authToken);
-    const roleId = payload.value.role;
+    if (authToken) {
+      const { payload } = useJwt(authToken);
+      const roleId = payload.value?.role;
 
-    if (roleId === 'admin') {
-      isAdmin.value = true;
+      if (roleId === 'admin') {
+        isAdmin.value = true;
+      }
     }
   } catch (error) {
     console.error('Erreur lors de la requête :', error);
@@ -154,7 +150,7 @@ onMounted(async () => {
 @tailwind utilities;
 
 .ButtonPrimary {
-  @apply w-full md:w-32 h-8 px-4 py-1.5 bg-violet-600 rounded-lg flex justify-center items-center text-white text-sm font-bold font-['Inter'] m-1;
+  @apply w-full md:w-32 h-8 px-4 py-1.5 bg-violet-600 text-white rounded-lg flex justify-center items-center text-sm font-bold font-['Inter'] m-1;
 }
 
 .dropdown-enter-active, .dropdown-leave-active {

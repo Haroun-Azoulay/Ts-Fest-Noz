@@ -1,40 +1,47 @@
 <template>
-  <HeaderPage></HeaderPage>
-  <ModalConfirm v-model="showError" title="Erreur" @confirm="confirmError">
-    <p>{{ errorMessage }}</p>
-  </ModalConfirm>
-  <ModalConfirm v-model="showSuccess" title="Confirmation" @confirm="confirmSuccess">
-    <p>{{ successMessage }}</p>
-  </ModalConfirm>
-  <fieldset>
-    <legend>Parametres d'evenements</legend>
-    <div>
-      <input type="radio" id="huey" name="drone" value="huey" @change="handleChangeAllPoints" checked />
-      <label for="huey">Tous les points</label>
-      <input type="radio" id="dewey" name="drone" value="dewey" @change="handleChangeMyPoints" />
-      <label for="dewey">Mes points</label>
-    </div>
-    <div>
-      <label for="startDate">Date de début :</label>
-      <input type="date" id="startDate" v-model="startDate" />
-      <label for="endDate">Date de fin :</label>
-      <input type="date" id="endDate" v-model="endDate" />
-      <button @click="filterPointsByDate">Filtrer</button>
-    </div>
-  </fieldset>
-  <div id="map" style="position: absolute; width: 100%; height: 100%"></div>
+  <div class="container">
+    <HeaderPage />
+    <ModalConfirm v-model="showError" title="Erreur" @confirm="confirmError">
+      <p>{{ errorMessage }}</p>
+    </ModalConfirm>
+    <ModalConfirm v-model="showSuccess" title="Confirmation" @confirm="confirmSuccess">
+      <p>{{ successMessage }}</p>
+    </ModalConfirm>
+    <fieldset>
+      <legend>Paramètres d'événements</legend>
+      <div>
+        <input type="radio" id="huey" name="drone" value="huey" @change="handleChangeAllPoints" checked />
+        <label for="huey"> Tous les points </label>
+        <input
+          v-if="isAuthorized"
+          type="radio"
+          id="dewey"
+          name="drone"
+          value="dewey"
+          @change="handleChangeMyPoints"
+        />
+        <label v-if="isAuthorized" for="dewey"> Mes points</label>
+      </div>
+      <div>
+        <label for="startDate">Date de début :</label>
+        <input type="date" id="startDate" v-model="startDate" />
+        <label for="endDate">Date de fin :</label>
+        <input type="date" id="endDate" v-model="endDate" />
+        <button @click="filterPointsByDate">Filtrer</button>
+      </div>
+    </fieldset>
+    <section id="map" style="position: absolute; width: 100%; height: 100%"></section>
+  </div>
 </template>
-
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import mapboxgl, { Map } from 'mapbox-gl';  
+import mapboxgl, { Map } from 'mapbox-gl';
 import { useJwt } from '@vueuse/integrations/useJwt';
 import ApiService from "@/services/ApiService";
 import { format } from 'date-fns';
 import HeaderPage from '../components/Header/HeaderPage.vue';
 import ModalConfirm from '../components/pModal/ModalConfirm.vue';
-
 
 const showError = ref(false);
 const errorMessage = ref('');
@@ -58,7 +65,8 @@ interface Maps {
   address: string;
   color: string;
   region_name: string;
-  region_geo_json: string;
+  url_point: string;
+  date: string;
 }
 
 interface Coordinates {
@@ -73,9 +81,11 @@ const markers = ref<mapboxgl.Marker[]>([]);
 
 let map: Map;
 let userId: string | null = null;
+let userRole: string | null = null;
 
 const startDate = ref<string>('');
 const endDate = ref<string>('');
+const isAuthorized = ref<boolean>(false);
 
 const filterPointsByDate = () => {
   const filteredPoints = points.value.filter(point => {
@@ -112,23 +122,28 @@ const addMarkers = () => {
         .setLngLat([point.longitude, point.latitude])
         .addTo(map);
       const formatedDate = format(new Date(point.date), "dd/MM/yyyy HH:mm");
+
+      const popupContent = `
+        <section style="font-family: Arial, sans-serif; padding: 10px;">
+          <h1 style="font-size: 16px; font-weight: bold; margin-bottom: 5px;">${point.text}</h1>
+          <p style="margin: 5px 0;">Adresse: ${point.address}</p>
+          <p style="margin: 5px 0;">Région: ${point.region_name}</p>
+          <p style="margin: 5px 0;">Date: ${formatedDate}</p>
+          <a href="${point.url_point}" style="display: inline-block; margin: 10px 0; color: #9333ea; text-decoration: none;">Cliquer ici</a>
+          <button onclick="window.deletePoint(${point.id})" style="padding: 5px 10px; border: none; border-radius: 4px; background-color: #9333ea; color: white; cursor: pointer; transition: background-color 0.3s ease;">Supprimer</button>
+        </section>
+      `;
+
       const popup = new mapboxgl.Popup({ offset: 25 })
-        .setHTML(`<section>
-                    <h1>${point.text}</h1>
-                    <p>${point.address}</p>
-                    <p>${point.region_name}</p>
-                    <p>${formatedDate}</p>
-                     <a href=${point.region_geo_json}>Cliquer ici</a> 
-                    <button onclick="window.deletePoint(${point.id})">Remove</button>
-                  </section>`);
-        
+        .setHTML(popupContent);
+
       marker.setPopup(popup);
       markers.value.push(marker);
-      console.log(point)
-      console.log("tttttttttttttttttttttttttt")
+      console.log(point);
     });
   }
 };
+
 
 const handleChangeAllPoints = async () => {
   const authToken = localStorage.getItem("authToken");
@@ -187,8 +202,13 @@ onMounted(() => {
   const authToken = localStorage.getItem("authToken");
   if (authToken) {
     const { payload } = useJwt(authToken);
-    console.log(payload)
     userId = payload.value.userId;
+    userRole = payload.value.role; 
+
+    if (["admin", "artist", "organizer"].includes(userRole)) {
+      isAuthorized.value = true;
+    }
+
     handleChangeAllPoints();
   }
 });
@@ -196,6 +216,11 @@ onMounted(() => {
 const handleChangeMyPoints = async () => {
   if (!userId) {
     console.error("L'utilisateur n'est pas authentifié.");
+    return;
+  }
+
+  if (!["admin", "artist", "organizer"].includes(userRole)) {
+    console.error("L'utilisateur n'a pas les permissions nécessaires.");
     return;
   }
 
@@ -222,3 +247,63 @@ const handleChangeMyPoints = async () => {
   }
 };
 </script>
+
+
+<style scoped>
+.container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+fieldset {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 20px;
+  background-color: #f9f9f9;
+}
+
+legend {
+  font-weight: bold;
+}
+
+.radio-group {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.radio-group input {
+  margin-right: 5px;
+}
+
+.date-filter {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.date-filter label {
+  margin-right: 5px;
+}
+
+.date-filter input {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #9333ea;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #9333ea;
+}
+</style>

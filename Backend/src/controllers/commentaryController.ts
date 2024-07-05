@@ -10,7 +10,7 @@ const createCommentary = async (req: Request, res: Response) => {
 
     const post = await Post.findByPk(postId);
     if (!post) {
-      return res.status(404).json({ message: "Le post associé n'existe pas." });
+      return res.status(404).json({ message: "The associated post does not exist" });
     }
 
     const commentary = await Commentary.create({
@@ -24,44 +24,41 @@ const createCommentary = async (req: Request, res: Response) => {
     });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: "Erreur lors de la création du commentaire." });
+    return res.status(500).json({ message: "Error creating comment" });
   }
 };
 
 
-// const getCommentariesByPost = async (req: Request, res: Response) => {
-//   try {
-//     const { postId } = req.params;
+const getCommentariesByPost = async (req: Request, res: Response) => {
+  try {
+    const { postId } = req.params;
 
 
-//     const post = await Post.findByPk(postId);
-//     if (!post) {
-//       return res.status(404).json({ message: "Le post associé n'existe pas." });
-//     }
+    const post = await Post.findByPk(postId);
+    if (!post) {
+      return res.status(404).json({ message: "The associated post does not exist" });
+    }
 
-//     const commentaries = await Commentary.findAll({
-//       where: { postId },
-//       attributes: ["id", "content", "userId", "createdAt", "updatedAt"]
-//     });
+    const commentaries = await Commentary.findAll({
+      where: { postId },
+      attributes: ["id", "content"]
+    });
 
-//     const commentariesWithUserDetails = await Promise.all(commentaries.map(async (commentary) => {
-//       const user = await User.findByPk(commentary.userId, { attributes: ["id", "pseudo"] });
-//       return {
-//         id: commentary.id,
-//         content: commentary.content,
-//         userId: commentary.userId,
-//         user: user ? { id: user.id, pseudo: user.pseudo } : null,
-//         createdAt: commentary.createdAt,
-//         updatedAt: commentary.updatedAt
-//       };
-//     }));
+    const commentariesWithUserDetails = await Promise.all(commentaries.map(async (commentary) => {
+      return {
+        id: commentary.id,
+        content: commentary.content,
+      };
+    }));
 
-//     return res.json(commentariesWithUserDetails);
-//   } catch (error) {
-//     console.error(error);
-//     return res.status(500).json({ message: "Erreur lors de la récupération des commentaires pour le post spécifié." });
-//   }
-// };
+    return res.json(commentariesWithUserDetails);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Error retrieving comments for the specified post" });
+  }
+};
+
+
 const getAllCommentaries = async (req: Request, res: Response) => {
   try {
 
@@ -80,54 +77,54 @@ const getAllCommentaries = async (req: Request, res: Response) => {
     return res.json(commentariesWithUserDetails);
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: "Erreur lors de la récupération des commentaires." });
+    return res.status(500).json({ message: "Error retrieving comments" });
   }
 };
 
 
 
 
-// const updateCommentary = async (req, res) => {
-//   try {
-//     const { commentaryId } = req.params;
-//     const { content } = req.body;
+const updateCommentary = async (req: Request, res: Response) => {
+  try {
+    const { commentaryId } = req.params;
+    const { content } = req.body;
 
-//     const commentary = await Commentary.findByPk(commentaryId);
-//     if (!commentary) {
-//       return res.status(404).json({ message: "Le commentaire n'existe pas." });
-//     }
+    const commentary = await Commentary.findByPk(commentaryId);
+    if (!commentary) {
+      return res.status(404).json({ message: "Le commentaire n'existe pas." });
+    }
 
-//     await commentary.update({ content });
+    await commentary.update({ content });
 
-//     return res.status(200).json({ message: "Commentaire mis à jour avec succès." });
-//   } catch (error) {
-//     console.error(error);
-//     return res.status(500).json({ message: "Erreur lors de la mise à jour du commentaire." });
-//   }
-// };
+    return res.status(200).json({ message: "Commentaire mis à jour avec succès." });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Erreur lors de la mise à jour du commentaire." });
+  }
+};
 
-// const deleteCommentary = async (req, res) => {
-//   try {
-//     const { commentaryId } = req.params;
+const deleteCommentary = async (req: Request, res: Response) => {
+  try {
+    const { commentaryId } = req.params;
 
-//     const commentary = await Commentary.findByPk(commentaryId);
-//     if (!commentary) {
-//       return res.status(404).json({ message: "Le commentaire n'existe pas." });
-//     }
+    const commentary = await Commentary.findByPk(commentaryId);
+    if (!commentary) {
+      return res.status(404).json({ message: "Le commentaire n'existe pas." });
+    }
 
-//     await commentary.destroy();
+    await commentary.destroy();
 
-//     return res.status(200).json({ message: "Commentaire supprimé avec succès." });
-//   } catch (error) {
-//     console.error(error);
-//     return res.status(500).json({ message: "Erreur lors de la suppression du commentaire." });
-//   }
-// };
+    return res.status(200).json({ message: "Commentaire supprimé avec succès." });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Erreur lors de la suppression du commentaire." });
+  }
+};
 
 export default {
   createCommentary,
-//   getCommentariesByPost,
+  getCommentariesByPost,
   getAllCommentaries,
-//   updateCommentary,
-//   deleteCommentary,
+  updateCommentary,
+  deleteCommentary,
 };
