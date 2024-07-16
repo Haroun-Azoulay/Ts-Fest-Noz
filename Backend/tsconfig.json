@@ -11,11 +11,12 @@
       "forceConsistentCasingInFileNames": true,
       "allowJs": true,
       "declaration": true,
-      "emitDeclarationOnly": true,
+      "emitDeclarationOnly": false,
       "declarationMap": true,
 
     },
     "include": [
+      "app.ts",
       "src/**/*",
       "types/**/*", "../Frontend/music_app/src/services" ,
     ],

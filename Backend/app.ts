@@ -34,7 +34,7 @@ declare module "express" {
 const app = express();
 app.use(express.json());
 app.use(cors());
-const port : number = process.env.PORT as number | undefined || 3000;
+const port : number = process.env.PORT ? Number(process.env.PORT) : 3000;
 
 app.use("/event", eventRoutes);
 app.use("/users", userRoutes);
