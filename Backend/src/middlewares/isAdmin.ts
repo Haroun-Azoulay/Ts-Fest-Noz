@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 
 
-const isAdmin = (req: Request, res: Response, next: NextFunction): void => {
-  const role = req.role;
+const isAdmin = (req: Request, res: Response, next: NextFunction) : void => {
+  const role : string | undefined = req.role;
 
   console.log('req.role:', role);
 

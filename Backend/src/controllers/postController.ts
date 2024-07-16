@@ -1,27 +1,28 @@
 import { Request, Response } from "express";
 import PostModel from "../models/Post";
+import { PostAttributes } from "../interfaces/types";
 
-const createPost = async (req: Request, res: Response) => {
+const createPost = async (req: Request, res: Response) : Promise<Response<any, Record<string, any>>> => {
   try {
     console.log("addPost:", req.body);
 
-    const post = await PostModel.create({
+    const post : PostModel = await PostModel.create({
       ...req.body,
     });
 
-    const formattedPost = {
+    const formattedPost : PostAttributes = {
       id: post.id,
       title: post.title,
       subtitle: post.subtitle,
       content: post.content,
-      userIDd: post.userId,
+      userId: post.userId,
     };
 
     console.log("addPost:", formattedPost);
-    res.status(201).json(formattedPost);
+    return res.status(201).json(formattedPost);
   } catch (error) {
     console.error("Error when adding a post:", error);
-    res.status(500).send("Error when adding a post");
+    return res.status(500).send("Error when adding a post");
   }
 };
 
@@ -41,10 +42,8 @@ const createPost = async (req: Request, res: Response) => {
 //     res.status(500).send("Erreur lors de la recuperation du post);
 // }
 
-const getPostById = async (req: Request, res:Response) => {
-    const postId = req.params.id; 
-
-    
+const getPostById = async (req: Request, res:Response) : Promise<void> => {
+    const postId : string = req.params.id;
     PostModel.findOne({
         attributes: ['id', 'title', 'content'],
         where: {
@@ -54,9 +53,8 @@ const getPostById = async (req: Request, res:Response) => {
     .then((result) => {
         if (result) {
             return res.json(result);
-        } else {
-            return res.status(404).json({ message: "Item not found" });
         }
+        return res.status(404).json({ message: "Item not found" });
     })
     .catch((error) => {
         console.log(error);
@@ -64,7 +62,7 @@ const getPostById = async (req: Request, res:Response) => {
     });
 };
 
-const getAllPosts = async (req: Request, res: Response) => {
+const getAllPosts = async (req: Request, res: Response) : Promise<void> => {
     await PostModel.findAll({
         attributes: ["id", "title", "content"]
     }).then((result) => {
@@ -76,7 +74,7 @@ const getAllPosts = async (req: Request, res: Response) => {
 };
 
 
-const updatePost = async (req: Request, res: Response) => {
+const updatePost = async (req: Request, res: Response) : Promise<void> => {
     PostModel.update({
             title: "Updated Title Name!",
         }, {
@@ -95,7 +93,7 @@ const updatePost = async (req: Request, res: Response) => {
 
 
 
-const deletePost = async (req:Request, res: Response) => {
+const deletePost = async (req:Request, res: Response) : Promise<void> => {
     PostModel.destroy({
             where: {
                 id: 1,

@@ -1,9 +1,9 @@
-import express from "express";
+import express, { Router } from "express";
 import eventController from "../controllers/eventController";
 import verifyToken from "../middlewares/verifyToken";
 import isAuthorizedPost from "../middlewares/isAuthorizedPost";
 
-const router = express.Router();
+const router : Router = express.Router();
 
 router.post("/add-event", verifyToken, isAuthorizedPost, eventController.addEvent);
 

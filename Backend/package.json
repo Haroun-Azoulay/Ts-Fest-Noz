@@ -30,6 +30,7 @@
     "simple-oauth2": "^5.0.0"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
     "@types/express-session": "^1.18.0",
     "@types/jsonwebtoken": "^9.0.5",

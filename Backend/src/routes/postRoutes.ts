@@ -1,9 +1,9 @@
-import express from "express";
+import express, { Router } from "express";
 import postController from "../controllers/postController";
 import verifyToken from "../middlewares/verifyToken";
 import isAuthorizedPost from "../middlewares/isAuthorizedPost";
 
-const router = express.Router();
+const router : Router = express.Router();
 
 router.post("/add-post", verifyToken, isAuthorizedPost, postController.createPost);
 

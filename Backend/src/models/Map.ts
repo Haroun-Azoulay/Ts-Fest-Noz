@@ -1,16 +1,6 @@
 import { DataTypes, Model } from "sequelize";
 import sequelizeConnection from "../../config/database";
-
-
-export type MapAttributes = {
-  id: number;
-  // user_id: string; 
-  longitude?: number;
-  latitude?: number;
-  text?: string;
-  address: string;
-  color: string;
-};
+import { MapAttributes } from "../interfaces/types";
 
 class Map extends Model<MapAttributes> implements MapAttributes {
   public id!: number;

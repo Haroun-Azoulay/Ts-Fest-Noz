@@ -1,15 +1,8 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelizeConnection from '../../config/database';
+import { PostAttributes } from "../interfaces/types";
 import User from './User';
 import Commentary from './Commentary';
-
-export interface PostAttributes {
-  id: string;
-  title: string;
-  subtitle: string;
-  content: string;
-  userId: string;
-}
 
 class Post extends Model<PostAttributes> implements PostAttributes {
   public id!: string;

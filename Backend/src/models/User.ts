@@ -1,22 +1,12 @@
-import { Request } from "express";
 import { DataTypes, Model } from "sequelize";
 import sequelizeConnection from "../../config/database";
+import { UserAttributes } from "../interfaces/types";
 import City from "./City";
 import Map from "./Map";
 import Post from "./Post";
 import Payment from "./Payment";
 import OrganizerProfil from "./OrganizerProfil";
 import ArtistProfil from "./ArtistsProfil";
-
-export type UserAttributes = {
-  id?: string;
-  lastname: string;
-  firstname: string;
-  password: string;
-  email: string;
-  role: string;
-  pseudo: string;
-};
 
 class User extends Model<UserAttributes> {
   public id?: string;
@@ -47,10 +37,6 @@ class User extends Model<UserAttributes> {
       throw error;
     }
   };
-}
-
-export interface UserRequest extends Request {
-  user?: UserAttributes;
 }
 
 User.init(

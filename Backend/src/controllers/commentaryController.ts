@@ -1,19 +1,18 @@
 import { Request, Response } from 'express';
 import Commentary from '../models/Commentary';
 import Post from '../models/Post';
-import User from '../models/User';
-import verifyToken from '../middlewares/verifyToken';
+import { Commentaries, CommentariesByPost } from '../interfaces/types';
 
-const createCommentary = async (req: Request, res: Response) => {
+const createCommentary = async (req: Request, res: Response) : Promise<Response<any, Record<string, any>>> => {
   try {
-    const { postId } = req.params as { postId: string };
+    const postId : string = req.params.postId;
 
     const post = await Post.findByPk(postId);
     if (!post) {
       return res.status(404).json({ message: "The associated post does not exist" });
     }
 
-    const commentary = await Commentary.create({
+    const commentary : Commentary = await Commentary.create({
       ...req.body,
       postId: postId,
     });
@@ -26,25 +25,23 @@ const createCommentary = async (req: Request, res: Response) => {
     console.error(error);
     return res.status(500).json({ message: "Error creating comment" });
   }
-};
+}
 
-
-const getCommentariesByPost = async (req: Request, res: Response) => {
+const getCommentariesByPost = async (req: Request, res: Response) : Promise<Response<any, Record<string, any>>> => {
   try {
-    const { postId } = req.params;
+    const postId : string = req.params.postId;
 
-
-    const post = await Post.findByPk(postId);
+    const post : Post | null = await Post.findByPk(postId);
     if (!post) {
       return res.status(404).json({ message: "The associated post does not exist" });
     }
 
-    const commentaries = await Commentary.findAll({
+    const commentaries : Commentary[] = await Commentary.findAll({
       where: { postId },
       attributes: ["id", "content"]
     });
 
-    const commentariesWithUserDetails = await Promise.all(commentaries.map(async (commentary) => {
+    const commentariesWithUserDetails : CommentariesByPost[] = await Promise.all(commentaries.map(async (commentary) => {
       return {
         id: commentary.id,
         content: commentary.content,
@@ -56,18 +53,17 @@ const getCommentariesByPost = async (req: Request, res: Response) => {
     console.error(error);
     return res.status(500).json({ message: "Error retrieving comments for the specified post" });
   }
-};
+}
 
-
-const getAllCommentaries = async (req: Request, res: Response) => {
+const getAllCommentaries = async (req: Request, res: Response) : Promise<Response<any, Record<string, any>>> => {
   try {
 
-    const commentaries = await Commentary.findAll({
+    const commentaries : Commentary[] = await Commentary.findAll({
       attributes: ["id", "content",]
     });
 
 
-    const commentariesWithUserDetails = await Promise.all(commentaries.map(async (commentary) => {
+    const commentariesWithUserDetails : Commentaries[] = await Promise.all(commentaries.map(async (commentary) => {
       return {
         id: commentary.id,
         content: commentary.content,
@@ -81,13 +77,10 @@ const getAllCommentaries = async (req: Request, res: Response) => {
   }
 };
 
-
-
-
-const updateCommentary = async (req: Request, res: Response) => {
+const updateCommentary = async (req: Request, res: Response) : Promise<Response<any, Record<string, any>>> => {
   try {
-    const { commentaryId } = req.params;
-    const { content } = req.body;
+    const commentaryId : string = req.params.commentaryId;
+    const content : string = req.body.content;
 
     const commentary = await Commentary.findByPk(commentaryId);
     if (!commentary) {
@@ -103,9 +96,9 @@ const updateCommentary = async (req: Request, res: Response) => {
   }
 };
 
-const deleteCommentary = async (req: Request, res: Response) => {
+const deleteCommentary = async (req: Request, res: Response) : Promise<Response<any, Record<string, any>>> => {
   try {
-    const { commentaryId } = req.params;
+    const commentaryId : string = req.params.commentaryId;
 
     const commentary = await Commentary.findByPk(commentaryId);
     if (!commentary) {

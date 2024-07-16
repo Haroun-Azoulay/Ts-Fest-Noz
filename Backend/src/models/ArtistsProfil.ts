@@ -1,14 +1,6 @@
 import { DataTypes, Model } from "sequelize";
 import sequelizeConnection from "../../config/database";
-
-interface ArtistProfilAttributes {
-  id: string;
-  denomination: string; 
-  phone_number: string;
-  url_media: string;
-  picture: string;
-  SIRET_number: string;
-}
+import { ArtistProfilAttributes } from "../interfaces/types";
 
 class ArtistProfil extends Model<ArtistProfilAttributes> implements ArtistProfilAttributes {
   public id!: string;

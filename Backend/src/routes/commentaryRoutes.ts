@@ -1,9 +1,9 @@
-import express from "express";
+import express, { Router } from "express";
 import commentaryController from '../controllers/commentaryController';
 import verifyToken from "../middlewares/verifyToken";
 
 
-const router = express.Router();
+const router : Router = express.Router();
 
 router.post('/create-commentary/:postId', verifyToken, commentaryController.createCommentary);
 

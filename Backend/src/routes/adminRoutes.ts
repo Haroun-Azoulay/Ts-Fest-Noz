@@ -1,9 +1,9 @@
-import express from 'express';
+import express, { Router } from 'express';
 import userController from '../controllers/userController';
 import verifyToken from '../middlewares/verifyToken';
 import isAdmin from '../middlewares/isAdmin';
 
-const router = express.Router();
+const router : Router = express.Router();
 
 router.get('/all-users', verifyToken, isAdmin, userController.getAllUsers);
 

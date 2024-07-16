@@ -18,10 +18,10 @@ import commentaryRoutes from "./src/routes/commentaryRoutes";
 import adminRoutes from "./src/routes/adminRoutes";
 import cors from "cors";
 
-const session = require('express-session');
+/* const session = require('express-session');
 const { AuthorizationCode } = require('simple-oauth2');
 const axios = require('axios');
-const crypto = require('crypto');
+const crypto = require('crypto'); */
 
 dotenv.config();
 
@@ -34,7 +34,7 @@ declare module "express" {
 const app = express();
 app.use(express.json());
 app.use(cors());
-const port = process.env.PORT || 3000;
+const port : number = process.env.PORT as number | undefined || 3000;
 
 app.use("/event", eventRoutes);
 app.use("/users", userRoutes);

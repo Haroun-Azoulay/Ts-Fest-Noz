@@ -9,7 +9,7 @@ declare module 'express-serve-static-core' {
   }
 }
 
-const verifyToken = (req: Request, res: Response, next: NextFunction) => {
+const verifyToken = (req: Request, res: Response, next: NextFunction): Response<any, Record<string, any>> | undefined => {
   const authorizationHeader = req.headers.authorization;
 
   if (!authorizationHeader) {

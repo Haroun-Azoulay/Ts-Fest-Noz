@@ -1,23 +1,24 @@
+import { CityAttributes } from "../interfaces/types";
 import CityModel from "../models/City";
 import { Request, Response } from "express";
 
-const addPoint = async (req: Request, res: Response) => {
+const addPoint = async (req: Request, res: Response) : Promise<Response<any, Record<string, any>>> => {
   try {
-    const userId = req.userId;
-    const role = req.role;
+    const userId : string | undefined = req.userId;
+    const role : string | undefined = req.role;
 
     if (!userId) {
       return res.status(400).json({ message: "The user must be authenticated" });
     }
 
-
-    const point = await CityModel.create({
+    const point : CityModel | null = await CityModel.create({
       ...req.body,
       user_id: userId
     });
 
-    const formattedPoint = {
+    const formattedPoint : CityAttributes = {
       id: point.id,
+      user_id: userId,
       longitude: point.longitude,
       latitude: point.latitude,
       date: point.date,
@@ -27,21 +28,22 @@ const addPoint = async (req: Request, res: Response) => {
       zip_code: point.zip_code,
       label: point.label,
       color: point.color,
+      departement_number:point.departement_number,
       style: point.style,
       region_name: point.region_name,
       url_point: point.url_point
     };
 
-    res.status(201).json(formattedPoint);
+    return res.status(201).json(formattedPoint);
   } catch (error) {
     console.error("Error adding a point:", error);
-    res.status(500).send("Error adding point");
+    return res.status(500).send("Error adding point");
   }
 };
-const getAllPoints = async (req: Request, res: Response) => {
+const getAllPoints = async (req: Request, res: Response) : Promise<Response<any, Record<string, any>>> => {
   try {
 
-    const points = await CityModel.findAll();
+    const points : CityModel[] | undefined = await CityModel.findAll();
 
 
     // const pointsWithUserDetails = await Promise.all(points.map(async (point) => {
@@ -61,14 +63,14 @@ const getAllPoints = async (req: Request, res: Response) => {
     return res.status(500).json({ message: "Error retrieving points" });
   }
 };
-const getPointByUser = async (req: Request, res: Response) => {
+const getPointByUser = async (req: Request, res: Response) : Promise<Response<any, Record<string, any>>> => {
   try {
-    const userId = req.params.id;
+    const userId : string = req.params.id;
     if (!userId) {
       return res.status(400).json({ message: "User ID is required" });
     }
 
-    const points = await CityModel.findAll({
+    const points : CityModel[] | null = await CityModel.findAll({
       where: {
         user_id: userId
       }
@@ -112,13 +114,13 @@ const getPointByUser = async (req: Request, res: Response) => {
 // };
 
 
-const deletePoint = async (req: Request, res: Response) => {
+const deletePoint = async (req: Request, res: Response) : Promise<Response<any, Record<string, any>>> => {
   try {
-    const userId = req.userId;
+    const userId : string | undefined = req.userId;
     // const isAdmin = req.isAdmin;
     const { pointId } = req.params;
 
-    const point = await CityModel.findByPk(pointId);
+    const point : CityModel | null = await CityModel.findByPk(pointId);
     if (!point) {
       return res.status(404).json({ message: "The point does not exist" });
     }

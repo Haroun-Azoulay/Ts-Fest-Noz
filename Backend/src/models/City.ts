@@ -1,24 +1,7 @@
 import { DataTypes, Model } from "sequelize";
 import sequelizeConnection from "../../config/database";
+import { CityAttributes } from "../interfaces/types";
 import User from "./User";
-
-export type CityAttributes = {
-  id: string;
-  user_id: string;
-  city_name: string;
-  text: string;
-  address: string;
-  zip_code: number;
-  label: string;
-  longitude: number;
-  latitude: number;
-  date: Date;
-  style: string;
-  color: string;
-  departement_number: number;
-  region_name: string;
-  url_point: string;
-}
 
 class City extends Model<CityAttributes> {
   public id!: string;
