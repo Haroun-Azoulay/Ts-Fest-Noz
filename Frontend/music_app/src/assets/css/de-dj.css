@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@500;600;700;800;900&display=swap');
+*{
+    --title-font: "Red Hat Display";
+}
+
+
+h1,h2,h3,h4,h5,h6,a.btn-main,.wm,.de-image-text.s2 h3,.list-inline-style-1 li,.list-boxed-s1 h3,.de_tab.tab_style_4 .de_nav li h3,footer .widget h5,blockquote,.widget_tags li a{
+    letter-spacing: 0;
+    font-weight: bold;
+}
+
+#subheader h1{
+    text-transform: uppercase;
+    font-size: 90px;
+    font-weight: bold;
+}
+
+h2{
+    font-size: 45px;
+}
+
+h2,.wm{
+    text-transform: uppercase;
+}
+
+
+h2.s2{
+    font-size: 84px;
+    font-weight: bold;
+    margin-bottom: 0;
+    line-height: 1em;
+}
+
+h1.ultra-big{
+    font-size: 200px;
+    text-transform: uppercase;
+    line-height: .8em;
+    font-weight: 900;
+}
+
+.pricing-s1 .m, .pricing-s1 .y{
+    font-weight: bold;
+    font-size: 56px;
+}
+
+a.btn-main{
+    text-transform: uppercase;
+}
+
+a.btn-main, a.btn-main:active, a.btn-main:focus, a.btn-main:visited, .btn-main, input[type=button].btn-main, a.btn-line
+.de_tab.tab_style_4 .de_nav.de_nav_dark li.active h3,
+.de_tab.tab_style_4 .de_nav.de_nav_dark li.active h4,
+.de_tab.tab_style_4 .de_nav.de_nav_dark li.active span,
+.list-boxed-s1 li:hover,
+#back-to-top:before,
+#form_subscribe #btn-subscribe i,
+.social-icons a i,
+.list-boxed-s1 li:hover h3,
+.menu-btn,
+.de-event-item .d-date,
+.page-item.active .page-link,
+.dark-scheme #mainmenu li li:hover a,
+.widget-post .date,
+.widget_tags li,
+.dark-scheme a.btn-main:hover,
+.de_tab.tab_style_4 .de_nav li.active h3,
+.dark-scheme #menu-btn:before,
+.dih-title{
+    color: #000000;
+}
+
+.de_tab.tab_style_4 .de_nav.de_nav_dark li h3,
+.de_tab.tab_style_4 .de_nav.de_nav_dark li h4{
+    text-transform: uppercase;
+}
+
+header.smaller,
+.dark-scheme footer,
+.dark-scheme section,
+.de_tab.tab_style_4 .de_nav.de_nav_dark li,
+body::-webkit-scrollbar-track{
+    background: #371990;
+}
+
+.pricing-s1:hover .mid{
+    background: rgba(255, 255, 255, .1);
+}
+
+.wm{
+    width: 200%;
+    letter-spacing: 100px;
+    margin-left: -47.5%;
+}
+
+.de-image-text.s2 h3{
+    color: #000000;
+    padding: 10px 0;
+    text-transform: uppercase;
+    font-size: 28px;
+    background: var(--primary-color);
+}
+
+.countdown-amount{
+    font-weight: bold;
+}
+
+.arrow_wrap{
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+.arrow__up {
+    margin: 0 auto;
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 15px solid var(--primary-color);
+    margin-top: -15px;
+}
+
+
+@media (max-width: 1199px){
+    h1.ultra-big{
+        font-size: 10vw;
+        letter-spacing: 0;
+    }
+}
