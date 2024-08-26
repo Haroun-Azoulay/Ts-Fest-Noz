@@ -2,7 +2,7 @@
     <section class="min-h-screen flex items-center justify-center bg-slate-50">
       <div class="flex gap-16">
             <SignupPage></SignupPage>
-            <img class="object-contain" src="../assets/authentification.png">
+            <img class="object-contain" src="../assets/images/authentification.png">
         </div>
     </section>
 </template>

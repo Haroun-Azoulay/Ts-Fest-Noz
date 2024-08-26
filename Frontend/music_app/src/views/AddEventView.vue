@@ -60,11 +60,11 @@
     </section>
     <section class="max-w-screen-lg mx-auto p-4 md:p-16">
       <div class="flex justify-evenly items-center">
-        <img src="../assets/jazze.PNG" alt="Jazz Logo" class="w-32 h-32 object-contain mx-4 my-4">
-        <img src="../assets/rock.PNG" alt="Rock Logo" class="w-32 h-32 object-contain mx-4 my-4">
-        <img src="../assets/salsa.PNG" alt="Salsa Logo" class="w-32 h-32 object-contain mx-4 my-4">
-        <img src="../assets/piano.PNG" alt="Classical Logo" class="w-32 h-32 object-contain mx-4 my-4">
-        <img src="../assets/rap.PNG" alt="Rap Logo" class="w-32 h-32 object-contain mx-4 my-4">
+        <img src="../assets/images/jazze.PNG" alt="Jazz Logo" class="w-32 h-32 object-contain mx-4 my-4">
+        <img src="../assets/images/rock.PNG" alt="Rock Logo" class="w-32 h-32 object-contain mx-4 my-4">
+        <img src="../assets/images/salsa.PNG" alt="Salsa Logo" class="w-32 h-32 object-contain mx-4 my-4">
+        <img src="../assets/images/piano.PNG" alt="Classical Logo" class="w-32 h-32 object-contain mx-4 my-4">
+        <img src="../assets/images/rap.PNG" alt="Rap Logo" class="w-32 h-32 object-contain mx-4 my-4">
       </div>
     </section>
     <FooterPage></FooterPage>

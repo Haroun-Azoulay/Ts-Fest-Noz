@@ -3,7 +3,7 @@
       <div class="flex gap-16">
         <SigninPage></SigninPage>
         <div class="flex items-center justify-center">
-          <img class="object-contain" src="../assets/authentification.png">
+          <img class="object-contain" src="../assets/images/authentification.png">
         </div>
       </div>
     </section>

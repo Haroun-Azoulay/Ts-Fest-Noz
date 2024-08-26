@@ -2,9 +2,9 @@
   <footer class="bg-white py-8 border-t">
     <div class="container mx-auto flex flex-wrap items-center justify-between">
       <div class="flex flex-col items-center md:items-start mb-8 md:mb-0">
-        <img src="../../assets/logo.png" alt="Logo Fest-Noz" class="w-25 h-20 mr-5" />
+        <img src="../../assets/images/logo.png" alt="Logo Fest-Noz" class="w-25 h-20 mr-5" />
         <div class="flex items-center mb-4 mt-2">
-          <img src="../../assets/téléchargement.jpg" alt="Google Pagespeed" class="w-15 h-10 mr-2" />
+          <img src="../../assets/images/téléchargement.jpg" alt="Google Pagespeed" class="w-15 h-10 mr-2" />
           <span class="text-green-500 text-xl font-bold">100</span>
         </div>
       </div>
@@ -27,16 +27,16 @@
       </div>
       <div class="flex space-x-4 mt-6 md:mt-0 md:ml-8">
         <a href="#" class="bg-white rounded-full p-2 shadow-lg text-gray-600 hover:text-gray-800">
-          <img src="../../assets/appli.png" alt="Appli" />
+          <img src="../../assets/images/appli.png" alt="Appli" />
         </a>
         <a href="#" class="bg-white rounded-full p-2 shadow-lg text-gray-600 hover:text-gray-800">
-          <img src="../../assets/instagram (1).png" alt="Instagram" />
+          <img src="../../assets/images/instagram (1).png" alt="Instagram" />
         </a>
         <a href="#" class="bg-white rounded-full p-2 shadow-lg text-gray-600 hover:text-gray-800">
-          <img src="../../assets/twitter (1).png" alt="Twitter" />
+          <img src="../../assets/images/twitter (1).png" alt="Twitter" />
         </a>
         <a href="#" class="bg-white rounded-full p-2 shadow-lg text-gray-600 hover:text-gray-800">
-          <img src="../../assets/linkedin (1).png" alt="LinkedIn" />
+          <img src="../../assets/images/linkedin (1).png" alt="LinkedIn" />
         </a>
       </div>
     </div>

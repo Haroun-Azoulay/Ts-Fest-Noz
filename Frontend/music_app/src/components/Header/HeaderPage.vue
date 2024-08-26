@@ -12,7 +12,7 @@
       <div class="w-full flex items-center justify-between">
         <div class="flex-1 flex justify-center">
           <a href="/" class="flex items-center">
-            <img src="../../assets/logo.png" alt="Logo" class="h-20 w-25">
+            <img src="../../assets/images/logo.png" alt="Logo" class="h-20 w-25">
           </a>
         </div>
         <div :class="{'hidden': !isMenuOpen, 'block': isMenuOpen}" class="w-full md:w-auto md:flex md:items-center md:ml-auto">

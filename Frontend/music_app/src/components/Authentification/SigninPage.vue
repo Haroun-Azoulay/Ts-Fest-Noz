@@ -6,7 +6,7 @@ signinpage.vue:<template>
         <div class="px-16 bg-white rounded-2xl shadow-md flex flex-col justify-center items-center gap-1"
             style="height: 60rem">
             <a href="/" class="flex items-center justify-center mb-8">
-                <img src="../../assets/logo.png" style="height: 200px">
+                <img src="../../assets/images/logo.png" style="height: 200px">
             </a>
             <div class="font-semibold mb-8 text-2xl">
                 Connexion

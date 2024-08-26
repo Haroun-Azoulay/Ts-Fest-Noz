@@ -30,7 +30,7 @@
           </button>
         </div>
       </div>
-      <img src="../assets/home.png" class="w-full md:w-1/2 mt-6 md:mt-0 flex-1" alt="Home image">
+      <img src="../assets/images/home.png" class="w-full md:w-1/2 mt-6 md:mt-0 flex-1" alt="Home image">
     </section>
 
     <hr class="my-8 border-gray-200">
@@ -38,17 +38,17 @@
       <h2 class="text-center font-inter text-3xl md:text-4xl font-extrabold mb-12">Ce que nous offrons !</h2>
       <div class="flex flex-col md:flex-row justify-center items-center space-y-8 md:space-y-0 md:space-x-12">
         <div class="bg-white p-8 rounded-lg shadow-md text-center flex-1 max-w-xs">
-          <img src="../assets/appli (4).png" alt="Mobile Icon" class="mx-auto mb-4 w-12 h-12">
+          <img src="../assets/images/appli (4).png" alt="Mobile Icon" class="mx-auto mb-4 w-12 h-12">
           <h3 class="font-inter text-xl font-bold mb-2">Une Application Mobile</h3>
           <p class="text-gray-600">Vous pourrez proposer ou chercher des événements depuis votre smartphone ! (ça arrive ! )</p>
         </div>
         <div class="bg-white p-8 rounded-lg shadow-md text-center flex-1 max-w-xs border-2 border-purple-400 transform scale-105">
-          <img src="../assets/appli (3).png" alt="Web Icon" class="mx-auto mb-4 w-12 h-12">
+          <img src="../assets/images/appli (3).png" alt="Web Icon" class="mx-auto mb-4 w-12 h-12">
           <h3 class="font-inter text-xl font-bold mb-2 text-purple-600">Un Site web</h3>
           <p class="text-gray-600">Un site web intuitif sur lequel vous pourrez faire tout aussi bien voire mieux que sur votre téléphone :)</p>
         </div>
         <div class="bg-white p-8 rounded-lg shadow-md text-center flex-1 max-w-xs">
-          <img src="../assets/carte (1).png" alt="Map Icon" class="mx-auto mb-4 w-12 h-12">
+          <img src="../assets/images/carte (1).png" alt="Map Icon" class="mx-auto mb-4 w-12 h-12">
           <h3 class="font-inter text-xl font-bold mb-2">Une carte intuitive</h3>
           <p class="text-gray-600">Une carte intuitive qui vous permettra de situer très simplement les événements autour de vous !</p>
         </div>
@@ -73,7 +73,7 @@
         </button>
       </div>
       <div class="flex-1 mt-8 md:mt-0 md:ml-8">
-        <img src="../assets/forum.png" alt="Message image" class="rounded-lg shadow-md">
+        <img src="../assets/images/forum.png" alt="Message image" class="rounded-lg shadow-md">
       </div>
     </section>
 
@@ -81,11 +81,11 @@
 
     <section class="max-w-screen-lg mx-auto p-4 md:p-16">
       <div class="flex justify-evenly items-center">
-        <img src="../assets/jazze.PNG" alt="Jazz Logo" class="w-32 h-32 object-contain mx-4 my-4">
-        <img src="../assets/rock.PNG" alt="Rock Logo" class="w-32 h-32 object-contain mx-4 my-4">
-        <img src="../assets/salsa.PNG" alt="Salsa Logo" class="w-32 h-32 object-contain mx-4 my-4">
-        <img src="../assets/piano.PNG" alt="Classical Logo" class="w-32 h-32 object-contain mx-4 my-4">
-        <img src="../assets/rap.PNG" alt="Rap Logo" class="w-32 h-32 object-contain mx-4 my-4">
+        <img src="../assets/images/jazze.PNG" alt="Jazz Logo" class="w-32 h-32 object-contain mx-4 my-4">
+        <img src="../assets/images/rock.PNG" alt="Rock Logo" class="w-32 h-32 object-contain mx-4 my-4">
+        <img src="../assets/images/salsa.PNG" alt="Salsa Logo" class="w-32 h-32 object-contain mx-4 my-4">
+        <img src="../assets/images/piano.PNG" alt="Classical Logo" class="w-32 h-32 object-contain mx-4 my-4">
+        <img src="../assets/images/rap.PNG" alt="Rap Logo" class="w-32 h-32 object-contain mx-4 my-4">
       </div>
     </section>
 
@@ -104,7 +104,7 @@
       </div>
       <div class="flex justify-center items-center space-x-4">
         <div class="text-center">
-          <img src="../assets/DALL·E 2024-07-02 23.34.18 - Generate a headshot image of a friendly and professional looking woman in her 40s with a clear background. The image should be square (e.g., 500x500 p.webp" alt="User 1" class="rounded-full w-24 h-24 mx-auto mb-2">
+          <img src="../assets/images/DALL·E 2024-07-02 23.34.18 - Generate a headshot image of a friendly and professional looking woman in her 40s with a clear background. The image should be square (e.g., 500x500 p.webp" alt="User 1" class="rounded-full w-24 h-24 mx-auto mb-2">
           <h4 class="font-inter text-lg font-bold">Marine Lecompte</h4>
           <p class="text-gray-600 text-sm">Chanteuse Country</p>
           <div class="flex justify-center mt-2">
@@ -116,7 +116,7 @@
           </div>
         </div>
         <div class="text-center">
-          <img src="../assets/DALL·E 2024-07-02 23.34.15 - Generate a headshot image of a friendly and professional looking older man in his 60s with a clear background. The image should be square (e.g., 500x5.webp" alt="User 2" class="rounded-full w-24 h-24 mx-auto mb-2">
+          <img src="../assets/images/DALL·E 2024-07-02 23.34.15 - Generate a headshot image of a friendly and professional looking older man in his 60s with a clear background. The image should be square (e.g., 500x5.webp" alt="User 2" class="rounded-full w-24 h-24 mx-auto mb-2">
           <h4 class="font-inter text-lg font-bold">Charles Leclerc</h4>
           <p class="text-gray-600 text-sm">Patron de bar</p>
           <div class="flex justify-center mt-2">
@@ -128,7 +128,7 @@
           </div>
         </div>
         <div class="text-center">
-          <img src="../assets/DALL·E 2024-07-02 23.34.12 - Generate a headshot image of a friendly and professional looking young woman in her 20s with a clear background. The image should be square (e.g., 500.webp" alt="User 3" class="rounded-full w-24 h-24 mx-auto mb-2">
+          <img src="../assets/images/DALL·E 2024-07-02 23.34.12 - Generate a headshot image of a friendly and professional looking young woman in her 20s with a clear background. The image should be square (e.g., 500.webp" alt="User 3" class="rounded-full w-24 h-24 mx-auto mb-2">
           <h4 class="font-inter text-lg font-bold">Romeena De Silva</h4>
           <p class="text-gray-600 text-sm">Danseuse de Salsa</p>
           <div class="flex justify-center mt-2">
@@ -140,7 +140,7 @@
           </div>
         </div>
         <div class="text-center">
-          <img src="../assets/DALL·E 2024-07-02 23.34.21 - Generate a headshot image of a friendly and professional looking man in his 30s with a clear background. The image should be square (e.g., 500x500 pix.webp" alt="User 4" class="rounded-full w-24 h-24 mx-auto mb-2">
+          <img src="../assets/images/DALL·E 2024-07-02 23.34.21 - Generate a headshot image of a friendly and professional looking man in his 30s with a clear background. The image should be square (e.g., 500x500 pix.webp" alt="User 4" class="rounded-full w-24 h-24 mx-auto mb-2">
           <h4 class="font-inter text-lg font-bold">Antoine Chevalier</h4>
           <p class="text-gray-600 text-sm">Fan de Rai</p>
           <div class="flex justify-center mt-2">
