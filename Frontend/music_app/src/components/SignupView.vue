@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import SignupPage from '../components/Authentification/SignupPage.vue';
+import SignupPage from '../pages/Authentification/SignupPage.vue';
 </script>
 <style>
 @tailwind base;

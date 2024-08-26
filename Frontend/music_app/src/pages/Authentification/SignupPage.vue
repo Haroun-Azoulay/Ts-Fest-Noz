@@ -61,7 +61,7 @@ import { useRouter } from 'vue-router';
 import type { Signup } from '../../../models/authentification';
 import ApiService from "@/services/ApiService";
 import { ref, computed } from 'vue';
-import ModalConfirm from '../pModal/ModalConfirm.vue';
+import ModalConfirm from '../../components/pModal/ModalConfirm.vue';
 
 const show = ref(false);
 const errorMessage = ref('');

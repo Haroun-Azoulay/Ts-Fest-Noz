@@ -35,11 +35,11 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import HeaderPage from '../components/Header/HeaderPage.vue';
+import HeaderPage from '../pages/Header/HeaderPage.vue';
 import { useRouter } from 'vue-router';
 import ApiService from "@/services/ApiService";
 import { useJwt } from '@vueuse/integrations/useJwt';
-import FooterPage from '../components/Footer/FooterPage.vue';
+import FooterPage from '../pages/Footer/FooterPage.vue';
 const router = useRouter();
 const post = ref({});
 const isAuthorized = ref<boolean>(false);

@@ -74,7 +74,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import ApiService from "@/services/ApiService";
-import HeaderPage from '../components/Header/HeaderPage.vue';
+import HeaderPage from '../pages/Header/HeaderPage.vue';
 
 const users = ref([]);
 

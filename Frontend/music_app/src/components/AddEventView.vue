@@ -85,10 +85,10 @@
 import { ref, onMounted, computed } from 'vue';
 import mapboxgl from 'mapbox-gl';
 import ApiService from "@/services/ApiService";
-import HeaderPage from '../components/Header/HeaderPage.vue';
-import SearchPage from '../components/Map/SearchPage.vue';
-import ModalConfirm from '../components/pModal/ModalConfirm.vue';
-import FooterPage from '../components/Footer/FooterPage.vue';
+import HeaderPage from '../pages/Header/HeaderPage.vue';
+import SearchPage from '../pages/Map/SearchPage.vue';
+import ModalConfirm from './pModal/ModalConfirm.vue';
+import FooterPage from '../pages/Footer/FooterPage.vue';
 
 const result = ref(null);
 const event_name = ref('');

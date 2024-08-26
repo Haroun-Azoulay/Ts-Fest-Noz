@@ -10,7 +10,7 @@
   </template>
   
   <script setup lang="ts">
-  import SigninPage from '../components/Authentification/SigninPage.vue';
+  import SigninPage from '../pages/Authentification/SigninPage.vue';
   </script>
   
   <style>
