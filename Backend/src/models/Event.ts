@@ -1,14 +1,7 @@
 import { DataTypes, Model } from "sequelize";
 import sequelizeConnection from "../../config/database";
+import { EventAttributes } from "../interfaces/types";
 import Payment from "./Payment";
-
-interface EventAttributes {
-  id: string;
-  name: string;
-  description: string;
-  url: string;
-  mapId: number; 
-}
 
 class Event extends Model<EventAttributes> implements EventAttributes {
   public id!: string;

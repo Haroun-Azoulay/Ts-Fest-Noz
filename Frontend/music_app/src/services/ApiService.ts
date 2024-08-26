@@ -5,19 +5,19 @@ const axiosInstance = axios.create({
 });
 
 const ApiService = {
-    get(endpoint, config = {}) {
+    get(endpoint: string, config = {}) {
         return axiosInstance.get(endpoint, config);
     },
 
-    post(endpoint, data = {}, config = {}) {
+    post(endpoint: string, data = {}, config = {}) {
         return axiosInstance.post(endpoint, data, config);
     },
 
-    put(endpoint, data = {}, config = {}) {
+    put(endpoint: string, data = {}, config = {}) {
         return axiosInstance.put(endpoint, data, config);
     },
 
-    delete(endpoint, config = {}) {
+    delete(endpoint: string, config = {}) {
         return axiosInstance.delete(endpoint, config);
     }
 };

@@ -1,36 +1,38 @@
+import { EventAttributes, PaymentAttributes } from "../interfaces/types";
 import EventModel from "../models/Event";
 import PaymentModel from "../models/Payment";
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 
-const addEvent = async (req: Request, res: Response) => {
+const addEvent = async (req: Request, res: Response) : Promise<Response<any, Record<string, any>>> => {
     try {
         console.log("addEvent - req.body:", req.body);
 
-        const event = await EventModel.create({
+        const event : EventModel = await EventModel.create({
             ...req.body,
         });
 
-        const formattedEvent = {
+        const formattedEvent : EventAttributes = {
             id: event.id,
             name: event.name,
             description: event.description,
-            url: event.url
+            url: event.url,
+            mapId: event.mapId
         };
 
-        res.status(201).json(formattedEvent);
+        return res.status(201).json(formattedEvent);
     } catch (error) {
         console.error("Error adding an event:", error);
-        res.status(500).send("Error adding event");
+        return res.status(500).send("Error adding event");
     }
 };
 
-const getEventById = async (req: Request, res: Response) => {
+const getEventById = async (req: Request, res: Response) : Promise<Response<any, Record<string, any>>> => {
     try {
-        const eventId = req.params.id;
+        const eventId : string = req.params.id;
         console.log("getEventById - eventId:", eventId);
 
-        const event = await EventModel.findByPk(eventId, {
+        const event : EventModel | null = await EventModel.findByPk(eventId, {
             attributes: ['id', 'name', 'description']
         });
 
@@ -45,9 +47,9 @@ const getEventById = async (req: Request, res: Response) => {
     }
 };
 
-const getAllEvents = async (req: Request, res: Response) => {
+const getAllEvents = async (req: Request, res: Response) : Promise<Response<any, Record<string, any>>> => {
     try {
-        const events = await EventModel.findAll();
+        const events : EventModel[] = await EventModel.findAll();
         return res.json(events);
     } catch (error) {
         console.error("Error retrieving events", error);
@@ -55,42 +57,43 @@ const getAllEvents = async (req: Request, res: Response) => {
     }
 };
 
-const addPayment = async (req: Request, res: Response) => {
+const addPayment = async (req: Request, res: Response) : Promise<Response<any, Record<string, any>>> => {
     try {
-        const userId = req.userId; 
-        const eventId = req.params.id;
+        const userId : string | undefined = req.userId; 
+        const eventId : string = req.params.id;
         console.log("addPayment - userId:", userId, "eventId:", eventId, "req.body:", req.body);
 
-        const token = jwt.sign(
+        const token : string = jwt.sign(
             { userId: userId },
             "RANDOM_SECRET_KEY",
             { expiresIn: "24h" }
         );
 
-        const payment = await PaymentModel.create({
+        const payment : PaymentModel = await PaymentModel.create({
             ...req.body,
             token
         });
-        const formattedPayment = {
+        const formattedPayment : PaymentAttributes = {
             id: payment.id,
             payment: payment.payment,
             token: token,
         };
 
         console.log("addPayment - formattedPayment:", formattedPayment);
-        res.status(201).json(formattedPayment);
+        return res.status(201).json(formattedPayment);
     } catch (error) {
         console.error("Error adding a payment:", error);
-        res.status(500).send("Error adding a payment");
+        return res.status(500).send("Error adding a payment");
     }
 };
 
-const getPaymentById = async (req: Request, res: Response) => {
+const getPaymentById = async (req: Request, res: Response) : Promise<Response<any, Record<string, any>>> => {
     try {
-        const { eventId, paymentId } = req.params;
+        const eventId : string = req.params.eventId;
+        const paymentId : string = req.params.paymentId;
         console.log("getPaymentById - eventId:", eventId, "paymentId:", paymentId);
 
-        const payment = await PaymentModel.findOne({
+        const payment : PaymentModel | null = await PaymentModel.findOne({
             where: {
                 id: paymentId,
             },
@@ -109,14 +112,14 @@ const getPaymentById = async (req: Request, res: Response) => {
 };
 
 
-const verifyTokenOATUH = async (req: Request, res: Response) => {
+const verifyTokenOATUH = async (req: Request, res: Response) : Promise<Response<any, Record<string, any>> | undefined> => {
     try {
-        const { token } = req.body;
+        const token : string = req.body.token;
         if (!token) {
             return res.status(400).json({ message: "Missing token" });
         }
 
-        const payment = await PaymentModel.findOne({ where: { token } });
+        const payment : PaymentModel | null = await PaymentModel.findOne({ where: { token } });
         if (!payment) {
             return res.status(401).json({ message: "Invalid token or not found in database" });
         }
@@ -134,12 +137,12 @@ const verifyTokenOATUH = async (req: Request, res: Response) => {
         return res.status(500).json({ message: "Error verifying token" });
     }
 };
-const deleteToken = async (req: Request, res: Response) => {
+const deleteToken = async (req: Request, res: Response) : Promise<Response<any, Record<string, any>>> => {
     try {
-        const { token } = req.params;
+        const token : string = req.params.token;
         console.log("deleteToken - token:", token);
 
-        const payment = await PaymentModel.findOne({ where: { token } });
+        const payment : PaymentModel | null = await PaymentModel.findOne({ where: { token } });
         if (!payment) {
             return res.status(404).json({ message: "The token does not exist" });
         }

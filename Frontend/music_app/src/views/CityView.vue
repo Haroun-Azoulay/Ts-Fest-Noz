@@ -100,6 +100,7 @@ const filterPointsByDate = () => {
 
 const createMap = () => {
   const token: string = import.meta.env.VITE_MAPBOX_TOKEN;
+  console.log(token);
   mapboxgl.accessToken = token;
   map = new mapboxgl.Map({
     container: 'map',

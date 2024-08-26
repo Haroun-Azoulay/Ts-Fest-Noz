@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
 import UserModel from "../models/User";
+import { UserInfo } from "../interfaces/types";
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const signup = async (req: Request, res: Response): Promise<Response> => {
+const signup = async (req: Request, res: Response) : Promise<Response<any, Record<string, any>>> => {
   try {
     const { lastname, firstname, password, email, role, pseudo } = req.body;
 
@@ -13,15 +14,12 @@ const signup = async (req: Request, res: Response): Promise<Response> => {
       });
     }
 
-    const defaultRole = "user";
-    const isAdmin = email === "admin@example.com";
-    const assignedRole = isAdmin ? "admin" : defaultRole;
+    const defaultRole : string = "user";
+    const isAdmin : boolean = email === "admin@example.com";
+    const assignedRole : string = isAdmin ? "admin" : defaultRole;
+    const hashedPassword : string = await bcrypt.hash(password, 10);
 
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-
- 
-    const newUser = await UserModel.create({
+    const newUser : UserModel = await UserModel.create({
       email,
       lastname,
       firstname,
@@ -30,7 +28,6 @@ const signup = async (req: Request, res: Response): Promise<Response> => {
       role: assignedRole,
     });
 
- 
     return res.status(201).json({
       message: "User created successfully!",
       user: newUser,
@@ -43,25 +40,24 @@ const signup = async (req: Request, res: Response): Promise<Response> => {
   }
 };
 
-const getUserInfo = async (req: Request, res: Response): Promise<Response> => {
-  const userId = req.userId;
+const getUserInfo = async (req: Request, res: Response) : Promise<Response<any, Record<string, any>>> => {
+  const userId : string | undefined = req.userId;
   console.log(req.userId)
   try {
 
-    const user = await UserModel.findOne({ where: { id: userId } });
+    const user : UserModel | null = await UserModel.findOne({ where: { id: userId } });
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-
   
-    const userDetails = {
+    const userDetails : UserInfo = {
       id: user.id,
       email: user.email,
       lastname: user.lastname,
       firstname: user.firstname,
       role: user.role,
-      pseudo: user.pseudo,
+      pseudo: user.pseudo
     };
 
     return res.status(200).json(userDetails);
@@ -73,10 +69,10 @@ const getUserInfo = async (req: Request, res: Response): Promise<Response> => {
   }
 };
 
-const signin = async (req: Request, res: Response) => {
+const signin = async (req: Request, res: Response) : Promise<Response<any, Record<string, any>>> => {
   try {
-    const { pseudo, password } = req.body;
-
+    const pseudo : string = req.body.pseudo;
+    const password : string = req.body.password;
 
     if (!pseudo || !password) {
       return res
@@ -86,7 +82,7 @@ const signin = async (req: Request, res: Response) => {
         });
     }
 
-    const foundUser = await UserModel.findOne({
+    const foundUser : UserModel | null = await UserModel.findOne({
       where: { pseudo },
     });
 
@@ -98,7 +94,7 @@ const signin = async (req: Request, res: Response) => {
         });
     }
 
-    const passwordMatch = await bcrypt.compare(password, foundUser.password);
+    const passwordMatch : string = await bcrypt.compare(password, foundUser.password);
 
     if (!passwordMatch) {
       return res
@@ -108,7 +104,7 @@ const signin = async (req: Request, res: Response) => {
         });
     }
 
-    const token = jwt.sign(
+    const token : string = jwt.sign(
       { userId: foundUser.id, role: foundUser.role },
       "RANDOM_SECRET_KEY",
       { expiresIn: "24h" }
@@ -127,11 +123,11 @@ const signin = async (req: Request, res: Response) => {
   }
 };
 
-const logout = async (req: Request, res: Response) => {
+const logout = async (req: Request, res: Response) : Promise<void> => {
   res.status(200).json({ message: "Logout successful" });
 };
 
-function getAllUsers(req: Request, res: Response) {
+const getAllUsers = async(req: Request, res: Response) : Promise<void> => {
   UserModel.findAll()
     .then((result) => {
       return res.json(result);
@@ -142,20 +138,18 @@ function getAllUsers(req: Request, res: Response) {
     });
 }
 
-const updateUserRole = async (req: Request, res: Response) => {
+const updateUserRole = async (req: Request, res: Response) : Promise<Response<any, Record<string, any>>> => {
   try {
-    const { userId } = req.params;
-    const { newRole } = req.body;
+    const userId : string = req.params.userId;
+    const newRole : string = req.body.newRole;
     console.log(userId);
     console.log(newRole);
-
 
     if (!newRole) {
       return res.status(400).json({ message: "New role is required." });
     }
 
-
-    const updateSuccess = await UserModel.updateUserRole(userId, newRole);
+    const updateSuccess : boolean = await UserModel.updateUserRole(userId, newRole);
     
     if (updateSuccess) {
       return res.status(200).json({ message: "Role updated successfully." });

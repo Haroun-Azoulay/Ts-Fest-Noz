@@ -1,14 +1,6 @@
 import { DataTypes, Model } from "sequelize";
 import sequelizeConnection from "../../config/database";
-
-interface OrganizerProfilAttributes {
-    id: string;
-    denomination: string;
-    phone_number: string;
-    full_adress: string;
-    SIRET_number: number;
-    more_info: string;
-}
+import { OrganizerProfilAttributes } from "../interfaces/types";
 
 class OrganizerProfil extends Model<OrganizerProfilAttributes> implements OrganizerProfilAttributes {
     public id!: string;
