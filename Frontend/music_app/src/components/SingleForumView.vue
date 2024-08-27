@@ -28,7 +28,7 @@
 </template>
   <script setup lang="ts">
   import { ref, onMounted } from 'vue';
-  import HeaderPage from '../pages/Header/HeaderPage.vue';
+  import HeaderPage from '../pages/Header/HeaderPage-backup.vue';
   import { useRoute } from 'vue-router';
   import ApiService from "@/services/ApiService";
   

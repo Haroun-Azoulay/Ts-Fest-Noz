@@ -35,6 +35,10 @@
     --title-font: "Bebas Neue", Helvetica, Arial, sans-serif;
 }
 
+a {
+    cursor:pointer;
+}
+
 .g-custom{
     --bs-gutter-x: 40px;
     --bs-gutter-y: 40px;
@@ -8743,7 +8747,7 @@ a.de-card:hover {
 }
 
 .de-image-text.s2 {
-    text-align: center;
+    text-align: initial;
 }
 
 .de-image-text.s2 h3{
@@ -15290,6 +15294,11 @@ img {
     header.header-mobile {
         overflow: hidden;
         position: relative;
+        padding-top:0;
+    }
+    header.header-mobile .de-flex{
+        display:flex;
+        flex-direction:column;
     }
 
     header.header-mobile #mainmenu {
@@ -16071,4 +16080,8 @@ img {
         left: 0;
         top: -21px;
     }
+}
+
+input {
+    color:black;
 }

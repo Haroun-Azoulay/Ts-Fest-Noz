@@ -40,7 +40,7 @@ import mapboxgl, { Map } from 'mapbox-gl';
 import { useJwt } from '@vueuse/integrations/useJwt';
 import ApiService from "@/services/ApiService";
 import { format } from 'date-fns';
-import HeaderPage from '../pages/Header/HeaderPage.vue';
+import HeaderPage from '../pages/Header/HeaderPage-backup.vue';
 import ModalConfirm from './pModal/ModalConfirm.vue';
 
 const showError = ref(false);

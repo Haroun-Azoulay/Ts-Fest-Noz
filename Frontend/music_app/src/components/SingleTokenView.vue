@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
-import HeaderPage from '../pages/Header/HeaderPage.vue';
+import HeaderPage from '../pages/Header/HeaderPage-backup.vue';
 import ApiService from '../services/ApiService';
 import { useRouter, useRoute } from 'vue-router';
 

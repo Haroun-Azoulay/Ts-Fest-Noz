@@ -85,7 +85,7 @@
 import { ref, onMounted, computed } from 'vue';
 import mapboxgl from 'mapbox-gl';
 import ApiService from "@/services/ApiService";
-import HeaderPage from '../pages/Header/HeaderPage.vue';
+import HeaderPage from '../pages/Header/HeaderPage-backup.vue';
 import SearchPage from '../pages/Map/SearchPage.vue';
 import ModalConfirm from './pModal/ModalConfirm.vue';
 import FooterPage from '../pages/Footer/FooterPage.vue';

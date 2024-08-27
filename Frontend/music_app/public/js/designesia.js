@@ -1485,7 +1485,8 @@
       * document ready
       * --------------------------------------------------*/
      jQuery(document).ready(function() {
-        $('.de-preloader').delay(500).fadeOut(500);
+        function designesia_execute_all() {
+            $('.de-preloader').delay(500).fadeOut(500);
          'use strict';
          f_rtl();
          load_magnificPopup();
@@ -1833,9 +1834,6 @@
 					$this.next().slideToggle(350);
 				}
 			});
-
-
-
          });
          $(function() {
              "use strict";
@@ -1845,7 +1843,10 @@
                  $('.bg-loop').css('background-position', x + 'px 0');
              }, 50);
          })
-		 
-		
+        }
+        $(window).on('popstate', function() {
+            designesia_execute_all();
+        });
+        designesia_execute_all();
      });
  })(jQuery);

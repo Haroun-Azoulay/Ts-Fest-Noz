@@ -1,65 +1,7 @@
 
 <template>
     <div id="wrapper">
-        <div id="preloader">
-            <div class="preloader1"></div>
-        </div>
-        <!-- header begin -->
-        <header class="transparent">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="de-flex sm-pt10">
-                            <div class="de-flex-col">
-                                <div class="de-flex-col">
-                                    <!-- logo begin -->
-                                    <div id="logo">
-                                        <a href="02_djfest-index.html">
-                                            <img alt="" src="/images-dj/logo-light.png" />
-                                        </a>
-                                    </div>
-                                    <!-- logo close -->
-                                </div>
-                                <div class="de-flex-col">
-                                </div>
-                            </div>
-                            <div class="de-flex-col header-col-mid">
-                                <!-- mainmenu begin -->
-                                <ul id="mainmenu">
-                                    <li><a href="#de-carousel">Home</a>
-                                        <ul>
-                                            <li><a href="index.html">Rockfest</a></li>
-                                            <li><a href="02_djfest-index.html">DJFest</a></li>
-                                            <li><a href="03_electrofest-index.html">Electrofest</a></li>
-                                            <li><a href="01_rockfest-index-video.html">Rockfest Video</a></li>
-                                        </ul>
-                                    </li>                                   
-                                    <li><a href="#section-artists">Artists</a></li>                  
-                                    <li><a href="#section-schedule">Schedule</a></li>             
-                                    <li><a href="#section-tickets">Tickets</a></li>
-                                    <li><a href="#section-gallery">Gallery</a></li>
-                                    <li><a href="index-dj.html">Pages</a>
-                                        <ul>
-                                            <li><a href="02_djfest-blog.html">Blog</a></li>
-                                            <li><a href="02_djfest-contact.html">Contact</a></li>
-                                            <li><a href="02_djfest-gallery.html">Gallery</a></li>
-                                        </ul>
-                                    </li>
-                                    
-                                </ul>
-                            </div>
-                            <div class="de-flex-col">
-                                <div class="menu_side_area">
-                                    <a href="#section-tickets" class="btn-main"><i class="fa fa-sign-in"></i><span>Buy Ticket</span></a>
-                                    <span id="menu-btn"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
-        <!-- header close -->
+        <HeaderPage />
         <!-- content begin -->
         <div class="no-bottom no-top" id="content">
             <div id="top"></div>
@@ -74,7 +16,7 @@
                 <!-- Inner -->
                 <div class="carousel-inner">
                     <!-- Single item -->
-                    <div class="carousel-item active" data-bgimage="url(/images-dj/slider/1.jpg)">
+                    <div class="carousel-item active" data-bgimage="url(/images-dj/slider/1.jpg)" style="background: url(/images-dj/slider/1.jpg) 0% 0% / cover;">
                         <div class="mask">
                             <div class="d-flex justify-content-center align-items-center h-100">
                                 <div class="container text-white text-center">
@@ -82,7 +24,7 @@
                                         <div class="col-md-12">
                                             <h1 class="ultra-big mb-3 wow fadeInUp">Summer<br><span class="id-color">Remix</span></h1>
                                             <div class="col-md-6 offset-md-3">
-                                                <p class="lead wow fadeInUp" data-wow-delay=".3s">The biggest music event in decades. Attended by more than 100 musicians from all over the world. Get your ticket now!</p>
+                                                <p class="lead wow fadeInUp" data-wow-delay=".3s">Les plus gros évènements de musiques depuis des décennies. Organisé par plus de 100 musiciens de tous les coins du monde. Inscrivez-vous maintenant!</p>
                                             </div>                                            <div class="spacer-10"></div>
                                             <a href="#section-artists" class="btn-main wow fadeInUp" data-wow-delay=".6s">Explore</a>
                                         </div>
@@ -92,15 +34,15 @@
                         </div>
                     </div>
                     <!-- Single item -->
-                    <div class="carousel-item" data-bgimage="url(images-dj/slider/2.jpg)">
+                    <div class="carousel-item" data-bgimage="url(images-dj/slider/2.jpg)" style="background: url(/images-dj/slider/2.jpg) 0% 0% / cover;">
                         <div class="mask">
                             <div class="d-flex justify-content-center align-items-center h-100 wow f">
                                 <div class="container text-white text-center">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <h1 class="ultra-big mb-3 wow fadeInUp">5 Days<br><span class="id-color">Party</span></h1>
+                                            <h1 class="ultra-big mb-3 wow fadeInUp">Musiques<br><span class="id-color">Sans fin</span></h1>
                                             <div class="col-md-6 offset-md-3">
-                                                <p class="lead wow fadeInUp" data-wow-delay=".3s">The biggest music event in decades. Attended by more than 100 musicians from all over the world. Get your ticket now!</p>
+                                                <p class="lead wow fadeInUp" data-wow-delay=".3s">Les plus gros évènements de musiques depuis des décennies. Organisé par plus de 100 musiciens de tous les coins du monde. Inscrivez-vous maintenant!</p>
                                             </div>                                            <div class="spacer-10"></div>
                                             <a href="#section-artists" class="btn-main wow fadeInUp" data-wow-delay=".6s">Explore</a>
                                         </div>
@@ -131,8 +73,8 @@
                     <div class="row g-custom-x align-items-center">
                         <div class="col-lg-12">
                             <div class="text-center">
-                                <h2 class="s2 text-black wow fadeInUp" data-wow-delay="0s">Aug 20-24</h2>
-                                <h3 class="text-black wow fadeInUp" data-wow-delay=".2s">Allegiant Stadium, Las Vegas, NV, United States</h3>
+                                <h2 class="s2 text-black wow fadeInUp" data-wow-delay="0s"><i style="margin-right: 5%;color:black;" class="fa fa-apple"></i><i style="color:black;" class="fa fa-android"></i></h2>
+                                <h3 class="text-black wow fadeInUp" data-wow-delay=".2s">Disponible sur iOS et Android</h3>
                             </div>
                         </div>
                     </div>
@@ -157,7 +99,7 @@
                                     </div>
                                     <h3>DJ Neurogenic</h3>
                                 </a>
-                                <img src="../assets/images-dj/misc/featured-1.jpg" class="img-fluid" alt="">
+                                <img src="/images-dj/misc/featured-1.jpg" class="img-fluid" alt="">
                             </div>
                         </div>
                         <div class="col-md-4 mb-sm-30">
@@ -168,7 +110,7 @@
                                     </div>
                                     <h3>DJ Phenomenic</h3>
                                 </a>
-                                <img src="../assets/images-dj/misc/featured-2.jpg" class="img-fluid" alt="">
+                                <img src="/images-dj/misc/featured-2.jpg" class="img-fluid" alt="">
                             </div>
                         </div>
                         <div class="col-md-4 mb-sm-30">
@@ -179,7 +121,7 @@
                                     </div>
                                     <h3>DJ Fritz</h3>
                                 </a>
-                                <img src="../assets/images-dj/misc/featured-3.jpg" class="img-fluid" alt="">
+                                <img src="/images-dj/misc/featured-3.jpg" class="img-fluid" alt="">
                             </div>
                         </div>
                     </div>
@@ -210,152 +152,41 @@
                     </div>
                 </div>
             </section>
-            <section id="section-schedule" aria-label="section-services-tab" data-bgimage="url(images-dj/background/1.jpg)">
+            <section id="section-plan" aria-label="section-services-tab" data-bgimage="url(images-dj/background/1.jpg)" style="background: url(/images-dj/background/1.jpg) 0% 0% / cover;">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="text-center">
-                                <div class="wm wow slideInUp">Schedule</div>
-                                <h2 class="wow fadeInUp" data-wow-delay=".2s"><span class="id-color">02</span> Schedule</h2>
+                                <div class="wm wow slideInUp">Plan</div>
+                                <h2 class="wow fadeInUp" data-wow-delay=".2s"><span class="id-color">02</span> Plan</h2>
                                 <div class="small-border bg-color wow zoomIn" data-wow-delay=".4s"></div>
                             </div>
                         </div>
                         <div class="spacer-single"></div>
                         <div class="col-md-12">
                             <div class="de_tab tab_style_4 text-center">
-                                <ul class="de_nav de_nav_dark">
-                                    <li class="active" data-link="#section-services-tab">
-                                        <h3>Day <span>01</span></h3>
-                                        <h4>Aug 20, 2023</h4>
-                                    </li>
-                                    <li data-link="#section-services-tab">
-                                        <h3>Day <span>02</span></h3>
-                                        <h4>Aug 21, 2023</h4>
-                                    </li>
-                                    <li data-link="#section-services-tab">
-                                        <h3>Day <span>03</span></h3>
-                                        <h4>Aug 22, 2023</h4>
-                                    </li>
-                                    <li data-link="#section-services-tab">
-                                        <h3>Day <span>04</span></h3>
-                                        <h4>Aug 23, 2023</h4>
-                                    </li>
-                                    <li data-link="#section-services-tab">
-                                        <h3>Day <span>05</span></h3>
-                                        <h4>Aug 24, 2023</h4>
-                                    </li>
-                                </ul>
+                                <h2 class="text-2xl md:text-4xl font-extrabold mb-6">
+                                Les Meilleurs Evenements musicaux sont tout autour de vous !
+                                </h2>
+                                <h2 class="mb-6" style="font-size:25px;">
+                                Proposez ou assistez aux meilleurs évenements proche de chez vous ou que vous soyez !
+                                </h2>
                                 <div class="de_tab_content text-left">
                                     <div id="tab1" class="tab_single_content">
                                         <div class="row">
                                             <div class="col-md-12 text-center">
                                                 <ul class="list-boxed-s1">
-                                                    <li>
-                                                        <h3>DJ Neurogenic</h3><span></span>
+                                                    <li
+                                                        v-bind:style=" isFullAuthorized ? 'pointer-events:auto;cursor:pointer;' : 'pointer-events: none;' "
+                                                        @click="goToCityPage">
+                                                        <h3>Trouver un evenement</h3>
+                                                        <span></span>
                                                     </li>
-                                                    <li>
-                                                        <h3>Stylewort</h3><span></span>
-                                                    </li>
-                                                    <li>
-                                                        <h3>Hotbox</h3><span></span>
-                                                    </li>
-                                                    <li>
-                                                        <h3>Formulary</h3><span></span>
-                                                    </li>
-                                                    <li>
-                                                        <h3>Exalbuminous</h3><span></span>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div id="tab2" class="tab_single_content">
-                                        <div class="row">
-                                            <div class="col-md-12 text-center">
-                                                <ul class="list-boxed-s1">
-                                                    <li>
-                                                        <h3>DJ Fritz</h3><span></span>
-                                                    </li>
-                                                    <li>
-                                                        <h3>Taxidermize</h3><span></span>
-                                                    </li>
-                                                    <li>
-                                                        <h3>Chevelle</h3><span></span>
-                                                    </li>
-                                                    <li>
-                                                        <h3>Lysimachus</h3><span></span>
-                                                    </li>
-                                                    <li>
-                                                        <h3>Ovidae</h3><span></span>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div id="tab3" class="tab_single_content">
-                                        <div class="row">
-                                            <div class="col-md-12 text-center">
-                                                <ul class="list-boxed-s1">
-                                                    <li>
-                                                        <h3>DJ Phenomenic</h3><span></span>
-                                                    </li>
-                                                    <li>
-                                                        <h3>Rockward</h3><span></span>
-                                                    </li>
-                                                    <li>
-                                                        <h3>Floater</h3><span></span>
-                                                    </li>
-                                                    <li>
-                                                        <h3>Carabus</h3><span></span>
-                                                    </li>
-                                                    <li>
-                                                        <h3>Windgalled</h3><span></span>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div id="tab4" class="tab_single_content">
-                                        <div class="row">
-                                            <div class="col-md-12 text-center">
-                                                <ul class="list-boxed-s1">
-                                                    <li>
-                                                        <h3>DJ Neurogenic</h3><span></span>
-                                                    </li>
-                                                    <li>
-                                                        <h3>Cassinese</h3><span></span>
-                                                    </li>
-                                                    <li>
-                                                        <h3>Barnard</h3><span></span>
-                                                    </li>
-                                                    <li>
-                                                        <h3>Aggrieved</h3><span></span>
-                                                    </li>
-                                                    <li>
-                                                        <h3>Victuallership</h3><span></span>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div id="tab5" class="tab_single_content">
-                                        <div class="row">
-                                            <div class="col-md-12 text-center">
-                                                <ul class="list-boxed-s1">
-                                                    <li>
-                                                        <h3>DJ Phenomenic</h3><span></span>
-                                                    </li>
-                                                    <li>
-                                                        <h3>DJ Fritz</h3><span></span>
-                                                    </li>
-                                                    <li>
-                                                        <h3>DJ Neurogenic</h3><span></span>
-                                                    </li>
-                                                    <li>
-                                                        <h3>Emarcid</h3><span></span>
-                                                    </li>
-                                                    <li>
-                                                        <h3>Stylewort</h3><span></span>
+                                                    <li
+                                                        v-bind:style=" isAuthorized ? 'pointer-events:auto;cursor:pointer;' : 'pointer-events: none;' "
+                                                        @click="goAddEventPage">
+                                                        <h3>Proposer un evenement</h3>
+                                                        <span></span>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -456,12 +287,38 @@
                     </div>
                 </div>
             </section>
-            <section id="section-gallery" data-bgimage="url(images-dj/background/2.jpg)">
+            <section id="section-forum" data-bgimage="url(images-dj/background/3.jpg)" style="background: url(/images-dj/background/3.jpg) 0% 0% / cover;">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12 text-center">
-                            <div class="wm wow slideInUp">Gallery</div>
-                            <h2 class="wow fadeInUp" data-wow-delay=".2s"><span class="id-color">04</span> Gallery</h2>
+                            <div class="wm wow slideInUp">Communauté</div>
+                            <h2 class="wow fadeInUp" data-wow-delay=".2s"><span class="id-color">04</span> Communauté Actif</h2>
+                            <div class="small-border bg-color wow zoomIn" data-wow-delay=".4s"></div>
+                        </div>
+                        <div class="spacer-single"></div>
+                    </div>
+                    <div style="display:flex;">
+                        <div class="text-center md:text-left flex-1">
+                            <h2 class="font-inter text-2xl md:text-4xl font-extrabold mb-6">Laissez un message !</h2>
+                            <p class="text-gray-600 mb-6 text-white">
+                            Commentez, Partagez, Parlez tout simplement, exprimez vous sur les événements et faites des rencontres qui dureront peut-être toute la vie !
+                            </p>
+                            <a v-bind:style=" isFullAuthorized ? 'background-color:#cdff6b;' : 'background-color:gray;pointer-events: none;' "
+                            :disabled="!isFullAuthorized"
+                            @click="goForumPage" class="btn-main"><span class="text-white">ACCEDER AU FORUM</span></a>
+                        </div>
+                        <div class="flex-1 mt-8 md:mt-0 md:ml-8">
+                            <img src="../assets/images/forum.png" alt="Message image" class="rounded-lg shadow-md">
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="section-gallery" data-bgimage="url(images-dj/background/2.jpg)" style="background: url(/images-dj/background/2.jpg) 0% 0% / cover;">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <div class="wm wow slideInUp">Gallerie</div>
+                            <h2 class="wow fadeInUp" data-wow-delay=".2s"><span class="id-color">05</span> Gallerie</h2>
                             <div class="small-border bg-color wow zoomIn" data-wow-delay=".4s"></div>
                         </div>
                         <div class="spacer-single"></div>
@@ -472,22 +329,22 @@
                                 <!-- Slides -->
                                 <div class="carousel-inner mb-5">
                                     <div class="carousel-item active">
-                                        <img src="../assets/images-dj/gallery/1.jpg" class="d-block w-100" alt="" />
+                                        <img src="/images-dj/gallery/1.jpg" class="d-block w-100" alt="" />
                                     </div>
                                     <div class="carousel-item">
-                                        <img src="../assets/images-dj/gallery/2.jpg" class="d-block w-100" alt="" />
+                                        <img src="/images-dj/gallery/2.jpg" class="d-block w-100" alt="" />
                                     </div>
                                     <div class="carousel-item">
-                                        <img src="../assets/images-dj/gallery/3.jpg" class="d-block w-100" alt="" />
+                                        <img src="/images-dj/gallery/3.jpg" class="d-block w-100" alt="" />
                                     </div>
                                     <div class="carousel-item">
-                                        <img src="../assets/images-dj/gallery/4.jpg" class="d-block w-100" alt="" />
+                                        <img src="/images-dj/gallery/4.jpg" class="d-block w-100" alt="" />
                                     </div>
                                     <div class="carousel-item">
-                                        <img src="../assets/images-dj/gallery/5.jpg" class="d-block w-100" alt="" />
+                                        <img src="/images-dj/gallery/5.jpg" class="d-block w-100" alt="" />
                                     </div>
                                     <div class="carousel-item">
-                                        <img src="../assets/images-dj/gallery/6.jpg" class="d-block w-100" alt="" />
+                                        <img src="/images-dj/gallery/6.jpg" class="d-block w-100" alt="" />
                                     </div>
 
                                 </div>
@@ -534,7 +391,7 @@
                     <div class="row">
                         <div class="col-md-12 text-center">
                             <div class="wm wow slideInUp">Sponsors</div>
-                            <h2 class="wow fadeInUp" data-wow-delay=".2s"><span class="id-color">05</span> Sponsored by:</h2>
+                            <h2 class="wow fadeInUp" data-wow-delay=".2s"><span class="id-color">05</span> Sponsorisé par :</h2>
                             <div class="small-border bg-color wow zoomIn" data-wow-delay=".4s"></div>
                         </div>
                         <div class="spacer-single"></div>
@@ -574,88 +431,55 @@
         </div>
         <!-- content close -->
         <a href="#" id="back-to-top"></a>
-        <!-- footer begin -->
-        <footer data-bgimage="url(/images-dj/background/3.jpg)">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-3 col-sm-6 col-xs-1">
-                        <div class="widget">
-                            <h5>Contact Info</h5>
-                            <address class="s1">
-                                <span><i class="id-color fa fa-map-marker fa-lg"></i>08 W 36th St, New York, NY 10001</span>
-                                <span><i class="id-color fa fa-phone fa-lg"></i>+1 333 1000 2000</span>
-                                <span><i class="id-color fa fa-envelope-o fa-lg"></i><a href="mailto:contact@example.com">contact@example.com</a></span>
-                            </address>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6 col-xs-1">
-                        <div class="widget">
-                            <h5>Quick Links</h5>
-                            <ul>
-                                <li><a href="02_djfest-blog.html">Blog</a></li>
-                                <li><a href="02_djfest-gallery.html">Gallery</a></li>
-                                <li><a href="02_djfest-contact.html">Contact Us</a></li>
-                                <li><a href="#section-tickets">Ticket</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6 col-xs-1">
-                        <div class="widget">
-                            <h5>Latest Blog</h5>
-                            <ul>
-                                <li><a href="02_djfest-blog-single.html">Unreleased Footage of DJ Phenomenic</a></li>
-                                <li><a href="02_djfest-blog-single.html">DJ Fritz Announce New Single</a></li>
-                                <li><a href="02_djfest-blog-single.html">DJ Neurogenic Announce World Tour</a></li>
-                                <li><a href="02_djfest-blog-single.html">Taxidermize New Collaboration</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6 col-xs-1">
-                        <div class="widget">
-                            <h5>Newsletter</h5>
-                            <p>Signup for our newsletter to get the latest news in your inbox.</p>
-                            <form action="blank.php" class="row form-dark" id="form_subscribe" method="post" name="form_subscribe">
-                                <div class="col text-center">
-                                    <input class="form-control" id="txt_subscribe" name="txt_subscribe" placeholder="enter your email" type="text" /> <a href="#" id="btn-subscribe"><i class="arrow_right bg-color-secondary"></i></a>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </form>
-                            <div class="spacer-10"></div>
-                            <small>Your email is safe with us. We don't spam.</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="subfooter">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="de-flex">
-                                <div class="de-flex-col">
-                                    <a href="02_djfest-index.html">
-                                        <img alt="" class="f-logo" src="../assets/images-dj/logo.png" /><span class="copy">&copy; Copyright 2024 - Rockfest by Designesia</span>
-                                    </a>
-                                </div>
-                                <div class="de-flex-col">
-                                    <div class="social-icons">
-                                        <a href="#"><i class="fa fa-facebook fa-lg"></i></a>
-                                        <a href="#"><i class="fa fa-twitter fa-lg"></i></a>
-                                        <a href="#"><i class="fa fa-linkedin fa-lg"></i></a>
-                                        <a href="#"><i class="fa fa-pinterest fa-lg"></i></a>
-                                        <a href="#"><i class="fa fa-rss fa-lg"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
-        <!-- footer close -->
+        <FooterPage />
     </div>
 </template>
 
 <script setup lang="ts">
+import HeaderPage from '../pages/Header/HeaderPage.vue';
+import FooterPage from '../pages/Footer/FooterPage.vue';
+import { useRouter } from 'vue-router';
+import { ref, onMounted } from 'vue';
+import { useJwt } from '@vueuse/integrations/useJwt';
+
+const isAuthorized = ref(false);
+const isFullAuthorized = ref(false);
+const router = useRouter();
+
+const goToCityPage = () => {
+  router.push({ path: '/city' });
+};
+
+onMounted(async () => {
+  try {
+    const authToken = localStorage.getItem('authToken');
+    if (authToken) {
+      const { payload } = useJwt(authToken);
+      const roleId = payload.value?.role;
+
+      if (roleId === 'admin' || roleId === 'artist' || roleId === 'organizer') {
+        isAuthorized.value = true;
+        isFullAuthorized.value = true;
+      } else if (roleId === 'user') {
+        isFullAuthorized.value = true;
+      }
+    }
+  } catch (error) {
+    console.error('Erreur lors de la requête :', error);
+  }
+});
+
+const goAddEventPage = () => {
+  if (isFullAuthorized.value) {
+    router.push({ path: '/add' });
+  }
+};
+
+const goForumPage = () => {
+  if (isFullAuthorized.value) {
+    router.push({ path: '/forum' });
+  }
+};
 </script>
 
 <style>

@@ -50,7 +50,7 @@ import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { format } from 'date-fns';
 import ApiService from "@/services/ApiService";
-import HeaderPage from '../pages/Header/HeaderPage.vue';
+import HeaderPage from '../pages/Header/HeaderPage-backup.vue';
 import FooterPage from '../pages/Footer/FooterPage.vue';
 
 const router = useRouter();

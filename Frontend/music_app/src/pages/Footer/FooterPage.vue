@@ -1,57 +1,88 @@
 <template>
-  <footer class="bg-white py-8 border-t">
-    <div class="container mx-auto flex flex-wrap items-center justify-between">
-      <div class="flex flex-col items-center md:items-start mb-8 md:mb-0">
-        <img src="../../assets/images/logo.png" alt="Logo Fest-Noz" class="w-25 h-20 mr-5" />
-        <div class="flex items-center mb-4 mt-2">
-          <img src="../../assets/images/téléchargement.jpg" alt="Google Pagespeed" class="w-15 h-10 mr-2" />
-          <span class="text-green-500 text-xl font-bold">100</span>
+  <footer data-bgimage="url(/images-dj/background/3.jpg)">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-sm-6 col-xs-1">
+                <div class="widget">
+                    <h5>Contact Info</h5>
+                    <address class="s1">
+                        <span><i class="id-color fa fa-map-marker fa-lg"></i>France</span>
+                        <span><i class="id-color fa fa-phone fa-lg"></i>+33 4 73 21 46 79</span>
+                        <span><i class="id-color fa fa-envelope-o fa-lg"></i><a href="mailto:Festnoz@gmail.com">Festnoz@gmail.com</a></span>
+                    </address>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-1">
+                <div class="widget">
+                    <h5>Quick Links</h5>
+                    <ul>
+                        <li><a href="02_djfest-blog.html">Blog</a></li>
+                        <li><a href="02_djfest-gallery.html">Gallery</a></li>
+                        <li><a href="02_djfest-contact.html">Contact Us</a></li>
+                        <li><a href="#section-tickets">Ticket</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-1">
+                <div class="widget">
+                    <h5>Latest Blog</h5>
+                    <ul>
+                        <li><a href="02_djfest-blog-single.html">Unreleased Footage of DJ Phenomenic</a></li>
+                        <li><a href="02_djfest-blog-single.html">DJ Fritz Announce New Single</a></li>
+                        <li><a href="02_djfest-blog-single.html">DJ Neurogenic Announce World Tour</a></li>
+                        <li><a href="02_djfest-blog-single.html">Taxidermize New Collaboration</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-1">
+                <div class="widget">
+                    <h5>Newsletter</h5>
+                    <p>Signup for our newsletter to get the latest news in your inbox.</p>
+                    <form action="blank.php" class="row form-dark" id="form_subscribe" method="post" name="form_subscribe">
+                        <div class="col text-center">
+                            <input class="form-control" id="txt_subscribe" name="txt_subscribe" placeholder="enter your email" type="text" /> <a href="#" id="btn-subscribe"><i class="arrow_right bg-color-secondary"></i></a>
+                            <div class="clearfix"></div>
+                        </div>
+                    </form>
+                    <div class="spacer-10"></div>
+                    <small>Your email is safe with us. We don't spam.</small>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="flex flex-col md:flex-row w-full md:w-auto justify-center items-center mx-auto font-poppins">
-        <div class="text-center md:text-left mb-4 md:mb-0 md:mr-8">
-          <h5 class="font-bold mb-2">Liens</h5>
-          <ul>
-            <li><a href="#" class="text-gray-600 hover:text-gray-800">À propos</a></li>
-            <li><a href="#" class="text-gray-600 hover:text-gray-800">Blog</a></li>
-            <li><a href="#" class="text-gray-600 hover:text-gray-800">Zones desservies</a></li>
-            <li><a href="#" class="text-gray-600 hover:text-gray-800">Études de cas</a></li>
-          </ul>
-        </div>
-        <div class="text-center md:text-left mb-10 md:mb-0">
-          <h5 class="font-bold mb-6">Contactez-nous</h5>
-          <p class="text-gray-600 mb-2">Contactez-nous au :</p>
-          <p class="text-gray-600 mb-2">04 73 21 46 79</p>
-          <p class="text-gray-600">Email : Festnoz@gmail.com</p>
-        </div>
-      </div>
-      <div class="flex space-x-4 mt-6 md:mt-0 md:ml-8">
-        <a href="#" class="bg-white rounded-full p-2 shadow-lg text-gray-600 hover:text-gray-800">
-          <img src="../../assets/images/appli.png" alt="Appli" />
-        </a>
-        <a href="#" class="bg-white rounded-full p-2 shadow-lg text-gray-600 hover:text-gray-800">
-          <img src="../../assets/images/instagram (1).png" alt="Instagram" />
-        </a>
-        <a href="#" class="bg-white rounded-full p-2 shadow-lg text-gray-600 hover:text-gray-800">
-          <img src="../../assets/images/twitter (1).png" alt="Twitter" />
-        </a>
-        <a href="#" class="bg-white rounded-full p-2 shadow-lg text-gray-600 hover:text-gray-800">
-          <img src="../../assets/images/linkedin (1).png" alt="LinkedIn" />
-        </a>
-      </div>
     </div>
-    <div class="border-t mt-8 pt-4 text-center text-gray-600 font-poppins">
-      © 2024. Fest Noz. Tous droits réservés.
+    <div class="subfooter">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="de-flex">
+                        <div class="de-flex-col">
+                            <a href="02_djfest-index.html">
+                                <img alt="" class="f-logo" src="../assets/images-dj/logo.png" /><span class="copy">&copy; 2024. Fest Noz. Tous droits réservés.</span>
+                            </a>
+                        </div>
+                        <div class="de-flex-col">
+                            <div class="social-icons">
+                                <a href="#"><i class="fa fa-facebook fa-lg"></i></a>
+                                <a href="#"><i class="fa fa-twitter fa-lg"></i></a>
+                                <a href="#"><i class="fa fa-linkedin fa-lg"></i></a>
+                                <a href="#"><i class="fa fa-pinterest fa-lg"></i></a>
+                                <a href="#"><i class="fa fa-rss fa-lg"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </footer>
+</footer>
 </template>
 
-  <style scoped>
-  @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
-  
-  .font-poppins {
+<style scoped>
+    @tailwind base;
+    @tailwind components;
+    @tailwind utilities;
+
+    .font-poppins {
     font-family: 'Poppins', sans-serif;
-  }
-  </style>
+    }
+</style>
