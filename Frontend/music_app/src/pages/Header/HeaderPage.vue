@@ -8,7 +8,7 @@
                         <div class="de-flex-col">
                             <!-- logo begin -->
                             <div id="logo">
-                                <a href="02_djfest-index.html">
+                                <a href="/">
                                     <img alt="" style="height:50px;" src="../../assets/images/logo.png" />
                                 </a>
                             </div>
@@ -74,34 +74,47 @@ const isLoggedIn = ref(false);
 const isAdmin = ref(false);
 
 const goToSigninPage = () => {
-  router.push({ path: '/signin' });
+  router.push('/signin').then(() => {
+      window.location.reload();
+  });
 };
 
 const goToSignupPage = () => {
-  router.push({ path: '/signup' });
+  router.push('/signup').then(() => {
+      window.location.reload();
+  });
 };
 
 const goToAdminHomePage = () => {
-  router.push({ path: '/admin' });
+  router.push('/admin').then(() => {
+      window.location.reload();
+  });
 };
 
 const goToEventsPage = () => {
-  router.push({ path: '/event' });
+  router.push('/event').then(() => {
+      window.location.reload();
+  });
 };
 
 const goToCityPage = (event: Event) => {
   event.preventDefault();
-  router.push({ path: '/city' });
+  router.push('/city').then(() => {
+      window.location.reload();
+  });
 };
 
 const goAddEventPage = (event: Event) => {
-  event.preventDefault();
-  router.push({ path: '/add' });
+  router.push('/add').then(() => {
+      window.location.reload();
+  });
 };
 
 const goForumPage = (event: Event) => {
   event.preventDefault();
-  router.push({ path: '/forum' });
+  router.push('/forum').then(() => {
+      window.location.reload();
+  });
 };
 
 const logout = () => {

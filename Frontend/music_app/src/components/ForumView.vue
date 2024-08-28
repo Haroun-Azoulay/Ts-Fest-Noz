@@ -1,7 +1,20 @@
 <template>
   <div class="bg-gray-100 min-h-screen flex flex-col">
     <HeaderPage />
-    <div class="container mx-auto p-4 flex-grow">
+    <section id="subheader" class="text-light" data-bgimage="url(/images-dj/background/subheader.jpg) bottom">
+      <div class="center-y relative text-center">
+          <div class="container">
+              <div class="row">
+                  
+                  <div class="col-md-12 text-center">
+                    <h1>Forum</h1>
+                  </div>
+                  <div class="clearfix"></div>
+              </div>
+          </div>
+      </div>
+    </section>
+    <div class="p-4" style="background:#371990;">
       <h1
         class="font-inter text-2xl md:text-5xl font-extrabold leading-tight tracking-normal text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 mb-6 text-center">
         Bienvenue sur le Forum !
@@ -35,7 +48,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import HeaderPage from '../pages/Header/HeaderPage-backup.vue';
+import HeaderPage from '../pages/Header/HeaderPage.vue';
 import { useRouter } from 'vue-router';
 import ApiService from "@/services/ApiService";
 import { useJwt } from '@vueuse/integrations/useJwt';

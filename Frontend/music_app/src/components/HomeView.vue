@@ -16,7 +16,7 @@
                 <!-- Inner -->
                 <div class="carousel-inner">
                     <!-- Single item -->
-                    <div class="carousel-item active" data-bgimage="url(/images-dj/slider/1.jpg)" style="background: url(/images-dj/slider/1.jpg) 0% 0% / cover;">
+                    <div class="carousel-item active" data-bgimage="url(/images-dj/slider/1.jpg)">
                         <div class="mask">
                             <div class="d-flex justify-content-center align-items-center h-100">
                                 <div class="container text-white text-center">
@@ -34,7 +34,7 @@
                         </div>
                     </div>
                     <!-- Single item -->
-                    <div class="carousel-item" data-bgimage="url(images-dj/slider/2.jpg)" style="background: url(/images-dj/slider/2.jpg) 0% 0% / cover;">
+                    <div class="carousel-item" data-bgimage="url(images-dj/slider/2.jpg)">
                         <div class="mask">
                             <div class="d-flex justify-content-center align-items-center h-100 wow f">
                                 <div class="container text-white text-center">
@@ -152,7 +152,7 @@
                     </div>
                 </div>
             </section>
-            <section id="section-plan" aria-label="section-services-tab" data-bgimage="url(images-dj/background/1.jpg)" style="background: url(/images-dj/background/1.jpg) 0% 0% / cover;">
+            <section id="section-plan" aria-label="section-services-tab" data-bgimage="url(images-dj/background/1.jpg)">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12">
@@ -165,12 +165,13 @@
                         <div class="spacer-single"></div>
                         <div class="col-md-12">
                             <div class="de_tab tab_style_4 text-center">
-                                <h2 class="text-2xl md:text-4xl font-extrabold mb-6">
-                                Les Meilleurs Evenements musicaux sont tout autour de vous !
+                                <h2 class="mb-6" style="font-size:22px;font-weight:600;">
+                                    Trouvez les meilleurs évènements à proximité !
                                 </h2>
-                                <h2 class="mb-6" style="font-size:25px;">
-                                Proposez ou assistez aux meilleurs évenements proche de chez vous ou que vous soyez !
-                                </h2>
+                                <h2><span class="id-color">OU</span></h2>
+                                <h2 class="mb-6" style="font-size:22px;font-weight:600;">
+                                    Proposez ou assistez aux meilleurs évenements proches
+                                <br/> de chez vous ou que vous soyez !</h2>
                                 <div class="de_tab_content text-left">
                                     <div id="tab1" class="tab_single_content">
                                         <div class="row">
@@ -287,7 +288,7 @@
                     </div>
                 </div>
             </section>
-            <section id="section-forum" data-bgimage="url(images-dj/background/3.jpg)" style="background: url(/images-dj/background/3.jpg) 0% 0% / cover;">
+            <section id="section-forum" data-bgimage="url(images-dj/background/3.jpg)">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12 text-center">
@@ -313,7 +314,7 @@
                     </div>
                 </div>
             </section>
-            <section id="section-gallery" data-bgimage="url(images-dj/background/2.jpg)" style="background: url(/images-dj/background/2.jpg) 0% 0% / cover;">
+            <section id="section-gallery" data-bgimage="url(images-dj/background/2.jpg)">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12 text-center">
@@ -436,50 +437,56 @@
 </template>
 
 <script setup lang="ts">
-import HeaderPage from '../pages/Header/HeaderPage.vue';
-import FooterPage from '../pages/Footer/FooterPage.vue';
-import { useRouter } from 'vue-router';
-import { ref, onMounted } from 'vue';
-import { useJwt } from '@vueuse/integrations/useJwt';
+    import HeaderPage from '../pages/Header/HeaderPage.vue';
+    import FooterPage from '../pages/Footer/FooterPage.vue';
+    import { useRouter } from 'vue-router';
+    import { ref, onMounted } from 'vue';
+    import { useJwt } from '@vueuse/integrations/useJwt';
 
-const isAuthorized = ref(false);
-const isFullAuthorized = ref(false);
-const router = useRouter();
+    const isAuthorized = ref(false);
+    const isFullAuthorized = ref(false);
+    const router = useRouter();
 
-const goToCityPage = () => {
-  router.push({ path: '/city' });
-};
+    const goToCityPage = () => {
+        router.push('/city').then(() => {
+            window.location.reload();
+        });
+    };
 
-onMounted(async () => {
-  try {
-    const authToken = localStorage.getItem('authToken');
-    if (authToken) {
-      const { payload } = useJwt(authToken);
-      const roleId = payload.value?.role;
+    const goAddEventPage = () => {
+        if (isFullAuthorized.value) {
+            router.push('/add').then(() => {
+                window.location.reload();
+            });
+        }
+    };
 
-      if (roleId === 'admin' || roleId === 'artist' || roleId === 'organizer') {
-        isAuthorized.value = true;
-        isFullAuthorized.value = true;
-      } else if (roleId === 'user') {
-        isFullAuthorized.value = true;
-      }
-    }
-  } catch (error) {
-    console.error('Erreur lors de la requête :', error);
-  }
-});
+    const goForumPage = () => {
+        if (isFullAuthorized.value) {
+            router.push('/forum').then(() => {
+                window.location.reload();
+            });
+        }
+    };
 
-const goAddEventPage = () => {
-  if (isFullAuthorized.value) {
-    router.push({ path: '/add' });
-  }
-};
+    onMounted(async () => {
+        try {
+            const authToken = localStorage.getItem('authToken');
+            if (authToken) {
+            const { payload } = useJwt(authToken);
+            const roleId = payload.value?.role;
 
-const goForumPage = () => {
-  if (isFullAuthorized.value) {
-    router.push({ path: '/forum' });
-  }
-};
+            if (roleId === 'admin' || roleId === 'artist' || roleId === 'organizer') {
+                isAuthorized.value = true;
+                isFullAuthorized.value = true;
+            } else if (roleId === 'user') {
+                isFullAuthorized.value = true;
+            }
+            }
+        } catch (error) {
+            console.error('Erreur lors de la requête :', error);
+        }
+    });
 </script>
 
 <style>

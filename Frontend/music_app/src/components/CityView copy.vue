@@ -1,5 +1,5 @@
 <template>
-  <div id="wrapper">
+  <div class="container">
     <HeaderPage />
     <ModalConfirm v-model="showError" title="Erreur" @confirm="confirmError">
       <p>{{ errorMessage }}</p>
@@ -7,20 +7,8 @@
     <ModalConfirm v-model="showSuccess" title="Confirmation" @confirm="confirmSuccess">
       <p>{{ successMessage }}</p>
     </ModalConfirm>
-    <section id="subheader" class="text-light" data-bgimage="url(/images-dj/background/subheader.jpg) bottom">
-      <div class="center-y relative text-center">
-          <div class="container">
-              <div class="row">
-                  <div class="col-md-12 text-center">
-                    <h1>Plan</h1>
-                  </div>
-                  <div class="clearfix"></div>
-              </div>
-          </div>
-      </div>
-    </section>
-    <fieldset style="background:#371990">
-      <h2>Paramètres d'événements</h2>
+    <fieldset>
+      <legend>Paramètres d'événements</legend>
       <div>
         <input type="radio" id="huey" name="drone" value="huey" @change="handleChangeAllPoints" checked />
         <label for="huey"> Tous les points </label>
@@ -42,12 +30,8 @@
         <button @click="filterPointsByDate">Filtrer</button>
       </div>
     </fieldset>
-    <section class="map_box_container">
-      <div id="map">
-      </div>
-    </section>
+    <section id="map" style="position: absolute; width: 100%; height: 100%"></section>
   </div>
-  <FooterPage/>
 </template>
 
 <script setup lang="ts">
@@ -56,8 +40,7 @@ import mapboxgl, { Map } from 'mapbox-gl';
 import { useJwt } from '@vueuse/integrations/useJwt';
 import ApiService from "@/services/ApiService";
 import { format } from 'date-fns';
-import HeaderPage from '../pages/Header/HeaderPage.vue';
-import FooterPage from '../pages/Footer/FooterPage.vue';
+import HeaderPage from '../pages/Header/HeaderPage-backup.vue';
 import ModalConfirm from './pModal/ModalConfirm.vue';
 
 const showError = ref(false);
@@ -276,7 +259,7 @@ const handleChangeMyPoints = async () => {
 fieldset {
   border: 1px solid #ccc;
   padding: 10px;
-  padding-bottom: 20px;
+  margin-bottom: 20px;
   background-color: #f9f9f9;
 }
 

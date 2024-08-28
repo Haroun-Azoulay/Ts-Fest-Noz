@@ -1,7 +1,7 @@
 searchpage.vue : <template>
-  <section class="flex justify-center items-center mt-4  min-h-screen">
+  <section class="flex justify-center items-center  min-h-screen">
     <div class="w-full max-w-lg flex justify-center items-center flex-col p-4 rounded-md shadow-lg bg-white">
-      <h1 class="text-black mb-4 text-xl font-bold text-center">localisez de l'événement</h1>
+      <h1 class="text-black mb-4 text-xl font-bold text-center">Créez un marqueur d'un évènement</h1>
       <form @submit.prevent="geocodeAndSubmit" class="w-full">
         <div class="mb-4">
           <label class="block text-black text-m font-medium leading-tight">Numéro de rue</label>

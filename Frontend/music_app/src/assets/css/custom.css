@@ -1,0 +1,22 @@
+.map_box_container{
+    height: 100%!important;
+    width: 100%!important;
+    background:#371990;
+    padding-left:5%;
+    padding-right:5%;
+}
+
+#map {
+    top: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+.mapboxgl-canvas {
+    width:auto;
+    height:100%!important;
+}
+
+select {
+    color:black;
+}

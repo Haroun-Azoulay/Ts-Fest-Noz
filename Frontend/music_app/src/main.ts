@@ -18,6 +18,7 @@ import './assets/css/style.css'
 import './assets/css/de-dj.css'
 import './assets/css/colors/scheme-02.css'
 import './assets/css/coloring.css'
+import './assets/css/custom.css'
 
 const app = createApp(App)
 

@@ -2,22 +2,15 @@
 <template>
   <div>
     <HeaderPage></HeaderPage>
-    <section id="subheader" class="text-light" data-bgimage="url(/images-dj/background/subheader.jpg) bottom">
-      <div class="center-y relative text-center">
-          <div class="container">
-              <div class="row">
-                  
-                  <div class="col-md-12 text-center">
-                    <h1>Proposer un évènement</h1>
-                  </div>
-                  <div class="clearfix"></div>
-              </div>
-          </div>
-      </div>
-    </section>
-    <h2 class="" style="text-align:center;background:#371990;margin-bottom:0;">
-        Entrez vos informations et situer<br/> <span class="id-color">votre événement sur la carte !</span>
-    </h2>
+    <div class="text-center md:mr-8 flex-1 mb-8 md:mb-0">
+      <h1
+        class="font-inter text-2xl md:text-5xl font-extrabold leading-tight tracking-normal text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 mb-6">
+        Le Meilleur de l'évenement musical !
+      </h1>
+      <h3 class="font-inter text-2xl md:text-3xl font-extrabold leading-tight tracking-normal mb-6">
+        Entrez vos informations et situez votre événement sur la carte !
+      </h3>
+    </div>
     <SearchPage @geocodeResult="handleGeocodeResult"></SearchPage>
     <ModalConfirm v-model="showError" title="Erreur" @confirm="confirmError">
       <p>{{ errorMessage }}</p>
@@ -25,12 +18,12 @@
     <ModalConfirm v-model="showSuccess" title="Confirmation" @confirm="confirmSuccess">
       <p>{{ successMessage }}</p>
     </ModalConfirm>
+    <section></section>
     <section class="flex flex-col lg:flex-row justify-center items-center">
-      <h2 style="text-align:center;position:absolute;z-index:1;">La carte s'affichera après que vous ayez cliqué sur Rechercher.</h2>
-      <div id="map" class="w-full lg:w-3/5 h-64 lg:h-500px" style="height: 0px;z-index:2;"></div>
+      <div id="map" class="w-full lg:w-3/5 h-64 lg:h-500px" style="height: 600px;"></div>
       <div
         class="border-2 w-full lg:w-1/5 flex justify-center items-center flex-col bg-violet-600 rounded-md mt-5 lg:mt-0 p-4"
-        v-if="result" style="height: 100%;z-index:2;">
+        v-if="result" style="height: 600px;">
         <h1 class="text-white mb-4 text-xl font-bold text-center">Ajout de l'evenement</h1>
         <label class="text-white text-m font-medium leading-tight text-center">Adresse complète</label>
         <p class="text-m text-white mb-4 text-center">Nom de l'emplacement : {{ result.place }} {{ result.postalCode }}
@@ -65,7 +58,7 @@
         </button>
       </div>
     </section>
-    <!--<section class="max-w-screen-lg mx-auto p-4 md:p-16">
+    <section class="max-w-screen-lg mx-auto p-4 md:p-16">
       <div class="flex justify-evenly items-center">
         <img src="../assets/images/jazze.PNG" alt="Jazz Logo" class="w-32 h-32 object-contain mx-4 my-4">
         <img src="../assets/images/rock.PNG" alt="Rock Logo" class="w-32 h-32 object-contain mx-4 my-4">
@@ -74,15 +67,17 @@
         <img src="../assets/images/rap.PNG" alt="Rap Logo" class="w-32 h-32 object-contain mx-4 my-4">
       </div>
     </section>
-    <hr class="my-8 border-gray-200">-->
+    <FooterPage></FooterPage>
+  
+    <hr class="my-8 border-gray-200">
     <ModalConfirm v-model="showError" title="Erreur" @confirm="confirmError">
       <p>{{ errorMessage }}</p>
     </ModalConfirm>
     <ModalConfirm v-model="showSuccess" title="Confirmation" @confirm="confirmSuccess">
       <p>{{ successMessage }}</p>
     </ModalConfirm>
+    <section></section>
   </div>
-  <FooterPage></FooterPage>
 </template>
 
 
@@ -90,7 +85,7 @@
 import { ref, onMounted, computed } from 'vue';
 import mapboxgl from 'mapbox-gl';
 import ApiService from "@/services/ApiService";
-import HeaderPage from '../pages/Header/HeaderPage.vue';
+import HeaderPage from '../pages/Header/HeaderPage-backup.vue';
 import SearchPage from '../pages/Map/SearchPage.vue';
 import ModalConfirm from './pModal/ModalConfirm.vue';
 import FooterPage from '../pages/Footer/FooterPage.vue';
@@ -137,10 +132,6 @@ const styleColor = computed(() => {
 const handleGeocodeResult = (geocodeResult) => {
   result.value = geocodeResult;
   updateMap([geocodeResult.longitude, geocodeResult.latitude]);
-  const elem = document.getElementById("map");
-  if (elem) {
-    elem.style.height = "600px";
-  }
 };
 
 const addPoint = async () => {

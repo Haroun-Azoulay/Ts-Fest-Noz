@@ -1,5 +1,18 @@
 <template>
   <HeaderPage></HeaderPage>
+  <section id="subheader" class="text-light" data-bgimage="url(/images-dj/background/subheader.jpg) bottom">
+      <div class="center-y relative text-center">
+          <div class="container">
+              <div class="row">
+                  
+                  <div class="col-md-12 text-center">
+                    <h1>Gestion des utilisateurs</h1>
+                  </div>
+                  <div class="clearfix"></div>
+              </div>
+          </div>
+      </div>
+    </section>
   <section>
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
       <table class="w-full text-sm text-left rtl:text-right text-blue-100 dark:text-blue-100">
@@ -69,12 +82,14 @@
       </table>
     </div>
   </section>
+  <FooterPage/>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import ApiService from "@/services/ApiService";
-import HeaderPage from '../pages/Header/HeaderPage-backup.vue';
+import HeaderPage from '../pages/Header/HeaderPage.vue';
+import FooterPage from '../pages/Footer/FooterPage.vue';
 
 const users = ref([]);
 
