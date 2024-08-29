@@ -1,8 +1,21 @@
 <template>
-  <div class="bg-gray-100 min-h-screen flex flex-col items-center">
-    <HeaderPage />
+  <HeaderPage />
+  <section id="subheader" class="text-light" data-bgimage="url(/images-dj/background/subheader.jpg) bottom">
+    <div class="center-y relative text-center">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-md-12 text-center">
+                  <h1>FORUM</h1>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+  </section>
+  <div class="min-h-screen flex flex-col items-center" style="background:#371990">
     <div class="w-full max-w-2xl p-6 bg-white rounded-lg shadow-md mt-8">
-      <h2 class="text-3xl font-extrabold text-gray-800 mb-6 text-center">Écrire un post</h2>
+      <h2 class="text-3xl font-extrabold text-gray-800 mb-6 text-center text-black">Ecrire un post</h2>
       <form @submit.prevent="addPost" class="space-y-4">
         <div>
           <label class="block text-sm font-medium text-gray-700">Titre</label>
@@ -34,18 +47,20 @@
         <div class="flex justify-center">
           <button
             type="submit"
-            class="mt-1 bg-violet-600 text-white px-4 py-2 rounded-md hover:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-600 focus:ring-opacity-50"
+            class="mt-1 bg-violet-600 text-white font-semibold px-4 py-2 rounded-md hover:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-600 focus:ring-opacity-50"
           >
-            Ajouter le post
+            CONFIRMER
           </button>
         </div>
       </form>
     </div>
   </div>
+  <FooterPage/>
 </template>
   <script setup lang="ts">
   import { ref, onMounted } from 'vue';
-  import HeaderPage from '../pages/Header/HeaderPage-backup.vue';
+  import HeaderPage from '../pages/Header/HeaderPage.vue';
+  import FooterPage from '../pages/Footer/FooterPage.vue';
   import { useRouter } from 'vue-router';
   import ApiService from "@/services/ApiService";
   import { useJwt } from '@vueuse/integrations/useJwt';

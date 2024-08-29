@@ -24,16 +24,16 @@
         <button
           class="<ButtonPrimary w-full md:w-80 h-12 px-6 m-2 py-2.5 bg-gradient-to-r from-violet-500 to-purple-700 rounded-lg flex justify-center items-center shadow-lg transform hover:scale-105 transition-transform duration-300>"
           @click="goToAddPost">
-          <span class="ButtonSecondary text-center text-white text-base font-bold font-['Roboto']">
-            Écrire un post
+          <span class=" text-center text-white font-bold">
+            NOUVEAU POST
           </span>
         </button>
         </label>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <div v-for="item in post" :key="item.id" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-          <h2 class="text-xl font-semibold mb-2">{{ item.title }}</h2>
-          <p class="text-gray-700 mb-4">{{ item.description }}</p>
+          <h2 class="text-xl font-semibold mb-2 text-black">{{ item.title }}</h2>
+          <p class="text-black-700 mb-4">{{ item.description }}</p>
           <button
             class="ButtonPrimary text-white w-full md:w-80 h-12 px-6 m-2 py-2.5 bg-gradient-to-r from-violet-500 to-purple-700 rounded-lg flex justify-center items-center shadow-lg transform hover:scale-105 transition-transform duration-300"
             @click="goTosingleForum(item.id)">

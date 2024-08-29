@@ -1,20 +1,33 @@
 <template>
-  <div class="min-h-screen flex flex-col">
-    <HeaderPage></HeaderPage>
+  <HeaderPage/>
+  <section id="subheader" class="text-light" data-bgimage="url(/images-dj/background/subheader.jpg) bottom">
+      <div class="center-y relative text-center">
+          <div class="container">
+              <div class="row">
+                  
+                  <div class="col-md-12 text-center">
+                    <h1>Détails de l'évènement</h1>
+                  </div>
+                  <div class="clearfix"></div>
+              </div>
+        </div>
+    </div>
+  </section>
+  <div class="flex flex-col" style="background:#371990;height:50vh;padding-top:3%;">
     <main class="flex-grow">
       <section class="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg mt-6">
-        <h1 class="text-3xl font-bold mb-6">Détails de l'événement</h1>
+        <h2 class="text-2xl font-bold text-black">Détails</h2>
         <div v-if="event" class="space-y-4">
           <div class="flex items-center">
             <span class="text-gray-500 font-semibold">Nom:</span>
-            <span class="ml-2">{{ event.name }}</span>
+            <span class="ml-2 text-black font-semibold">{{ event.name }}</span>
           </div>
           <div class="flex items-center">
             <span class="text-gray-500 font-semibold">Description:</span>
-            <span class="ml-2">{{ event.description }}</span>
+            <span class="ml-2 text-black">{{ event.description }}</span>
           </div>
-          <button @click="goToPaymentPage" class="mt-6 bg-violet-600 text-white py-2 px-6 rounded hover:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-600 focus:ring-opacity-50">
-            Payer
+          <button @click="goToPaymentPage" class="font-bold mt-6 bg-violet-600 text-white py-2 px-6 rounded hover:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-600 focus:ring-opacity-50">
+            PAYER
           </button>
         </div>
         <div v-else class="text-center">
@@ -22,15 +35,15 @@
         </div>
       </section>
     </main>
-    <FooterPage></FooterPage>
   </div>
+  <FooterPage></FooterPage>
 </template>
 
 
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import HeaderPage from '../pages/Header/HeaderPage-backup.vue';
+import HeaderPage from '../pages/Header/HeaderPage.vue';
 import { useRouter, useRoute } from 'vue-router';
 import ApiService from "@/services/ApiService";
 import { useJwt } from '@vueuse/integrations/useJwt';

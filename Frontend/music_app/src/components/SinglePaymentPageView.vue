@@ -1,23 +1,37 @@
 <template>
-  <div>
-    <HeaderPage></HeaderPage>
-    <section class="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg mt-6">
-      <h1 class="text-3xl font-bold mb-4">Détails de l'événement</h1>
-      <p class="text-xl mb-6">Veuillez scanner le QR code ci-dessous pour plus de détails.</p>
+  <HeaderPage/>
+  <section id="subheader" class="text-light" data-bgimage="url(/images-dj/background/subheader.jpg) bottom">
+      <div class="center-y relative text-center">
+          <div class="container">
+              <div class="row">
+                  <div class="col-md-12 text-center">
+                    <h1>Paiement</h1>
+                  </div>
+                  <div class="clearfix"></div>
+              </div>
+        </div>
+    </div>
+  </section>
+  <div style="background:#371990;padding-top:3%;">
+    <section class="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg">
+      <h2 class="text-2xl font-bold text-black">Détails</h2>
+      <p class="text-xl mb-6 text-black">Veuillez scanner le QR code ci-dessous pour plus de détails.</p>
       <div class="flex justify-center mb-6">
         <qrcode-vue :value="qrValue" :level="level" :render-as="renderAs" class="w-64 h-64" />
       </div>
       <div class="text-center">
-        <button @click="goToIdentificationPage" class="bg-violet-600 text-white py-2 px-4 rounded hover:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-600 focus:ring-opacity-50">
-          Essayer sans QR code
+        <button @click="goToIdentificationPage" class="bg-violet-600 text-white py-2 px-4 rounded hover:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-600 focus:ring-opacity-50 font-semibold">
+          ESSAYER SANS QR CODE
         </button>
       </div>
     </section>
   </div>
+  <FooterPage/>
 </template>
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue';
-import HeaderPage from '../pages/Header/HeaderPage-backup.vue';
+import HeaderPage from '../pages/Header/HeaderPage.vue';
+import FooterPage from '../pages/Footer/FooterPage.vue';
 import { useRouter } from 'vue-router';
 import QrcodeVue, { Level, RenderAs } from 'qrcode.vue';
 
