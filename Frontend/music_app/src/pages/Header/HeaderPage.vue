@@ -74,47 +74,31 @@ const isLoggedIn = ref(false);
 const isAdmin = ref(false);
 
 const goToSigninPage = () => {
-  router.push('/signin').then(() => {
-      window.location.reload();
-  });
+  router.push({ path : '/signin' });
 };
 
 const goToSignupPage = () => {
-  router.push('/signup').then(() => {
-      window.location.reload();
-  });
+  router.push({ path : '/signup' });
 };
 
 const goToAdminHomePage = () => {
-  router.push('/admin').then(() => {
-      window.location.reload();
-  });
+  router.push({ path : '/admin' });
 };
 
 const goToEventsPage = () => {
-  router.push('/event').then(() => {
-      window.location.reload();
-  });
+  router.push({ path : '/event' });
 };
 
 const goToCityPage = (event: Event) => {
-  event.preventDefault();
-  router.push('/city').then(() => {
-      window.location.reload();
-  });
+  router.push({ path : '/city' });
 };
 
 const goAddEventPage = (event: Event) => {
-  router.push('/add').then(() => {
-      window.location.reload();
-  });
+  router.push({ path : '/add' });
 };
 
 const goForumPage = (event: Event) => {
-  event.preventDefault();
-  router.push('/forum').then(() => {
-      window.location.reload();
-  });
+  router.push({ path : '/forum' });
 };
 
 const logout = () => {

@@ -16,10 +16,10 @@
                 <div class="widget">
                     <h5>Liens rapides</h5>
                     <ul>
-                        <li><a href="02_djfest-blog.html">Plan</a></li>
-                        <li><a href="02_djfest-gallery.html">Proposer un évènement</a></li>
-                        <li><a href="02_djfest-contact.html">Forum</a></li>
-                        <li><a href="#section-tickets">Contactez-nous</a></li>
+                        <li><a @click="goToCityPage">Plan</a></li>
+                        <li><a @click="goToEventsPage">Liste d'évènements</a></li>
+                        <li><a @click="goToForumPage">Forum</a></li>
+                        <li><a @click="goToCityPage">Contactez-nous</a></li>
                     </ul>
                 </div>
             </div>
@@ -77,6 +77,36 @@
     </div>
 </footer>
 </template>
+
+<script setup lang="ts">
+import { useRouter, useRoute } from 'vue-router';
+import { onMounted } from 'vue';
+const router = useRouter();
+const route = useRoute();
+
+const goToCityPage = (event: Event) => {
+  router.push({ path : '/city' });
+};
+
+const goToEventsPage = (event: Event) => {
+  router.push({ path : '/event' });
+};
+
+const goToForumPage = (event: Event) => {
+  router.push({ path : '/forum' });
+};
+
+onMounted(() => {
+    const findScript = document.getElementById('designesiajs');
+    if (findScript) {
+        findScript.remove();
+    }
+    const script = document.createElement('script');
+    script.id = 'designesiajs';
+    script.src = '/js/designesia.js';
+    document.body.appendChild(script);
+});
+</script>
 
 <style scoped>
     @tailwind base;
