@@ -5,7 +5,7 @@
           <div class="container">
               <div class="row">
                   <div class="col-md-12 text-center">
-                    <h1>Paiement</h1>
+                    <h1>Détails de l'évènement</h1>
                   </div>
                   <div class="clearfix"></div>
               </div>

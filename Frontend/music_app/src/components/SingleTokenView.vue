@@ -1,19 +1,34 @@
 <template>
+  <HeaderPage/>
+  <section id="subheader" class="text-light" data-bgimage="url(/images-dj/background/subheader.jpg) bottom">
+    <div class="center-y relative text-center">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-md-12 text-center">
+                  <h1>Page de vérification</h1>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+  </section>
   <div :class="['min-h-screen flex flex-col', backgroundClass]">
-    <HeaderPage></HeaderPage>
     <div class="flex-grow flex flex-col items-center justify-center p-4">
-      <p class="text-xl font-semibold mb-4">Page de vérification</p>
+      <p class="text-black text-xl font-semibold mb-4">Page de vérification</p>
       <button @click="deletetoken" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300 ease-in-out mb-4">
         Supprimer le token
       </button>
-      <p class="text-gray-700">{{ message }}</p>
+      <p class="text-gray-700 text-black">{{ message }}</p>
     </div>
   </div>
+  <FooterPage/>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
-import HeaderPage from '../pages/Header/HeaderPage-backup.vue';
+import HeaderPage from '../pages/Header/HeaderPage.vue';
+import FooterPage from '../pages/Footer/FooterPage.vue';
 import ApiService from '../services/ApiService';
 import { useRouter, useRoute } from 'vue-router';
 
