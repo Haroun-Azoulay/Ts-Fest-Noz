@@ -1,5 +1,6 @@
 import { CityAttributes } from "../interfaces/types";
 import CityModel from "../models/City";
+import Event from "../models/Event";
 import { Request, Response } from "express";
 
 const addPoint = async (req: Request, res: Response) : Promise<Response<any, Record<string, any>>> => {
@@ -129,8 +130,14 @@ const deletePoint = async (req: Request, res: Response) : Promise<Response<any, 
       return res.status(403).json({ message: "You do not have permission to delete this item" });
     }
 
-    await point.destroy();
+    CityModel.beforeDestroy(async (city, options) => {
+      await Event.destroy({
+        where: { id: point.id },
+      });
+    });
 
+    await point.destroy();
+    
     return res.status(200).json({ message: "The point was successfully deleted" });
   } catch (error) {
     console.error(error);
