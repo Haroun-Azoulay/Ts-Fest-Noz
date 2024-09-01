@@ -14,8 +14,8 @@
   </section>
   <div style="background:#371990;padding-top:3%;">
     <section class="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg">
-      <h2 class="text-2xl font-bold text-black">Détails</h2>
-      <p class="text-xl mb-6 text-black">Veuillez scanner le QR code ci-dessous pour plus de détails.</p>
+      <h2 class="text-2xl font-bold text-black">Merci beaucoup de votre achat !</h2>
+      <p class="text-xl mb-6 text-black">Vous retrouverez ci-dessous le QR Code à présenter à l'évènement.</p>
       <div class="flex justify-center mb-6">
         <qrcode-vue :value="qrValue" :level="level" :render-as="renderAs" class="w-64 h-64" />
       </div>

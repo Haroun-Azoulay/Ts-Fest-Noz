@@ -62,6 +62,15 @@ const geocodeAndSubmit = async () => {
 
     // Mettez à jour la carte avec le nouveau marqueur
     updateMap([longitude, latitude]);
+
+    const elem = document.getElementById('add-event-map');
+    const select_map = document.getElementById('map');
+    if (elem) {
+      elem.style.height = '110vh';
+    }
+    if (select_map) {
+      select_map.style.height = '100%';
+    }
   } catch (error) {
     console.error('Erreur de géocodage d\'adresse :', error.message);
     // Gérez l'erreur, par exemple, affichez un message à l'utilisateur

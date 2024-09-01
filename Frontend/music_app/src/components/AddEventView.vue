@@ -6,7 +6,6 @@
       <div class="center-y relative text-center">
           <div class="container">
               <div class="row">
-                  
                   <div class="col-md-12 text-center">
                     <h1>Proposer un évènement</h1>
                   </div>
@@ -16,7 +15,7 @@
       </div>
     </section>
     <h2 class="" style="text-align:center;background:#371990;margin-bottom:0;">
-        Entrez vos informations et situer<br/> <span class="id-color">votre événement sur la carte !</span>
+        Entrez vos informations et situez<br/> <span class="id-color">votre événement sur la carte !</span>
     </h2>
     <SearchPage @geocodeResult="handleGeocodeResult"></SearchPage>
     <ModalConfirm v-model="showError" title="Erreur" @confirm="confirmError">
@@ -26,43 +25,47 @@
       <p>{{ successMessage }}</p>
     </ModalConfirm>
     <section class="flex flex-col lg:flex-row justify-center items-center">
-      <h2 style="text-align:center;position:absolute;z-index:1;">La carte s'affichera après que vous ayez cliqué sur Rechercher.</h2>
-      <div id="map" class="w-full lg:w-3/5 h-64 lg:h-500px" style="height: 0px;z-index:2;"></div>
-      <div
-        class="border-2 w-full lg:w-1/5 flex justify-center items-center flex-col bg-violet-600 rounded-md mt-5 lg:mt-0 p-4"
-        v-if="result" style="height: 100%;z-index:2;">
-        <h1 class="text-white mb-4 text-xl font-bold text-center">Ajout de l'evenement</h1>
-        <label class="text-white text-m font-medium leading-tight text-center">Adresse complète</label>
-        <p class="text-m text-white mb-4 text-center">Nom de l'emplacement : {{ result.place }} {{ result.postalCode }}
-          {{ result.city }} {{ result.country }}</p>
-        <label class="text-white text-m font-medium leading-tight mb-1 text-center">Nom de l'evenement</label>
-        <input class="w-full mb-4 p-2 rounded" placeholder="Saisissez le nom de l'événement" v-model="event_name" />
-        <label class="text-white text-m font-medium leading-tight text-center">Choisissez une heure pour votre rendez-vous :</label>
-        <input type="datetime-local" class="mb-4 w-full h-12 p-2 rounded" name="meeting-time" v-model="meetingTime"
-          min="2024-07-07T00:00" max="2025-07-14T00:00" />
-        <label for="music-style-select" class="mb-1 text-white text-m font-medium leading-tight text-center">Style de
-          musique</label>
-        <select class="mb-4 w-full h-12 p-2 rounded" v-model="selectedStyle" name="style" id="music-style-select">
-          <option value="">Type de musique</option>
-          <option value="jazz">Jazz</option>
-          <option value="rap-rnb">Rap - R'N'B</option>
-          <option value="classique">Classique</option>
-          <option value="reggae">Reggae</option>
-          <option value="pop-rock">Pop - Rock</option>
-          <option value="country">Country</option>
-          <option value="autre">Autres</option>
-        </select>
-        <label class="text-white text-m font-medium leading-tight mb-1 text-center">Numéro du groupe / de
-          l'artiste</label>
-        <input class="mb-4 w-full p-2 rounded" v-model="event_label" type="text"
-          placeholder="Entrez le nom de l'événement" required>
-        <label class="text-white text-m font-medium leading-tight mb-1 text-center">Description de l'événement</label>
-        <textarea class="mb-1 w-full h-24 p-2 rounded" v-model="event_txt" type="text"
-          placeholder="Entrez la description" required></textarea>
-        <button @click="addPoint" type="submit"
-          class="mt-1 bg-white text-violet-600 p-2 rounded hover:text-white hover:bg-violet-300 focus:outline-none focus:ring focus:ring-violet-600 focus:ring-opacity-50">
-          Ajouter un point et l'événement
-        </button>
+      <!--<h2 style="text-align:center;position:absolute;z-index:1;">La carte s'affichera après que vous ayez cliqué sur Rechercher.</h2>-->
+      <div id="add-event-map" class="row" style="height:0vh;">
+        <div class="col-lg-6 map_box_container" style="height:100%;">
+          <div id="map" style="height: 100%!important;"></div>
+        </div>
+        <div
+          class="col-lg-6 border-2 w-full lg:w-1/5 flex justify-center items-center flex-col bg-violet-600 rounded-md lg:mt-0 p-4"
+          v-if="result" style="height: 100%;">
+          <h1 class="text-white mb-4 text-xl font-bold text-center">Ajout de l'evenement</h1>
+          <label class="text-white text-m font-medium leading-tight text-center">Adresse complète</label>
+          <p class="text-m text-white mb-4 text-center">Nom de l'emplacement : {{ result.place }} {{ result.postalCode }}
+            {{ result.city }} {{ result.country }}</p>
+          <label class="text-white text-m font-medium leading-tight mb-1 text-center">Nom de l'evenement</label>
+          <input class="w-full mb-4 p-2 rounded" placeholder="Saisissez le nom de l'événement" v-model="event_name" />
+          <label class="text-white text-m font-medium leading-tight text-center">Choisissez une heure pour votre rendez-vous :</label>
+          <input type="datetime-local" class="mb-4 w-full h-12 p-2 rounded" name="meeting-time" v-model="meetingTime"
+            min="2024-07-07T00:00" max="2025-07-14T00:00" />
+          <label for="music-style-select" class="mb-1 text-white text-m font-medium leading-tight text-center">Style de
+            musique</label>
+          <select class="mb-4 w-full h-12 p-2 rounded" v-model="selectedStyle" name="style" id="music-style-select">
+            <option value="">Type de musique</option>
+            <option value="jazz">Jazz</option>
+            <option value="rap-rnb">Rap - R'N'B</option>
+            <option value="classique">Classique</option>
+            <option value="reggae">Reggae</option>
+            <option value="pop-rock">Pop - Rock</option>
+            <option value="country">Country</option>
+            <option value="autre">Autres</option>
+          </select>
+          <label class="text-white text-m font-medium leading-tight mb-1 text-center">Numéro du groupe / de
+            l'artiste</label>
+          <input class="mb-4 w-full p-2 rounded" v-model="event_label" type="text"
+            placeholder="Entrez le nom de l'événement" required>
+          <label class="text-white text-m font-medium leading-tight mb-1 text-center">Description de l'événement</label>
+          <textarea class="mb-1 w-full h-24 p-2 rounded" v-model="event_txt" type="text"
+            placeholder="Entrez la description" required></textarea>
+          <button @click="addPoint" type="submit"
+            class="mt-1 bg-white text-violet-600 p-2 rounded hover:text-white hover:bg-violet-300 focus:outline-none focus:ring focus:ring-violet-600 focus:ring-opacity-50">
+            Ajouter un point et l'événement
+          </button>
+        </div>
       </div>
     </section>
     <!--<section class="max-w-screen-lg mx-auto p-4 md:p-16">
@@ -113,6 +116,10 @@ const confirmError = () => {
 
 const confirmSuccess = () => {
   showSuccess.value = false;
+  const elem = document.getElementById('add-event-map');
+  if (elem) {
+    elem.style.height = '100%';
+  }
 };
 
 const styleColor = computed(() => {

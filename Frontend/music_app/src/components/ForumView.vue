@@ -30,7 +30,7 @@
         </button>
         </label>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div id="list-forum-posts" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <div v-for="item in post" :key="item.id" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
           <h2 class="text-xl font-semibold mb-2 text-black">{{ item.title }}</h2>
           <p class="text-black-700 mb-4">{{ item.description }}</p>

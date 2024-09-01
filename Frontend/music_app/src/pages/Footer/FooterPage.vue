@@ -16,10 +16,10 @@
                 <div class="widget">
                     <h5>Liens rapides</h5>
                     <ul>
-                        <li><a @click="goToCityPage">Plan</a></li>
-                        <li><a @click="goToEventsPage">Liste d'évènements</a></li>
-                        <li><a @click="goToForumPage">Forum</a></li>
-                        <li><a @click="goToCityPage">Contactez-nous</a></li>
+                        <li><a @click="goToCityPage" href="">Plan</a></li>
+                        <li><a @click="goToEventsPage" href="">Liste d'évènements</a></li>
+                        <li><a @click="goToForumPage" href="">Forum</a></li>
+                        <li><a @click="goToCityPage" href="">Contactez-nous</a></li>
                     </ul>
                 </div>
             </div>
@@ -63,11 +63,11 @@
                         </div>
                         <div class="de-flex-col">
                             <div class="social-icons">
-                                <a href="#"><i class="fa fa-facebook fa-lg"></i></a>
                                 <a href="#"><i class="fa fa-twitter fa-lg"></i></a>
+                                <!--<a href="#"><i class="fa fa-facebook fa-lg"></i></a>
                                 <a href="#"><i class="fa fa-linkedin fa-lg"></i></a>
                                 <a href="#"><i class="fa fa-pinterest fa-lg"></i></a>
-                                <a href="#"><i class="fa fa-rss fa-lg"></i></a>
+                                <a href="#"><i class="fa fa-rss fa-lg"></i></a>-->
                             </div>
                         </div>
                     </div>
@@ -85,26 +85,29 @@ const router = useRouter();
 const route = useRoute();
 
 const goToCityPage = (event: Event) => {
-  router.push({ path : '/city' });
+    event.preventDefault()
+    router.push({ path : '/city' });
 };
 
 const goToEventsPage = (event: Event) => {
-  router.push({ path : '/event' });
+    event.preventDefault()
+    router.push({ path : '/event' });
 };
 
 const goToForumPage = (event: Event) => {
-  router.push({ path : '/forum' });
+    event.preventDefault()
+    router.push({ path : '/forum' });
 };
 
 onMounted(() => {
-    const findScript = document.getElementById('designesiajs');
-    if (findScript) {
-        findScript.remove();
+    const findScriptDesignesiajs = document.getElementById('designesiajs');
+    if (findScriptDesignesiajs) {
+        findScriptDesignesiajs.remove();
     }
-    const script = document.createElement('script');
-    script.id = 'designesiajs';
-    script.src = '/js/designesia.js';
-    document.body.appendChild(script);
+    const designesiajs = document.createElement('script');
+    designesiajs.id = 'designesiajs';
+    designesiajs.src = '/js/designesia.js';
+    document.body.appendChild(designesiajs);
 });
 </script>
 

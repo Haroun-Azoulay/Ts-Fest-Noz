@@ -27,7 +27,7 @@
             <span class="ml-2 text-black">{{ event.description }}</span>
           </div>
           <button @click="goToPaymentPage" class="font-bold mt-6 bg-violet-600 text-white py-2 px-6 rounded hover:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-600 focus:ring-opacity-50">
-            PAYER
+            RÉSERVER
           </button>
         </div>
         <div v-else class="text-center">

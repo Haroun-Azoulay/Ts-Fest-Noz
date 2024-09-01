@@ -74,7 +74,7 @@
                         <div class="col-lg-12">
                             <div class="text-center">
                                 <h2 class="s2 text-black wow fadeInUp" data-wow-delay="0s"><i style="margin-right: 5%;color:black;" class="fa fa-apple"></i><i style="color:black;" class="fa fa-android"></i></h2>
-                                <h3 class="text-black wow fadeInUp" data-wow-delay=".2s">Disponible sur iOS et Android</h3>
+                                <h3 class="text-black wow fadeInUp" data-wow-delay=".2s">Bientôt disponible sur iOS et Android</h3>
                             </div>
                         </div>
                     </div>
@@ -85,8 +85,8 @@
                     <div class="row g-custom-x align-items-center">
                         <div class="col-lg-12">
                             <div class="text-center">
-                                <div class="wm wow slideInUp">Artists</div>
-                                <h2 class="wow fadeInUp" data-wow-delay=".2s"><span class="id-color">01</span> Artists</h2>
+                                <div class="wm wow slideInUp">Artistes</div>
+                                <h2 class="wow fadeInUp" data-wow-delay=".2s"><span class="id-color">01</span> Artistes</h2>
                                 <div class="small-border bg-color-2"></div>
                                 <div class="spacer-single"></div>
                             </div>
@@ -184,7 +184,7 @@
                                                         <span></span>
                                                     </li>
                                                     <li
-                                                        v-bind:style=" isAuthorized ? 'pointer-events:auto;cursor:pointer;' : 'pointer-events: none;' "
+                                                        v-bind:style=" isAuthorized ? 'pointer-events:auto;cursor:pointer;' : 'display:none;' "
                                                         @click="goAddEventPage">
                                                         <h3>Proposer un evenement</h3>
                                                         <span></span>
@@ -304,9 +304,9 @@
                             <p class="text-gray-600 mb-6 text-white">
                             Commentez, Partagez, Parlez tout simplement, exprimez vous sur les événements et faites des rencontres qui dureront peut-être toute la vie !
                             </p>
-                            <a v-bind:style=" isFullAuthorized ? 'background-color:#cdff6b;' : 'background-color:gray;pointer-events: none;' "
+                            <a v-bind:style=" isFullAuthorized ? 'background-color:#cdff6b;color:black;' : 'background-color:gray;pointer-events: none;color:white;' "
                             :disabled="!isFullAuthorized"
-                            @click="goForumPage" class="btn-main"><span class="text-white">ACCEDER AU FORUM</span></a>
+                            @click="goForumPage" class="btn-main"><span>ACCEDER AU FORUM</span></a>
                         </div>
                         <div class="flex-1 mt-8 md:mt-0 md:ml-8">
                             <img src="../assets/images/forum.png" alt="Message image" class="rounded-lg shadow-md">
@@ -318,8 +318,8 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12 text-center">
-                            <div class="wm wow slideInUp">Gallerie</div>
-                            <h2 class="wow fadeInUp" data-wow-delay=".2s"><span class="id-color">05</span> Gallerie</h2>
+                            <div class="wm wow slideInUp">Galerie</div>
+                            <h2 class="wow fadeInUp" data-wow-delay=".2s"><span class="id-color">05</span> Galerie</h2>
                             <div class="small-border bg-color wow zoomIn" data-wow-delay=".4s"></div>
                         </div>
                         <div class="spacer-single"></div>

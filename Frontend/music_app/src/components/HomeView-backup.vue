@@ -60,7 +60,7 @@
       <div class="text-center md:text-left flex-1">
         <h2 class="font-inter text-2xl md:text-4xl font-extrabold mb-6">Laissez un message !</h2>
         <p class="text-gray-600 mb-6">
-          Commentez, Partagez, Parlez tout simplement, exprimez vous sur les événements et faites des rencontres qui dureront peut-être toute la vie !
+          Commentez, Partagez, Parlez tout simplement, exprimez vous sur les événements et faites des rencontres qui dureront peut-être toute la vie!
         </p>
         <button
         :class="['ButtonPrimary', isFullAuthorized ? 'bg-violet-600' : 'bg-gray-400']"

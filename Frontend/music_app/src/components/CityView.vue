@@ -42,7 +42,7 @@
         <button @click="filterPointsByDate">Filtrer</button>
       </div>
     </fieldset>
-    <section class="map_box_container">
+    <section class="map_box_container_city">
       <div id="map">
       </div>
     </section>

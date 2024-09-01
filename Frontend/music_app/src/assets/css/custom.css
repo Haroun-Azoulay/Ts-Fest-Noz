@@ -1,9 +1,11 @@
 .map_box_container{
-    height: 100%!important;
-    width: 100%!important;
     background:#371990;
+}
+
+.map_box_container_city{
     padding-left:5%;
     padding-right:5%;
+    background:#371990;
 }
 
 #map {
@@ -23,4 +25,8 @@ select {
 
 textarea {
     color:black;
+}
+
+#list-forum-posts {
+    height:100%!important
 }

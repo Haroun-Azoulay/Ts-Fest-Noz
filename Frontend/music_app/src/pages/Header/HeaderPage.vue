@@ -20,20 +20,13 @@
                     <div class="de-flex-col header-col-mid">
                         <!-- mainmenu begin -->
                         <ul id="mainmenu">
-                            <li><a href="#de-carousel">Home</a>
-                                <ul>
-                                    <li><a href="index.html">Rockfest</a></li>
-                                    <li><a href="02_djfest-index.html">DJFest</a></li>
-                                    <li><a href="03_electrofest-index.html">Electrofest</a></li>
-                                    <li><a href="01_rockfest-index-video.html">Rockfest Video</a></li>
-                                </ul>
-                            </li>                                   
-                            <li><a href="#section-artists">Artistes</a></li>                  
-                            <li><a href="#section-plan">Plan</a></li>             
-                            <li><a href="#section-tickets">Tickets</a></li>
-                            <li><a href="#section-forum">Forum</a></li>
-                            <li><a href="#section-gallery">Gallerie</a></li>
-                            <li><a href="index-dj.html">Pages</a>
+                            <li><a href="/#de-carousel">Home</a></li>                                   
+                            <li><a href="/#section-artists">Artistes</a></li>                  
+                            <li><a href="/#section-plan">Plan</a></li>             
+                            <li><a href="/#section-tickets">Tickets</a></li>
+                            <li><a href="/#section-forum">Forum</a></li>
+                            <li><a href="/#section-gallery">Galerie</a></li>
+                            <li><a href="">Pages</a>
                                 <ul>
                                     <li><a @click.prevent="goToCityPage">Rechercher un evenement</a></li>
                                     <li><a @click.prevent="goAddEventPage">Proposer un evenement</a></li>
