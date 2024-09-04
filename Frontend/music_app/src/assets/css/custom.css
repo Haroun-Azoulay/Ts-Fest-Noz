@@ -30,3 +30,14 @@ textarea {
 #list-forum-posts {
     height:100%!important
 }
+
+.forum-comment {
+    display:flex;
+    flex-direction: column;
+}
+
+.user-avatar-forum-comment {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}

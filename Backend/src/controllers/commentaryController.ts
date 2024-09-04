@@ -20,6 +20,7 @@ const createCommentary = async (req: Request, res: Response) : Promise<Response<
     return res.status(201).json({
       id: commentary.id,
       content: commentary.content,
+      userId: commentary.userId
     });
   } catch (error) {
     console.error(error);
@@ -38,17 +39,18 @@ const getCommentariesByPost = async (req: Request, res: Response) : Promise<Resp
 
     const commentaries : Commentary[] = await Commentary.findAll({
       where: { postId },
-      attributes: ["id", "content"]
+      attributes: ["id", "content", "userId", "createdAt"]
     });
 
-    const commentariesWithUserDetails : CommentariesByPost[] = await Promise.all(commentaries.map(async (commentary) => {
+    /* const commentariesWithUserDetails : CommentariesByPost[] = await Promise.all(commentaries.map(async (commentary) => {
       return {
         id: commentary.id,
         content: commentary.content,
+        userId: commentary.userId
       };
-    }));
+    }) */
 
-    return res.json(commentariesWithUserDetails);
+    return res.json(commentaries);
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Error retrieving comments for the specified post" });

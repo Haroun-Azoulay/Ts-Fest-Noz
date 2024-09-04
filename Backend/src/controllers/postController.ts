@@ -45,7 +45,7 @@ const createPost = async (req: Request, res: Response) : Promise<Response<any, R
 const getPostById = async (req: Request, res:Response) : Promise<void> => {
     const postId : string = req.params.id;
     PostModel.findOne({
-        attributes: ['id', 'title', 'content'],
+        attributes: ['id', 'title', 'subtitle', 'content', 'userId'],
         where: {
             id: postId
         }
