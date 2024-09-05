@@ -28,7 +28,7 @@
       <!--<h2 style="text-align:center;position:absolute;z-index:1;">La carte s'affichera après que vous ayez cliqué sur Rechercher.</h2>-->
       <div id="add-event-map" class="row" style="height:0vh;">
         <div class="col-lg-6 map_box_container" style="height:100%;">
-          <div id="map" style="height: 100%!important;"></div>
+          <div id="map"></div>
         </div>
         <div
           class="col-lg-6 border-2 w-full lg:w-1/5 flex justify-center items-center flex-col bg-violet-600 rounded-md lg:mt-0 p-4"

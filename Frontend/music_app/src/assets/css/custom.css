@@ -14,11 +14,6 @@
     width: 100%;
 }
 
-.mapboxgl-canvas {
-    width:auto;
-    height:100%!important;
-}
-
 select {
     color:black;
 }
@@ -29,6 +24,10 @@ textarea {
 
 #list-forum-posts {
     height:100%!important
+}
+
+#add-event-map {
+    width:100%!important;
 }
 
 .forum-comment {

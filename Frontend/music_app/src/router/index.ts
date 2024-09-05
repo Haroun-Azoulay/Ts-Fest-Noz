@@ -10,6 +10,7 @@ import SingleEventView from '@/components/SingleEventView.vue';
 import SingleForumView from '@/components/SingleForumView.vue';
 import SinglePaymentPageView from '@/components/SinglePaymentPageView.vue';
 import SingleTokenView from '@/components/SingleTokenView.vue';
+import ContactView from '@/components/ContactView.vue';
 import ForumView from '@/components/ForumView.vue';
 import ErrorView from '@/components/404View.vue';
 import PostView from '@/components/AddPostView.vue';
@@ -33,6 +34,11 @@ const routes = [
     path: '/signin',
     name: 'signin',
     component: SigninView,
+  },
+  {
+    path: '/contact',
+    name: 'contact',
+    component: ContactView,
   },
   {
     path: '/forum',
