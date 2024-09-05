@@ -62,7 +62,7 @@
           <textarea class="mb-1 w-full h-24 p-2 rounded" v-model="event_txt" type="text"
             placeholder="Entrez la description" required></textarea>
           <button @click="addPoint" type="submit"
-            class="mt-1 bg-white text-violet-600 p-2 rounded hover:text-white hover:bg-violet-300 focus:outline-none focus:ring focus:ring-violet-600 focus:ring-opacity-50">
+            class="mt-1 bg-white text-violet-600 p-2 rounded hover:text-violet-300 focus:outline-none focus:ring focus:ring-violet-600 focus:ring-opacity-50">
             Ajouter un point et l'événement
           </button>
         </div>

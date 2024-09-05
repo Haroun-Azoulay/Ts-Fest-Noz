@@ -9,7 +9,7 @@
                             <!-- logo begin -->
                             <div id="logo">
                                 <a href="/">
-                                    <img alt="" style="height:50px;" src="../../assets/images/logo.png" />
+                                    <img alt="" style="height:100px;" src="../../assets/images/logo.png" />
                                 </a>
                             </div>
                             <!-- logo close -->

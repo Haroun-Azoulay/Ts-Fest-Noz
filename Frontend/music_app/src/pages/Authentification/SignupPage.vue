@@ -2,7 +2,7 @@
     <ModalConfirm v-model="show" title="Erreur" @confirm="confirm">
         <p>{{ errorMessage }}</p>
     </ModalConfirm>
-    <div class="flex flex-col justify-center items-center min-h-screen bg-gray-100">
+    <div class="flex flex-col justify-center items-center min-h-screen bg-gray-100 rounded-lg">
         <div class="px-16 bg-white rounded-2xl shadow-md flex flex-col justify-center items-center gap-1"
             style="height: 60rem">
             <a href="/" class="flex items-center justify-center mb-8">

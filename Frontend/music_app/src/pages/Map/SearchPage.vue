@@ -20,7 +20,7 @@ searchpage.vue : <template>
           <input class="text-center w-full p-2 border rounded shadow-md" v-model="geocoding_town" type="text" placeholder="Entrez la ville" required>
         </div>
         <div>
-          <button type="submit" class="w-full bg-violet-600 text-white p-2 rounded shadow-md hover:text-violet-600 hover:bg-white border hover:border-violet-600 focus:outline-none focus:ring focus:ring-violet-600 focus:ring-opacity-50">
+          <button type="submit" class="w-full bg-violet-600 text-white p-2 rounded shadow-md hover:text-violet-600 hover:bg-violet-400 focus:outline-none focus:ring focus:ring-violet-600 focus:ring-opacity-50">
             Rechercher
           </button>
         </div>
@@ -55,36 +55,33 @@ const emit = defineEmits(['geocodeResult']);
 const geocodeAndSubmit = async () => {
   try {
     const { latitude, longitude, streetAddress, postalCode, city, country, place } = await geocodeAddress(fullAddress.value);
-    // Mettez à jour le résultat avec les données de géocodage
+
     result.value = { latitude, longitude, streetAddress, postalCode, city, country, place };
     console.log(result.value);
     emit('geocodeResult', result.value);
 
-    // Mettez à jour la carte avec le nouveau marqueur
     updateMap([longitude, latitude]);
 
     const elem = document.getElementById('add-event-map');
     const select_map = document.getElementById('map');
     if (elem) {
-      elem.style.height = '110vh';
+      elem.style.height = '100vh';
     }
     if (select_map) {
       select_map.style.height = '100%';
     }
   } catch (error) {
     console.error('Erreur de géocodage d\'adresse :', error.message);
-    // Gérez l'erreur, par exemple, affichez un message à l'utilisateur
   }
 };
 
 
 const updateMap = (coordinates) => {
-  // Supprimez la carte existante s'il y en a une
   if (map) {
     map.remove();
   }
 
-  // Créez une nouvelle carte avec le marqueur mis à jour
+  
   map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/streets-v12',
@@ -92,7 +89,7 @@ const updateMap = (coordinates) => {
     zoom: 15,
   });
 
-  // Ajoutez le marqueur à la carte
+ 
   new mapboxgl.Marker()
     .setLngLat(coordinates)
     .addTo(map);
@@ -100,8 +97,7 @@ const updateMap = (coordinates) => {
 
 
 onMounted(() => {
-  // Initialisez la carte lors du montage du composant
-  mapboxgl.accessToken = 'pk.eyJ1IjoiYmVjaGFyaTkzIiwiYSI6ImNscGFleXpqYzA1eHgycW5rdGdma2JoOGwifQ.3I3YPCqSxPKBgvwyksQRwg';
+  mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
 });
 
 
