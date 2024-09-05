@@ -31,6 +31,7 @@
                                     <li><a @click.prevent="goToCityPage">Rechercher un evenement</a></li>
                                     <li><a @click.prevent="goAddEventPage">Proposer un evenement</a></li>
                                     <li><a @click.prevent="goForumPage">Forum</a></li>
+                                    <li><a @click.prevent="goContactPage">Contact</a></li>
                                 </ul>
                             </li>
                             
@@ -92,6 +93,10 @@ const goAddEventPage = (event: Event) => {
 
 const goForumPage = (event: Event) => {
   router.push({ path : '/forum' });
+};
+
+const goContactPage = () => {
+  router.push({ path : '/contact' });
 };
 
 const logout = () => {
