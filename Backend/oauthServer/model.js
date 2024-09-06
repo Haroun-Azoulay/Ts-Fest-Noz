@@ -4,7 +4,7 @@ module.exports = {
       clientId: 'your_client_id_here',
       clientSecret: 'your_client_secret_here',
       grants: ['authorization_code', 'password', 'client_credentials'],
-      redirectUris: ['http://localhost:4001/callback']
+      redirectUris: ['http://localhost:5000/callback']
     };
     callback(null, client);
   },

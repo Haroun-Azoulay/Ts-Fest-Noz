@@ -28,9 +28,6 @@ const config = {
 const client = new AuthorizationCode(config);
 
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
 
 app.get('/login', (req, res) => {
   const state = crypto.randomBytes(20).toString('hex');
