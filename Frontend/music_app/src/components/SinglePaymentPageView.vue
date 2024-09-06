@@ -59,6 +59,5 @@ const qrValue = computed(() => {
 const goToIdentificationPage = () => {
   const externalUrl = 'http://localhost:5000/login';
   window.location.href = externalUrl;
-  // router.push({ path: `/event/token/3AGZEYG&1386SFAFTFDA` });
 };
 </script>
