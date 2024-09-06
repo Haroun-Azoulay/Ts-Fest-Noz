@@ -17,12 +17,9 @@
       <h2 class="text-2xl font-bold text-black">Merci beaucoup de votre achat !</h2>
       <p class="text-xl mb-6 text-black">Vous retrouverez ci-dessous le QR Code à présenter à l'évènement.</p>
       <div class="flex justify-center mb-6">
-        <qrcode-vue :value="qrValue" :level="level" :render-as="renderAs" class="w-64 h-64" />
-      </div>
-      <div class="text-center">
-        <button @click="goToIdentificationPage" class="bg-violet-600 text-white py-2 px-4 rounded hover:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-600 focus:ring-opacity-50 font-semibold">
-          ESSAYER SANS QR CODE
-        </button>
+        <a @click="goToIdentificationPage">
+          <qrcode-vue :value="qrValue" :level="level" :render-as="renderAs" class="w-64 h-64" />
+        </a>
       </div>
     </section>
   </div>

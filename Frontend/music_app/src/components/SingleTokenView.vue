@@ -56,7 +56,7 @@ const checkToken = async () => {
   try {
     const response = await ApiService.post('event/get-event/token/', { token: authToken }, config);
     console.log("Réponse de la vérification du token :", response.data);
-    message.value = "Token valide. Réponse : " + JSON.stringify(response.data);
+    message.value = "Token valide.";
   } catch (error) {
     console.error("Erreur lors de la requête :", error);
     message.value = "Erreur lors de la vérification du token.";
