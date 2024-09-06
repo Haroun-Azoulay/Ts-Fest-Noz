@@ -137,6 +137,7 @@ const verifyTokenOATUH = async (req: Request, res: Response) : Promise<Response<
         return res.status(500).json({ message: "Error verifying token" });
     }
 };
+
 const deleteToken = async (req: Request, res: Response) : Promise<Response<any, Record<string, any>>> => {
     try {
         const token : string = req.params.token;

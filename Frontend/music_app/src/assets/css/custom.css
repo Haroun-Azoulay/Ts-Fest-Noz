@@ -1,0 +1,42 @@
+.map_box_container{
+    background:#371990;
+}
+
+.map_box_container_city{
+    padding-left:5%;
+    padding-right:5%;
+    background:#371990;
+}
+
+#map {
+    top: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+select {
+    color:black;
+}
+
+textarea {
+    color:black;
+}
+
+#list-forum-posts {
+    height:100%!important
+}
+
+#add-event-map {
+    width:100%!important;
+}
+
+.forum-comment {
+    display:flex;
+    flex-direction: column;
+}
+
+.user-avatar-forum-comment {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -39,6 +39,7 @@ export interface CommentaryAttributes {
   id: string;
   content: string;
   postId: string;
+  userId: string;
 }
 
 export interface Commentaries {

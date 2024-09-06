@@ -1,18 +1,19 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import SignupView from '@/views/SignupView.vue';
-import SigninView from '@/views/SigninView.vue';
-import HomeView from '@/views/HomeView.vue';
-import AddEvent from '@/views/AddEventView.vue';
-import CityView from '@/views/CityView.vue';
-import EventView from '@/views/EventView.vue';
-import AdminHomeView from '@/views/AdminHomeView.vue';
-import SingleEventView from '@/views/SingleEventView.vue';
-import SingleForumView from '@/views/SingleForumView.vue';
-import SinglePaymentPageView from '@/views/SinglePaymentPageView.vue';
-import SingleTokenView from '@/views/SingleTokenView.vue';
-import ForumView from '@/views/ForumView.vue';
-import ErrorView from '@/views/404View.vue';
-import PostView from '@/views/AddPostView.vue';
+import SignupView from '@/components/SignupView.vue';
+import SigninView from '@/components/SigninView.vue';
+import HomeView from '@/components/HomeView.vue';
+import AddEvent from '@/components/AddEventView.vue';
+import CityView from '@/components/CityView.vue';
+import EventView from '@/components/EventView.vue';
+import AdminHomeView from '@/components/AdminHomeView.vue';
+import SingleEventView from '@/components/SingleEventView.vue';
+import SingleForumView from '@/components/SingleForumView.vue';
+import SinglePaymentPageView from '@/components/SinglePaymentPageView.vue';
+import SingleTokenView from '@/components/SingleTokenView.vue';
+import ContactView from '@/components/ContactView.vue';
+import ForumView from '@/components/ForumView.vue';
+import ErrorView from '@/components/404View.vue';
+import PostView from '@/components/AddPostView.vue';
 import authMiddleware from '@/middlewares/auth';
 import authEvent from '@/middlewares/authEvent';
 import authAdmin from '@/middlewares/authAdmin';
@@ -33,6 +34,11 @@ const routes = [
     path: '/signin',
     name: 'signin',
     component: SigninView,
+  },
+  {
+    path: '/contact',
+    name: 'contact',
+    component: ContactView,
   },
   {
     path: '/forum',
@@ -113,7 +119,7 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(),
   routes,
 });
 

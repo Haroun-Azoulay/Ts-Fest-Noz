@@ -6,7 +6,7 @@
   
 
 <script setup lang="ts">
-import HeaderPage from '../components/Header/HeaderPage.vue';
+import HeaderPage from '../pages/Header/HeaderPage-backup.vue';
 import { ref, onMounted } from 'vue';
 import mapboxgl, { Map, Marker } from 'mapbox-gl';
 
