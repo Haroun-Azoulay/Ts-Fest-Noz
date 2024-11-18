@@ -19,7 +19,7 @@
                         <li><a @click="goToCityPage" href="">Plan</a></li>
                         <li><a @click="goToEventsPage" href="">Liste d'évènements</a></li>
                         <li><a @click="goToForumPage" href="">Forum</a></li>
-                        <li><a @click="goToCityPage" href="">Contactez-nous</a></li>
+                        <li><a @click="goToContactPage" href="">Contactez-nous</a></li>
                     </ul>
                 </div>
             </div>
@@ -27,10 +27,10 @@
                 <div class="widget">
                     <h5>Latest Blog</h5>
                     <ul>
-                        <li><a href="02_djfest-blog-single.html">Unreleased Footage of DJ Phenomenic</a></li>
-                        <li><a href="02_djfest-blog-single.html">DJ Fritz Announce New Single</a></li>
-                        <li><a href="02_djfest-blog-single.html">DJ Neurogenic Announce World Tour</a></li>
-                        <li><a href="02_djfest-blog-single.html">Taxidermize New Collaboration</a></li>
+                        <li><a href="">Unreleased Footage of DJ Phenomenic</a></li>
+                        <li><a href="">DJ Fritz Announce New Single</a></li>
+                        <li><a href="">DJ Neurogenic Announce World Tour</a></li>
+                        <li><a href="">Taxidermize New Collaboration</a></li>
                     </ul>
                 </div>
             </div>
@@ -63,7 +63,7 @@
                         </div>
                         <div class="de-flex-col">
                             <div class="social-icons">
-                                <a href="#"><i class="fa fa-twitter fa-lg"></i></a>
+                                <a href="https://x.com/fest_noz_app"><i class="fa fa-twitter fa-lg"></i></a>
                                 <!--<a href="#"><i class="fa fa-facebook fa-lg"></i></a>
                                 <a href="#"><i class="fa fa-linkedin fa-lg"></i></a>
                                 <a href="#"><i class="fa fa-pinterest fa-lg"></i></a>
@@ -97,6 +97,11 @@ const goToEventsPage = (event: Event) => {
 const goToForumPage = (event: Event) => {
     event.preventDefault()
     router.push({ path : '/forum' });
+};
+
+const goToContactPage = (event: Event) => {
+    event.preventDefault()
+    router.push({ path : '/contact' });
 };
 
 onMounted(() => {

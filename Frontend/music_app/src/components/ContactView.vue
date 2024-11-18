@@ -124,17 +124,13 @@
 
           <div id="sidebar" class="col-md-4">
             <div class="widget widget_text">
-              <h3>Contact Info</h3>
+              <h3>Informations de contact</h3>
               <address>
-                <span><strong>Address:</strong>100 S Main St, Los Angeles, CA</span>
-                <span><strong>Phone:</strong>(208) 333 9296</span>
-                <span><strong>Fax:</strong>(208) 333 9298</span>
+                <span><strong>Téléphone:</strong>+33 4 73 21 46 79</span>
                 <span
                   ><strong>Email:</strong
-                  ><a href="mailto:contact@example.com">contact@example.com</a></span
+                  ><a href="mailto:contact@example.com">Festnoz@gmail.com</a></span
                 >
-                <span><strong>Web:</strong><a href="#test">http://example.com</a></span>
-                <span><strong>Open</strong>Sunday - Friday 08:00 - 18:00</span>
               </address>
             </div>
           </div>
