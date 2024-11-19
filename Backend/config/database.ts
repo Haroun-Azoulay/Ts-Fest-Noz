@@ -19,4 +19,4 @@ const sequelizeConnection : Sequelize = new Sequelize(dbName, dbUser, dbPassword
   dialect: dbDriver
 })
 
-export default sequelizeConnection
+export default sequelizeConnection;

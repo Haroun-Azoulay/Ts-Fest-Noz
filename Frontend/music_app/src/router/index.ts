@@ -107,14 +107,14 @@ const routes = [
     component: SinglePaymentPageView,
   },
   {
-    path: '/error',
-    name: 'ErrorView',
-    component: ErrorView,
-  },
-  {
     path: '/event/token/3AGZEYG&1386SFAFTFDA',
     name: 'Singletoken',
     component: SingleTokenView,
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'not-found',
+    component: ErrorView,
   },
 ];
 

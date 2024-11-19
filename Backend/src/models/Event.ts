@@ -42,7 +42,7 @@ Event.init(
   }
 );
 
-Event.hasMany(Payment, { foreignKey: "payment_id", as: "payment" });
-Payment.belongsTo(Event, { foreignKey: 'payment_id' });
+// Event.hasMany(Payment, { foreignKey: "payment_id", as: "payment" });
+// Payment.belongsTo(Event, { foreignKey: 'payment_id' });
 
 export default Event;

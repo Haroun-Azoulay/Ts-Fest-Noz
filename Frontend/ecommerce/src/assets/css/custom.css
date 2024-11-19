@@ -1,0 +1,13 @@
+.ecommerce-select-category {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.ecommerce-select-category .col{
+    text-align:center;
+}
+
+#add-member-area {
+    margin-bottom:5%;
+}
