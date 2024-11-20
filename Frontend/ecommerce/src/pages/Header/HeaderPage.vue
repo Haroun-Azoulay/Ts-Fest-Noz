@@ -25,8 +25,8 @@
                             <li><a href="">Pages</a>
                                 <ul>
                                     <li><a @click.prevent="goToGroupPage">Créer un groupe</a></li>
-                                    <li><a @click.prevent="goAddEventPage">Vendre un produit</a></li>
-                                    <li><a @click.prevent="goAddEventPage">Voir mes produits</a></li>
+                                    <li><a @click.prevent="goToGroupPage">Vendre un produit</a></li>
+                                    <li><a @click.prevent="goToGroupPage">Voir mes produits</a></li>
                                     <li><a @click.prevent="goContactPage">Contact</a></li>
                                 </ul>
                             </li>
@@ -40,6 +40,8 @@
                             <span id="menu-btn"></span>
                         </div>
                         <div v-if="isLoggedIn" class="menu_side_area" style="text-align:center;">
+                            <a @click="logout" style=" margin-right: 5px;"><i class="bi bi-bag-fill" style="font-size:2em"></i></a>
+                            <a @click="goToDashboardPage" style=" margin-right: 5px;"><i class="bi bi-person-circle" style="font-size:2em"></i></a>
                             <a @click="logout" class="btn-main" style="background-color:red;margin-right:5px;">Deconnexion</a>
                             <a v-if="isAdmin" @click="goToAdminHomePage" class="btn-main" style="background-color:green;margin-right:5px;">Admin</a>
                             <a @click="goToFestNozOfficialWebsite" class="btn-main">Site Officiel Fest-Noz</a>
@@ -80,12 +82,12 @@ const goToFestNozOfficialWebsite = () => {
   window.location.href = 'http://localhost:5173'
 };
 
-const goToGroupPage = (event: Event) => {
+const goToGroupPage = () => {
   router.push({ path : '/group' });
 };
 
-const goAddEventPage = (event: Event) => {
-  router.push({ path : '/add' });
+const goToDashboardPage = () => {
+  router.push({ path : '/dashboard' });
 };
 
 const goForumPage = (event: Event) => {

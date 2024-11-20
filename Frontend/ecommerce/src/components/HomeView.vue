@@ -185,12 +185,11 @@
             const authToken = localStorage.getItem('authToken');
             if (authToken) {
                 const { payload } = useJwt(authToken);
-                const roleId = payload.value?.role;
-
-                if (roleId === 'admin' || roleId === 'artist' || roleId === 'organizer') {
+                const role = payload.value?.role;
+                if (role === 'admin' || role === 'artist' || role === 'organizer') {
                     isAuthorized.value = true;
                     isFullAuthorized.value = true;
-                } else if (roleId === 'user') {
+                } else if (role === 'user') {
                     isFullAuthorized.value = true;
                 }
             }

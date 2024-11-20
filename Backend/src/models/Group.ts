@@ -3,7 +3,7 @@ import sequelizeConnection from '../../config/database';
 import { GroupAttributes } from "../interfaces/types";
 
 class Group extends Model<GroupAttributes> implements GroupAttributes {
-  public id!: string;
+  public id?: string | undefined;
   public name!: string;
 }
 

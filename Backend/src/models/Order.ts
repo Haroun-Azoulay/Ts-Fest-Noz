@@ -5,7 +5,7 @@ import User from './User';
 import OrderDetail from './OrderDetail';
 
 class Order extends Model<OrderAttributes> implements OrderAttributes {
-  public id!: string;
+  public id?: string | undefined;
   public userId!: string;
   public totalPrice!: number;
 }

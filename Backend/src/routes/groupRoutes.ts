@@ -1,15 +1,15 @@
 import express, { Router } from "express";
-import userController from "../controllers/userController";
+import groupController from "../controllers/groupController";
 import verifyToken from "../middlewares/verifyToken";
 
 const router : Router = express.Router();
 
-router.post("/signup", userController.signup);
+router.get("/me", verifyToken, groupController.getGroup);
 
-router.get("/my-user", verifyToken, userController.getUserInfo);
+router.get("/get-all-groups", verifyToken, groupController.getAllGroups);
 
-router.get("/get-all-users", verifyToken, userController.getAllUsers);
+router.post("/create-group", verifyToken, groupController.createGroup);
 
-router.post("/signin", userController.signin);
+router.delete("/delete-group/:id", verifyToken, groupController.deleteGroup);
 
 export default router;

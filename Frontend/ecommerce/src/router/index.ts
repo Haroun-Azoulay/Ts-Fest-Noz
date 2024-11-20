@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import SignupView from '@/components/SignupView.vue';
 import SigninView from '@/components/SigninView.vue';
 import HomeView from '@/components/HomeView.vue';
+import DashboardView from '@/components/DashboardView.vue';
 import GroupView from '@/components/GroupView.vue';
 import AdminHomeView from '@/components/AdminHomeView.vue';
 import ContactView from '@/components/ContactView.vue';
@@ -24,6 +25,11 @@ const routes = [
     path: '/signin',
     name: 'signin',
     component: SigninView,
+  },
+  {
+    path: '/dashboard',
+    name: 'dashboard',
+    component: DashboardView,
   },
   {
     path: '/group',

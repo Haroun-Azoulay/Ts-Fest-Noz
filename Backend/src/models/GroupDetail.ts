@@ -5,8 +5,8 @@ import User from './User';
 import Group from './Group';
 
 class GroupDetail extends Model<GroupDetailAttributes> implements GroupDetailAttributes {
-  public id!: string;
-  public groupId!: string;
+  public id?: string | undefined;
+  public groupId?: string | undefined;
   public userId!: string;
   public owner!: boolean;
 }

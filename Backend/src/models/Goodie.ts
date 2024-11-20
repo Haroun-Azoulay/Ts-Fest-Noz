@@ -8,6 +8,7 @@ class Goodie extends Model<GoodieAttributes> implements GoodieAttributes {
   userId!: string;
   goodieTypeId!: string;
   name!: string;
+  path?: string;
   quantity!: number;
   price!: number;
   available!: boolean;
@@ -49,6 +50,11 @@ Goodie.init(
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
+    },
+    path: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      unique: false,
     },
     quantity: {
       type: DataTypes.STRING,

@@ -13173,6 +13173,9 @@ a.read_more i {
 
 .menu_side_area {
     margin-left: 20px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
 
 .rtl .menu_side_area {

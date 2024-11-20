@@ -6,7 +6,7 @@ import Order from './Order';
 import Goodie from './Goodie';
 
 class OrderDetail extends Model<OrderDetailAttributes> implements OrderDetailAttributes {
-  public id!: string;
+  public id?: string | undefined;
   public userId!: string;
   public orderId!: string;
   public goodieId!: string;

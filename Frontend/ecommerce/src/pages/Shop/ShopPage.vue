@@ -4,9 +4,9 @@
             <label>Groupe</label>
             <select class="form-select" aria-label="">
                 <option selected value="none">Sélectionnez le groupe</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                <option v-for="group in allGroups" :key="group.name" :value="group.id">
+                    {{ group.name }}
+                </option>
             </select>
         </div>
         <div class="col col-lg-3">
@@ -29,10 +29,16 @@ import ApiService from '@/services/ApiService';
 const isLoggedIn = ref(false);
 const isAdmin = ref(false);
 var allGoodieTypes = ref<GoodieType[]>([]);
+var allGroups = ref<Group[]>([]);
 
 interface GoodieType {
-  id: number;
+  id: string;
   name: string;
+}
+
+interface Group {
+    id: string;
+    name: string;
 }
 
 onMounted(async () => {
@@ -45,6 +51,14 @@ onMounted(async () => {
                 },
             });
             getAllGoodieTypes.data.forEach((type : GoodieType) => allGoodieTypes.value.push(type));
+
+            const getAllGroups = await ApiService.get('/group/get-all-groups', {
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                },
+            });
+            getAllGroups.data.forEach((group : Group) => allGroups.value.push(group));
+
             const { payload } = useJwt(authToken);
             const roleId = payload.value?.role;
 
