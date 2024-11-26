@@ -8,6 +8,67 @@
     text-align:center;
 }
 
+.ecommerce-shop {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.ecommerce-cards {
+    flex: 1 0 21%;
+    display:flex;
+    justify-content: space-evenly;
+    padding:30px;
+}
+
+.ecommerce-card {
+    transition: transform .2s;
+    width: 20vw;
+}
+
+.ecommerce-card:hover {
+    transform: scale(1.2);
+}
+
+.ecommerce-card-img {
+    object-fit:cover;
+    height:20vh;
+}
+
+.ecommerce-card-body {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    height:100%;
+}
+
+.ecommerce-card-text-description {
+    text-overflow: ellipsis;
+    width:50%;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.ecommerce-card-button {
+    width:100%;
+    padding: 0 5% 0 5%;
+}
+
+.ecommerce-card-button a {
+    width:100%;
+}
+
 #add-member-area {
     margin-bottom:5%;
+}
+
+.goodieSmallImage {
+    height:5rem;
+    width:5rem;
+}
+
+.goodieSmallImage img {
+    height:100%;
+    width:100%;
+    object-fit: contain
 }

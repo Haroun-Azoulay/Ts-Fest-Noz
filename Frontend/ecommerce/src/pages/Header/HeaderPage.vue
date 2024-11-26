@@ -20,7 +20,7 @@
                     <div class="de-flex-col header-col-mid">
                         <!-- mainmenu begin -->
                         <ul id="mainmenu">
-                            <li><a href="/#de-carousel">Home</a></li>
+                            <li><a href="/">Home</a></li>
                             <li><a href="/#section-shop">Boutique</a></li>
                             <li><a href="">Pages</a>
                                 <ul>

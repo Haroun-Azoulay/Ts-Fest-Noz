@@ -37,6 +37,26 @@
           </div>
           <div class="col-md-4">
             <h3>Vos produits</h3>
+            <div v-if="myGoodies.length > 0">
+              <div v-for="goodie in myGoodies" :key="goodie">
+                <div class="row" style="display:flex;align-items:center;">
+                  <div class="col goodieSmallImage">
+                    <img :src="`http://${goodie.path}`"/>
+                  </div>
+                  <div class="col">
+                    <span>Nom : {{ goodie.name }}</span>
+                    <br>
+                    <span>Type : {{ goodie.goodieTypeId }}</span>
+                    <br>
+                    <span>Quantité : {{ goodie.quantity }}</span>
+                    <br>
+                    <span>Disponible : {{ goodie.available }}</span>
+                  </div>
+                </div>
+                <hr style="color:white;border-top:solid 1px #FFF;padding:0;margin:20px 0 20px 0;">
+              </div>
+            </div>
+            <p v-if="myGoodies.length === 0">Vous n'avez aucun goodies en vente.</p>
             <a @click="addGoodie" class="btn-main"><i class="bi bi-plus-circle-fill"></i></a>
           </div>
           <div id="sidebar" class="col-md-4">
@@ -74,23 +94,20 @@
   import ModalConfirm from './pModal/ModalConfirm.vue';
   import ModalAddGoodie from './pModal/ModalAddGoodie.vue';
   import FooterPage from '../pages/Footer/FooterPage.vue'
+  import type { Goodie, GoodieType } from '../../models/goodie';
 
   const router = useRouter();
   const route = useRoute();
   const groupName = ref('');
-  const allGroupMembers = ref([]);
   const showError = ref(false);
   const errorMessage = ref('');
   const successMessage = ref('');
   const showSuccess = ref(false);
   const showAddGoodie = ref(false);
+  var allGroupMembers = ref([]);
+  var myGoodies = ref<Goodie[]>([]);
   var addGoodiesCalledOnce = ref(false);
   var allGoodieTypes = ref<GoodieType[]>([]);
-
-  interface GoodieType {
-    id: string;
-    name: string;
-  }
 
   const confirmAddGoodie = () => {
       showAddGoodie.value = false;
@@ -129,15 +146,8 @@
 
   const addGoodie = async () => {
     try {
-      const authToken = localStorage.getItem('authToken');
       showAddGoodie.value = true;
       if (!addGoodiesCalledOnce.value) {
-        const getAllGoodieTypes = await ApiService.get('/goodietype/get-all-types', {
-            headers: {
-                Authorization: `Bearer ${authToken}`,
-            },
-        });
-        getAllGoodieTypes.data.forEach((type : GoodieType) => allGoodieTypes.value.push(type));
         addGoodiesCalledOnce.value = true;
       }
     } catch (error) {
@@ -155,19 +165,38 @@
             if (role !== "artist") {
               router.push({ path : '/' });
             }
-            const response = await ApiService.get('/group/me', {
+            const getMyGroup = await ApiService.get('/group/me', {
                 headers: {
                     Authorization: `Bearer ${authToken}`,
                 },
             });
-            groupName.value = response.data.name;
-            const response2 = await ApiService.get('/groupdetail/me', {
+            groupName.value = getMyGroup.data.name;
+            const getMyGroupDetails = await ApiService.get('/groupdetail/me', {
                 headers: {
                     Authorization: `Bearer ${authToken}`,
                 },
             });
-            response2.data.forEach(element => {
+            getMyGroupDetails.data.forEach((element: { email: any; owner: any }) => {
               allGroupMembers.value.push({ email: element.email, owner: element.owner});
+            });
+            const getAllGoodieTypes = await ApiService.get('/goodietype/get-all-types', {
+              headers: {
+                  Authorization: `Bearer ${authToken}`,
+              },
+            });
+            allGoodieTypes.value = getAllGoodieTypes.data;
+            const getMyGoodies = await ApiService.get('/goodie/me', {
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                },
+            });
+            getMyGoodies.data.forEach((element : Goodie) => {
+              allGoodieTypes.value.forEach((goodieType) => {
+                if (element.goodieTypeId === goodieType.id) {
+                  element.goodieTypeId = goodieType.name;
+                  myGoodies.value.push(element);
+                }
+              })
             });
         }
     } catch (error) {

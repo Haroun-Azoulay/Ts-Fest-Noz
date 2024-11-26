@@ -1,15 +1,14 @@
 import express, { Router } from "express";
-import userController from "../controllers/userController";
 import verifyToken from "../middlewares/verifyToken";
-
+import goodieController from "../controllers/goodieController";
 const router : Router = express.Router();
 
-router.post("/signup", userController.signup);
+router.post("/add", verifyToken, goodieController.createGoodie);
 
-router.get("/my-user", verifyToken, userController.getUserInfo);
+router.get("/me", verifyToken, goodieController.getMyGoodies);
 
-router.get("/get-all-users", verifyToken, userController.getAllUsers);
+router.get("/get-all-goodies", verifyToken, goodieController.getAllAvailableGoodies);
 
-router.post("/signin", userController.signin);
+router.get("/get-filtered-goodies", verifyToken, goodieController.getFilteredGoodies);
 
 export default router;

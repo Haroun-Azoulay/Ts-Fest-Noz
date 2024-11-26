@@ -30,7 +30,7 @@ import orderRoutes from "./src/routes/orderRoutes";
 import orderDetailRoutes from "./src/routes/orderDetailRoutes";
 import './src/models/associations';
 import cors from "cors";
-
+import path from 'path';
 /* const session = require('express-session');
 const { AuthorizationCode } = require('simple-oauth2');
 const axios = require('axios');
@@ -61,6 +61,11 @@ app.use("/group", groupRoutes);
 app.use("/groupdetail", groupDetailRoutes);
 app.use("/order", orderRoutes);
 app.use("/orderdetail", orderDetailRoutes);
+
+const publicDir = path.join(__dirname, 'src', 'public');
+
+// Configuration pour servir les fichiers statiques
+app.use('/', express.static(publicDir));
 
 app.get("/", (req, res) => {
   res.send("Express + TypeScript Server");

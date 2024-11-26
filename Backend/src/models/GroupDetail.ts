@@ -1,8 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelizeConnection from '../../config/database';
 import { GroupDetailAttributes } from "../interfaces/types";
-import User from './User';
-import Group from './Group';
 
 class GroupDetail extends Model<GroupDetailAttributes> implements GroupDetailAttributes {
   public id?: string | undefined;
