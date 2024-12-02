@@ -1,5 +1,6 @@
 import { EventAttributes, PaymentAttributes } from "../interfaces/types";
 import EventModel from "../models/Event";
+import CityModel from "../models/City";
 import PaymentModel from "../models/Payment";
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
@@ -26,6 +27,24 @@ const addEvent = async (req: Request, res: Response) : Promise<Response<any, Rec
         return res.status(500).send("Error adding event");
     }
 };
+
+const getEventsByCity = async (req: Request, res: Response) : Promise<Response<any, Record<string, any>>> => {
+    try {
+        const cityName : string = req.params.city;
+        var eventsByCityName : EventModel[] = [];
+        const citiesByCityName : CityModel[] | null = await CityModel.findAll({where: {city_name: cityName}});
+        for (const city of citiesByCityName) {
+            const event : EventModel | null = await EventModel.findByPk(city.id, {
+                attributes: ['id', 'name', 'description']
+            });
+            eventsByCityName!.push(event!);
+        };
+        return res.json(eventsByCityName);
+    } catch (error) {
+        return res.status(500).json({ message: "Error retrieving events by city" });
+    }
+};
+
 
 const getEventById = async (req: Request, res: Response) : Promise<Response<any, Record<string, any>>> => {
     try {
@@ -161,6 +180,7 @@ export default {
     verifyTokenOATUH,
     deleteToken,
     addEvent,
+    getEventsByCity,
     getAllEvents,
     getEventById,
     addPayment,

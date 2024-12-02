@@ -42,6 +42,7 @@
         <button @click="filterPointsByDate">Filtrer</button>
       </div>
     </fieldset>
+    <SearchCityPage @geocodeResult="handleGeocodeResult"></SearchCityPage>
     <section class="map_box_container_city">
       <div id="map">
       </div>
@@ -59,6 +60,7 @@ import { format } from 'date-fns';
 import HeaderPage from '../pages/Header/HeaderPage.vue';
 import FooterPage from '../pages/Footer/FooterPage.vue';
 import ModalConfirm from './pModal/ModalConfirm.vue';
+import SearchCityPage from '../pages/Map/SearchCity.vue';
 
 const showError = ref(false);
 const errorMessage = ref('');
@@ -103,6 +105,30 @@ let userRole: string | null = null;
 const startDate = ref<string>('');
 const endDate = ref<string>('');
 const isAuthorized = ref<boolean>(false);
+const result = ref(null);
+
+const updateMap = (coordinates) => {
+  if (map) {
+    map.remove();
+  }
+
+  map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v12',
+    center: coordinates,
+    zoom: 15,
+  });
+
+  new mapboxgl.Marker()
+    .setLngLat(coordinates);
+
+  addMarkers();
+};
+
+const handleGeocodeResult = (geocodeResult) => {
+  result.value = geocodeResult;
+  updateMap([geocodeResult.longitude, geocodeResult.latitude]);
+};
 
 const filterPointsByDate = () => {
   const filteredPoints = points.value.filter(point => {
