@@ -25,10 +25,10 @@
                 <img class="ecommerce-card-img" :src="`http://${goodie.path}`" alt="Card image cap">
                 <div class="card-body ecommerce-card-body">
                     <h5 class="card-title" style="color:black;">{{ goodie.name }}</h5>
+                    <h5 class="card-title" style="color:black;">{{ goodie.price }} €</h5>
                     <p class="card-text ecommerce-card-text-description" style="color:black;">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                     <div class="row ecommerce-card-button">
-                        <a href="#" class="col btn btn-primary"><i class="bi bi-cart"></i></a>
-                        <a href="#" class="col btn btn-primary"><i class="bi bi-cart"></i></a>
+                        <a :href="`/goodie-details/${goodie.id}`" class="col btn btn-primary pl-0 pr-0"><i class="bi bi-cart"></i></a>
                     </div>
                 </div>
             </div>
@@ -44,6 +44,7 @@
     import type { Goodie, GoodieType } from '../../../models/goodie';
 
     const isAdmin = ref(false);
+    const festnozCart = ref<[]>([]);
     var allGoodieTypes = ref<GoodieType[]>([]);
     var allGroups = ref<Group[]>([]);
     var allGoodies = ref<Goodie[]>([]);
@@ -55,8 +56,6 @@
 
     const goodieFilter = async () => {
         try {
-            console.log(filters.value.selectedGroup);
-            console.log(filters.value.selectedType);
             const authToken = localStorage.getItem('authToken');
             var url = "";
             if (filters.value.selectedGroup === "null" && filters.value.selectedType === "null") {
@@ -77,6 +76,9 @@
 
     onMounted(async () => {
         try {
+            if (!(localStorage.getItem('festnozCart'))) {
+                localStorage.setItem('festnozCart', '[]');
+            }
             const authToken = localStorage.getItem('authToken');
             if (authToken) {
                 const getAllGoodieTypes = await ApiService.get('/goodietype/get-all-types', {
