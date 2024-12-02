@@ -148,7 +148,27 @@
                                 <li>Victuallership</li>
                                 <li>Barnard</li>
                             </ul>
+                            <h2 class="wow fadeInUp mt-9" data-wow-delay=".2s">Vous êtes aussi un <span class="id-color">artiste</span> ou bien un <span class="id-color">organisateur</span> ?</h2>
+                            
                         </div>
+                        <div class="de_tab tab_style_4 text-center">
+                                <div class="de_tab_content text-left">
+                                    <div id="tab1" class="tab_single_content pb-0 mb-0">
+                                        <div class="row">
+                                            <div class="col-md-12 text-center">
+                                                <ul class="list-boxed-s1">
+                                                    <li
+                                                        v-bind:style=" isFullAuthorized ? 'pointer-events:auto;cursor:pointer;' : 'pointer-events: none;' "
+                                                        @click="goToContactPage">
+                                                        <h3>Contactez-nous</h3>
+                                                        <span></span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                     </div>
                 </div>
             </section>
@@ -446,6 +466,11 @@
     const isAuthorized = ref(false);
     const isFullAuthorized = ref(false);
     const router = useRouter();
+
+    const goToContactPage = (event: Event) => {
+        event.preventDefault()
+        router.push({ path : '/contact' });
+    };
 
     const goToCityPage = () => {
         router.push('/city').then(() => {

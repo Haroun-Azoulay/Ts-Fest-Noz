@@ -1,3 +1,7 @@
+input {
+    color:black;
+}
+
 .map_box_container{
     background:#371990;
 }
