@@ -9,6 +9,7 @@ import ContactView from '@/components/ContactView.vue';
 import ErrorView from '@/components/404View.vue';
 import authMiddleware from '@/middlewares/auth';
 import authAdmin from '@/middlewares/authAdmin';
+import GoodieDetailsView from '@/components/GoodieDetailsView.vue';
 
 const routes = [
   {
@@ -30,6 +31,11 @@ const routes = [
     path: '/dashboard',
     name: 'dashboard',
     component: DashboardView,
+  },
+  {
+    path: '/goodie-details/:goodieId',
+    name: 'goodiedetails',
+    component: GoodieDetailsView,
   },
   {
     path: '/group',
