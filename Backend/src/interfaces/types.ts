@@ -128,3 +128,112 @@ export interface UserInfo {
   pseudo: string
 }
 // ============================================= User Interfaces(End) =============================================
+
+// ============================================= Group Interfaces(Start) =============================================
+export interface GroupAttributes {
+  id?: string;
+  name: string;
+}
+
+export interface GroupInfo {
+  id?: string;
+  name: string;
+}
+// ============================================= Group Interfaces(End) =============================================
+
+// ============================================= Group Interfaces(Start) =============================================
+export interface GroupDetailAttributes {
+  id?: string;
+  groupId?: string;
+  userId?: string;
+  owner: boolean;
+}
+
+export interface GroupDetailInfo {
+  id?: string;
+  groupId?: string;
+  userId?: string;
+  owner: boolean;
+}
+
+export interface GroupUsersDetailInfo {
+  id?: string;
+  groupId?: string;
+  userId?: string;
+  email?: string;
+  owner: boolean;
+}
+// ============================================= Group Interfaces(End) =============================================
+
+// ============================================= Goodie Interfaces(Start) =============================================
+export interface GoodieAttributes {
+  id?: string;
+  groupId?: string;
+  userId?: string;
+  goodieTypeId?: string;
+  name: string;
+  path?: string;
+  quantity: number;
+  price: number;
+  available: boolean;
+}
+
+export interface GoodieInfo {
+  id?: string;
+  groupId?: string;
+  userId?: string;
+  goodieTypeId?: string;
+  type: string;
+  name: string;
+  path?: string;
+  quantity: number;
+  price: number;
+  available: boolean;
+}
+// ============================================= Goodie Interfaces(End) =============================================
+
+// ============================================= GoodieType Interfaces(Start) =============================================
+export interface GoodieTypeAttributes {
+  id?: string;
+  name: string;
+}
+
+export interface GoodieTypeInfo {
+  id?: string;
+  name: string;
+}
+// ============================================= GoodieType Interfaces(End) =============================================
+
+// ============================================= Order Interfaces(Start) =============================================
+export interface OrderAttributes {
+  id?: string;
+  userId?: string;
+  totalPrice: number;
+}
+
+export interface OrderInfo {
+  id?: string;
+  userId?: string;
+  totalPrice: number;
+}
+// ============================================= Order Interfaces(End) =============================================
+
+// ============================================= OrderDetails Interfaces(Start) =============================================
+export interface OrderDetailAttributes {
+  id?: string;
+  orderId?: string;
+  userId?: string;
+  goodieId?: string;
+  quantity: number;
+  price: number;
+}
+
+export interface OrderDetailInfo {
+  id?: string;
+  orderId?: string;
+  userId?: string;
+  goodieId?: string;
+  quantity: number;
+  price: number;
+}
+// ============================================= OrderDetails Interfaces(End) =============================================

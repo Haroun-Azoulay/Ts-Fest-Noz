@@ -34,7 +34,6 @@ import { ref, computed, onMounted, defineEmits } from 'vue';
 import { geocodeAddress } from '../../services/GeocodingService';
 import mapboxgl from 'mapbox-gl';
 
-
 const geocoding_number = ref('');
 const geocoding_address = ref('');
 const geocoding_postal_code = ref('');
@@ -55,7 +54,6 @@ const emit = defineEmits(['geocodeResult']);
 const geocodeAndSubmit = async () => {
   try {
     const { latitude, longitude, streetAddress, postalCode, city, country, place } = await geocodeAddress(fullAddress.value);
-
     result.value = { latitude, longitude, streetAddress, postalCode, city, country, place };
     console.log(result.value);
     emit('geocodeResult', result.value);

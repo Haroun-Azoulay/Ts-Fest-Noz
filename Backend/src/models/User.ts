@@ -85,12 +85,12 @@ User.init(
 );
 
 
-User.hasMany(City, {
-  foreignKey: "user_id",
-  onDelete: "CASCADE",
-  onUpdate: "CASCADE",
-});
-User.hasMany(Map, { foreignKey: "user_id", as: "maps" });
-User.hasMany(Post, { foreignKey: 'userId' });
+// User.hasMany(City, {
+//   foreignKey: "user_id",
+//   onDelete: "CASCADE",
+//   onUpdate: "CASCADE",
+// });
+// User.hasMany(Map, { foreignKey: "user_id", as: "maps" });
+// User.hasMany(Post, { foreignKey: 'userId' });
 // City.belongsTo(User, { foreignKey: 'user_id' });
 export default User;

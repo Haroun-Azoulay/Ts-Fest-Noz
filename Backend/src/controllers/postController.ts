@@ -115,4 +115,4 @@ export default {
     getAllPosts,
     updatePost,
     deletePost,
-  };
+};

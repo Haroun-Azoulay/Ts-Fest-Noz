@@ -9,6 +9,8 @@ router.post("/add-event", verifyToken, isAuthorizedPost, eventController.addEven
 
 router.get("/get-all-events", verifyToken, eventController.getAllEvents);
 
+router.get("/get-event-city/:city", eventController.getEventsByCity);
+
 router.get("/get-event/:id", eventController.getEventById);
 
 router.post("/get-event/:id/payment", verifyToken, eventController.addPayment);
