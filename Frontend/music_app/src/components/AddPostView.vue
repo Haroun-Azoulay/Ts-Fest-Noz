@@ -57,7 +57,7 @@
   </div>
   <FooterPage/>
 </template>
-  <script setup lang="ts">
+<script setup lang="ts">
   import { ref, onMounted } from 'vue';
   import HeaderPage from '../pages/Header/HeaderPage.vue';
   import FooterPage from '../pages/Footer/FooterPage.vue';
@@ -70,48 +70,66 @@
   const authToken = ref<string | null>(null);
   const errorMessage = ref<string>('');
   const show = ref<boolean>(false);
-  
-  onMounted(async () => {
-    try {
-      const token = localStorage.getItem('authToken');
-      if (token) {
-        authToken.value = token;
-        const { payload } = useJwt(token);
-        console.log(payload.value)
-        userId = payload.value.userId;
-        console.log("test")
-        console.log(userId)
+interface JwtPayload {
+  userId: string;
+}
+
+interface PostRequest {
+  title: string;
+  subtitle: string;
+  content: string;
+  userId: string;
+}
+
+onMounted(async () => {
+  try {
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      authToken.value = token;
+
+      const { payload } = useJwt<JwtPayload>(token);
+
+      if (payload.value) {
+        userId.value = payload.value.userId;
+        console.log('Payload:', payload.value);
+        console.log('UserId:', userId.value);
       }
-    } catch (error) {
-      console.error('Erreur lors de la requête :', error);
     }
-  });
+  } catch (error) {
+    console.error('Erreur lors de la requête :', error);
+  }
+});
   
-  const request = ref({
-    title: '',
-    subtitle: '',
-    content: '',
-    userId: '',
-  });
+  const request = ref<PostRequest>({
+  title: '',
+  subtitle: '',
+  content: '',
+  userId: '',
+});
+
   
-  const addPost = async () => {
-    try {
-      request.value.userId = userId;
-  
-      const response = await ApiService.post('/post/add-post', request.value, {
-        headers: {
-          Authorization: `Bearer ${authToken.value}`,
-        },
-      });
-      
-      const token = response.data.token;
-      router.push({ path: "/forum" });
-    } catch (error: any) {
-      console.error(error);
-      errorMessage.value = error.response?.data?.message || error.message;
-      show.value = true;
+const addPost = async (): Promise<void> => {
+  try {
+    if (!userId.value) {
+      throw new Error("User ID is not defined. Please authenticate first.");
     }
-  };
+
+    request.value.userId = userId.value;
+
+    const response = await ApiService.post('/post/add-post', request.value, {
+      headers: {
+        Authorization: `Bearer ${authToken.value}`,
+      },
+    });
+
+    router.push({ path: "/forum" });
+  } catch (error: any) {
+    console.error("Error while adding post:", error);
+    errorMessage.value = error.response?.data?.message || error.message;
+    show.value = true; // Display the error to the user
+  }
+};
+
   </script>
   
   <style>
