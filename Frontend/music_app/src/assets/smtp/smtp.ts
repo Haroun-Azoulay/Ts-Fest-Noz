@@ -53,7 +53,18 @@ class EmailService {
       };
       xhr.send(payload);
     } else {
-      console.error("CORS not supported");
+      console.error("CORS not supported");└─(00:13:36)──> ssh-copy-id -p 5022 emrjuwhh@ht2-storage.n0c.com                                    1 ↵ ──(lun.,déc.09)─┘
+
+      ^C/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+      /usr/bin/ssh-copy-id: 183: cannot create /home/haroun/.ssh/ssh-copy-id.ZlllpRMfqC/popids_tmp_id: Directory nonexistent
+      /usr/bin/ssh-copy-id: 189: cannot create /home/haroun/.ssh/ssh-copy-id.ZlllpRMfqC/popids_output: Directory nonexistent
+      grep: /home/haroun/.ssh/ssh-copy-id.ZlllpRMfqC/popids_output: No such file or directory
+      /usr/bin/ssh-copy-id: 202: cannot open /home/haroun/.ssh/ssh-copy-id.ZlllpRMfqC/popids_output: No such file
+      cat: /home/haroun/.ssh/ssh-copy-id.ZlllpRMfqC/popids_tmp_id: No such file or directory
+      
+      /usr/bin/ssh-copy-id: WARNING: All keys were skipped because they already exist on the remote system.
+                      (if you think this is a mistake, you may want to use -f option)
+      
     }
   }
 
