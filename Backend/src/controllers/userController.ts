@@ -6,9 +6,9 @@ const jwt = require("jsonwebtoken");
 
 const signup = async (req: Request, res: Response) : Promise<Response<any, Record<string, any>>> => {
   try {
-    const { lastname, firstname, password, email, role, pseudo } = req.body;
+    const { lastname, firstname, password, email, pseudo } = req.body;
 
-    if (!lastname || !firstname || !password || !email || !role || !pseudo) {
+    if (!lastname || !firstname || !password || !email || !pseudo) {
       return res.status(400).json({
         message: "A required field is missing.",
       });

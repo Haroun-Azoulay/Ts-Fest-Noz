@@ -25,6 +25,3 @@ ALTER USER music SET search_path = "music";
 SET search_path TO "music";
 
 CREATE OR REPLACE LANGUAGE plpgsql;
-
-
--- utf8-4 pour les emoji 

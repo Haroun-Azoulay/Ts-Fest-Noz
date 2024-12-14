@@ -64,7 +64,7 @@ app.use("/orderdetail", orderDetailRoutes);
 
 const publicDir = path.join(__dirname, 'src', 'public');
 
-// Configuration pour servir les fichiers statiques
+
 app.use('/', express.static(publicDir));
 
 app.get("/", (req, res) => {
