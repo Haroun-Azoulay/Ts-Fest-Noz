@@ -35,6 +35,9 @@ import path from 'path';
 const { AuthorizationCode } = require('simple-oauth2');
 const axios = require('axios');
 const crypto = require('crypto'); */
+import swaggerUI from "swagger-ui-express";
+import swaggerSpec from "./swagger";
+
 
 dotenv.config();
 
@@ -47,6 +50,7 @@ declare module "express" {
 const app = express();
 app.use(express.json());
 app.use(cors());
+app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 const port : number = process.env.PORT ? Number(process.env.PORT) : 3000;
 
 app.use("/event", eventRoutes);
@@ -64,7 +68,7 @@ app.use("/orderdetail", orderDetailRoutes);
 
 const publicDir = path.join(__dirname, 'src', 'public');
 
-
+// Configuration pour servir les fichiers statiques
 app.use('/', express.static(publicDir));
 
 app.get("/", (req, res) => {
