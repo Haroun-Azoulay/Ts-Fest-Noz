@@ -33,13 +33,13 @@ Event.init(
     },
     mapId: {
       type: DataTypes.INTEGER,
-      allowNull: true, 
+      allowNull: true,
     },
   },
   {
     sequelize: sequelizeConnection,
     modelName: "event",
-  }
+  },
 );
 
 // Event.hasMany(Payment, { foreignKey: "payment_id", as: "payment" });

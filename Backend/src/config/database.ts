@@ -9,15 +9,15 @@ const dbHost = process.env.DB_HOST;
 const dbDriver = process.env.DB_DRIVER;
 const dbPassword = process.env.DB_PASSWORD;
 
-console.log('DB_NAME:', dbName);
-console.log('DB_USER:', dbUser);
-console.log('DB_HOST:', dbHost);
-console.log('DB_DRIVER:', dbDriver);
-console.log('DB_PASSWORD:', dbPassword);
+console.log("DB_NAME:", dbName);
+console.log("DB_USER:", dbUser);
+console.log("DB_HOST:", dbHost);
+console.log("DB_DRIVER:", dbDriver);
+console.log("DB_PASSWORD:", dbPassword);
 
 const sequelizeConnection = new Sequelize(dbName, dbUser, dbPassword, {
-    host: dbHost,
-    dialect: dbDriver
+  host: dbHost,
+  dialect: dbDriver,
 });
 
 module.exports = sequelizeConnection;

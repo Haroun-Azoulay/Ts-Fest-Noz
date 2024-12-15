@@ -4,7 +4,10 @@ import { UserInfo } from "../interfaces/types";
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const signup = async (req: Request, res: Response) : Promise<Response<any, Record<string, any>>> => {
+const signup = async (
+  req: Request,
+  res: Response,
+): Promise<Response<any, Record<string, any>>> => {
   try {
     const { lastname, firstname, password, email, pseudo } = req.body;
 
@@ -14,12 +17,12 @@ const signup = async (req: Request, res: Response) : Promise<Response<any, Recor
       });
     }
 
-    const defaultRole : string = "user";
-    const isAdmin : boolean = email === "admin@example.com";
-    const assignedRole : string = isAdmin ? "admin" : defaultRole;
-    const hashedPassword : string = await bcrypt.hash(password, 10);
+    const defaultRole: string = "user";
+    const isAdmin: boolean = email === "admin@example.com";
+    const assignedRole: string = isAdmin ? "admin" : defaultRole;
+    const hashedPassword: string = await bcrypt.hash(password, 10);
 
-    const newUser : UserModel = await UserModel.create({
+    const newUser: UserModel = await UserModel.create({
       email,
       lastname,
       firstname,
@@ -40,24 +43,28 @@ const signup = async (req: Request, res: Response) : Promise<Response<any, Recor
   }
 };
 
-const getUserInfo = async (req: Request, res: Response) : Promise<Response<any, Record<string, any>>> => {
-  const userId : string | undefined = req.userId;
-  console.log(req.userId)
+const getUserInfo = async (
+  req: Request,
+  res: Response,
+): Promise<Response<any, Record<string, any>>> => {
+  const userId: string | undefined = req.userId;
+  console.log(req.userId);
   try {
-
-    const user : UserModel | null = await UserModel.findOne({ where: { id: userId } });
+    const user: UserModel | null = await UserModel.findOne({
+      where: { id: userId },
+    });
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-  
-    const userDetails : UserInfo = {
+
+    const userDetails: UserInfo = {
       id: user.id,
       email: user.email,
       lastname: user.lastname,
       firstname: user.firstname,
       role: user.role,
-      pseudo: user.pseudo
+      pseudo: user.pseudo,
     };
 
     return res.status(200).json(userDetails);
@@ -69,45 +76,45 @@ const getUserInfo = async (req: Request, res: Response) : Promise<Response<any, 
   }
 };
 
-const signin = async (req: Request, res: Response) : Promise<Response<any, Record<string, any>>> => {
+const signin = async (
+  req: Request,
+  res: Response,
+): Promise<Response<any, Record<string, any>>> => {
   try {
-    const pseudo : string = req.body.pseudo;
-    const password : string = req.body.password;
+    const pseudo: string = req.body.pseudo;
+    const password: string = req.body.password;
 
     if (!pseudo || !password) {
-      return res
-        .status(400)
-        .json({
-          message: "Username and password are required for login.",
-        });
+      return res.status(400).json({
+        message: "Username and password are required for login.",
+      });
     }
 
-    const foundUser : UserModel | null = await UserModel.findOne({
+    const foundUser: UserModel | null = await UserModel.findOne({
       where: { pseudo },
     });
 
     if (!foundUser) {
-      return res
-        .status(401)
-        .json({
-          message: "Invalid credentials. Check your username and password.",
-        });
+      return res.status(401).json({
+        message: "Invalid credentials. Check your username and password.",
+      });
     }
 
-    const passwordMatch : string = await bcrypt.compare(password, foundUser.password);
+    const passwordMatch: string = await bcrypt.compare(
+      password,
+      foundUser.password,
+    );
 
     if (!passwordMatch) {
-      return res
-        .status(401)
-        .json({
-          message: "Invalid credentials. Check your username and password.",
-        });
+      return res.status(401).json({
+        message: "Invalid credentials. Check your username and password.",
+      });
     }
 
-    const token : string = jwt.sign(
+    const token: string = jwt.sign(
       { userId: foundUser.id, role: foundUser.role },
       "RANDOM_SECRET_KEY",
-      { expiresIn: "24h" }
+      { expiresIn: "24h" },
     );
 
     return res.status(200).json({
@@ -123,11 +130,11 @@ const signin = async (req: Request, res: Response) : Promise<Response<any, Recor
   }
 };
 
-const logout = async (req: Request, res: Response) : Promise<void> => {
+const logout = async (req: Request, res: Response): Promise<void> => {
   res.status(200).json({ message: "Logout successful" });
 };
 
-const getAllUsers = async(req: Request, res: Response) : Promise<void> => {
+const getAllUsers = async (req: Request, res: Response): Promise<void> => {
   UserModel.findAll()
     .then((result) => {
       return res.json(result);
@@ -136,12 +143,15 @@ const getAllUsers = async(req: Request, res: Response) : Promise<void> => {
       console.log(error);
       return res.json({});
     });
-}
+};
 
-const updateUserRole = async (req: Request, res: Response) : Promise<Response<any, Record<string, any>>> => {
+const updateUserRole = async (
+  req: Request,
+  res: Response,
+): Promise<Response<any, Record<string, any>>> => {
   try {
-    const userId : string = req.params.userId;
-    const newRole : string = req.body.newRole;
+    const userId: string = req.params.userId;
+    const newRole: string = req.body.newRole;
     console.log(userId);
     console.log(newRole);
 
@@ -149,14 +159,15 @@ const updateUserRole = async (req: Request, res: Response) : Promise<Response<an
       return res.status(400).json({ message: "New role is required." });
     }
 
-    const updateSuccess : boolean = await UserModel.updateUserRole(userId, newRole);
-    
+    const updateSuccess: boolean = await UserModel.updateUserRole(
+      userId,
+      newRole,
+    );
+
     if (updateSuccess) {
       return res.status(200).json({ message: "Role updated successfully." });
     } else {
-      return res
-        .status(403)
-        .json({ message: "Admin role cannot be updated." });
+      return res.status(403).json({ message: "Admin role cannot be updated." });
     }
   } catch (error) {
     console.error(error);

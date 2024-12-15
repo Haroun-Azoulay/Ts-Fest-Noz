@@ -19,7 +19,7 @@ class User extends Model<UserAttributes> {
 
   public static updateUserRole = async (
     userId: string,
-    newRole: string
+    newRole: string,
   ): Promise<boolean> => {
     try {
       const user = await this.findByPk(userId);
@@ -81,9 +81,8 @@ User.init(
   {
     sequelize: sequelizeConnection,
     modelName: "user",
-  }
+  },
 );
-
 
 // User.hasMany(City, {
 //   foreignKey: "user_id",

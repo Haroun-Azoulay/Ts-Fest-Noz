@@ -2,7 +2,7 @@ import express, { Router } from "express";
 import userController from "../controllers/userController";
 import verifyToken from "../middlewares/verifyToken";
 
-const router : Router = express.Router();
+const router: Router = express.Router();
 
 router.post("/signup", userController.signup);
 

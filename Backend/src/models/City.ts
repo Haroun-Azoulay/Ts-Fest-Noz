@@ -32,12 +32,12 @@ City.init(
     user_id: {
       type: DataTypes.UUID,
       allowNull: false,
-      references: { 
-        model: 'users', 
-        key: 'id',
+      references: {
+        model: "users",
+        key: "id",
       },
-      onUpdate: 'CASCADE',
-      onDelete: 'CASCADE',
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE",
     },
     city_name: {
       type: DataTypes.STRING,
@@ -95,8 +95,7 @@ City.init(
   {
     sequelize: sequelizeConnection,
     modelName: "city",
-  }
+  },
 );
-
 
 export default City;

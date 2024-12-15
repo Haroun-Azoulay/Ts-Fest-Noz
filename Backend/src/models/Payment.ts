@@ -23,12 +23,12 @@ Payment.init(
     payment: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-    }
+    },
   },
   {
     sequelize: sequelizeConnection,
     modelName: "payment",
-  }
+  },
 );
 
 export default Payment;

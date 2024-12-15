@@ -28,16 +28,15 @@ import groupRoutes from "./src/routes/groupRoutes";
 import groupDetailRoutes from "./src/routes/groupDetailRoutes";
 import orderRoutes from "./src/routes/orderRoutes";
 import orderDetailRoutes from "./src/routes/orderDetailRoutes";
-import './src/models/associations';
+import "./src/models/associations";
 import cors from "cors";
-import path from 'path';
+import path from "path";
 /* const session = require('express-session');
 const { AuthorizationCode } = require('simple-oauth2');
 const axios = require('axios');
 const crypto = require('crypto'); */
 import swaggerUI from "swagger-ui-express";
 import swaggerSpec from "./swagger";
-
 
 dotenv.config();
 
@@ -50,8 +49,9 @@ declare module "express" {
 const app = express();
 app.use(express.json());
 app.use(cors());
+// Endpoint swagger
 app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
-const port : number = process.env.PORT ? Number(process.env.PORT) : 3000;
+const port: number = process.env.PORT ? Number(process.env.PORT) : 3000;
 
 app.use("/event", eventRoutes);
 app.use("/users", userRoutes);
@@ -66,19 +66,40 @@ app.use("/groupdetail", groupDetailRoutes);
 app.use("/order", orderRoutes);
 app.use("/orderdetail", orderDetailRoutes);
 
-const publicDir = path.join(__dirname, 'src', 'public');
+const publicDir = path.join(__dirname, "src", "public");
 
-// Configuration pour servir les fichiers statiques
-app.use('/', express.static(publicDir));
+// Configurate to serv static files
+app.use("/", express.static(publicDir));
 
-app.get("/", (req, res) => {
-  res.send("Express + TypeScript Server");
+
+/**
+ * @swagger
+ * /ping:
+ *   get:
+ *     summary: Monitoring
+ *     description: Monitoring.
+ *     tags:
+ *       - Monitoring
+ *     responses:
+ *       200:
+ *         description: The service is <orking>.
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example: pong
+ */
+app.get("/ping", (req, res) => {
+  res.send("pong");
 });
+
 
 async function syncModels() {
   try {
     await sequelizeConnection.authenticate();
-    console.log("[database]: Database connection has been established successfully.");
+    console.log(
+      "[database]: Database connection has been established successfully.",
+    );
 
     await User.sync({ force: true });
     await Post.sync({ force: true });
@@ -94,7 +115,7 @@ async function syncModels() {
     await GoodieType.sync({ force: true });
     await Goodie.sync({ force: true });
     await Order.sync({ force: true });
-    await OrderDetail.sync({ force: true }); 
+    await OrderDetail.sync({ force: true });
 
     app.listen(port, () => {
       console.log(`[server]: Server is running at http://localhost:${port}`);

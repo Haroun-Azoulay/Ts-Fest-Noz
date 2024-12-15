@@ -2,7 +2,10 @@ import { DataTypes, Model } from "sequelize";
 import sequelizeConnection from "../../config/database";
 import { ArtistProfilAttributes } from "../interfaces/types";
 
-class ArtistProfil extends Model<ArtistProfilAttributes> implements ArtistProfilAttributes {
+class ArtistProfil
+  extends Model<ArtistProfilAttributes>
+  implements ArtistProfilAttributes
+{
   public id!: string;
   public denomination!: string;
   public phone_number!: string;
@@ -15,7 +18,7 @@ ArtistProfil.init(
   {
     id: {
       type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4, 
+      defaultValue: DataTypes.UUIDV4,
       allowNull: false,
       primaryKey: true,
     },
@@ -23,7 +26,6 @@ ArtistProfil.init(
       type: DataTypes.STRING,
       allowNull: false,
       primaryKey: true,
-      
     },
     phone_number: {
       type: DataTypes.STRING,
@@ -46,7 +48,7 @@ ArtistProfil.init(
   {
     sequelize: sequelizeConnection,
     modelName: "ArtistProfil",
-  }
+  },
 );
 
 export default ArtistProfil;

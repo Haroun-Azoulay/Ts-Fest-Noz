@@ -1,8 +1,11 @@
-import { DataTypes, Model } from 'sequelize';
-import sequelizeConnection from '../../config/database';
+import { DataTypes, Model } from "sequelize";
+import sequelizeConnection from "../../config/database";
 import { GroupDetailAttributes } from "../interfaces/types";
 
-class GroupDetail extends Model<GroupDetailAttributes> implements GroupDetailAttributes {
+class GroupDetail
+  extends Model<GroupDetailAttributes>
+  implements GroupDetailAttributes
+{
   public id?: string | undefined;
   public groupId?: string | undefined;
   public userId!: string;
@@ -21,27 +24,27 @@ GroupDetail.init(
       type: DataTypes.UUID,
       allowNull: false,
       references: {
-        model: 'groups',
-        key: 'id',
+        model: "groups",
+        key: "id",
       },
     },
     userId: {
       type: DataTypes.UUID,
       allowNull: false,
       references: {
-        model: 'users',
-        key: 'id',
+        model: "users",
+        key: "id",
       },
     },
     owner: {
       type: DataTypes.BOOLEAN,
-      allowNull: false
+      allowNull: false,
     },
   },
   {
     sequelize: sequelizeConnection,
     modelName: "groupdetail",
-  }
+  },
 );
 
 // GroupDetail.belongsTo(Group, { foreignKey: 'groupId' });

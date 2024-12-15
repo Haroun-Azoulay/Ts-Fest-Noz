@@ -1,46 +1,46 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const OAuth2Server = require('oauth2-server');
+const express = require("express");
+const bodyParser = require("body-parser");
+const OAuth2Server = require("oauth2-server");
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-
 const oauth = new OAuth2Server({
-  model: require('./model'),
-  grants: ['authorization_code', 'password', 'client_credentials'],
+  model: require("./model"),
+  grants: ["authorization_code", "password", "client_credentials"],
   accessTokenLifetime: 3600,
-  allowBearerTokensInQueryString: true
+  allowBearerTokensInQueryString: true,
 });
-
 
 app.use((req, res, next) => {
   req.oauth = oauth;
   next();
 });
 
-
-app.all('/oauth/token', (req, res, next) => {
+app.all("/oauth/token", (req, res, next) => {
   const request = new OAuth2Server.Request(req);
   const response = new OAuth2Server.Response(res);
 
-  return oauth.token(request, response)
+  return oauth
+    .token(request, response)
     .then((token) => {
       res.json(token);
-    }).catch((err) => {
+    })
+    .catch((err) => {
       res.status(err.code || 500).json(err);
     });
 });
 
-
-app.get('/oauth/authorize', (req, res) => {
+app.get("/oauth/authorize", (req, res) => {
   const clientId = req.query.client_id;
   const redirectUri = req.query.redirect_uri;
   const state = req.query.state;
   const responseType = req.query.response_type;
   if (!clientId || !redirectUri || !state || !responseType) {
-    return res.status(400).json({ error: 'Missing client_id, redirect_uri, state, or response_type' });
+    return res.status(400).json({
+      error: "Missing client_id, redirect_uri, state, or response_type",
+    });
   }
 
   res.send(`
@@ -58,43 +58,47 @@ app.get('/oauth/authorize', (req, res) => {
   `);
 });
 
+app.post("/oauth/authorize", (req, res) => {
+  const { client_id, redirect_uri, username, password, state, response_type } =
+    req.body;
 
-app.post('/oauth/authorize', (req, res) => {
-  const { client_id, redirect_uri, username, password, state, response_type } = req.body;
-
-
-  if (username !== 'user' || password !== 'pass') {
-    return res.status(401).send('Invalid credentials');
+  if (username !== "user" || password !== "pass") {
+    return res.status(401).send("Invalid credentials");
   }
 
   const request = new OAuth2Server.Request(req);
   const response = new OAuth2Server.Response(res);
 
-  return oauth.authorize(request, response, { authenticateHandler: { handle: () => ({ id: username }) } })
+  return oauth
+    .authorize(request, response, {
+      authenticateHandler: { handle: () => ({ id: username }) },
+    })
     .then((authorizationCode) => {
       res.redirect(`http://localhost:5173/event/token/3AGZEYG&1386SFAFTFDA`);
-    }).catch((err) => {
+    })
+    .catch((err) => {
       res.status(err.code || 500).json(err);
     });
 });
 
-
-app.get('/user', (req, res) => {
+app.get("/user", (req, res) => {
   const request = new OAuth2Server.Request(req);
   const response = new OAuth2Server.Response(res);
 
-  return oauth.authenticate(request, response).then((token) => {
-    res.json({
-      id: '123',
-      name: 'John Doe',
-      email: 'john.doe@example.com'
+  return oauth
+    .authenticate(request, response)
+    .then((token) => {
+      res.json({
+        id: "123",
+        name: "John Doe",
+        email: "john.doe@example.com",
+      });
+    })
+    .catch((err) => {
+      res.status(err.code || 500).json(err);
     });
-  }).catch((err) => {
-    res.status(err.code || 500).json(err);
-  });
 });
 
-
 app.listen(4000, () => {
-  console.log('OAuth2 server listening on http://localhost:4000');
+  console.log("OAuth2 server listening on http://localhost:4000");
 });

@@ -4,7 +4,7 @@ import { MapAttributes } from "../interfaces/types";
 
 class Map extends Model<MapAttributes> implements MapAttributes {
   public id!: number;
-  // public user_id!: string;  
+  // public user_id!: string;
   public longitude?: number;
   public latitude?: number;
   public text?: string;
@@ -23,7 +23,7 @@ Map.init(
     // user_id: {
     //   type: DataTypes.UUID,
     //   allowNull: false,
-    //   references: { 
+    //   references: {
     //     model: 'users',
     //     key: 'id',
     //   },
@@ -54,7 +54,7 @@ Map.init(
   {
     sequelize: sequelizeConnection,
     modelName: "map",
-  }
+  },
 );
 
 // Définir la relation many-to-one avec User

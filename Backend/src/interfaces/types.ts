@@ -6,7 +6,7 @@ export interface JwtPayload {
 // ============================================= ArtistProfil Interfaces (Start) =============================================
 export interface ArtistProfilAttributes {
   id: string;
-  denomination: string; 
+  denomination: string;
   phone_number: string;
   url_media: string;
   picture: string;
@@ -43,13 +43,13 @@ export interface CommentaryAttributes {
 }
 
 export interface Commentaries {
-  id: string,
-  content: string
+  id: string;
+  content: string;
 }
 
 export interface CommentariesByPost {
-  id: string,
-  content: string
+  id: string;
+  content: string;
 }
 // ============================================= Commentary Interfaces (End) =============================================
 
@@ -59,14 +59,14 @@ export interface EventAttributes {
   name: string;
   description: string;
   url: string;
-  mapId: number; 
+  mapId: number;
 }
 // ============================================= Event Interfaces(End) =============================================
 
 // ============================================= Map Interfaces(Start) =============================================
 export interface MapAttributes {
   id: number;
-  // user_id: string; 
+  // user_id: string;
   longitude?: number;
   latitude?: number;
   text?: string;
@@ -121,11 +121,11 @@ export interface UserRequest {
 
 export interface UserInfo {
   id?: string;
-  email: string,
-  lastname: string,
-  firstname: string,
-  role: string,
-  pseudo: string
+  email: string;
+  lastname: string;
+  firstname: string;
+  role: string;
+  pseudo: string;
 }
 // ============================================= User Interfaces(End) =============================================
 

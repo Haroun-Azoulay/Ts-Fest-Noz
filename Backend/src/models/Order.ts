@@ -1,8 +1,8 @@
-import { DataTypes, Model } from 'sequelize';
-import sequelizeConnection from '../../config/database';
+import { DataTypes, Model } from "sequelize";
+import sequelizeConnection from "../../config/database";
 import { OrderAttributes } from "../interfaces/types";
-import User from './User';
-import OrderDetail from './OrderDetail';
+import User from "./User";
+import OrderDetail from "./OrderDetail";
 
 class Order extends Model<OrderAttributes> implements OrderAttributes {
   public id?: string | undefined;
@@ -22,19 +22,19 @@ Order.init(
       type: DataTypes.UUID,
       allowNull: false,
       references: {
-        model: 'users',
-        key: 'id',
+        model: "users",
+        key: "id",
       },
     },
     totalPrice: {
       type: DataTypes.FLOAT,
-      allowNull: false
-    }
+      allowNull: false,
+    },
   },
   {
     sequelize: sequelizeConnection,
     modelName: "order",
-  }
+  },
 );
 
 // Order.hasMany(OrderDetail, { foreignKey: 'orderId', onDelete: 'CASCADE' });

@@ -2,7 +2,7 @@ import express, { Router } from "express";
 import groupController from "../controllers/groupController";
 import verifyToken from "../middlewares/verifyToken";
 
-const router : Router = express.Router();
+const router: Router = express.Router();
 
 router.get("/me", verifyToken, groupController.getGroup);
 

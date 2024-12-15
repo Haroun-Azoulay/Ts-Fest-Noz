@@ -3,9 +3,14 @@ import postController from "../controllers/postController";
 import verifyToken from "../middlewares/verifyToken";
 import isAuthorizedPost from "../middlewares/isAuthorizedPost";
 
-const router : Router = express.Router();
+const router: Router = express.Router();
 
-router.post("/add-post", verifyToken, isAuthorizedPost, postController.createPost);
+router.post(
+  "/add-post",
+  verifyToken,
+  isAuthorizedPost,
+  postController.createPost,
+);
 
 router.get("/get-all-posts", verifyToken, postController.getAllPosts);
 

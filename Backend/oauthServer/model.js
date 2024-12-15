@@ -1,10 +1,10 @@
 module.exports = {
   getClient: function (clientId, clientSecret, callback) {
     const client = {
-      clientId: 'your_client_id_here',
-      clientSecret: 'your_client_secret_here',
-      grants: ['authorization_code', 'password', 'client_credentials'],
-      redirectUris: ['http://localhost:5000/callback']
+      clientId: "your_client_id_here",
+      clientSecret: "your_client_secret_here",
+      grants: ["authorization_code", "password", "client_credentials"],
+      redirectUris: ["http://localhost:5000/callback"],
     };
     callback(null, client);
   },
@@ -13,7 +13,7 @@ module.exports = {
       accessToken: token.accessToken,
       accessTokenExpiresAt: token.accessTokenExpiresAt,
       client: client,
-      user: user
+      user: user,
     };
     callback(null, accessToken);
   },
@@ -21,8 +21,8 @@ module.exports = {
     const token = {
       accessToken: accessToken,
       accessTokenExpiresAt: new Date(new Date().getTime() + 3600 * 1000),
-      client: { id: 'your_client_id_here' },
-      user: { id: '123' }
+      client: { id: "your_client_id_here" },
+      user: { id: "123" },
     };
     callback(null, token);
   },
@@ -30,8 +30,8 @@ module.exports = {
     const authCode = {
       code: authorizationCode,
       expiresAt: new Date(new Date().getTime() + 60000),
-      client: { id: 'your_client_id_here' },
-      user: { id: '123' }
+      client: { id: "your_client_id_here" },
+      user: { id: "123" },
     };
     callback(null, authCode);
   },
@@ -41,7 +41,7 @@ module.exports = {
       expiresAt: code.expiresAt,
       client: client,
       user: user,
-      redirectUri: code.redirectUri
+      redirectUri: code.redirectUri,
     };
     callback(null, authCode);
   },
@@ -53,9 +53,9 @@ module.exports = {
   },
   getUser: function (username, password, callback) {
     const user = {
-      id: '123',
-      username: username
+      id: "123",
+      username: username,
     };
     callback(null, user);
-  }
+  },
 };
