@@ -54,9 +54,9 @@ app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 const port: number = process.env.PORT ? Number(process.env.PORT) : 3000;
 
 app.use("/event", eventRoutes);
-app.use("/users", userRoutes);
+app.use("/", userRoutes);
 app.use("/city", cityRoutes);
-app.use("/admin", adminRoutes);
+app.use("/", adminRoutes);
 app.use("/post", postRoutes);
 app.use("/commentary", commentaryRoutes);
 app.use("/goodie", goodieRoutes);
@@ -82,13 +82,14 @@ app.use("/", express.static(publicDir));
  *       - Monitoring
  *     responses:
  *       200:
- *         description: The service is <orking>.
+ *         description: The service is working.
  *         content:
  *           text/plain:
  *             schema:
  *               type: string
  *               example: pong
  */
+
 app.get("/ping", (req, res) => {
   res.send("pong");
 });

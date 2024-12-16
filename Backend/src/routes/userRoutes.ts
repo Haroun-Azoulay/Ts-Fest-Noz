@@ -7,11 +7,13 @@ const router: Router = express.Router();
 
 router.post("/signup", userController.signup);
 
+router.post("/signin", userController.signin);
+
 router.get("/my-user", verifyToken, userController.getUserInfo);
 
 router.get("/get-all-users", verifyToken, userController.getAllUsers);
 
-router.post("/signin", userController.signin);
+
 
 export default router;
 
@@ -21,10 +23,19 @@ export default router;
 
 /**
  * @swagger
- * /users/signup:
+ * components:
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ * 
+ * /signup:
  *   post:
  *     summary: Create a user
- *     description: Create a user.
+ *     description: Create a user in the system.
+ *     tags:
+ *       - Connexion
  *     requestBody:
  *       required: true
  *       content:
@@ -55,20 +66,18 @@ export default router;
  *                 description: The user's lastname.
  *     responses:
  *       201:
- *         description: Create user successful.
+ *         description: User created successfully.
  *       400:
  *         description: Bad request.
  *       401:
  *         description: Unauthorized.
- */
-
-
-/**
- * @swagger
- * /users/signin:
+ * 
+ * /signin:
  *   post:
  *     summary: Authenticate a user
- *     description: Authenticate a user.
+ *     description: Log in an existing user with pseudo and password.
+ *     tags:
+ *       - Connexion
  *     requestBody:
  *       required: true
  *       content:
@@ -87,7 +96,39 @@ export default router;
  *                 description: The user's password.
  *     responses:
  *       201:
- *         description: Authenticate is successful.
+ *         description: Authentication successful.
+ *       400:
+ *         description: Bad request.
+ *       401:
+ *         description: Unauthorized.
+ * 
+ * /my-user:
+ *   get:
+ *     summary: Retrieve current user information
+ *     description: Get details of the currently authenticated user.
+ *     tags:
+ *       - Connexion
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: User information retrieved successfully.
+ *       400:
+ *         description: Bad request.
+ *       401:
+ *         description: Unauthorized.
+ * 
+ * /get-all-users:
+ *   get:
+ *     summary: Retrieve all user information
+ *     description: Get details of the all user authenticated user.
+ *     tags:
+ *       - Connexion
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: User information retrieved successfully.
  *       400:
  *         description: Bad request.
  *       401:
