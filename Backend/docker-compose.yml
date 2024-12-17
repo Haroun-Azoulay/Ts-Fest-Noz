@@ -1,40 +1,47 @@
-version: "3.8"
-
 services:
-  music-app-db:
+  music-db:
     image: postgres:13
     volumes:
       - ./docker_ressources/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - pg_music_data:/var/lib/postgresql/data
     ports:
       - "5434:5432"
     environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: root
-      POSTGRES_DB: music_app
-
+      POSTGRES_USER: music
+      POSTGRES_PASSWORD: music
+      POSTGRES_DB: music
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U music"]
+      interval: 1s
+      timeout: 5s
+      retries: 5
   api:
     build: .
     ports:
       - "3000:3000"
     environment:
       - PORT=3000
-      - DB_NAME=music_app
-      - DB_USER=root
-      - DB_PASSWORD=root
-      - DB_HOST=music-app-db
+      - DB_NAME=music
+      - DB_USER=music
+      - DB_PASSWORD=music
+      - DB_HOST=music-db
       - DB_DRIVER=postgres
     depends_on:
-      - music-app-db
+      music-db:
+        condition: service_healthy
 
-  oauthserver1:
-    build: ./oauthServer
-    ports:
-      - "4000:4000"
+  # oauthserver1:
+  #   build: ./oauthServer
+  #   ports:
+  #     - "4000:4000"
 
-  app:
-    build: ./app
-    ports:
-      - "5000:5000"
+  # app:
+  #   build: ./app
+  #   ports:
+  #     - "5000:5000"
+
+volumes:
+  pg_music_data:
 #docker exec -it backend-music-app-db-1 psql -U root music_app
 
 #3000 - 3001 etc

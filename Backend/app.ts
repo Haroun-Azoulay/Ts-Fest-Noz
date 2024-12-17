@@ -37,6 +37,7 @@ const axios = require('axios');
 const crypto = require('crypto'); */
 import swaggerUI from "swagger-ui-express";
 import swaggerSpec from "./swagger";
+import faker from "./src/config/faker";
 
 dotenv.config();
 
@@ -96,25 +97,36 @@ app.get("/ping", (req, res) => {
 async function syncModels() {
   try {
     await sequelizeConnection.authenticate();
-    console.log(
-      "[database]: Database connection has been established successfully.",
-    );
+    console.log("Database connection has been established successfully.");
 
-    await User.sync({ force: true });
-    await Post.sync({ force: true });
-    await Commentary.sync({ force: true });
-    await City.sync({ force: true });
-    await ArtistProfil.sync({ force: true });
-    await OrganizerProfil.sync({ force: true });
-    await Map.sync({ force: true });
-    await Event.sync({ force: true });
-    await Payment.sync({ force: true });
-    await Group.sync({ force: true });
-    await GroupDetail.sync({ force: true });
-    await GoodieType.sync({ force: true });
-    await Goodie.sync({ force: true });
-    await Order.sync({ force: true });
-    await OrderDetail.sync({ force: true });
+    await User.sync({ force: false });
+    async function insertFakerData() {
+      try {
+        const count = await User.count();
+        console.log;
+        if (count === 0)
+          User.bulkCreate(faker.users, {
+            ignoreDuplicates: true,
+          });
+      } catch (error) {
+        console.log("Table User is filled or an error occurred:", error);
+      }
+    }
+    await insertFakerData();
+    await Post.sync({ force: false });
+    await Commentary.sync({ force: false });
+    await City.sync({ force: false });
+    await ArtistProfil.sync({ force: false });
+    await OrganizerProfil.sync({ force: false });
+    await Map.sync({ force: false });
+    await Event.sync({ force: false });
+    await Payment.sync({ force: false });
+    await Group.sync({ force: false });
+    await GroupDetail.sync({ force: false });
+    await GoodieType.sync({ force: false });
+    await Goodie.sync({ force: false });
+    await Order.sync({ force: false });
+    await OrderDetail.sync({ force: false });
 
     app.listen(port, () => {
       console.log(`[server]: Server is running at http://localhost:${port}`);
