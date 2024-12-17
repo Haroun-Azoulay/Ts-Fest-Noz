@@ -4,7 +4,6 @@ import verifyToken from "../middlewares/verifyToken";
 
 const router: Router = express.Router();
 
-
 router.post("/signup", userController.signup);
 
 router.post("/signin", userController.signin);
@@ -13,13 +12,7 @@ router.get("/my-user", verifyToken, userController.getUserInfo);
 
 router.get("/get-all-users", verifyToken, userController.getAllUsers);
 
-
-
 export default router;
-
-
-
-
 
 /**
  * @swagger
@@ -29,7 +22,7 @@ export default router;
  *       type: http
  *       scheme: bearer
  *       bearerFormat: JWT
- * 
+ *
  * /signup:
  *   post:
  *     summary: Create a user
@@ -71,7 +64,7 @@ export default router;
  *         description: Bad request.
  *       401:
  *         description: Unauthorized.
- * 
+ *
  * /signin:
  *   post:
  *     summary: Authenticate a user
@@ -101,7 +94,7 @@ export default router;
  *         description: Bad request.
  *       401:
  *         description: Unauthorized.
- * 
+ *
  * /my-user:
  *   get:
  *     summary: Retrieve current user information
@@ -117,7 +110,7 @@ export default router;
  *         description: Bad request.
  *       401:
  *         description: Unauthorized.
- * 
+ *
  * /get-all-users:
  *   get:
  *     summary: Retrieve all user information

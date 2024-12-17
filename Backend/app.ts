@@ -55,7 +55,7 @@ const port: number = process.env.PORT ? Number(process.env.PORT) : 3000;
 
 app.use("/event", eventRoutes);
 app.use("/", userRoutes);
-app.use("/city", cityRoutes);
+app.use("/", cityRoutes);
 app.use("/", adminRoutes);
 app.use("/post", postRoutes);
 app.use("/commentary", commentaryRoutes);
@@ -70,7 +70,6 @@ const publicDir = path.join(__dirname, "src", "public");
 
 // Configurate to serv static files
 app.use("/", express.static(publicDir));
-
 
 /**
  * @swagger
@@ -93,7 +92,6 @@ app.use("/", express.static(publicDir));
 app.get("/ping", (req, res) => {
   res.send("pong");
 });
-
 
 async function syncModels() {
   try {

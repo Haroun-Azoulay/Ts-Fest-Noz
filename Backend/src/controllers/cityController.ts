@@ -75,7 +75,7 @@ const getPointByUser = async (
   res: Response,
 ): Promise<Response<any, Record<string, any>>> => {
   try {
-    const userId: string = req.params.id;
+    const userId: string = req.params.userId;
     if (!userId) {
       return res.status(400).json({ message: "User ID is required" });
     }

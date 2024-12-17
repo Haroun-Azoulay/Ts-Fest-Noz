@@ -5,7 +5,6 @@ import isAdmin from "../middlewares/isAdmin";
 
 const router: Router = express.Router();
 
-
 // it's the same like user i can change after !!!
 router.get("/all-users", verifyToken, isAdmin, userController.getAllUsers);
 
@@ -18,7 +17,6 @@ router.put(
 
 export default router;
 
-
 /**
  * @swagger
  * components:
@@ -27,10 +25,10 @@ export default router;
  *       type: http
  *       scheme: bearer
  *       bearerFormat: JWT
- * 
+ *
  * /update-role/{userId}:
  *   put:
- *     summary: Update role 
+ *     summary: Update role
  *     description: Update role if you are Admin
  *     parameters:
  *       - in: path
