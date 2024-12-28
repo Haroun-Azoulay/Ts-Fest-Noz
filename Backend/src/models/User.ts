@@ -9,7 +9,7 @@ import OrganizerProfil from "./OrganizerProfil";
 import ArtistProfil from "./ArtistsProfil";
 
 class User extends Model<UserAttributes> {
-  public id?: string;
+  public id!: string;
   public lastname!: string;
   public firstname!: string;
   public password!: string;

@@ -24,14 +24,12 @@ class City extends Model<CityAttributes> {
 City.init(
   {
     id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      allowNull: false,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
     user_id: {
       type: DataTypes.UUID,
-      allowNull: false,
       references: {
         model: "users",
         key: "id",

@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import PostModel from "../models/Post";
 import { PostAttributes } from "../interfaces/types";
+import Post from "../models/Post";
 
 const createPost = async (
   req: Request,
@@ -29,22 +30,6 @@ const createPost = async (
   }
 };
 
-// const getAllPost = async (req: Request, res: Response) {
-//     try {
-//     PostModel.findOne({
-//         attributes: ['id', 'title', 'content', 'id'],
-//     }).then((result) => {
-//         return res.json(result);
-//     }).catch((error) => {
-//         console.log(error);
-//         return res.json({});
-//     });
-// };
-// } catch (error) {
-//     console.error("Erreur lors de la récuperation du post :", error);
-//     res.status(500).send("Erreur lors de la recuperation du post);
-// }
-
 const getPostById = async (req: Request, res: Response): Promise<void> => {
   const postId: string = req.params.id;
   PostModel.findOne({
@@ -57,7 +42,7 @@ const getPostById = async (req: Request, res: Response): Promise<void> => {
       if (result) {
         return res.json(result);
       }
-      return res.status(404).json({ message: "Item not found" });
+      return res.status(404).json({ message: "Post not found" });
     })
     .catch((error) => {
       console.log(error);
@@ -78,44 +63,48 @@ const getAllPosts = async (req: Request, res: Response): Promise<void> => {
     });
 };
 
-const updatePost = async (req: Request, res: Response): Promise<void> => {
-  PostModel.update(
-    {
-      title: "Updated Title Name!",
-    },
-    {
-      where: {
-        id: 1,
-      },
-    },
-  )
-    .then((result) => {
-      return res.json(result);
-    })
-    .catch((error) => {
-      console.log(error);
-      return res.json({});
-    });
+const updatePost = async (
+  req: Request,
+  res: Response,
+): Promise<Response<any, Record<string, any>>> => {
+  try {
+    const postId: string = req.params.id;
+    const content: string = req.body.content;
+    const post = await Post.findByPk(postId);
+
+    if (!post) {
+      return res.status(404).json({ message: "The post don't exist." });
+    }
+
+    await post.update({ content });
+
+    return res.status(200).json({ message: "Post is update." });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Error retrieving post." });
+  }
 };
 
-const deletePost = async (req: Request, res: Response): Promise<void> => {
-  PostModel.destroy({
-    where: {
-      id: 1,
-    },
-  })
-    .then((result) => {
-      return res.json(result);
-    })
-    .catch((error) => {
-      console.log(error);
-      return res.json({});
-    });
+const deletePost = async (
+  req: Request,
+  res: Response,
+): Promise<Response<any, Record<string, any>>> => {
+  try {
+    const postId: string = req.params.id;
+    const post = await Post.findByPk(postId);
+    if (!post) {
+      return res.status(404).json({ message: "The post don't exist." });
+    }
+    await post.destroy();
+    return res.status(204).json({ message: "Post removed success." });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Error to remove commentary." });
+  }
 };
 
 export default {
   createPost,
-  // getLatestPost,
   getPostById,
   getAllPosts,
   updatePost,

@@ -50,22 +50,23 @@ declare module "express" {
 const app = express();
 app.use(express.json());
 app.use(cors());
+
 // Endpoint swagger
 app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 const port: number = process.env.PORT ? Number(process.env.PORT) : 3000;
 
-app.use("/event", eventRoutes);
-app.use("/", userRoutes);
-app.use("/", cityRoutes);
-app.use("/", adminRoutes);
-app.use("/post", postRoutes);
-app.use("/commentary", commentaryRoutes);
-app.use("/goodie", goodieRoutes);
-app.use("/goodietype", goodieTypeRoutes);
-app.use("/group", groupRoutes);
-app.use("/groupdetail", groupDetailRoutes);
-app.use("/order", orderRoutes);
-app.use("/orderdetail", orderDetailRoutes);
+app.use(eventRoutes);
+app.use(userRoutes);
+app.use(cityRoutes);
+app.use(adminRoutes);
+app.use(postRoutes);
+app.use(commentaryRoutes);
+app.use(goodieRoutes);
+app.use(goodieTypeRoutes);
+app.use(groupRoutes);
+app.use(groupDetailRoutes);
+app.use(orderRoutes);
+app.use(orderDetailRoutes);
 
 const publicDir = path.join(__dirname, "src", "public");
 
@@ -100,22 +101,33 @@ async function syncModels() {
     console.log("Database connection has been established successfully.");
 
     await User.sync({ force: false });
+    await Post.sync({ force: false });
+    await City.sync({ force: false });
     async function insertFakerData() {
       try {
-        const count = await User.count();
+        const countUser = await User.count();
+        const countPost = await Post.count();
+        const countCity = await City.count();
         console.log;
-        if (count === 0)
+        if (countUser === 0)
           User.bulkCreate(faker.users, {
+            ignoreDuplicates: true,
+          });
+        if (countPost === 0)
+          Post.bulkCreate(faker.posts, {
+            ignoreDuplicates: true,
+          });
+        if (countCity === 0)
+          City.bulkCreate(faker.cities, {
             ignoreDuplicates: true,
           });
       } catch (error) {
         console.log("Table User is filled or an error occurred:", error);
       }
     }
+
     await insertFakerData();
-    await Post.sync({ force: false });
     await Commentary.sync({ force: false });
-    await City.sync({ force: false });
     await ArtistProfil.sync({ force: false });
     await OrganizerProfil.sync({ force: false });
     await Map.sync({ force: false });

@@ -90,7 +90,7 @@ const getAllCommentaries = async (
     return res.json(commentariesWithUserDetails);
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: "Error retrieving comments" });
+    return res.status(500).json({ message: "Error retrieving comments." });
   }
 };
 
@@ -104,19 +104,15 @@ const updateCommentary = async (
 
     const commentary = await Commentary.findByPk(commentaryId);
     if (!commentary) {
-      return res.status(404).json({ message: "Le commentaire n'existe pas." });
+      return res.status(404).json({ message: "The commentary don't exist." });
     }
 
     await commentary.update({ content });
 
-    return res
-      .status(200)
-      .json({ message: "Commentaire mis à jour avec succès." });
+    return res.status(200).json({ message: "Commentary is update." });
   } catch (error) {
     console.error(error);
-    return res
-      .status(500)
-      .json({ message: "Erreur lors de la mise à jour du commentaire." });
+    return res.status(500).json({ message: "Error retrieving comments." });
   }
 };
 
@@ -129,19 +125,15 @@ const deleteCommentary = async (
 
     const commentary = await Commentary.findByPk(commentaryId);
     if (!commentary) {
-      return res.status(404).json({ message: "Le commentaire n'existe pas." });
+      return res.status(404).json({ message: "The commentary don't exist." });
     }
 
     await commentary.destroy();
 
-    return res
-      .status(200)
-      .json({ message: "Commentaire supprimé avec succès." });
+    return res.status(204).json({ message: "Commentary removed success." });
   } catch (error) {
     console.error(error);
-    return res
-      .status(500)
-      .json({ message: "Erreur lors de la suppression du commentaire." });
+    return res.status(500).json({ message: "Error to remove commentary." });
   }
 };
 
