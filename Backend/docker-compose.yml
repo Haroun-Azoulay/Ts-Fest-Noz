@@ -30,18 +30,12 @@ services:
       music-db:
         condition: service_healthy
 
-  # oauthserver1:
-  #   build: ./oauthServer
-  #   ports:
-  #     - "4000:4000"
-
-  # app:
-  #   build: ./app
-  #   ports:
-  #     - "5000:5000"
+  oauthserver1:
+    build: ./oauthServer
+    ports:
+      - "3001:3001"
 
 volumes:
   pg_music_data:
 #docker exec -it backend-music-app-db-1 psql -U root music_app
 
-#3000 - 3001 etc

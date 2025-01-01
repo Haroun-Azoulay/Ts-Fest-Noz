@@ -26,8 +26,8 @@ import goodieRoutes from "./src/routes/goodieRoutes";
 import goodieTypeRoutes from "./src/routes/goodieTypeRoutes";
 import groupRoutes from "./src/routes/groupRoutes";
 import groupDetailRoutes from "./src/routes/groupDetailRoutes";
-import orderRoutes from "./src/routes/orderRoutes";
-import orderDetailRoutes from "./src/routes/orderDetailRoutes";
+// import orderRoutes from "./src/routes/orderRoutes";
+// import orderDetailRoutes from "./src/routes/orderDetailRoutes";
 import "./src/models/associations";
 import cors from "cors";
 import path from "path";
@@ -65,8 +65,8 @@ app.use(goodieRoutes);
 app.use(goodieTypeRoutes);
 app.use(groupRoutes);
 app.use(groupDetailRoutes);
-app.use(orderRoutes);
-app.use(orderDetailRoutes);
+// app.use(orderRoutes);
+// app.use(orderDetailRoutes);
 
 const publicDir = path.join(__dirname, "src", "public");
 
@@ -108,7 +108,6 @@ async function syncModels() {
         const countUser = await User.count();
         const countPost = await Post.count();
         const countCity = await City.count();
-        console.log;
         if (countUser === 0)
           User.bulkCreate(faker.users, {
             ignoreDuplicates: true,

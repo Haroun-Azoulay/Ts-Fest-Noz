@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connexion</title>
+</head>
+<body>
+  <section class="connexion">
+    <h1>OAUTH2</h1>
+    <form action="/oauth/token" method="POST">
+
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+      <input type="hidden" name="grant_type" value="password">
+
+    
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" placeholder="Enter your username" required>
+      <br><br>
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" placeholder="Enter your password" required>
+      <br><br>
+
+      
+      <button type="submit">Request Token</button>
+    </form>
+  </section>
+</body>
+</html>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f3e8ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+
+  h1 {
+    text-align: center;
+  }
+
+  .connexion {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 90%;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  label {
+    font-size: 14px;
+    color: #5c3d99;
+  }
+
+  input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    outline: none;
+  }
+
+  input:focus {
+    border-color: #5c3d99;
+  }
+
+  button {
+    padding: 10px 15px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #7d4acb;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #6933b3;
+  }
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

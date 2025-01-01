@@ -57,7 +57,6 @@ Map.init(
   },
 );
 
-// Définir la relation many-to-one avec User
 // Map.belongsTo(User, { foreignKey: 'user_id' });
 
 export default Map;

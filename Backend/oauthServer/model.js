@@ -1,61 +1,158 @@
+/**
+ * Configuration.
+ */
+
+require("dotenv").config();
+
+var config = {
+  clients: [
+    {
+      id: process.env.CLIENT_ID, // TODO: Needed by refresh_token grant
+      clientId: process.env.CLIENT_ID,
+      clientSecret: process.env.CLIENT_SECRET,
+      grants: ["password", "refresh_token"],
+      redirectUris: [],
+    },
+  ],
+  confidentialClients: [
+    {
+      clientId: process.env.CLIENT_ID_CONFIDENTIAL,
+      clientSecret: process.env.CLIENT_SECRET_CONFIDENTIAL,
+      grants: ["password", "client_credentials"],
+      redirectUris: [],
+    },
+  ],
+  tokens: [],
+  users: [
+    {
+      username: "guard",
+      password: "password",
+    },
+  ],
+};
+
+/**
+ * Dump the memory storage content (for debug).
+ */
+
+var dump = function () {
+  console.log("clients", config.clients);
+  console.log("confidentialClients", config.confidentialClients);
+  console.log("tokens", config.tokens);
+  console.log("users", config.users);
+};
+
+dump;
+/*
+ * Methods used by all grant types.
+ */
+
+var getAccessToken = function (token) {
+  var tokens = config.tokens.filter(function (savedToken) {
+    return savedToken.accessToken === token;
+  });
+
+  return tokens[0];
+};
+
+var getClient = function (clientId, clientSecret) {
+  var clients = config.clients.filter(function (client) {
+    return client.clientId === clientId && client.clientSecret === clientSecret;
+  });
+
+  var confidentialClients = config.confidentialClients.filter(
+    function (client) {
+      return (
+        client.clientId === clientId && client.clientSecret === clientSecret
+      );
+    },
+  );
+
+  return clients[0] || confidentialClients[0];
+};
+
+var saveToken = function (token, client, user) {
+  token.client = {
+    id: client.clientId,
+  };
+
+  token.user = {
+    username: user.username,
+    state: user.state, // Ajout du state ici
+  };
+
+  config.tokens.push(token);
+
+  dump(); // Affiche les tokens actuels dans la console
+
+  return token;
+};
+
+/*
+ * Method used only by password grant type.
+ */
+
+var getUser = function (username, password) {
+  var users = config.users.filter(function (user) {
+    return user.username === username && user.password === password;
+  });
+
+  return users[0];
+};
+
+/*
+ * Method used only by client_credentials grant type.
+ */
+
+var getUserFromClient = function (client) {
+  var clients = config.confidentialClients.filter(function (savedClient) {
+    return (
+      savedClient.clientId === client.clientId &&
+      savedClient.clientSecret === client.clientSecret
+    );
+  });
+
+  return clients.length;
+};
+
+/*
+ * Methods used only by refresh_token grant type.
+ */
+
+var getRefreshToken = function (refreshToken) {
+  var tokens = config.tokens.filter(function (savedToken) {
+    return savedToken.refreshToken === refreshToken;
+  });
+
+  if (!tokens.length) {
+    return;
+  }
+
+  return tokens[0];
+};
+
+var revokeToken = function (token) {
+  config.tokens = config.tokens.filter(function (savedToken) {
+    return savedToken.refreshToken !== token.refreshToken;
+  });
+
+  var revokedTokensFound = config.tokens.filter(function (savedToken) {
+    return savedToken.refreshToken === token.refreshToken;
+  });
+
+  return !revokedTokensFound.length;
+};
+
+/**
+ * Export model definition object.
+ */
+
 module.exports = {
-  getClient: function (clientId, clientSecret, callback) {
-    const client = {
-      clientId: "your_client_id_here",
-      clientSecret: "your_client_secret_here",
-      grants: ["authorization_code", "password", "client_credentials"],
-      redirectUris: ["http://localhost:5000/callback"],
-    };
-    callback(null, client);
-  },
-  saveToken: function (token, client, user, callback) {
-    const accessToken = {
-      accessToken: token.accessToken,
-      accessTokenExpiresAt: token.accessTokenExpiresAt,
-      client: client,
-      user: user,
-    };
-    callback(null, accessToken);
-  },
-  getAccessToken: function (accessToken, callback) {
-    const token = {
-      accessToken: accessToken,
-      accessTokenExpiresAt: new Date(new Date().getTime() + 3600 * 1000),
-      client: { id: "your_client_id_here" },
-      user: { id: "123" },
-    };
-    callback(null, token);
-  },
-  getAuthorizationCode: function (authorizationCode, callback) {
-    const authCode = {
-      code: authorizationCode,
-      expiresAt: new Date(new Date().getTime() + 60000),
-      client: { id: "your_client_id_here" },
-      user: { id: "123" },
-    };
-    callback(null, authCode);
-  },
-  saveAuthorizationCode: function (code, client, user, callback) {
-    const authCode = {
-      authorizationCode: code.authorizationCode,
-      expiresAt: code.expiresAt,
-      client: client,
-      user: user,
-      redirectUri: code.redirectUri,
-    };
-    callback(null, authCode);
-  },
-  revokeAuthorizationCode: function (code, callback) {
-    callback(null, true);
-  },
-  verifyScope: function (token, scope, callback) {
-    callback(null, true);
-  },
-  getUser: function (username, password, callback) {
-    const user = {
-      id: "123",
-      username: username,
-    };
-    callback(null, user);
-  },
+  getAccessToken: getAccessToken,
+  getClient: getClient,
+  saveToken: saveToken,
+  getUser: getUser,
+  getUserFromClient: getUserFromClient,
+  getRefreshToken: getRefreshToken,
+  revokeToken: revokeToken,
 };

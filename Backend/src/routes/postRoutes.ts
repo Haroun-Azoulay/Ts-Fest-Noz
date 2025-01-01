@@ -36,7 +36,7 @@ export default router;
  *     summary: Add a new post
  *     description: Add a new post in the forum.
  *     tags:
- *       - Forum
+ *       - Forum - Posts
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -76,7 +76,7 @@ export default router;
  *     summary: Retrieve all posts on the forum
  *     description: Get details of all posts.
  *     tags:
- *       - Forum
+ *       - Forum - Posts
  *     security:
  *       - bearerAuth: []
  *     responses:
@@ -100,7 +100,7 @@ export default router;
  *           format: uuid
  *         description: Numeric UUID of the post to retrieve his forum.
  *     tags:
- *       - Forum
+ *       - Forum - Posts
  *     security:
  *       - bearerAuth: []
  *     responses:
@@ -147,7 +147,7 @@ export default router;
  *                 type: string
  *                 description: The post's userId.
  *     tags:
- *       - Forum
+ *       - Forum - Posts
  *     security:
  *       - bearerAuth: []
  *     responses:
@@ -171,7 +171,7 @@ export default router;
  *           format: uuid
  *         description: Numeric UUID of the post to delete
  *     tags:
- *       - Forum
+ *       - Forum - Posts
  *     security:
  *       - bearerAuth: []
  *     responses:
