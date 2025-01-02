@@ -7,18 +7,19 @@ RUN apt-get update && apt-get upgrade -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-
 COPY package*.json ./
 
+RUN npm install\
+&& npm install typescript -g
 
-RUN npm install
-
+COPY .env ./
 
 COPY . .
 
-
-RUN chmod +x app.js
+RUN chmod +x oauth2server.ts
 
 EXPOSE 3001
 
-CMD ["node", "app.js"]
+RUN tsc
+
+CMD ["node", "oauth2server.js"]

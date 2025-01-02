@@ -8,6 +8,7 @@
   },
   "author": "",
   "license": "ISC",
+  "type": "commonjs",
   "dependencies": {
     "cookie-parser": "^1.4.7",
     "csurf": "^1.11.0",
@@ -15,5 +16,12 @@
     "ejs": "^3.1.10",
     "express": "^4.19.2",
     "oauth2-server": "^3.1.1"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.8",
+    "@types/csurf": "^1.11.5",
+    "@types/oauth2-server": "^3.0.18",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
   }
 }
