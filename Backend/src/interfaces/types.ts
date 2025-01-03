@@ -146,14 +146,12 @@ export interface GroupDetailAttributes {
   id?: string;
   groupId?: string;
   userId?: string;
-  owner: boolean;
 }
 
 export interface GroupDetailInfo {
   id?: string;
   groupId?: string;
   userId?: string;
-  owner: boolean;
 }
 
 export interface GroupUsersDetailInfo {
@@ -161,7 +159,6 @@ export interface GroupUsersDetailInfo {
   groupId?: string;
   userId?: string;
   email?: string;
-  owner: boolean;
 }
 // ============================================= Group Interfaces(End) =============================================
 

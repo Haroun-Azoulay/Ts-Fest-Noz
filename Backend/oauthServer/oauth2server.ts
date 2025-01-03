@@ -100,5 +100,5 @@ function authenticateRequest(req: Request, res: Response, next: NextFunction) {
 
 const PORT = 3001;
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`Server OAUTH2 is running on http://localhost:${PORT}`);
 });

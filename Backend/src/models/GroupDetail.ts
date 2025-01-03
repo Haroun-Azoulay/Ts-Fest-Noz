@@ -9,7 +9,6 @@ class GroupDetail
   public id?: string | undefined;
   public groupId?: string | undefined;
   public userId!: string;
-  public owner!: boolean;
 }
 
 GroupDetail.init(
@@ -35,10 +34,6 @@ GroupDetail.init(
         model: "users",
         key: "id",
       },
-    },
-    owner: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
     },
   },
   {

@@ -35,7 +35,6 @@ const getMyGroup = async (
         groupId: element.groupId,
         userId: element.userId,
         email: getUser?.email,
-        owner: element.owner,
       };
       groupUsersDetailInfoList.push(groupUsersDetailInfo);
     }

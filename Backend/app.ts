@@ -31,10 +31,6 @@ import groupDetailRoutes from "./src/routes/groupDetailRoutes";
 import "./src/models/associations";
 import cors from "cors";
 import path from "path";
-/* const session = require('express-session');
-const { AuthorizationCode } = require('simple-oauth2');
-const axios = require('axios');
-const crypto = require('crypto'); */
 import swaggerUI from "swagger-ui-express";
 import swaggerSpec from "./swagger";
 import faker from "./src/config/faker";
