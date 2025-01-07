@@ -6,7 +6,6 @@ import City from "./City";
 import Map from "./Map";
 import User from "./User";
 import Group from "./Group";
-import GroupDetail from "./GroupDetail";
 import GoodieType from "./GoodieType";
 import Goodie from "./Goodie";
 import Order from "./Order";
@@ -20,9 +19,6 @@ Goodie.belongsTo(GoodieType, { foreignKey: "goodieTypeId" });
 
 Group.hasMany(Goodie, { foreignKey: "groupId", onDelete: "CASCADE" });
 Goodie.belongsTo(Group, { foreignKey: "groupId" });
-
-Group.hasMany(GroupDetail, { foreignKey: "groupId", onDelete: "CASCADE" });
-GroupDetail.belongsTo(Group, { foreignKey: "groupId" });
 
 Order.hasMany(OrderDetail, { foreignKey: "orderId", onDelete: "CASCADE" });
 OrderDetail.belongsTo(Order, { foreignKey: "orderId" });

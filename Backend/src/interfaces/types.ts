@@ -141,27 +141,6 @@ export interface GroupInfo {
 }
 // ============================================= Group Interfaces(End) =============================================
 
-// ============================================= Group Interfaces(Start) =============================================
-export interface GroupDetailAttributes {
-  id?: string;
-  groupId?: string;
-  userId?: string;
-}
-
-export interface GroupDetailInfo {
-  id?: string;
-  groupId?: string;
-  userId?: string;
-}
-
-export interface GroupUsersDetailInfo {
-  id?: string;
-  groupId?: string;
-  userId?: string;
-  email?: string;
-}
-// ============================================= Group Interfaces(End) =============================================
-
 // ============================================= Goodie Interfaces(Start) =============================================
 export interface GoodieAttributes {
   id?: string;

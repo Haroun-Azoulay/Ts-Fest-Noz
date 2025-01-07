@@ -13,7 +13,6 @@ import OrganizerProfil from "./src/models/OrganizerProfil";
 import Goodie from "./src/models/Goodie";
 import GoodieType from "./src/models/GoodieType";
 import Group from "./src/models/Group";
-import GroupDetail from "./src/models/GroupDetail";
 import Order from "./src/models/Order";
 import OrderDetail from "./src/models/OrderDetail";
 import userRoutes from "./src/routes/userRoutes";
@@ -25,7 +24,6 @@ import adminRoutes from "./src/routes/adminRoutes";
 import goodieRoutes from "./src/routes/goodieRoutes";
 import goodieTypeRoutes from "./src/routes/goodieTypeRoutes";
 import groupRoutes from "./src/routes/groupRoutes";
-import groupDetailRoutes from "./src/routes/groupDetailRoutes";
 // import orderRoutes from "./src/routes/orderRoutes";
 // import orderDetailRoutes from "./src/routes/orderDetailRoutes";
 import "./src/models/associations";
@@ -60,14 +58,13 @@ app.use(commentaryRoutes);
 app.use(goodieRoutes);
 app.use(goodieTypeRoutes);
 app.use(groupRoutes);
-app.use(groupDetailRoutes);
 // app.use(orderRoutes);
 // app.use(orderDetailRoutes);
 
-const publicDir = path.join(__dirname, "src", "public");
+// const publicDir = path.join(__dirname, "src", "public");
 
-// Configurate to serv static files
-app.use("/", express.static(publicDir));
+// // Configurate to serv static files
+// app.use("/", express.static(publicDir));
 
 /**
  * @swagger
@@ -129,7 +126,6 @@ async function syncModels() {
     await Event.sync({ force: false });
     await Payment.sync({ force: false });
     await Group.sync({ force: false });
-    await GroupDetail.sync({ force: false });
     await GoodieType.sync({ force: false });
     await Goodie.sync({ force: false });
     await Order.sync({ force: false });
