@@ -1,13 +1,9 @@
 import express, { Router } from "express";
-import goodieTypeController from "../controllers/goodieTypeController";
 import verifyToken from "../middlewares/verifyToken";
+import groupDetailController from "../controllers/groupDetailController";
 
 const router: Router = express.Router();
 
-router.get(
-  "/get-all-types",
-  verifyToken,
-  goodieTypeController.getAllGoodieTypes,
-);
+router.get("/me", verifyToken, groupDetailController.getMyGroup);
 
 export default router;

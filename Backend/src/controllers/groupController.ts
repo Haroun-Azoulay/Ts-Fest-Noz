@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import UserModel from "../models/User";
 import GroupModel from "../models/Group";
+import GroupDetailModel from "../models/GroupDetail";
 
 const createGroup = async (
   req: Request,
@@ -29,7 +30,11 @@ const createGroup = async (
     const newGroup: GroupModel = await GroupModel.create({
       name: groupName,
     });
-    return res.json({ newGroup });
+    await GroupDetailModel.create({
+      userId: user?.id,
+      groupId: newGroup?.id,
+    });
+    return res.json({ message: "The group are created !" });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Error creating a group." });

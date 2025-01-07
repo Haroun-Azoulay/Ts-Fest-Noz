@@ -52,7 +52,7 @@ Goodie.init(
       unique: true,
     },
     path: {
-      type: DataTypes.BLOB,
+      type: DataTypes.STRING,
       allowNull: true,
       unique: false,
     },

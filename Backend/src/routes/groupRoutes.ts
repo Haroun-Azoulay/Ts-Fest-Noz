@@ -28,7 +28,7 @@ export default router;
  *     summary: Create a new group
  *     description: Create a new group in the e-shop.
  *     tags:
- *       - E-SHOP - Group
+ *       - Group
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -56,7 +56,7 @@ export default router;
  *     summary: Retrieve all group on the e-shop
  *     description: Get details of all group.
  *     tags:
- *       - E-SHOP - Group
+ *       - Group
  *     security:
  *       - bearerAuth: []
  *     responses:
@@ -80,7 +80,7 @@ export default router;
  *           format: uuid
  *         description: Numeric UUID of the group to retrieve his e-shop.
  *     tags:
- *       - E-SHOP - Group
+ *       - Group
  *     security:
  *       - bearerAuth: []
  *     responses:
@@ -104,7 +104,7 @@ export default router;
  *           format: uuid
  *         description: Numeric UUID of the group to delete
  *     tags:
- *       - E-SHOP - Group
+ *       - Group
  *     security:
  *       - bearerAuth: []
  *     responses:
