@@ -1,10 +1,10 @@
 import express, { Router } from "express";
 import groupController from "../controllers/groupController";
 import verifyToken from "../middlewares/verifyToken";
-
+import verifyTokenAdmin from "../middlewares/verifyToken";
 const router: Router = express.Router();
 
-router.post("/create-group", verifyToken, groupController.createGroup);
+router.post("/create-group", verifyTokenAdmin, groupController.createGroup);
 
 router.get("/get-group/:id", verifyToken, groupController.getGroup);
 

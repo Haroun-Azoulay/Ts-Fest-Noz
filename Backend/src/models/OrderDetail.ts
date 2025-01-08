@@ -39,7 +39,7 @@ OrderDetail.init(
     sequelize: sequelizeConnection,
     modelName: "OrderDetail",
     tableName: "orderdetails",
-  }
+  },
 );
 
 export default OrderDetail;

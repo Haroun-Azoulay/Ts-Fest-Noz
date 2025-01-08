@@ -41,7 +41,7 @@ export default router;
  *     summary: Add a new point
  *     description: Add a new point in the system.
  *     tags:
- *       - Maps
+ *       - City
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -88,7 +88,7 @@ export default router;
  *     summary: Retrieve all points information
  *     description: Get details of all points.
  *     tags:
- *       - Maps
+ *       - City
  *     security:
  *       - bearerAuth: []
  *     responses:
@@ -112,7 +112,7 @@ export default router;
  *           format: uuid
  *         description: Numeric UUID of the user to retrieve his point.
  *     tags:
- *       - Maps
+ *       - City
  *     security:
  *       - bearerAuth: []
  *     responses:
@@ -135,7 +135,7 @@ export default router;
  *           type: integer
  *         description: Numeric ID of the point to delete
  *     tags:
- *       - Maps
+ *       - City
  *     security:
  *       - bearerAuth: []
  *     responses:

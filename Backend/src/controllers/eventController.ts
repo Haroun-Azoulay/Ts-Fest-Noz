@@ -119,7 +119,7 @@ const addPayment = async (
       id: payment.id,
       payment: payment.payment,
       token: token,
-      userId: payment.userId
+      userId: payment.userId,
     };
 
     console.log("addPayment - formattedPayment:", formattedPayment);

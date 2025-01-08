@@ -31,5 +31,4 @@ GoodieType.init(
   },
 );
 
-
 export default GoodieType;

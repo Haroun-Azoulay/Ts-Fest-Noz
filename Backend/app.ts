@@ -62,11 +62,6 @@ app.use(groupUserRoutes);
 // app.use(orderRoutes);
 // app.use(orderDetailRoutes);
 
-const publicDir = path.join(__dirname, "src", "public");
-
-// Configurate to serv static files
-app.use("/", express.static(publicDir));
-
 /**
  * @swagger
  * /ping:
@@ -131,7 +126,6 @@ async function syncModels() {
     await OrderDetail.sync({ force: false });
     await Order.sync({ force: false });
 
-    
     app.listen(port, () => {
       console.log(`[server]: Server is running at http://localhost:${port}`);
     });

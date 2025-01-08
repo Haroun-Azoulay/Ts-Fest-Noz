@@ -45,5 +45,4 @@ GroupUser.init(
   },
 );
 
-
 export default GroupUser;

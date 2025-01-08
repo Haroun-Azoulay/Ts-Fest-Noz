@@ -65,7 +65,6 @@ export interface EventAttributes {
 }
 // ============================================= Event Interfaces(End) =============================================
 
-
 // ============================================= OrganizerProfil Interfaces(Start) =============================================
 export interface OrganizerProfilAttributes {
   id: string;
@@ -150,7 +149,6 @@ export interface GroupUsersDetailInfo {
   id?: string;
   groupId?: string;
   userId?: string;
-  email?: string;
 }
 // ============================================= Group Interfaces(End) =============================================
 
@@ -205,7 +203,7 @@ export interface OrderInfo {
   id?: string;
   userId?: string;
   totalPrice: number;
-  orderdetailId      : string;
+  orderdetailId: string;
 }
 // ============================================= Order Interfaces(End) =============================================
 

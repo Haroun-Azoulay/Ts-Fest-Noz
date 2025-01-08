@@ -10,7 +10,6 @@ class Order extends Model {
   public orderdetailId!: string;
 }
 
-
 Order.init(
   {
     id: {
@@ -44,7 +43,7 @@ Order.init(
     sequelize: sequelizeConnection,
     modelName: "Order",
     tableName: "orders",
-  }
+  },
 );
 
 export default Order;
