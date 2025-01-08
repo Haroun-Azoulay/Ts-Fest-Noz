@@ -31,11 +31,9 @@ City.init(
     user_id: {
       type: DataTypes.UUID,
       references: {
-        model: "users",
+        model: User,
         key: "id",
       },
-      onUpdate: "CASCADE",
-      onDelete: "CASCADE",
     },
     city_name: {
       type: DataTypes.STRING,
@@ -92,7 +90,8 @@ City.init(
   },
   {
     sequelize: sequelizeConnection,
-    modelName: "city",
+    modelName: "City",
+    tableName: "cities",
   },
 );
 

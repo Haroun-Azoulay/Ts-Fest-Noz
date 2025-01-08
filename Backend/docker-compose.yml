@@ -37,5 +37,6 @@ services:
 
 volumes:
   pg_music_data:
-#docker exec -it backend-music-app-db-1 psql -U root music_app
+
+
 

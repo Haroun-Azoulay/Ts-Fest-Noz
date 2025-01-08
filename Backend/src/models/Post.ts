@@ -2,7 +2,6 @@ import { DataTypes, Model } from "sequelize";
 import sequelizeConnection from "../../config/database";
 import { PostAttributes } from "../interfaces/types";
 import User from "./User";
-import Commentary from "./Commentary";
 
 class Post extends Model<PostAttributes> implements PostAttributes {
   public id!: string;
@@ -44,8 +43,8 @@ Post.init(
   {
     sequelize: sequelizeConnection,
     modelName: "post",
+    tableName: "posts",
   },
 );
 
-Post.hasMany(Commentary, { foreignKey: "postId" });
 export default Post;

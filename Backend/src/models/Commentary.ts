@@ -29,7 +29,7 @@ Commentary.init(
       type: DataTypes.UUID,
       allowNull: false,
       references: {
-        model: "posts",
+        model: Post,
         key: "id",
       },
     },
@@ -37,14 +37,15 @@ Commentary.init(
       type: DataTypes.UUID,
       allowNull: false,
       references: {
-        model: "users",
+        model: User,
         key: "id",
       },
     },
   },
   {
     sequelize: sequelizeConnection,
-    modelName: "commentary",
+    modelName: "Commentary",
+    tableName: "commentaries",
   },
 );
 

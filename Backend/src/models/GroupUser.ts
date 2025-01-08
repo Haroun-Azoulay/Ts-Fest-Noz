@@ -1,17 +1,19 @@
 import { DataTypes, Model } from "sequelize";
 import sequelizeConnection from "../../config/database";
-import { GroupDetailAttributes } from "../interfaces/types";
+import { GroupUserAttributes } from "../interfaces/types";
+import Group from "./Group";
+import User from "./User";
 
-class GroupDetail
-  extends Model<GroupDetailAttributes>
-  implements GroupDetailAttributes
+class GroupUser
+  extends Model<GroupUserAttributes>
+  implements GroupUserAttributes
 {
   public id?: string | undefined;
   public groupId?: string | undefined;
   public userId!: string;
 }
 
-GroupDetail.init(
+GroupUser.init(
   {
     id: {
       type: DataTypes.UUID,
@@ -23,7 +25,7 @@ GroupDetail.init(
       type: DataTypes.UUID,
       allowNull: false,
       references: {
-        model: "groups",
+        model: Group,
         key: "id",
       },
     },
@@ -31,17 +33,17 @@ GroupDetail.init(
       type: DataTypes.UUID,
       allowNull: false,
       references: {
-        model: "users",
+        model: User,
         key: "id",
       },
     },
   },
   {
     sequelize: sequelizeConnection,
-    modelName: "groupdetail",
+    modelName: "GroupUser",
+    tableName: "groupeUsers",
   },
 );
 
-// GroupDetail.belongsTo(Group, { foreignKey: 'groupId' });
 
-export default GroupDetail;
+export default GroupUser;

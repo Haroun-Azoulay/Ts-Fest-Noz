@@ -1,6 +1,9 @@
 import { DataTypes, Model } from "sequelize";
 import sequelizeConnection from "../../config/database";
 import { GoodieAttributes } from "../interfaces/types";
+import User from "./User";
+import Group from "./Group";
+import GoodieType from "./GoodieType";
 
 class Goodie extends Model<GoodieAttributes> implements GoodieAttributes {
   id?: string | undefined;
@@ -26,7 +29,7 @@ Goodie.init(
       type: DataTypes.UUID,
       allowNull: false,
       references: {
-        model: "groups",
+        model: Group,
         key: "id",
       },
     },
@@ -34,7 +37,7 @@ Goodie.init(
       type: DataTypes.UUID,
       allowNull: false,
       references: {
-        model: "users",
+        model: User,
         key: "id",
       },
     },
@@ -42,7 +45,7 @@ Goodie.init(
       type: DataTypes.UUID,
       allowNull: false,
       references: {
-        model: "goodietypes",
+        model: GoodieType,
         key: "id",
       },
     },
@@ -72,6 +75,7 @@ Goodie.init(
   {
     sequelize: sequelizeConnection,
     modelName: "goodie",
+    tableName: "goodies",
   },
 );
 

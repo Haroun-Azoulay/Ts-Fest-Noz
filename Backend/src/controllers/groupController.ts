@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import UserModel from "../models/User";
 import GroupModel from "../models/Group";
-import GroupDetailModel from "../models/GroupDetail";
+import GroupDetailModel from "../models/GroupUser";
 
 const createGroup = async (
   req: Request,

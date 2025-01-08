@@ -7,13 +7,11 @@ import Post from "./src/models/Post";
 import Commentary from "./src/models/Commentary";
 import Payment from "./src/models/Payment";
 import Event from "./src/models/Event";
-import Map from "./src/models/Map";
-import ArtistProfil from "./src/models/ArtistsProfil";
 import OrganizerProfil from "./src/models/OrganizerProfil";
 import Goodie from "./src/models/Goodie";
 import GoodieType from "./src/models/GoodieType";
 import Group from "./src/models/Group";
-import GroupDetail from "./src/models/GroupDetail";
+import GroupUser from "./src/models/GroupUser";
 import Order from "./src/models/Order";
 import OrderDetail from "./src/models/OrderDetail";
 import userRoutes from "./src/routes/userRoutes";
@@ -25,7 +23,7 @@ import adminRoutes from "./src/routes/adminRoutes";
 import goodieRoutes from "./src/routes/goodieRoutes";
 import goodieTypeRoutes from "./src/routes/goodieTypeRoutes";
 import groupRoutes from "./src/routes/groupRoutes";
-import groupDetailRoutes from "./src/routes/groupDetailRoutes";
+import groupUserRoutes from "./src/routes/groupUserRoutes";
 // import orderRoutes from "./src/routes/orderRoutes";
 // import orderDetailRoutes from "./src/routes/orderDetailRoutes";
 import "./src/models/associations";
@@ -60,7 +58,7 @@ app.use(commentaryRoutes);
 app.use(goodieRoutes);
 app.use(goodieTypeRoutes);
 app.use(groupRoutes);
-app.use(groupDetailRoutes);
+app.use(groupUserRoutes);
 // app.use(orderRoutes);
 // app.use(orderDetailRoutes);
 
@@ -123,18 +121,17 @@ async function syncModels() {
 
     await insertFakerData();
     await Commentary.sync({ force: false });
-    await ArtistProfil.sync({ force: false });
     await OrganizerProfil.sync({ force: false });
-    await Map.sync({ force: false });
     await Event.sync({ force: false });
     await Payment.sync({ force: false });
     await Group.sync({ force: false });
-    await GroupDetail.sync({ force: false });
+    await GroupUser.sync({ force: false });
     await GoodieType.sync({ force: false });
     await Goodie.sync({ force: false });
-    await Order.sync({ force: false });
     await OrderDetail.sync({ force: false });
+    await Order.sync({ force: false });
 
+    
     app.listen(port, () => {
       console.log(`[server]: Server is running at http://localhost:${port}`);
     });

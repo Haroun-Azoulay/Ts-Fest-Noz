@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import UserModel from "../models/User";
-import GroupModel from "../models/Group";
-import GroupDetailModel from "../models/GroupDetail";
+import GroupUserModel from "../models/GroupUser";
 import { GroupUsersDetailInfo } from "../interfaces/types";
 
 const getMyGroup = async (
@@ -13,16 +12,16 @@ const getMyGroup = async (
     const user: UserModel | null = await UserModel.findOne({
       where: { id: userId },
     });
-    const userAlreadyInGroup: GroupDetailModel | null =
-      await GroupDetailModel.findOne({ where: { userId: userId } });
+    const userAlreadyInGroup: GroupUserModel | null =
+      await GroupUserModel.findOne({ where: { userId: userId } });
     if (!user && !(user!.role === "artist") && !userAlreadyInGroup) {
       return res.status(404).json({
         message:
           "Impossible de récupérer les données de l'utilisateur dans un groupe.",
       });
     }
-    const groupDetails: GroupDetailModel[] | null =
-      await GroupDetailModel.findAll({
+    const groupDetails: GroupUserModel[] | null =
+      await GroupUserModel.findAll({
         where: { groupId: userAlreadyInGroup?.groupId },
       });
     const groupUsersDetailInfoList: GroupUsersDetailInfo[] | null = [];

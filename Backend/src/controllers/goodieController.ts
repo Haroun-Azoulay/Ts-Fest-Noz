@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import UserModel from "../models/User";
 import GoodieModel from "../models/Goodie";
-import GroupDetailModel from "../models/GroupDetail";
+import GroupDetailModel from "../models/GroupUser";
 import fs from "fs";
 var path = require("path");
 var multer = require("multer");

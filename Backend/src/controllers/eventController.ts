@@ -19,6 +19,8 @@ const addEvent = async (
     const formattedEvent: EventAttributes = {
       id: event.id,
       name: event.name,
+      city_id: event.city_id,
+      user_id: event.user_id,
       description: event.description,
       url: event.url,
       mapId: event.mapId,
@@ -117,6 +119,7 @@ const addPayment = async (
       id: payment.id,
       payment: payment.payment,
       token: token,
+      userId: payment.userId
     };
 
     console.log("addPayment - formattedPayment:", formattedPayment);

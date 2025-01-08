@@ -48,6 +48,7 @@ OrganizerProfil.init(
   {
     sequelize: sequelizeConnection,
     modelName: "OrganizerProfil",
+    tableName: "organizerProfils",
   },
 );
 

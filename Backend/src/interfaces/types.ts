@@ -60,20 +60,11 @@ export interface EventAttributes {
   description: string;
   url: string;
   mapId: number;
+  city_id: string;
+  user_id: string;
 }
 // ============================================= Event Interfaces(End) =============================================
 
-// ============================================= Map Interfaces(Start) =============================================
-export interface MapAttributes {
-  id: number;
-  // user_id: string;
-  longitude?: number;
-  latitude?: number;
-  text?: string;
-  address: string;
-  color: string;
-}
-// ============================================= Map Interfaces(End) =============================================
 
 // ============================================= OrganizerProfil Interfaces(Start) =============================================
 export interface OrganizerProfilAttributes {
@@ -91,6 +82,7 @@ export interface PaymentAttributes {
   id: string;
   token: string;
   payment: boolean;
+  userId: string;
 }
 // ============================================= Payment Interfaces(End) =============================================
 
@@ -142,13 +134,13 @@ export interface GroupInfo {
 // ============================================= Group Interfaces(End) =============================================
 
 // ============================================= Group Interfaces(Start) =============================================
-export interface GroupDetailAttributes {
+export interface GroupUserAttributes {
   id?: string;
   groupId?: string;
   userId?: string;
 }
 
-export interface GroupDetailInfo {
+export interface GroupUserInfo {
   id?: string;
   groupId?: string;
   userId?: string;
@@ -206,12 +198,14 @@ export interface OrderAttributes {
   id?: string;
   userId?: string;
   totalPrice: number;
+  orderdetailId: string;
 }
 
 export interface OrderInfo {
   id?: string;
   userId?: string;
   totalPrice: number;
+  orderdetailId      : string;
 }
 // ============================================= Order Interfaces(End) =============================================
 

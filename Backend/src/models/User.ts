@@ -1,12 +1,6 @@
 import { DataTypes, Model } from "sequelize";
 import sequelizeConnection from "../../config/database";
 import { UserAttributes } from "../interfaces/types";
-import City from "./City";
-import Map from "./Map";
-import Post from "./Post";
-import Payment from "./Payment";
-import OrganizerProfil from "./OrganizerProfil";
-import ArtistProfil from "./ArtistsProfil";
 
 class User extends Model<UserAttributes> {
   public id!: string;
@@ -24,7 +18,7 @@ class User extends Model<UserAttributes> {
     try {
       const user = await this.findByPk(userId);
       if (!user) {
-        throw new Error("Utilisateur non trouvé");
+        throw new Error("User not found.");
       }
       if (newRole !== "admin") {
         await user.update({ role: newRole });
@@ -80,16 +74,9 @@ User.init(
   },
   {
     sequelize: sequelizeConnection,
-    modelName: "user",
+    modelName: "User",
+    tableName: "users",
   },
 );
 
-// User.hasMany(City, {
-//   foreignKey: "user_id",
-//   onDelete: "CASCADE",
-//   onUpdate: "CASCADE",
-// });
-// User.hasMany(Map, { foreignKey: "user_id", as: "maps" });
-// User.hasMany(Post, { foreignKey: 'userId' });
-// City.belongsTo(User, { foreignKey: 'user_id' });
 export default User;
