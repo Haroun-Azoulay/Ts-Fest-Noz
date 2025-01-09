@@ -24,6 +24,8 @@ import goodieRoutes from "./src/routes/goodieRoutes";
 import goodieTypeRoutes from "./src/routes/goodieTypeRoutes";
 import groupRoutes from "./src/routes/groupRoutes";
 import groupUserRoutes from "./src/routes/groupUserRoutes";
+import { retryDb } from "./src/config/faker";
+
 // import orderRoutes from "./src/routes/orderRoutes";
 // import orderDetailRoutes from "./src/routes/orderDetailRoutes";
 import "./src/models/associations";
@@ -32,6 +34,7 @@ import path from "path";
 import swaggerUI from "swagger-ui-express";
 import swaggerSpec from "./swagger";
 import faker from "./src/config/faker";
+import logger from "node-color-log";
 
 dotenv.config();
 
@@ -87,50 +90,116 @@ app.get("/ping", (req, res) => {
 async function syncModels() {
   try {
     await sequelizeConnection.authenticate();
-    console.log("Database connection has been established successfully.");
+    logger.success("Database connection has been established successfully.");
 
     await User.sync({ force: false });
     await Post.sync({ force: false });
     await City.sync({ force: false });
+    await Commentary.sync({ force: false });
+    await Event.sync({ force: false });
+    await Group.sync({ force: false });
+    await GoodieType.sync({ force: false });
+    await GroupUser.sync({ force: false });
+    await Goodie.sync({ force: false });
+    await OrderDetail.sync({ force: false });
+    await Order.sync({ force: false });
+
     async function insertFakerData() {
       try {
         const countUser = await User.count();
         const countPost = await Post.count();
         const countCity = await City.count();
-        if (countUser === 0)
-          User.bulkCreate(faker.users, {
-            ignoreDuplicates: true,
-          });
-        if (countPost === 0)
-          Post.bulkCreate(faker.posts, {
-            ignoreDuplicates: true,
-          });
-        if (countCity === 0)
-          City.bulkCreate(faker.cities, {
-            ignoreDuplicates: true,
-          });
+        const countCommentary = await Commentary.count();
+        const countEvent = await Event.count();
+        const countGoodieType = await GoodieType.count();
+        const countGroup = await Group.count();
+        const countGroupUser = await GroupUser.count();
+        const countGoodie = await Goodie.count();
+        const countOrderDetail = await OrderDetail.count();
+        const countOrder = await Order.count();
+        const nb = 0;
+        switch (nb) {
+          case countUser:
+            await retryDb(() =>
+              User.bulkCreate(faker.users, {
+                ignoreDuplicates: true,
+              }),
+            );
+          case countPost:
+            await retryDb(() =>
+              Post.bulkCreate(faker.posts, {
+                ignoreDuplicates: true,
+              }),
+            );
+          case countCity:
+            await retryDb(() =>
+              City.bulkCreate(faker.cities, {
+                ignoreDuplicates: true,
+              }),
+            );
+          case countCommentary:
+            await retryDb(() =>
+              Commentary.bulkCreate(faker.commentaries, {
+                ignoreDuplicates: true,
+              }),
+            );
+          case countEvent:
+            await retryDb(() =>
+              Event.bulkCreate(faker.events, {
+                ignoreDuplicates: true,
+              }),
+            );
+          case countGroup:
+            await retryDb(() =>
+              Group.bulkCreate(faker.groups, {
+                ignoreDuplicates: true,
+              }),
+            );
+          case countGroupUser:
+            await retryDb(() =>
+              GroupUser.bulkCreate(faker.groupUsers, {
+                ignoreDuplicates: true,
+              }),
+            );
+          case countGoodieType:
+            await retryDb(() =>
+              GoodieType.bulkCreate(faker.goodieTypes, {
+                ignoreDuplicates: true,
+              }),
+            );
+          case countGoodie:
+            await retryDb(() =>
+              Goodie.bulkCreate(faker.goodies, {
+                ignoreDuplicates: true,
+              }),
+            );
+          case countOrderDetail:
+            await retryDb(() =>
+              OrderDetail.bulkCreate(faker.orderDetails, {
+                ignoreDuplicates: true,
+              }),
+            );
+          case countOrder:
+            await retryDb(() =>
+              Order.bulkCreate(faker.orders, {
+                ignoreDuplicates: true,
+              }),
+            );
+        }
       } catch (error) {
-        console.log("Table User is filled or an error occurred:", error);
+        logger.error("Table User is filled or an error occurred:", error);
       }
     }
 
     await insertFakerData();
-    await Commentary.sync({ force: false });
     await OrganizerProfil.sync({ force: false });
-    await Event.sync({ force: false });
     await Payment.sync({ force: false });
-    await Group.sync({ force: false });
-    await GroupUser.sync({ force: false });
-    await GoodieType.sync({ force: false });
-    await Goodie.sync({ force: false });
-    await OrderDetail.sync({ force: false });
-    await Order.sync({ force: false });
 
     app.listen(port, () => {
-      console.log(`[server]: Server is running at http://localhost:${port}`);
+      logger.success(`[server]: Server is running at http://localhost:${port}`);
     });
   } catch (err) {
-    console.error("[database]: Unable to connect to the database:", err);
+    logger.error("[database]: Unable to connect to the database:", err);
   }
 }
 

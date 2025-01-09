@@ -7,6 +7,7 @@ import OAuth2Server, {
   Request as OAuthRequest,
   Response as OAuthResponse,
 } from "oauth2-server";
+import logger from "node-color-log";
 const oauthModel = require("./model").default;
 
 dotenv.config();
@@ -100,5 +101,7 @@ function authenticateRequest(req: Request, res: Response, next: NextFunction) {
 
 const PORT = 3001;
 app.listen(PORT, () => {
-  console.log(`Server OAUTH2 is running on http://localhost:${PORT}`);
+  logger.success(
+    `[server]: Server OAUTH2 is running on http://localhost:${PORT}`,
+  );
 });

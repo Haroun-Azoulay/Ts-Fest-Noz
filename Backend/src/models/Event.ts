@@ -17,9 +17,8 @@ class Event extends Model<EventAttributes> implements EventAttributes {
 Event.init(
   {
     id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      allowNull: false,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
     name: {

@@ -41,7 +41,7 @@ GroupUser.init(
   {
     sequelize: sequelizeConnection,
     modelName: "GroupUser",
-    tableName: "groupeUsers",
+    tableName: "groupUsers",
   },
 );
 
