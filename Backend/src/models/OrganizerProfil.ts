@@ -1,6 +1,7 @@
 import { DataTypes, Model } from "sequelize";
 import sequelizeConnection from "../../config/database";
 import { OrganizerProfilAttributes } from "../interfaces/types";
+import User from "./User";
 
 class OrganizerProfil
   extends Model<OrganizerProfilAttributes>
@@ -12,6 +13,7 @@ class OrganizerProfil
   public full_adress!: string;
   public SIRET_number!: number;
   public more_info!: string;
+  public userId!: string;
 }
 
 OrganizerProfil.init(
@@ -37,12 +39,20 @@ OrganizerProfil.init(
       allowNull: true,
     },
     SIRET_number: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: true,
     },
     more_info: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    userId: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      references: {
+        model: User,
+        key: "id",
+      },
     },
   },
   {

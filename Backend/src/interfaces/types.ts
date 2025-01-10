@@ -10,7 +10,8 @@ export interface ArtistProfilAttributes {
   phone_number: string;
   url_media: string;
   picture: string;
-  SIRET_number: string;
+  SIRET_number: number;
+  userId: string;
 }
 // ============================================= ArtistProfil Interfaces (End) =============================================
 
@@ -73,6 +74,7 @@ export interface OrganizerProfilAttributes {
   full_adress: string;
   SIRET_number: number;
   more_info: string;
+  userId: string;
 }
 // ============================================= OrganizerProfil Interfaces(End) =============================================
 
@@ -82,6 +84,7 @@ export interface PaymentAttributes {
   token: string;
   payment: boolean;
   userId: string;
+  eventId: string;
 }
 // ============================================= Payment Interfaces(End) =============================================
 

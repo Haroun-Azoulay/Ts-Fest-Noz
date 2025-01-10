@@ -24,7 +24,7 @@ import goodieRoutes from "./src/routes/goodieRoutes";
 import goodieTypeRoutes from "./src/routes/goodieTypeRoutes";
 import groupRoutes from "./src/routes/groupRoutes";
 import groupUserRoutes from "./src/routes/groupUserRoutes";
-import { retryDb } from "./src/config/faker";
+import { organizerProfils, retryDb } from "./src/config/faker";
 
 // import orderRoutes from "./src/routes/orderRoutes";
 // import orderDetailRoutes from "./src/routes/orderDetailRoutes";
@@ -35,6 +35,7 @@ import swaggerUI from "swagger-ui-express";
 import swaggerSpec from "./swagger";
 import faker from "./src/config/faker";
 import logger from "node-color-log";
+import { ArtistProfil } from "./src/models/associations";
 
 dotenv.config();
 
@@ -103,6 +104,9 @@ async function syncModels() {
     await Goodie.sync({ force: false });
     await OrderDetail.sync({ force: false });
     await Order.sync({ force: false });
+    await Payment.sync({ force: false });
+    await OrganizerProfil.sync({ force: false });
+    await ArtistProfil.sync({ force: false });
 
     async function insertFakerData() {
       try {
@@ -117,6 +121,10 @@ async function syncModels() {
         const countGoodie = await Goodie.count();
         const countOrderDetail = await OrderDetail.count();
         const countOrder = await Order.count();
+        const countPayment = await Payment.count();
+        const countOrganizeProfil = await OrganizerProfil.count();
+        const countArtistProfil = await ArtistProfil.count();
+
         const nb = 0;
         switch (nb) {
           case countUser:
@@ -185,6 +193,24 @@ async function syncModels() {
                 ignoreDuplicates: true,
               }),
             );
+          case countPayment:
+            await retryDb(() =>
+              Payment.bulkCreate(faker.payments, {
+                ignoreDuplicates: true,
+              }),
+            );
+          case countOrganizeProfil:
+            await retryDb(() =>
+              OrganizerProfil.bulkCreate(faker.organizerProfils, {
+                ignoreDuplicates: true,
+              }),
+            );
+          case countArtistProfil:
+            await retryDb(() =>
+              ArtistProfil.bulkCreate(faker.artistProfils, {
+                ignoreDuplicates: true,
+              }),
+            );
         }
       } catch (error) {
         logger.error("Table User is filled or an error occurred:", error);
@@ -192,8 +218,6 @@ async function syncModels() {
     }
 
     await insertFakerData();
-    await OrganizerProfil.sync({ force: false });
-    await Payment.sync({ force: false });
 
     app.listen(port, () => {
       logger.success(`[server]: Server is running at http://localhost:${port}`);

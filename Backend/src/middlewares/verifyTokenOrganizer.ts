@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { JwtPayload } from "../interfaces/types";
 
-const verifyTokenAdmin = (
+const verifyTokenOrganizer = (
   req: Request,
   res: Response,
   next: NextFunction,
@@ -24,12 +24,12 @@ const verifyTokenAdmin = (
     console.log(decodedToken);
     const roleToken = decodedToken.role;
 
-    if (roleToken === "admin") {
+    if (roleToken === "organizer") {
       next();
     } else {
-      return res.status(403).json({ message: "You are not Admin." });
+      return res.status(403).json({ message: "You are not Organizer." });
     }
   });
 };
 
-export default verifyTokenAdmin;
+export default verifyTokenOrganizer;

@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
 import logger from "node-color-log";
 
-export async function retryDb<T>(fn: () => Promise<T>, retries = 10) {
+export async function retryDb<T>(fn: () => Promise<T>, retries = 30) {
   for (let i = 0; i < retries; i++) {
     try {
       return await fn();
@@ -24,6 +24,11 @@ const orderDetailUUIDs = Array.from({ length: 10 }, () => faker.string.uuid());
 const orderUUIDs = Array.from({ length: 10 }, () => faker.string.uuid());
 const goodieUUIDs = Array.from({ length: 10 }, () => faker.string.uuid());
 const groupUserUUIDs = Array.from({ length: 10 }, () => faker.string.uuid());
+const paymentUUIDs = Array.from({ length: 10 }, () => faker.string.uuid());
+const artistProfilUUIDs = Array.from({ length: 10 }, () => faker.string.uuid());
+const OrganizerProfilUUIDs = Array.from({ length: 10 }, () =>
+  faker.string.uuid(),
+);
 
 export function createRandomUser(index: number) {
   return {
@@ -143,6 +148,42 @@ export function createOrder(index: number) {
   };
 }
 
+export function createPayment(index: number) {
+  return {
+    id: paymentUUIDs[index],
+    token: faker.string.alpha(20),
+    payment: faker.datatype.boolean(),
+    userId: faker.helpers.arrayElement(userUUIDs),
+    eventId: eventUUIDs[index],
+  };
+}
+
+export function createArtistProfil(index: number) {
+  return {
+    id: artistProfilUUIDs[index],
+    denomination: faker.person.fullName().slice(0, 50),
+    phone_number: faker.phone.number().slice(0, 20),
+    url_media: faker.internet.url(),
+    picture: faker.image.dataUri({ type: "svg-base64" }),
+    SIRET_number: faker.number.int({
+      min: 10000,
+      max: 99999,
+    }),
+    userId: faker.helpers.arrayElement(userUUIDs),
+  };
+}
+export function createOrganizerProfil(index: number) {
+  return {
+    id: OrganizerProfilUUIDs[index],
+    denomination: faker.book.author(),
+    phone_number: faker.phone.number(),
+    full_adress: faker.location.secondaryAddress(),
+    SIRET_number: faker.number.int({ min: 1000, max: 10000 }),
+    more_info: faker.lorem.lines(),
+    userId: faker.helpers.arrayElement(userUUIDs),
+  };
+}
+
 export const users = Array.from({ length: 30 }, (_, index) =>
   createRandomUser(index),
 );
@@ -177,6 +218,18 @@ export const orders = Array.from({ length: 10 }, (_, index) =>
   createOrder(index),
 );
 
+export const payments = Array.from({ length: 10 }, (_, index) =>
+  createPayment(index),
+);
+
+export const artistProfils = Array.from({ length: 10 }, (_, index) =>
+  createArtistProfil(index),
+);
+
+export const organizerProfils = Array.from({ length: 10 }, (_, index) =>
+  createOrganizerProfil(index),
+);
+
 export default {
   users,
   posts,
@@ -189,5 +242,8 @@ export default {
   goodies,
   orderDetails,
   orders,
+  payments,
   retryDb,
+  artistProfils,
+  organizerProfils,
 };

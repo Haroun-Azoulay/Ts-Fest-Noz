@@ -119,6 +119,7 @@ const addPayment = async (
       id: payment.id,
       payment: payment.payment,
       token: token,
+      eventId: eventId,
       userId: payment.userId,
     };
 

@@ -10,6 +10,8 @@ import GoodieType from "./GoodieType";
 import Goodie from "./Goodie";
 import Order from "./Order";
 import OrderDetail from "./OrderDetail";
+import ArtistProfil from "./ArtistsProfil";
+import OrganizerProfil from "./OrganizerProfil";
 
 User.hasOne(Order, { foreignKey: "userId" });
 Order.belongsTo(User, { foreignKey: "userId" });
@@ -65,11 +67,25 @@ City.hasOne(Event, {
 });
 Event.belongsTo(City, { foreignKey: "city_id" });
 
-Event.hasMany(Payment, { foreignKey: "payment_id" });
-Payment.belongsTo(Event, { foreignKey: "payment_id" });
+Event.hasMany(Payment, { foreignKey: "event_id" });
+Payment.belongsTo(Event, { foreignKey: "event_id" });
 
 User.hasMany(Event, { foreignKey: "userId" });
 Event.belongsTo(User, { foreignKey: "userId" });
+
+User.hasOne(ArtistProfil, {
+  foreignKey: "userId",
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
+ArtistProfil.belongsTo(User, { foreignKey: "userId" });
+
+User.hasOne(OrganizerProfil, {
+  foreignKey: "userId",
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
+OrganizerProfil.belongsTo(User, { foreignKey: "userId" });
 
 export {
   Event,
@@ -82,4 +98,6 @@ export {
   Post,
   Commentary,
   City,
+  ArtistProfil,
+  OrganizerProfil,
 };
