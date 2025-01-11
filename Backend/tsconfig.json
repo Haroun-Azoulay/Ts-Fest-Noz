@@ -22,9 +22,3 @@
   ],
   "exclude": ["node_modules", "dist"]
 }
-
-// npx ts-node src/app.ts
-// node dist/app.js
-
-
-//npx ts-node app.ts

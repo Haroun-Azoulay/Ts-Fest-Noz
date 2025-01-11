@@ -16,6 +16,7 @@ import Order from "./src/models/Order";
 import OrderDetail from "./src/models/OrderDetail";
 import userRoutes from "./src/routes/userRoutes";
 import cityRoutes from "./src/routes/cityRoutes";
+import monitoringRoutes from "./src/routes/monitoringRoutes";
 import eventRoutes from "./src/routes/eventRoutes";
 import postRoutes from "./src/routes/postRoutes";
 import commentaryRoutes from "./src/routes/commentaryRoutes";
@@ -46,6 +47,7 @@ declare module "express" {
 }
 
 const app = express();
+
 app.use(express.json());
 app.use(cors());
 
@@ -53,6 +55,7 @@ app.use(cors());
 app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 const port: number = process.env.PORT ? Number(process.env.PORT) : 3000;
 
+app.use(monitoringRoutes);
 app.use(eventRoutes);
 app.use(userRoutes);
 app.use(cityRoutes);
@@ -65,28 +68,6 @@ app.use(groupRoutes);
 app.use(groupUserRoutes);
 // app.use(orderRoutes);
 // app.use(orderDetailRoutes);
-
-/**
- * @swagger
- * /ping:
- *   get:
- *     summary: Monitoring
- *     description: Monitoring.
- *     tags:
- *       - Monitoring
- *     responses:
- *       200:
- *         description: The service is working.
- *         content:
- *           text/plain:
- *             schema:
- *               type: string
- *               example: pong
- */
-
-app.get("/ping", (req, res) => {
-  res.send("pong");
-});
 
 async function syncModels() {
   try {
@@ -228,3 +209,5 @@ async function syncModels() {
 }
 
 syncModels();
+
+module.exports = app;
