@@ -1,5 +1,10 @@
 import { faker } from "@faker-js/faker";
 import logger from "node-color-log";
+import { v4 as uuidv4 } from "uuid";
+
+// Don't remove you don't use generate uuid with faker because it's don't work !
+let myuuid = uuidv4();
+
 
 export async function retryDb<T>(fn: () => Promise<T>, retries = 30) {
   for (let i = 0; i < retries; i++) {
@@ -13,22 +18,20 @@ export async function retryDb<T>(fn: () => Promise<T>, retries = 30) {
   }
 }
 
-const userUUIDs = Array.from({ length: 30 }, () => faker.string.uuid());
-const postUUIDs = Array.from({ length: 10 }, () => faker.string.uuid());
-const cityUUIDs = Array.from({ length: 10 }, () => faker.string.uuid());
-const commentaryUUIDs = Array.from({ length: 10 }, () => faker.string.uuid());
-const eventUUIDs = Array.from({ length: 10 }, () => faker.string.uuid());
-const goodieTypeUUIDs = Array.from({ length: 10 }, () => faker.string.uuid());
-const groupUUIDs = Array.from({ length: 10 }, () => faker.string.uuid());
-const orderDetailUUIDs = Array.from({ length: 10 }, () => faker.string.uuid());
-const orderUUIDs = Array.from({ length: 10 }, () => faker.string.uuid());
-const goodieUUIDs = Array.from({ length: 10 }, () => faker.string.uuid());
-const groupUserUUIDs = Array.from({ length: 10 }, () => faker.string.uuid());
-const paymentUUIDs = Array.from({ length: 10 }, () => faker.string.uuid());
-const artistProfilUUIDs = Array.from({ length: 10 }, () => faker.string.uuid());
-const OrganizerProfilUUIDs = Array.from({ length: 10 }, () =>
-  faker.string.uuid(),
-);
+const userUUIDs = Array.from({ length: 30 }, () => myuuid);
+const postUUIDs = Array.from({ length: 30 }, () => myuuid);
+const cityUUIDs = Array.from({ length: 30 }, () => myuuid);
+const commentaryUUIDs = Array.from({ length: 10 }, () => myuuid);
+const eventUUIDs = Array.from({ length: 10 }, () => myuuid);
+const goodieTypeUUIDs = Array.from({ length: 30 }, () => myuuid);
+const groupUUIDs = Array.from({ length: 30 }, () => myuuid);
+const orderDetailUUIDs = Array.from({ length: 30 }, () => myuuid);
+const orderUUIDs = Array.from({ length: 10 }, () => myuuid);
+const goodieUUIDs = Array.from({ length: 10 }, () => myuuid);
+const groupUserUUIDs = Array.from({ length: 10 }, () => myuuid);
+const paymentUUIDs = Array.from({ length: 5 }, () => myuuid);
+const artistProfilUUIDs = Array.from({ length: 10 }, () => myuuid);
+const OrganizerProfilUUIDs = Array.from({ length: 10 }, () => myuuid);
 
 export function createRandomUser(index: number) {
   return {
@@ -184,37 +187,37 @@ export function createOrganizerProfil(index: number) {
   };
 }
 
-export const users = Array.from({ length: 30 }, (_, index) =>
+export const users = Array.from({ length: 50 }, (_, index) =>
   createRandomUser(index),
 );
-export const posts = Array.from({ length: 10 }, (_, index) =>
+export const posts = Array.from({ length: 50 }, (_, index) =>
   createRandomPost(index),
 );
-export const cities = Array.from({ length: 10 }, (_, index) =>
+export const cities = Array.from({ length: 50 }, (_, index) =>
   createRandomCity(index),
 );
-export const commentaries = Array.from({ length: 10 }, (_, index) =>
+export const commentaries = Array.from({ length: 5 }, (_, index) =>
   createRandomCommentary(index),
 );
-export const events = Array.from({ length: 10 }, (_, index) =>
+export const events = Array.from({ length: 5 }, (_, index) =>
   createRandomEvent(index),
 );
-export const goodieTypes = Array.from({ length: 10 }, (_, index) =>
+export const goodieTypes = Array.from({ length: 5 }, (_, index) =>
   createGoodieType(index),
 );
-export const groups = Array.from({ length: 10 }, (_, index) =>
+export const groups = Array.from({ length: 50 }, (_, index) =>
   createGroup(index),
 );
-export const groupUsers = Array.from({ length: 10 }, (_, index) =>
+export const groupUsers = Array.from({ length: 5 }, (_, index) =>
   createGroupUser(index),
 );
-export const goodies = Array.from({ length: 10 }, (_, index) =>
+export const goodies = Array.from({ length: 50 }, (_, index) =>
   createGoodie(index),
 );
 export const orderDetails = Array.from({ length: 10 }, (_, index) =>
   createOrderDetail(index),
 );
-export const orders = Array.from({ length: 10 }, (_, index) =>
+export const orders = Array.from({ length: 5 }, (_, index) =>
   createOrder(index),
 );
 
@@ -222,11 +225,11 @@ export const payments = Array.from({ length: 10 }, (_, index) =>
   createPayment(index),
 );
 
-export const artistProfils = Array.from({ length: 10 }, (_, index) =>
+export const artistProfils = Array.from({ length: 5 }, (_, index) =>
   createArtistProfil(index),
 );
 
-export const organizerProfils = Array.from({ length: 10 }, (_, index) =>
+export const organizerProfils = Array.from({ length: 5 }, (_, index) =>
   createOrganizerProfil(index),
 );
 
