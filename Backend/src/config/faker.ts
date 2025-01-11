@@ -5,7 +5,6 @@ import { v4 as uuidv4 } from "uuid";
 // Don't remove you don't use generate uuid with faker because it's don't work !
 let myuuid = uuidv4();
 
-
 export async function retryDb<T>(fn: () => Promise<T>, retries = 30) {
   for (let i = 0; i < retries; i++) {
     try {
