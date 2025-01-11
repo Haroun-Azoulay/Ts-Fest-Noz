@@ -113,11 +113,15 @@ onMounted(() => {
   isLoggedIn.value = localStorage.getItem('authToken') !== null;
 });
 
+interface JwtPayload {
+  role: string; 
+}
+
 onMounted(async () => {
   try {
     const authToken = localStorage.getItem('authToken');
     if (authToken) {
-      const { payload } = useJwt(authToken);
+      const { payload } = useJwt<JwtPayload>(authToken);
       const roleId = payload.value?.role;
 
       if (roleId === 'admin') {
@@ -128,6 +132,7 @@ onMounted(async () => {
     console.error('Erreur lors de la requête :', error);
   }
 });
+
 </script>
 
 <style scoped>

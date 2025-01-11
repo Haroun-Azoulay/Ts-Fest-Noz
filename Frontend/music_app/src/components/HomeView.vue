@@ -383,22 +383,22 @@
                                 <!-- Thumbnails -->
                                 <div class="carousel-indicators" style="margin-bottom: -20px;">
                                     <button type="button" data-mdb-target="#carouselExampleIndicators" data-mdb-slide-to="0" class="active" aria-current="true" aria-label="Slide 1" style="width: 100px;">
-                                        <img class="d-block w-100 img-fluid" src="../assets/images-dj/gallery/1.jpg" alt="" />
+                                        <!-- <img class="d-block w-100 img-fluid" src="../assets/images-dj/gallery/1.jpg" alt="" /> -->
                                     </button>
                                     <button type="button" data-mdb-target="#carouselExampleIndicators" data-mdb-slide-to="1" aria-label="Slide 2" style="width: 100px;">
-                                        <img class="d-block w-100 img-fluid" src="../assets/images-dj/gallery/2.jpg" alt="" />
+                                        <!-- <img class="d-block w-100 img-fluid" src="../assets/images-dj/gallery/2.jpg" alt="" /> -->
                                     </button>
                                     <button type="button" data-mdb-target="#carouselExampleIndicators" data-mdb-slide-to="2" aria-label="Slide 3" style="width: 100px;">
-                                        <img class="d-block w-100 img-fluid" src="../assets/images-dj/gallery/3.jpg" alt="" />
+                                        <!-- <img class="d-block w-100 img-fluid" src="../assets/images-dj/gallery/3.jpg" alt="" /> -->
                                     </button>
                                     <button type="button" data-mdb-target="#carouselExampleIndicators" data-mdb-slide-to="3" aria-label="Slide 4" style="width: 100px;">
-                                        <img class="d-block w-100 img-fluid" src="../assets/images-dj/gallery/4.jpg" alt="" />
+                                        <!-- <img class="d-block w-100 img-fluid" src="../assets/images-dj/gallery/4.jpg" alt="" /> -->
                                     </button>
                                     <button type="button" data-mdb-target="#carouselExampleIndicators" data-mdb-slide-to="4" aria-label="Slide 5" style="width: 100px;">
-                                        <img class="d-block w-100 img-fluid" src="../assets/images-dj/gallery/5.jpg" alt="" />
+                                        <!-- <img class="d-block w-100 img-fluid" src="../assets/images-dj/gallery/5.jpg" alt="" /> -->
                                     </button>
                                     <button type="button" data-mdb-target="#carouselExampleIndicators" data-mdb-slide-to="5" aria-label="Slide 6" style="width: 100px;">
-                                        <img class="d-block w-100 img-fluid" src="../assets/images-dj/gallery/6.jpg" alt="" />
+                                        <!-- <img class="d-block w-100 img-fluid" src="../assets/images-dj/gallery/6.jpg" alt="" /> -->
                                     </button>
                                 </div>
                                 <!-- Thumbnails -->
@@ -494,11 +494,15 @@
         }
     };
 
+        interface CustomJwtPayload {
+    role: 'admin' | 'artist' | 'organizer' | 'user';
+    }
+
     onMounted(async () => {
         try {
             const authToken = localStorage.getItem('authToken');
             if (authToken) {
-            const { payload } = useJwt(authToken);
+            const { payload } = useJwt<CustomJwtPayload>(authToken);
             const roleId = payload.value?.role;
 
             if (roleId === 'admin' || roleId === 'artist' || roleId === 'organizer') {

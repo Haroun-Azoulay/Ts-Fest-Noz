@@ -1,34 +1,24 @@
-  // ts.config
-  {
-    "compilerOptions": {
-      "target": "es6",
-      "module": "commonjs",
-      "sourceMap": true,
-      "outDir": "dist",
-      "strict": true,
-      "esModuleInterop": true,
-      "skipLibCheck": true,
-      "forceConsistentCasingInFileNames": true,
-      "allowJs": true,
-      "declaration": true,
-      "emitDeclarationOnly": false,
-      "declarationMap": true,
-
-    },
-    "include": [
-      "app.ts",
-      "src/**/*",
-      "types/**/*", "../Frontend/music_app/src/services" ,
-    ],
-    "exclude": [
-      "node_modules",
-      "dist"
-    ]
-  }
-  
-
-  // npx ts-node src/app.ts
-  // node dist/app.js 
-
-
-  //npx ts-node app.ts
+// ts.config
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "sourceMap": true,
+    "outDir": "dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowJs": true,
+    "declaration": true,
+    "emitDeclarationOnly": false,
+    "declarationMap": true
+  },
+  "include": [
+    "app.ts",
+    "src/**/*",
+    "types/**/*",
+    "../Frontend/music_app/src/services"
+  ],
+  "exclude": ["node_modules", "dist"]
+}

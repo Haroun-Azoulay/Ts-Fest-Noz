@@ -107,14 +107,14 @@ const routes = [
     component: SinglePaymentPageView,
   },
   {
+    path: '/error',
+    name: 'ErrorView',
+    component: ErrorView,
+  },
+  {
     path: '/event/token/3AGZEYG&1386SFAFTFDA',
     name: 'Singletoken',
     component: SingleTokenView,
-  },
-  {
-    path: '/:pathMatch(.*)*',
-    name: 'not-found',
-    component: ErrorView,
   },
 ];
 
@@ -123,11 +123,11 @@ const router = createRouter({
   routes,
 });
 
-function nextFactory(context, middleware, index) {
+function nextFactory(context: any, middleware: any, index: any) {
   const subsequentMiddleware = middleware[index];
   if (!subsequentMiddleware) return context.next;
 
-  return (...parameters) => {
+  return (...parameters: any) => {
     context.next(...parameters);
     const nextMiddleware = nextFactory(context, middleware, index + 1);
     subsequentMiddleware({ ...context, next: nextMiddleware });

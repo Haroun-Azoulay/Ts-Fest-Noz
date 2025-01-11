@@ -1,15 +1,15 @@
 -- Create Database
-CREATE DATABASE music_app ENCODING = 'UTF8';
+CREATE DATABASE music ENCODING = 'UTF8';
 
 -- Create User dragibus
-CREATE USER music WITH ENCRYPTED PASSWORD 'root';
+CREATE USER music WITH ENCRYPTED PASSWORD 'music';
 
-GRANT CONNECT ON DATABASE music_app TO music;
+GRANT CONNECT ON DATABASE music TO music;
 GRANT USAGE ON SCHEMA public TO music;
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO music;
 GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO music;
 
-\connect music_app
+\connect music
 
 --Creation
 CREATE SCHEMA IF NOT EXISTS "music";
@@ -25,6 +25,3 @@ ALTER USER music SET search_path = "music";
 SET search_path TO "music";
 
 CREATE OR REPLACE LANGUAGE plpgsql;
-
-
--- utf8-4 pour les emoji 

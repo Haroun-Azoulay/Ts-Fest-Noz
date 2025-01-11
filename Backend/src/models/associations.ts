@@ -1,40 +1,103 @@
-import Event from './Event';
-import Payment from './Payment';
-import Post from './Post';
-import Commentary from './Commentary';
-import City from './City';
-import Map from './Map';
-import User from './User';
-import Group from './Group';
-import GroupDetail from './GroupDetail';
-import GoodieType from './GoodieType';
-import Goodie from './Goodie';
-import Order from './Order';
-import OrderDetail from './OrderDetail';
+import Event from "./Event";
+import Payment from "./Payment";
+import Post from "./Post";
+import Commentary from "./Commentary";
+import City from "./City";
+import User from "./User";
+import Group from "./Group";
+import GroupUser from "./GroupUser";
+import GoodieType from "./GoodieType";
+import Goodie from "./Goodie";
+import Order from "./Order";
+import OrderDetail from "./OrderDetail";
+import ArtistProfil from "./ArtistsProfil";
+import OrganizerProfil from "./OrganizerProfil";
 
-Event.hasMany(Payment, { foreignKey: "payment_id", as: "payment" });
-Payment.belongsTo(Event, { foreignKey: 'payment_id' });
+User.hasOne(Order, { foreignKey: "userId" });
+Order.belongsTo(User, { foreignKey: "userId" });
 
-GoodieType.hasMany(Goodie, { foreignKey: 'goodieTypeId', onDelete: 'CASCADE' });
-Goodie.belongsTo(GoodieType, { foreignKey: 'goodieTypeId' });
+OrderDetail.hasOne(Order, {
+  foreignKey: "orderDetailId",
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
+Order.belongsTo(OrderDetail, { foreignKey: "orderDetailId" });
 
-Group.hasMany(Goodie, { foreignKey: 'groupId', onDelete: 'CASCADE' });
-Goodie.belongsTo(Group, { foreignKey: 'groupId' });
+User.hasMany(Goodie, { foreignKey: "userId" });
+Goodie.belongsTo(User, { foreignKey: "userId" });
 
-Group.hasMany(GroupDetail, { foreignKey: 'groupId', onDelete: 'CASCADE' });
-GroupDetail.belongsTo(Group, { foreignKey: 'groupId' });
+Group.hasMany(Goodie, {
+  foreignKey: "groupId",
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
+Goodie.belongsTo(Group, { foreignKey: "groupId" });
 
-Order.hasMany(OrderDetail, { foreignKey: 'orderId', onDelete: 'CASCADE' });
-OrderDetail.belongsTo(Order, { foreignKey: 'orderId' });
+GoodieType.hasMany(Goodie, {
+  foreignKey: "goodieTypeId",
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
+Goodie.belongsTo(GoodieType, { foreignKey: "goodieTypeId" });
 
-Post.hasMany(Commentary, { foreignKey: 'postId' });
+Group.belongsToMany(User, { through: "GroupUsers" });
+User.belongsToMany(Group, { through: "GroupUsers" });
+
+User.hasMany(Post, { foreignKey: "userId" });
+Post.belongsTo(User, { foreignKey: "userId" });
+
+Post.hasMany(Commentary, {
+  foreignKey: "postId",
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
+Commentary.belongsTo(Post, { foreignKey: "postId" });
 
 User.hasMany(City, {
   foreignKey: "user_id",
   onDelete: "CASCADE",
   onUpdate: "CASCADE",
 });
-User.hasMany(Post, { foreignKey: 'userId' });
-//User.hasMany(Map, { foreignKey: "user_id", as: "maps" });
+City.belongsTo(User, { foreignKey: "user_id" });
 
-export { Event, Payment, GoodieType, Goodie };
+City.hasOne(Event, {
+  foreignKey: "city_id",
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
+Event.belongsTo(City, { foreignKey: "city_id" });
+
+Event.hasMany(Payment, { foreignKey: "event_id" });
+Payment.belongsTo(Event, { foreignKey: "event_id" });
+
+User.hasMany(Event, { foreignKey: "userId" });
+Event.belongsTo(User, { foreignKey: "userId" });
+
+User.hasOne(ArtistProfil, {
+  foreignKey: "userId",
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
+ArtistProfil.belongsTo(User, { foreignKey: "userId" });
+
+User.hasOne(OrganizerProfil, {
+  foreignKey: "userId",
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
+OrganizerProfil.belongsTo(User, { foreignKey: "userId" });
+
+export {
+  Event,
+  Payment,
+  GoodieType,
+  Goodie,
+  Order,
+  OrderDetail,
+  GroupUser,
+  Post,
+  Commentary,
+  City,
+  ArtistProfil,
+  OrganizerProfil,
+};

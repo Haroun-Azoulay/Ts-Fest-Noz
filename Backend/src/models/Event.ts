@@ -1,7 +1,8 @@
 import { DataTypes, Model } from "sequelize";
 import sequelizeConnection from "../../config/database";
 import { EventAttributes } from "../interfaces/types";
-import Payment from "./Payment";
+import City from "./City";
+import User from "./User";
 
 class Event extends Model<EventAttributes> implements EventAttributes {
   public id!: string;
@@ -9,19 +10,34 @@ class Event extends Model<EventAttributes> implements EventAttributes {
   public description!: string;
   public url!: string;
   public mapId!: number;
+  public city_id!: string;
+  public user_id!: string;
 }
 
 Event.init(
   {
     id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      allowNull: false,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
     name: {
       type: DataTypes.STRING,
       allowNull: true,
+    },
+    city_id: {
+      type: DataTypes.UUID,
+      references: {
+        model: City,
+        key: "id",
+      },
+    },
+    user_id: {
+      type: DataTypes.UUID,
+      references: {
+        model: User,
+        key: "id",
+      },
     },
     description: {
       type: DataTypes.STRING,
@@ -33,16 +49,14 @@ Event.init(
     },
     mapId: {
       type: DataTypes.INTEGER,
-      allowNull: true, 
+      allowNull: true,
     },
   },
   {
     sequelize: sequelizeConnection,
-    modelName: "event",
-  }
+    modelName: "Event",
+    tableName: "events",
+  },
 );
-
-// Event.hasMany(Payment, { foreignKey: "payment_id", as: "payment" });
-// Payment.belongsTo(Event, { foreignKey: 'payment_id' });
 
 export default Event;

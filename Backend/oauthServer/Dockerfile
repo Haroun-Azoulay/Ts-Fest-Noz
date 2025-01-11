@@ -1,29 +1,25 @@
-
 FROM debian:bookworm
 
 WORKDIR /app
 
 RUN apt-get update && apt-get upgrade -y \
     && apt-get install -y nodejs npm \
-    && apt-get install -y postgresql postgresql-contrib \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 COPY package*.json ./
 
-RUN npm install \
-    && npm i oauth2-server \
-    && npm i express \
-    && npm i dotenv \
-    && npm i simple-oauth2 \
-    && npm i axios
+RUN npm install\
+&& npm install typescript -g
 
-COPY model.js /app/
+COPY .env ./
 
 COPY . .
 
+RUN chmod +x oauth2server.ts
 
+EXPOSE 3001
 
-EXPOSE 4000
+RUN tsc
 
-CMD ["node", "oauthServer.js"]
+CMD ["node", "oauth2server.js"]

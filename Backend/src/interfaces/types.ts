@@ -6,11 +6,12 @@ export interface JwtPayload {
 // ============================================= ArtistProfil Interfaces (Start) =============================================
 export interface ArtistProfilAttributes {
   id: string;
-  denomination: string; 
+  denomination: string;
   phone_number: string;
   url_media: string;
   picture: string;
-  SIRET_number: string;
+  SIRET_number: number;
+  userId: string;
 }
 // ============================================= ArtistProfil Interfaces (End) =============================================
 
@@ -43,13 +44,13 @@ export interface CommentaryAttributes {
 }
 
 export interface Commentaries {
-  id: string,
-  content: string
+  id: string;
+  content: string;
 }
 
 export interface CommentariesByPost {
-  id: string,
-  content: string
+  id: string;
+  content: string;
 }
 // ============================================= Commentary Interfaces (End) =============================================
 
@@ -59,21 +60,11 @@ export interface EventAttributes {
   name: string;
   description: string;
   url: string;
-  mapId: number; 
+  mapId: number;
+  city_id: string;
+  user_id: string;
 }
 // ============================================= Event Interfaces(End) =============================================
-
-// ============================================= Map Interfaces(Start) =============================================
-export interface MapAttributes {
-  id: number;
-  // user_id: string; 
-  longitude?: number;
-  latitude?: number;
-  text?: string;
-  address: string;
-  color: string;
-}
-// ============================================= Map Interfaces(End) =============================================
 
 // ============================================= OrganizerProfil Interfaces(Start) =============================================
 export interface OrganizerProfilAttributes {
@@ -83,6 +74,7 @@ export interface OrganizerProfilAttributes {
   full_adress: string;
   SIRET_number: number;
   more_info: string;
+  userId: string;
 }
 // ============================================= OrganizerProfil Interfaces(End) =============================================
 
@@ -91,6 +83,8 @@ export interface PaymentAttributes {
   id: string;
   token: string;
   payment: boolean;
+  userId: string;
+  eventId: string;
 }
 // ============================================= Payment Interfaces(End) =============================================
 
@@ -121,11 +115,11 @@ export interface UserRequest {
 
 export interface UserInfo {
   id?: string;
-  email: string,
-  lastname: string,
-  firstname: string,
-  role: string,
-  pseudo: string
+  email: string;
+  lastname: string;
+  firstname: string;
+  role: string;
+  pseudo: string;
 }
 // ============================================= User Interfaces(End) =============================================
 
@@ -142,26 +136,22 @@ export interface GroupInfo {
 // ============================================= Group Interfaces(End) =============================================
 
 // ============================================= Group Interfaces(Start) =============================================
-export interface GroupDetailAttributes {
+export interface GroupUserAttributes {
   id?: string;
   groupId?: string;
   userId?: string;
-  owner: boolean;
 }
 
-export interface GroupDetailInfo {
+export interface GroupUserInfo {
   id?: string;
   groupId?: string;
   userId?: string;
-  owner: boolean;
 }
 
 export interface GroupUsersDetailInfo {
   id?: string;
   groupId?: string;
   userId?: string;
-  email?: string;
-  owner: boolean;
 }
 // ============================================= Group Interfaces(End) =============================================
 
@@ -209,12 +199,14 @@ export interface OrderAttributes {
   id?: string;
   userId?: string;
   totalPrice: number;
+  orderdetailId: string;
 }
 
 export interface OrderInfo {
   id?: string;
   userId?: string;
   totalPrice: number;
+  orderdetailId: string;
 }
 // ============================================= Order Interfaces(End) =============================================
 

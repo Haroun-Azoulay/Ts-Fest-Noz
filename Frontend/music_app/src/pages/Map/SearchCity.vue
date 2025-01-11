@@ -42,43 +42,82 @@ searchcity.vue : <template>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, defineEmits } from 'vue';
+import { ref, onMounted, defineEmits } from 'vue';
 import axios from 'axios';
 import ApiService from '@/services/ApiService';
-import { geocodeAddress, geocodeAddressByPlace } from '../../services/GeocodingService';
+import { geocodeAddressByPlace } from '../../services/GeocodingService';
 import mapboxgl from 'mapbox-gl';
 
-const cities = ref<[]>([]);
-const geocoding_city = ref('');
-const events = ref<[]>([]);
-const result = ref(null);
+
+interface Event {
+  id: number;
+  name: string;
+  description: string;
+}
+
+interface GeocodingResult {
+  latitude: number;
+  longitude: number;
+  streetAddress: string;
+  postalCode: string;
+  city: string;
+  country: string;
+  place: string;
+}
+
+
+const cities = ref<string[]>([]);
+const geocoding_city = ref<string>('');
+const events = ref<Event[]>([]);
+const result = ref<GeocodingResult | null>(null);
+
 
 const emit = defineEmits(['geocodeResult']);
 
-const selectCity = (city: string) => {
+
+const selectCity = (city: string): void => {
   geocoding_city.value = city;
   cities.value = [];
-}
+};
 
-const handleInput = async () => {
+const handleInput = async (): Promise<void> => {
   if (geocoding_city.value.length > 1) {
     cities.value = await fetchCities(geocoding_city.value);
   } else {
     cities.value = [];
   }
-}
+};
 
-const geocodeAndSubmit = async () => {
+const fetchCities = async (query: string): Promise<string[]> => {
+  if (!query) return [];
+  const url = `https://geo.api.gouv.fr/communes?nom=${query}&fields=nom&format=json&geometry=centre`;
+  try {
+    const response = await axios.get(url);
+    return response.data.map((city: { nom: string }) => city.nom);
+  } catch (error) {
+    console.error("Erreur lors de la récupération des villes :", error);
+    return [];
+  }
+};
+
+
+const geocodeAndSubmit = async (): Promise<void> => {
   try {
     const authToken = localStorage.getItem('authToken');
+    if (!authToken) {
+      throw new Error("Utilisateur non authentifié.");
+    }
+
     const response = await ApiService.get(`/event/get-event-city/${geocoding_city.value}`, {
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
     });
-    const { latitude, longitude, streetAddress, postalCode, city, country, place } = await geocodeAddressByPlace(`${geocoding_city.value}`);
+
+
+    const { latitude, longitude, streetAddress, postalCode, city, country, place } = await geocodeAddressByPlace(geocoding_city.value);
+
     result.value = { latitude, longitude, streetAddress, postalCode, city, country, place };
-    console.log(latitude);
     emit('geocodeResult', result.value);
     events.value = response.data;
   } catch (error) {
@@ -86,22 +125,12 @@ const geocodeAndSubmit = async () => {
   }
 };
 
-const fetchCities = async (query: any) => {
-  if (!query) return [];
-  const url = `https://geo.api.gouv.fr/communes?nom=${query}&fields=nom&format=json&geometry=centre`;
-  try {
-    const response = await axios.get(url);
-    return response.data.map((city) => city.nom);
-  } catch (error) {
-    console.error("Erreur lors de la récupération des villes :", error);
-  }
-};
 
 onMounted(() => {
   mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
 });
-
 </script>
+
 <style>
 @tailwind base;
 @tailwind components;

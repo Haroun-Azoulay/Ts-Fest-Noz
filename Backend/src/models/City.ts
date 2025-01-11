@@ -24,20 +24,17 @@ class City extends Model<CityAttributes> {
 City.init(
   {
     id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
       allowNull: false,
       primaryKey: true,
     },
     user_id: {
       type: DataTypes.UUID,
-      allowNull: false,
-      references: { 
-        model: 'users', 
-        key: 'id',
+      references: {
+        model: User,
+        key: "id",
       },
-      onUpdate: 'CASCADE',
-      onDelete: 'CASCADE',
     },
     city_name: {
       type: DataTypes.STRING,
@@ -94,9 +91,9 @@ City.init(
   },
   {
     sequelize: sequelizeConnection,
-    modelName: "city",
-  }
+    modelName: "City",
+    tableName: "cities",
+  },
 );
-
 
 export default City;

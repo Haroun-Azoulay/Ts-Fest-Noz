@@ -1,5 +1,5 @@
-import { DataTypes, Model } from 'sequelize';
-import sequelizeConnection from '../../config/database';
+import { DataTypes, Model } from "sequelize";
+import sequelizeConnection from "../../config/database";
 import { GroupAttributes } from "../interfaces/types";
 
 class Group extends Model<GroupAttributes> implements GroupAttributes {
@@ -24,13 +24,8 @@ Group.init(
   {
     sequelize: sequelizeConnection,
     modelName: "group",
-  }
+    tableName: "groups",
+  },
 );
-
-// Group.hasMany(Goodie, { foreignKey: 'groupId', onDelete: 'CASCADE' });
-// Goodie.belongsTo(Group, { foreignKey: 'groupId' });
-
-// Group.hasMany(GroupDetail, { foreignKey: 'groupId', onDelete: 'CASCADE' });
-// GroupDetail.belongsTo(Group, { foreignKey: 'groupId' });
 
 export default Group;

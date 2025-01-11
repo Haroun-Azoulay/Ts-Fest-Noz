@@ -3,21 +3,26 @@ import CityModel from "../models/City";
 import Event from "../models/Event";
 import { Request, Response } from "express";
 
-const addPoint = async (req: Request, res: Response) : Promise<Response<any, Record<string, any>>> => {
+const addPoint = async (
+  req: Request,
+  res: Response,
+): Promise<Response<any, Record<string, any>>> => {
   try {
-    const userId : string | undefined = req.userId;
-    const role : string | undefined = req.role;
+    const userId: string | undefined = req.userId;
+    const role: string | undefined = req.role;
 
     if (!userId) {
-      return res.status(400).json({ message: "The user must be authenticated" });
+      return res
+        .status(400)
+        .json({ message: "The user must be authenticated" });
     }
 
-    const point : CityModel | null = await CityModel.create({
+    const point: CityModel | null = await CityModel.create({
       ...req.body,
-      user_id: userId
+      user_id: userId,
     });
 
-    const formattedPoint : CityAttributes = {
+    const formattedPoint: CityAttributes = {
       id: point.id,
       user_id: userId,
       longitude: point.longitude,
@@ -29,10 +34,10 @@ const addPoint = async (req: Request, res: Response) : Promise<Response<any, Rec
       zip_code: point.zip_code,
       label: point.label,
       color: point.color,
-      departement_number:point.departement_number,
+      departement_number: point.departement_number,
       style: point.style,
       region_name: point.region_name,
-      url_point: point.url_point
+      url_point: point.url_point,
     };
 
     return res.status(201).json(formattedPoint);
@@ -41,11 +46,12 @@ const addPoint = async (req: Request, res: Response) : Promise<Response<any, Rec
     return res.status(500).send("Error adding point");
   }
 };
-const getAllPoints = async (req: Request, res: Response) : Promise<Response<any, Record<string, any>>> => {
+const getAllPoints = async (
+  req: Request,
+  res: Response,
+): Promise<Response<any, Record<string, any>>> => {
   try {
-
-    const points : CityModel[] | undefined = await CityModel.findAll();
-
+    const points: CityModel[] | undefined = await CityModel.findAll();
 
     // const pointsWithUserDetails = await Promise.all(points.map(async (point) => {
     //   //const user = await UserModel.findByPk(point.userId, { attributes: ["id", "pseudo"] });
@@ -64,31 +70,35 @@ const getAllPoints = async (req: Request, res: Response) : Promise<Response<any,
     return res.status(500).json({ message: "Error retrieving points" });
   }
 };
-const getPointByUser = async (req: Request, res: Response) : Promise<Response<any, Record<string, any>>> => {
+const getPointByUser = async (
+  req: Request,
+  res: Response,
+): Promise<Response<any, Record<string, any>>> => {
   try {
-    const userId : string = req.params.id;
+    const userId: string = req.params.userId;
     if (!userId) {
       return res.status(400).json({ message: "User ID is required" });
     }
 
-    const points : CityModel[] | null = await CityModel.findAll({
+    const points: CityModel[] | null = await CityModel.findAll({
       where: {
-        user_id: userId
-      }
+        user_id: userId,
+      },
     });
 
     return res.json(points);
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: "Error retrieving points per user" });
+    return res
+      .status(500)
+      .json({ message: "Error retrieving points per user" });
   }
 };
 
-
 // const updatePoint = async (req: Request, res: Response) => {
 //     try {
-//         const { pointId } = req.params; 
-//         const userId = req.userId; 
+//         const { pointId } = req.params;
+//         const userId = req.userId;
 
 //         // Effectuer la mise à jour
 //         const [updatedRows] = await CityModel.update(
@@ -114,20 +124,24 @@ const getPointByUser = async (req: Request, res: Response) : Promise<Response<an
 //     }
 // };
 
-
-const deletePoint = async (req: Request, res: Response) : Promise<Response<any, Record<string, any>>> => {
+const deletePoint = async (
+  req: Request,
+  res: Response,
+): Promise<Response<any, Record<string, any>>> => {
   try {
-    const userId : string | undefined = req.userId;
+    const userId: string | undefined = req.userId;
     // const isAdmin = req.isAdmin;
     const { pointId } = req.params;
 
-    const point : CityModel | null = await CityModel.findByPk(pointId);
+    const point: CityModel | null = await CityModel.findByPk(pointId);
     if (!point) {
       return res.status(404).json({ message: "The point does not exist" });
     }
 
     if (point.user_id !== userId) {
-      return res.status(403).json({ message: "You do not have permission to delete this item" });
+      return res
+        .status(403)
+        .json({ message: "You do not have permission to delete this item" });
     }
 
     CityModel.beforeDestroy(async (city, options) => {
@@ -137,8 +151,10 @@ const deletePoint = async (req: Request, res: Response) : Promise<Response<any, 
     });
 
     await point.destroy();
-    
-    return res.status(200).json({ message: "The point was successfully deleted" });
+
+    return res
+      .status(200)
+      .json({ message: "The point was successfully deleted" });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Error deleting point" });
@@ -149,5 +165,5 @@ export default {
   addPoint,
   deletePoint,
   getAllPoints,
-  getPointByUser
+  getPointByUser,
 };

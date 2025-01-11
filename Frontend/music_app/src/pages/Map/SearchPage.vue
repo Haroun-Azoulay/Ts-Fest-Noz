@@ -32,54 +32,68 @@ searchpage.vue : <template>
 <script setup lang="ts">
 import { ref, computed, onMounted, defineEmits } from 'vue';
 import { geocodeAddress } from '../../services/GeocodingService';
-import mapboxgl from 'mapbox-gl';
+import mapboxgl, { Map } from 'mapbox-gl';
 
-const geocoding_number = ref('');
-const geocoding_address = ref('');
-const geocoding_postal_code = ref('');
-const geocoding_town = ref('');
-const event_name = ref('');
-const event_txt = ref('');
-const result = ref(null);
-const selectedStyle = ref('');
+interface GeocodingResult {
+  latitude: number;
+  longitude: number;
+  streetAddress: string;
+  postalCode: string;
+  city: string;
+  country: string;
+  place: string;
+}
 
+type Coordinates = [number, number];
 
-const fullAddress = computed(() => {
+const geocoding_number = ref<string>('');
+const geocoding_address = ref<string>('');
+const geocoding_postal_code = ref<string>('');
+const geocoding_town = ref<string>('');
+const result = ref<GeocodingResult | null>(null);
+
+let map: Map | null = null;
+
+const fullAddress = computed<string>(() => {
   return `${geocoding_number.value} ${geocoding_address.value}, ${geocoding_postal_code.value} ${geocoding_town.value}`.trim();
 });
-let map;
-
 const emit = defineEmits(['geocodeResult']);
 
-const geocodeAndSubmit = async () => {
+
+const geocodeAndSubmit = async (): Promise<void> => {
   try {
-    const { latitude, longitude, streetAddress, postalCode, city, country, place } = await geocodeAddress(fullAddress.value);
+    const {
+      latitude,
+      longitude,
+      streetAddress,
+      postalCode,
+      city,
+      country,
+      place,
+    } = await geocodeAddress(fullAddress.value);
+
     result.value = { latitude, longitude, streetAddress, postalCode, city, country, place };
-    console.log(result.value);
+    console.log('Geocoding result:', result.value);
+
     emit('geocodeResult', result.value);
 
     updateMap([longitude, latitude]);
 
     const elem = document.getElementById('add-event-map');
     const select_map = document.getElementById('map');
-    if (elem) {
-      elem.style.height = '100vh';
-    }
-    if (select_map) {
-      select_map.style.height = '100%';
-    }
-  } catch (error) {
+    if (elem) elem.style.height = '100vh';
+    if (select_map) select_map.style.height = '100%';
+  } catch (error: any) {
     console.error('Erreur de géocodage d\'adresse :', error.message);
   }
 };
 
 
-const updateMap = (coordinates) => {
+const updateMap = (coordinates: Coordinates): void => {
   if (map) {
     map.remove();
   }
 
-  
   map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/streets-v12',
@@ -87,7 +101,7 @@ const updateMap = (coordinates) => {
     zoom: 15,
   });
 
- 
+
   new mapboxgl.Marker()
     .setLngLat(coordinates)
     .addTo(map);
@@ -97,10 +111,8 @@ const updateMap = (coordinates) => {
 onMounted(() => {
   mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
 });
-
-
-
 </script>
+
 <style>
 @tailwind base;
 @tailwind components;

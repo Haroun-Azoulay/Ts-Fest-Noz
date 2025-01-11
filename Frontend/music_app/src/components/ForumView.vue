@@ -45,7 +45,6 @@
     <FooterPage class="mt-auto" />
   </div>
 </template>
-
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import HeaderPage from '../pages/Header/HeaderPage.vue';
@@ -53,29 +52,54 @@ import { useRouter } from 'vue-router';
 import ApiService from "@/services/ApiService";
 import { useJwt } from '@vueuse/integrations/useJwt';
 import FooterPage from '../pages/Footer/FooterPage.vue';
-const router = useRouter();
-const post = ref({});
-const isAuthorized = ref<boolean>(false);
-  let userId: string | null = null;
-  let userRole: string | null = null;
 
-  onMounted(async () => {
+
+const router = useRouter();
+
+
+interface Post {
+  id: number;
+  title: string;
+  description: string;
+  content: string;
+  createdAt: string;
+  userId: string;
+}
+
+interface CustomJwtPayload {
+  userId: string;
+  role: string;
+}
+
+const post = ref<Post[]>([]);
+const isAuthorized = ref<boolean>(false);
+
+let userId: string | null = null;
+let userRole: string | null = null;
+
+onMounted(async () => {
   try {
     const authToken = localStorage.getItem("authToken");
     if (!authToken) {
-      console.error("L'utilisateur n'est pas authentifié.");
+      console.error("The user is not authenticated.");
       return;
     }
 
-    const { payload } = useJwt(authToken);
-    userId = payload.value.userId;
-    userRole = payload.value.role; 
+    const { payload } = useJwt<CustomJwtPayload>(authToken);
+    if (payload.value) {
+      userId = payload.value.userId;
+      userRole = payload.value.role;
 
-    if (["admin", "artist", "organizer"].includes(userRole)) {
-      isAuthorized.value = true;
+      if (["admin", "artist", "organizer"].includes(userRole)) {
+        isAuthorized.value = true;
+      } else {
+        console.warn("User is not authorized.");
+      }
     } else {
-      console.warn("Utilisateur non autorisé.");
+      console.error("Failed to decode the JWT payload.");
+      return;
     }
+
     const config = {
       headers: {
         Authorization: `Bearer ${authToken}`,
@@ -96,15 +120,15 @@ const goTosingleForum = (postId: number) => {
   if (postId) {
     router.push(`/forum/${postId}`);
   } else {
-    console.error("L'ID du post manquant");
+    console.error("Missing post ID.");
   }
 };
 
 const goToAddPost = () => {
   router.push({ path: '/forum/add' });
-}
-
+};
 </script>
+
 <style>
 @tailwind base;
 @tailwind components;

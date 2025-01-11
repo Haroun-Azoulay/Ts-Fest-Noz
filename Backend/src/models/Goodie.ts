@@ -1,12 +1,15 @@
-import { DataTypes, Model } from 'sequelize';
-import sequelizeConnection from '../../config/database';
+import { DataTypes, Model } from "sequelize";
+import sequelizeConnection from "../../config/database";
 import { GoodieAttributes } from "../interfaces/types";
+import User from "./User";
+import Group from "./Group";
+import GoodieType from "./GoodieType";
 
 class Goodie extends Model<GoodieAttributes> implements GoodieAttributes {
   id?: string | undefined;
   groupId!: string;
   userId!: string;
-  goodieTypeId!: string;
+  goodieTypeId?: string;
   name!: string;
   path?: string;
   quantity!: number;
@@ -26,24 +29,24 @@ Goodie.init(
       type: DataTypes.UUID,
       allowNull: false,
       references: {
-        model: 'groups',
-        key: 'id',
+        model: Group,
+        key: "id",
       },
     },
     userId: {
       type: DataTypes.UUID,
       allowNull: false,
       references: {
-        model: 'users',
-        key: 'id',
+        model: User,
+        key: "id",
       },
     },
     goodieTypeId: {
       type: DataTypes.UUID,
       allowNull: false,
       references: {
-        model: 'goodietypes',
-        key: 'id',
+        model: GoodieType,
+        key: "id",
       },
     },
     name: {
@@ -52,27 +55,28 @@ Goodie.init(
       unique: true,
     },
     path: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: true,
       unique: false,
     },
     quantity: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
     },
     price: {
       type: DataTypes.FLOAT,
-      allowNull: false
+      allowNull: false,
     },
     available: {
       type: DataTypes.BOOLEAN,
-      allowNull: false
+      allowNull: false,
     },
   },
   {
     sequelize: sequelizeConnection,
     modelName: "goodie",
-  }
+    tableName: "goodies",
+  },
 );
 
 export default Goodie;
