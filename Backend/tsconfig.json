@@ -12,13 +12,15 @@
     "allowJs": true,
     "declaration": true,
     "emitDeclarationOnly": false,
-    "declarationMap": true
+    "declarationMap": true,
+    "types": ["node", "jest"]
   },
   "include": [
     "app.ts",
     "src/**/*",
     "types/**/*",
-    "../Frontend/music_app/src/services"
+    "../Frontend/music_app/src/services",
+    "__tests__/**/*"
   ],
   "exclude": ["node_modules", "dist"]
 }

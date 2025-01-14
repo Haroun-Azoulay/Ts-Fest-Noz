@@ -5,7 +5,7 @@ import monitoringRoutes from "../../src/routes/monitoringRoutes";
 const app = express();
 app.use(monitoringRoutes);
 
-describe("Test case for monitoring app.", () => {
+describe("Test case for monitoring routes.", () => {
   it("GET /ping", async () => {
     const response = await request(app).get("/ping");
     expect(response.status).toBe(200);
