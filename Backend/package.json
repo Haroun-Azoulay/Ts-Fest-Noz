@@ -5,6 +5,9 @@
   "main": "nodemon app.ts",
   "scripts": {
     "test": "jest",
+    "test:controllers": "jest __tests__/controllers",
+    "test:routes": "jest __tests__/routes",
+    "coverage": "jest --coverage",
     "build": "npx tsc",
     "start": "node dist/Backend/app.js",
     "dev": "nodemon app.ts",
@@ -28,6 +31,7 @@
     "multer": "^1.4.4",
     "mysql2": "^3.7.1",
     "node-color-log": "^12.0.1",
+    "node-mocks-http": "^1.16.2",
     "oauth2-server": "^3.1.1",
     "pg": "^8.11.5",
     "sequelize": "^6.35.2",

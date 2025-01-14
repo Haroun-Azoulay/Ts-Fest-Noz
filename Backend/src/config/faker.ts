@@ -41,7 +41,7 @@ export function createRandomUser(index: number) {
     email: faker.internet.email(),
     pseudo: faker.person.firstName(),
     registeredAt: faker.date.past(),
-    role: faker.helpers.arrayElement(["admin", "artist", "organize", "user"]),
+    role: faker.helpers.arrayElement(["admin", "artist", "organizer", "user"]),
   };
 }
 
