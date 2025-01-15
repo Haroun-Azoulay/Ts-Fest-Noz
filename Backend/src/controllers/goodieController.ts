@@ -1,13 +1,17 @@
 import { Request, Response } from "express";
-import UserModel from "../models/User";
 import GoodieModel from "../models/Goodie";
 import fs from "fs";
 import { GoodieAttributes } from "../interfaces/types";
+
+interface MulterRequest extends Request {
+  file: any;
+}
+
 const createGoodie = async (
   req: Request,
   res: Response,
 ): Promise<Response<any, Record<string, any>>> => {
-  const file = req.file;
+  const file = (req as MulterRequest).file;
 
   if (file === undefined) {
     return res.status(201).json("Not found");

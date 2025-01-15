@@ -21,7 +21,7 @@ const createGroup = async (
     const newGroup: GroupModel = await GroupModel.create({
       name: groupName,
     });
-    return res.json({ newGroup });
+    return res.status(201).json({ newGroup });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Error creating a group." });
@@ -34,9 +34,16 @@ const deleteGroup = async (
 ): Promise<Response<any, Record<string, any>>> => {
   const groupId: string = req.params.id;
   try {
+    const checkExistGroup: GroupModel | null = await GroupModel.findOne({
+      where: { id: groupId },
+    });
+    if (!checkExistGroup) {
+      return res.status(404).json({
+        message: "Unable to find the group.",
+      });
+    }
     await GroupModel.destroy({ where: { id: groupId } });
-
-    return res.json({ message: "The group are deleted !" });
+    return res.status(200).json({ message: "The group is deleted !" });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Error deleting a group." });
@@ -49,14 +56,13 @@ const getGroup = async (
 ): Promise<Response<any, Record<string, any>>> => {
   try {
     const groupId: string | undefined = req.params.id;
-    if (!groupId) {
-      return res.status(400).json({ message: "Group ID is required" });
-    }
-
     const group: GroupModel | null = await GroupModel.findOne({
       where: { id: groupId },
     });
-    return res.json(group);
+    if (!group) {
+      return res.status(404).json({ message: "Group not found." });
+    }
+    return res.status(200).json(group);
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Error getting the group." });
@@ -69,7 +75,7 @@ const getAllGroups = async (
 ): Promise<Response<any, Record<string, any>>> => {
   try {
     const allGroups: GroupModel[] = await GroupModel.findAll();
-    return res.json(allGroups);
+    return res.status(200).json(allGroups);
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Error getting all groups." });

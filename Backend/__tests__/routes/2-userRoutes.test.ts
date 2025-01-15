@@ -7,6 +7,9 @@ const app = express();
 app.use(express.json());
 app.use(userRoutes);
 
+let tokenUser : string | undefined;
+let tokenAdmin : string | undefined;
+
 const newAdmin = {
   lastname: "admin",
   firstname: "admin",
@@ -23,70 +26,67 @@ const newUser = {
   pseudo: "bechari"
 };
 
-const currentUser = {
+const userLogin = {
   pseudo: "bechari",
   password: "test"
 };
 
-const adminUser = {
+const adminLogin = {
   pseudo: "admin",
   password: "admin"
 };
 
-var token = "";
-var tokenAdmin = "";
-
 describe("Test case for user routes", () => {
-  it("1 - test case for signup user", async () => {
+  it("1 - test case to signup user", async () => {
     const response = await request(app).post("/signup").send(newUser);
     expect(response.status).toBe(201);
   });
 
-  it("2 - test case for signup admin user", async () => {
+  it("2 - test case to signup admin user", async () => {
     const response = await request(app).post("/signup").send(newAdmin);
     expect(response.status).toBe(201);
   });
 
   it("3 - test case to log the user with admin credentials", async () => {
-    const response = await request(app).post("/signin").send(adminUser);
+    const response = await request(app).post("/signin").send(adminLogin);
     expect(response.status).toBe(200);
     tokenAdmin = response.body.token;
   });
 
   it("4 - test case to delete an user as admin", async () => {
-    const response = await request(app).delete(`/delete-user/${newUser.pseudo}`).set("Authorization", `Bearer ${tokenAdmin}`);;
+    const response = await request(app).delete(`/delete-user/${newUser.pseudo}`)
+    .set("Authorization", `Bearer ${tokenAdmin}`);
     expect(response.status).toBe(200);
-    tokenAdmin = response.body.token;
   });
 
   it("5 - test case to log the user with wrong credentials", async () => {
-    const response = await request(app).post("/signin").send(currentUser);
+    const response = await request(app).post("/signin").send(userLogin);
     expect(response.status).toBe(401);
   });
 
-  it("6 - test case for signup user once again", async () => {
+  it("6 - test case to signup user once again", async () => {
     const response = await request(app).post("/signup").send(newUser);
     expect(response.status).toBe(201);
   });
 
   it("7 - test case to log the user with right credentials", async () => {
-    const response = await request(app).post("/signin").send(currentUser);
+    const response = await request(app).post("/signin").send(userLogin);
     expect(response.status).toBe(200);
-    token = response.body.token;
+    tokenUser = response.body.token;
   });
 
   it("8 - test case to get current user info", async () => {
-    const response = await request(app).get("/my-user").set("Authorization", `Bearer ${token}`);
+    const response = await request(app).get("/my-user").set("Authorization", `Bearer ${tokenUser}`);
     expect(response.status).toBe(200);
   });
 
   it("9 - test case to get all users", async () => {
-    const response = await request(app).get("/get-all-users").set("Authorization", `Bearer ${token}`);;
+    const response = await request(app).get("/get-all-users").set("Authorization", `Bearer ${tokenUser}`);
     expect(response.status).toBe(200);
-    const userExists = response.body.some(
+    const userExist = response.body.some(
       (user: User) =>
-        user.pseudo === currentUser.pseudo
+        user.pseudo === userLogin.pseudo
     );
-    expect(userExists).toBe(true);
+    expect(userExist).toBe(true);
   });
 });

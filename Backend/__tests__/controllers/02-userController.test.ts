@@ -14,6 +14,7 @@ jest.mock('bcrypt');
 
 let tokenUser: string;
 let tokenAdmin: string;
+
 const newAdmin : UserRequest = {
     lastname: "admin",
     firstname: "admin",
@@ -35,7 +36,7 @@ const wrongUser = {
     pseudo: "test"
 };
 const existUser = new User({
-    id: "user-id",
+    id: "5cbfa5dc-7999-4fb1-a443-33894fb52ccb",
     lastname: "Dey",
     firstname: "Haroun-Rachid",
     email: "haroun@ooredoo.dz",
@@ -43,8 +44,17 @@ const existUser = new User({
     pseudo: "bechari",
     role: "user"
 });
+const existAdmin = new User({
+    id: "5cbfa5dc-7999-4fb1-a443-33894fb52ccc",
+    lastname: "admin",
+    firstname: "admin",
+    email: "admin@example.com",
+    password: "admin",
+    pseudo: "admin",
+    role: "admin"
+});
 const updatedUser = new User({
-    id: "user-id",
+    id: "5cbfa5dc-7999-4fb1-a443-33894fb52ccb",
     lastname: "Dey",
     firstname: "Haroun-Rachid",
     email: "haroun@ooredoo.dz",
@@ -64,7 +74,7 @@ const uncompleteLogin = {
     pseudo: "bechari\'"
 };
 const badLogin = {
-    password: "test",
+    password: "test%--\'",
     pseudo: "hpsdkgqpzojpoajhqpokvpokgkgqdkgeohkqdkpsl \
     hpsdkgqpzojpoajhqpokvpokgkgqdkgeohkqdkpsl \
     hpsdkgqpzojpoajhqpokvpokgkgqdkgeohkqdkpsl \
@@ -90,7 +100,7 @@ describe("Test case for user controller", () => {
             expect(res.status).toHaveBeenCalledWith(201);
         });
         it("2 - should create admin and return 201", async () => {
-            jest.spyOn(User, 'create').mockResolvedValue(existUser);
+            jest.spyOn(User, 'create').mockResolvedValue(existAdmin);
             const req = httpMocks.createRequest({
                 method: 'POST',
                 body: newAdmin
@@ -387,7 +397,7 @@ describe("Test case for user controller", () => {
             jest.spyOn(existUser, 'update').mockResolvedValue(updatedUser);
             const req = httpMocks.createRequest({
                 method: 'PUT',
-                params: { userId: "user-id" },
+                params: { userId: existUser.id },
                 body: { newRole: "artist" }
             });
             const res = httpMocks.createResponse();
@@ -405,7 +415,7 @@ describe("Test case for user controller", () => {
             );
             const req = httpMocks.createRequest({
                 method: 'PUT',
-                params: { userId: "user-id" }
+                params: { userId: existUser.id }
             });
             const res = httpMocks.createResponse();
             res.status = jest.fn().mockReturnThis();
@@ -424,7 +434,7 @@ describe("Test case for user controller", () => {
             jest.spyOn(existUser, 'update').mockResolvedValue(updatedUser);
             const req = httpMocks.createRequest({
                 method: 'PUT',
-                params: { userId: "user-id" },
+                params: { userId: existUser.id },
                 body: { newRole: "admin" }
             });
             const res = httpMocks.createResponse();

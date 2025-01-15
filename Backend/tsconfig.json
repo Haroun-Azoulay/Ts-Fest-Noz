@@ -20,7 +20,8 @@
     "src/**/*",
     "types/**/*",
     "../Frontend/music_app/src/services",
-    "__tests__/**/*"
+    "__tests__/**/*",
+    "global.d.ts"
   ],
   "exclude": ["node_modules", "dist"]
 }

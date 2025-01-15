@@ -93,13 +93,19 @@ const signin = async (
     const foundUser: UserModel | null = await UserModel.findOne({
       where: { pseudo },
     });
-
-    const passwordMatch: string = await bcrypt.compare(
+    
+    if (!foundUser) {
+      return res.status(401).json({
+        message: "Invalid credentials. Check your username and password.",
+      });
+    }
+    
+    const passwordMatch: boolean = await bcrypt.compare(
       password,
-      foundUser?.password,
+      foundUser.password
     );
-
-    if (!foundUser || !passwordMatch) {
+    
+    if (!passwordMatch) {
       return res.status(401).json({
         message: "Invalid credentials. Check your username and password.",
       });
@@ -129,7 +135,7 @@ const signin = async (
 // };
 
 const getAllUsers = async (req: Request, res: Response): Promise<Response<any, Record<string, any>>> => {
-  const result = UserModel.findAll();
+  const result = await UserModel.findAll();
   return res.status(200).json(result);
 };
 
