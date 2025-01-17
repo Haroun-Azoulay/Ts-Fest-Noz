@@ -62,7 +62,19 @@
           <div id="sidebar" class="col-md-4">
             <div class="widget widget_text">
               <h3>Historique d'achats</h3>
-              <div>
+              <div v-if="allMyOrders.length > 0">
+                <div v-for="order in allMyOrders">
+                  <div class="row" style="display:flex;align-items:center;">
+                    <div class="col">
+                      <span>Transaction id : {{ order.id }}</span>
+                      <br>
+                      <span>Date : {{ order.createdAt }}</span>
+                    </div>
+                  </div>
+                  <hr style="color:white;border-top:solid 1px #FFF;padding:0;margin:20px 0 20px 0;">
+                </div>
+              </div>
+              <div v-if="allMyOrders.length <= 0">
                 Vous n'avez rien acheté ici.
               </div>
             </div>
@@ -95,9 +107,9 @@
   import ModalAddGoodie from './pModal/ModalAddGoodie.vue';
   import FooterPage from '../pages/Footer/FooterPage.vue'
   import type { Goodie, GoodieType } from '../../models/goodie';
+  import type { OrdersAndDetails } from 'models/order'
 
   const router = useRouter();
-  const route = useRoute();
   const groupName = ref('');
   const showError = ref(false);
   const errorMessage = ref('');
@@ -108,6 +120,7 @@
   var myGoodies = ref<Goodie[]>([]);
   var addGoodiesCalledOnce = ref(false);
   var allGoodieTypes = ref<GoodieType[]>([]);
+  var allMyOrders = ref<OrdersAndDetails[]>([]);
 
   const confirmAddGoodie = () => {
       showAddGoodie.value = false;
@@ -198,6 +211,12 @@
                 }
               })
             });
+            const getMyOrders = await ApiService.get('/order/me', {
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                },
+            });
+            allMyOrders.value = getMyOrders.data;
         }
     } catch (error) {
       console.error('Erreur lors de la requête :', error);

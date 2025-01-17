@@ -70,22 +70,14 @@ const QRCODE = {
 
 const event = ref<Eve | null>(null);
 let userId: number | null = null;
-interface CustomJwtPayload {
-  userId: number; 
-}
+
 onMounted(async () => {
   const authToken = localStorage.getItem("authToken");
   if (authToken) {
-  const { payload } = useJwt<CustomJwtPayload>(authToken);
-  if (payload.value?.userId) {
+    const { payload } = useJwt(authToken);
     userId = payload.value.userId;
-    console.log("Payload decoded :", payload.value);
-  } else {
-    console.error("Impossible de récupérer l'ID utilisateur depuis le JWT.");
+    console.log(payload);
   }
-} else {
-  console.error("Token d'authentification introuvable.");
-}
 
   const eventId = route.params.id;
   console.log(eventId);

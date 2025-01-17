@@ -3,12 +3,12 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div class="de-flex sm-pt10">
+                <div class="de-flex sm-pt10" style="flex-direction:row;">
                     <div class="de-flex-col">
                         <div class="de-flex-col">
                             <!-- logo begin -->
                             <div id="logo">
-                                <a href="/">
+                                <a @click.prevent="goToHomePage">
                                     <img alt="" style="height:100px;" src="../../assets/images/logo.png" />
                                 </a>
                             </div>
@@ -24,17 +24,16 @@
                             <li><a href="/#section-artists">Artistes</a></li>                  
                             <li><a href="/#section-plan">Plan</a></li>             
                             <li><a href="/#section-tickets">Tickets</a></li>
-                            <li><a href="/#section-forum">Forum</a></li>
+                            <li><a href="/#section-announcements">Annonces</a></li>
                             <li><a href="/#section-gallery">Galerie</a></li>
                             <li><a href="">Pages</a>
                                 <ul>
                                     <li><a @click.prevent="goToCityPage">Rechercher un evenement</a></li>
                                     <li><a @click.prevent="goAddEventPage">Proposer un evenement</a></li>
-                                    <li><a @click.prevent="goForumPage">Forum</a></li>
+                                    <li><a @click.prevent="goForumPage">Annonces</a></li>
                                     <li><a @click.prevent="goContactPage">Contact</a></li>
                                 </ul>
                             </li>
-                            
                         </ul>
                     </div>
                     <div class="de-flex-col">
@@ -44,9 +43,9 @@
                             <span id="menu-btn"></span>
                         </div>
                         <div v-if="isLoggedIn" class="menu_side_area" style="text-align:center;">
-                            <a @click="logout" class="btn-main" style="background-color:red;margin-right:5px;">Deconnexion</a>
-                            <a v-if="isAdmin" @click="goToAdminHomePage" class="btn-main" style="background-color:green;margin-right:5px;">Admin</a>
-                            <a @click="goToEventsPage" class="btn-main">Annonces</a>
+                            <a @click="logout" class="btn-main" style="background-color:red;margin-right:5px;"><span>Deconnexion</span></a>
+                            <a v-if="isAdmin" @click="goToAdminHomePage" class="btn-main" style="background-color:green;margin-right:5px;"><span>Admin</span></a>
+                            <a @click="goToEventsPage" class="btn-main">Evenements</a>
                             <span id="menu-btn"></span>
                         </div>
                     </div>
@@ -61,11 +60,16 @@
 import { useRouter, useRoute } from 'vue-router';
 import { ref, computed, onMounted } from 'vue';
 import { useJwt } from '@vueuse/integrations/useJwt';
+import ApiService from '@/services/ApiService';
 
 const router = useRouter();
 const route = useRoute();
 const isLoggedIn = ref(false);
 const isAdmin = ref(false);
+
+const goToHomePage = () => {
+    router.push({ path : '/' });
+};
 
 const goToSigninPage = () => {
   router.push({ path : '/signin' });
@@ -92,7 +96,7 @@ const goAddEventPage = (event: Event) => {
 };
 
 const goForumPage = (event: Event) => {
-  router.push({ path : '/forum' });
+  router.push({ path : '/announcements' });
 };
 
 const goContactPage = () => {
@@ -109,19 +113,17 @@ const isHomePage = computed(() => {
   return route.path === '/';
 });
 
-onMounted(() => {
-  isLoggedIn.value = localStorage.getItem('authToken') !== null;
-});
-
-interface JwtPayload {
-  role: string; 
-}
-
 onMounted(async () => {
+  isLoggedIn.value = localStorage.getItem('authToken') !== null;
   try {
     const authToken = localStorage.getItem('authToken');
     if (authToken) {
-      const { payload } = useJwt<JwtPayload>(authToken);
+      await ApiService.get('/users/my-user', {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
+      const { payload } = useJwt(authToken);
       const roleId = payload.value?.role;
 
       if (roleId === 'admin') {
@@ -130,9 +132,11 @@ onMounted(async () => {
     }
   } catch (error) {
     console.error('Erreur lors de la requête :', error);
+    if (isLoggedIn.value === true) {
+      logout();
+    }
   }
 });
-
 </script>
 
 <style scoped>

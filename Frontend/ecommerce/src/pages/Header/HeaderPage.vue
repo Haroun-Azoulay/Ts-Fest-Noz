@@ -3,7 +3,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div class="de-flex sm-pt10">
+                <div class="de-flex sm-pt10" style="flex-direction:row;">
                     <div class="de-flex-col">
                         <div class="de-flex-col">
                             <!-- logo begin -->
@@ -27,7 +27,7 @@
                                     <li><a @click.prevent="goToGroupPage">Créer un groupe</a></li>
                                     <li><a @click.prevent="goToGroupPage">Vendre un produit</a></li>
                                     <li><a @click.prevent="goToGroupPage">Voir mes produits</a></li>
-                                    <li><a @click.prevent="goContactPage">Contact</a></li>
+                                    <li><a @click.prevent="goToContactPage">Contact</a></li>
                                 </ul>
                             </li>
                             
@@ -40,7 +40,7 @@
                             <span id="menu-btn"></span>
                         </div>
                         <div v-if="isLoggedIn" class="menu_side_area" style="text-align:center;">
-                            <a @click="logout" style=" margin-right: 5px;"><i class="bi bi-bag-fill" style="font-size:2em"></i></a>
+                            <a @click="goToCartPage" style=" margin-right: 5px;"><i class="bi bi-bag-fill" style="font-size:2em"></i></a>
                             <a @click="goToDashboardPage" style=" margin-right: 5px;"><i class="bi bi-person-circle" style="font-size:2em"></i></a>
                             <a @click="logout" class="btn-main" style="background-color:red;margin-right:5px;">Deconnexion</a>
                             <a v-if="isAdmin" @click="goToAdminHomePage" class="btn-main" style="background-color:green;margin-right:5px;">Admin</a>
@@ -90,11 +90,15 @@ const goToDashboardPage = () => {
   router.push({ path : '/dashboard' });
 };
 
-const goForumPage = (event: Event) => {
+const goToForumPage = (event: Event) => {
   router.push({ path : '/forum' });
 };
 
-const goContactPage = () => {
+const goToCartPage = () => {
+  router.push({ path : '/cart' });
+};
+
+const goToContactPage = () => {
   router.push({ path : '/contact' });
 };
 
@@ -108,11 +112,8 @@ const isHomePage = computed(() => {
   return route.path === '/';
 });
 
-onMounted(() => {
-  isLoggedIn.value = localStorage.getItem('authToken') !== null;
-});
-
 onMounted(async () => {
+  isLoggedIn.value = localStorage.getItem('authToken') !== null;
   try {
     const authToken = localStorage.getItem('authToken');
     if (authToken) {

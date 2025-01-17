@@ -1,3 +1,14 @@
+.payment-methods-logos {
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+}
+
+.payment-methods-logos img {
+    width:5rem;
+    padding:5px;
+}
+
 .ecommerce-select-category {
     display:flex;
     align-items:center;
@@ -58,6 +69,10 @@
 }
 
 .ecommerce-card-button a {
+    width:100%;
+}
+
+.ecommerce-card-button-disabled button {
     width:100%;
 }
 

@@ -29,6 +29,19 @@
                     class="self-stretch h-11 p-4 bg-white rounded-lg border border-neutral-400 text-sm leading-tight bg-slate-50"
                     placeholder="Saisissez votre email" v-model="request.email" />
             </div>
+            <div class="w-96 h-24 px-2.5 pb-2.5 flex-col justify-start items-start gap-2.5 flex">
+                <label class="w-96 text-gray-800 text-sm font-medium leading-tight">Ville</label>
+                <input class="self-stretch h-11 p-4 bg-white rounded-lg border border-neutral-400 text-sm leading-tight bg-slate-50" list="cities" @input="handleInput" v-model="geocoding_city" type="text" placeholder="Entrez une ville" required>
+                <datalist class="text-black" id="cities" v-if="cities.length">
+                    <option 
+                        v-for="(city, index) in cities" 
+                        :key="index"
+                        :value="city"
+                    >
+                        {{ city }}
+                    </option>
+                </datalist>
+            </div>
             <div class="w-96 h-24 px-2.5 pt-2.5 flex-col justify-start items-start gap-1 flex">
                 <label class="w-96 text-gray-800 text-sm font-medium leading-tight">Pseudo</label>
                 <input
@@ -61,10 +74,13 @@ import { useRouter } from 'vue-router';
 import type { Signup } from '../../../models/authentification';
 import ApiService from "@/services/ApiService";
 import { ref, computed } from 'vue';
+import axios from 'axios';
 import ModalConfirm from '../../components/pModal/ModalConfirm.vue';
 
 const show = ref(false);
 const errorMessage = ref('');
+const cities = ref<[]>([]);
+const geocoding_city = ref('');
 
 const confirm = () => {
     show.value = false;
@@ -79,10 +95,31 @@ const request = ref<Signup>({
     pseudo: '',
     role: 'user',
     password: '',
+    city: ''
 });
 
+const handleInput = async () => {
+  if (geocoding_city.value.length > 1) {
+    cities.value = await fetchCities(geocoding_city.value);
+    request.value.city = geocoding_city.value;
+  } else {
+    cities.value = [];
+  }
+}
+
+const fetchCities = async (query: any) => {
+  if (!query) return [];
+  const url = `https://geo.api.gouv.fr/communes?nom=${query}&fields=nom&format=json&geometry=centre`;
+  try {
+    const response = await axios.get(url);
+    return response.data.map((city) => city.nom);
+  } catch (error) {
+    console.error("Erreur lors de la récupération des villes :", error);
+  }
+};
+
 const isButtonDisabled = computed(() => {
-    return !(request.value.lastname && request.value.firstname && request.value.email && request.value.pseudo && request.value.password);
+    return !(request.value.lastname && request.value.firstname && request.value.email && request.value.pseudo && request.value.password && request.value.city);
 });
 
 const buttonClass = computed(() => {
@@ -91,6 +128,12 @@ const buttonClass = computed(() => {
 
 const signup = async () => {
     try {
+        var userCity = [];
+        const checkCity = await axios.get(`https://geo.api.gouv.fr/communes?nom=${request.value.city}&fields=nom&format=json&geometry=centre`);
+        userCity = checkCity.data.filter((city: { nom: string; }) => city.nom === request.value.city);
+        if (userCity.length <= 0) {
+            throw Error("La ville insérée n'existe pas.");
+        }
         const response = await ApiService.post('/users/signup', request.value);
         const token = response.data.token;
         router.push({ path: "/signin" });

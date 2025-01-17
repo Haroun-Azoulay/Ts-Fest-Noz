@@ -104,10 +104,10 @@ const goToContactPage = (event: Event) => {
     router.push({ path : '/contact' });
 };
 
-onMounted(() => {
-    const findScriptDesignesiajs = document.getElementById('designesiajs');
-    if (findScriptDesignesiajs) {
-        findScriptDesignesiajs.remove();
+router.afterEach(() => {
+    const existingScript = document.getElementById('designesiajs');
+    if (existingScript) {
+        existingScript.remove();
     }
     const designesiajs = document.createElement('script');
     designesiajs.id = 'designesiajs';

@@ -45,7 +45,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="bg-violet-600 border-b border-blue-400" v-for="user in users" :key="user.id">
+          <tr class="bg-violet-600 border-b border-blue-400" v-for="user in users" :key="user">
             <th scope="row" class="px-6 py-4 font-medium text-blue-50 whitespace-nowrap dark:text-blue-100">
               {{ user.lastname }}
             </th>
@@ -91,19 +91,7 @@ import ApiService from "@/services/ApiService";
 import HeaderPage from '../pages/Header/HeaderPage.vue';
 import FooterPage from '../pages/Footer/FooterPage.vue';
 
-interface User {
-  id: number;
-  lastname: string;
-  firstname: string;
-  email: string;
-  createdAt: string;
-  updatedAt: string;
-  role: string;
-  pseudo: string;
-}
-
-const users = ref<User[]>([])
-
+const users = ref([]);
 
 onMounted(async () => {
   const authToken = localStorage.getItem("authToken");

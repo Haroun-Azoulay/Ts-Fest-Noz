@@ -1,15 +1,15 @@
 <template>
-  <HeaderPage />
+  <HeaderPage/>
   <section id="subheader" class="text-light" data-bgimage="url(/images-dj/background/subheader.jpg) bottom">
-    <div class="center-y relative text-center">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12 text-center">
-            <h1>Détails de l'évènement</h1>
-          </div>
-          <div class="clearfix"></div>
+      <div class="center-y relative text-center">
+          <div class="container">
+              <div class="row">
+                  <div class="col-md-12 text-center">
+                    <h1>Détails de l'évènement</h1>
+                  </div>
+                  <div class="clearfix"></div>
+              </div>
         </div>
-      </div>
     </div>
   </section>
   <div style="background:#371990;padding-top:3%;">
@@ -23,41 +23,37 @@
       </div>
     </section>
   </div>
-  <FooterPage />
+  <FooterPage/>
 </template>
-
 <script setup lang="ts">
-import { ref, onMounted, computed, type Ref } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import HeaderPage from '../pages/Header/HeaderPage.vue';
 import FooterPage from '../pages/Footer/FooterPage.vue';
 import { useRouter } from 'vue-router';
-import QrcodeVue from 'qrcode.vue';
-import type { Level, RenderAs } from 'qrcode.vue';
+import QrcodeVue, { Level, RenderAs } from 'qrcode.vue';
 
 const router = useRouter();
 
-const token: Ref<string | null> = ref(null);
-
-const level: Ref<Level> = ref('M');
-
-const renderAs: Ref<RenderAs> = ref('svg');
+const token = ref<string | null>(null);
+const level = ref<Level>('M');
+const renderAs = ref<RenderAs>('svg');
 
 onMounted(() => {
-  const authToken = localStorage.getItem('QRCODE');
+  const authToken = localStorage.getItem("QRCODE");
   if (authToken) {
     token.value = authToken;
   }
 });
 
-const qrValue = computed<string>(() => {
-  const baseUrl = 'http://localhost:5000/login';
+const qrValue = computed(() => {
+  const baseUrl = "http://localhost:5000/login";
   if (token.value) {
     return `${baseUrl}?token=${token.value}`;
   }
   return baseUrl;
 });
 
-const goToIdentificationPage = (): void => {
+const goToIdentificationPage = () => {
   const externalUrl = 'http://localhost:5000/login';
   window.location.href = externalUrl;
 };

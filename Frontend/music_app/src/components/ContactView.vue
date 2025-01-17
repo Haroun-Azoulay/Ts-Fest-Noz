@@ -148,8 +148,7 @@ import ApiService from '@/services/ApiService'
 import { useJwt } from '@vueuse/integrations/useJwt'
 import { provide } from 'vue'
 import FooterPage from '../pages/Footer/FooterPage.vue'
-import Email from '../assets/smtp/smtp';
-
+import Email from '../assets/smtp/smtp.js'
 
 const name = ref('')
 const email = ref('')

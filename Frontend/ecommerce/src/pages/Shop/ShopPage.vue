@@ -28,7 +28,7 @@
                     <h5 class="card-title" style="color:black;">{{ goodie.price }} €</h5>
                     <p class="card-text ecommerce-card-text-description" style="color:black;">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                     <div class="row ecommerce-card-button">
-                        <a :href="`/goodie-details/${goodie.id}`" class="col btn btn-primary pl-0 pr-0"><i class="bi bi-cart"></i></a>
+                        <a :href="`/goodie-details/${goodie.id}`" class="col btn btn-info pl-0 pr-0"><i class="bi bi-three-dots"></i></a>
                     </div>
                 </div>
             </div>
@@ -44,7 +44,6 @@
     import type { Goodie, GoodieType } from '../../../models/goodie';
 
     const isAdmin = ref(false);
-    const festnozCart = ref<[]>([]);
     var allGoodieTypes = ref<GoodieType[]>([]);
     var allGroups = ref<Group[]>([]);
     var allGoodies = ref<Goodie[]>([]);
@@ -76,31 +75,23 @@
 
     onMounted(async () => {
         try {
-            if (!(localStorage.getItem('festnozCart'))) {
-                localStorage.setItem('festnozCart', '[]');
-            }
             const authToken = localStorage.getItem('authToken');
+            const getAllGoodieTypes = await ApiService.get('/goodietype/get-all-types');
+            getAllGoodieTypes.data.forEach((type : GoodieType) => allGoodieTypes.value.push(type));
+            const getAllGroups = await ApiService.get('/group/get-all-groups', {
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                },
+            });
+            getAllGroups.data.forEach((group : Group) => allGroups.value.push(group));
+
+            const getAllGoodies = await ApiService.get('/goodie/get-all-goodies', {
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                },
+            });
+            allGoodies.value = getAllGoodies.data;
             if (authToken) {
-                const getAllGoodieTypes = await ApiService.get('/goodietype/get-all-types', {
-                    headers: {
-                        Authorization: `Bearer ${authToken}`,
-                    },
-                });
-                getAllGoodieTypes.data.forEach((type : GoodieType) => allGoodieTypes.value.push(type));
-
-                const getAllGroups = await ApiService.get('/group/get-all-groups', {
-                    headers: {
-                        Authorization: `Bearer ${authToken}`,
-                    },
-                });
-                getAllGroups.data.forEach((group : Group) => allGroups.value.push(group));
-
-                const getAllGoodies = await ApiService.get('/goodie/get-all-goodies', {
-                    headers: {
-                        Authorization: `Bearer ${authToken}`,
-                    },
-                });
-                allGoodies.value = getAllGoodies.data;
 
                 const { payload } = useJwt(authToken);
                 const roleId = payload.value?.role;

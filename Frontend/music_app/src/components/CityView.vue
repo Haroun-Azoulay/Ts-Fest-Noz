@@ -105,9 +105,9 @@ let userRole: string | null = null;
 const startDate = ref<string>('');
 const endDate = ref<string>('');
 const isAuthorized = ref<boolean>(false);
-  const result = ref<Coordinates | null>(null);
+const result = ref(null);
 
-const updateMap = (coordinates: Coordinates) => {
+const updateMap = (coordinates) => {
   if (map) {
     map.remove();
   }
@@ -115,16 +115,20 @@ const updateMap = (coordinates: Coordinates) => {
   map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/streets-v12',
-    center: [coordinates.longitude, coordinates.latitude],
+    center: coordinates,
     zoom: 15,
   });
 
-  new mapboxgl.Marker().setLngLat([coordinates.longitude, coordinates.latitude]).addTo(map); }
-  const handleGeocodeResult = (geocodeResult: Coordinates): void => {
-  result.value = geocodeResult;
-  updateMap(geocodeResult);
+  new mapboxgl.Marker()
+    .setLngLat(coordinates);
+
+  addMarkers();
 };
 
+const handleGeocodeResult = (geocodeResult) => {
+  result.value = geocodeResult;
+  updateMap([geocodeResult.longitude, geocodeResult.latitude]);
+};
 
 const filterPointsByDate = () => {
   const filteredPoints = points.value.filter(point => {
@@ -209,12 +213,6 @@ const handleChangeAllPoints = async () => {
   }
 };
 
-declare global {
-  interface Window {
-    deletePoint: (pointId: number) => Promise<void>;
-  }
-}
-
 window.deletePoint = async (pointId: number) => {
   try {
     const authToken = localStorage.getItem("authToken");
@@ -242,22 +240,16 @@ window.deletePoint = async (pointId: number) => {
   }
 };
 
-interface CustomJwtPayload {
-  userId: string;
-  role: string;
-}
-
 onMounted(() => {
   createMap();
 
   const authToken = localStorage.getItem("authToken");
   if (authToken) {
-    const { payload } = useJwt<CustomJwtPayload>(authToken);
-      if (payload.value) {
-      userId = payload.value.userId;
-      userRole = payload.value.role;}
+    const { payload } = useJwt(authToken);
+    userId = payload.value.userId;
+    userRole = payload.value.role; 
 
-    if (!["admin", "artist", "organizer"].includes(userRole || '')) {
+    if (["admin", "artist", "organizer"].includes(userRole)) {
       isAuthorized.value = true;
     }
 
@@ -271,7 +263,7 @@ const handleChangeMyPoints = async () => {
     return;
   }
 
-  if (!["admin", "artist", "organizer"].includes(userRole || ''))  {
+  if (!["admin", "artist", "organizer"].includes(userRole)) {
     console.error("L'utilisateur n'a pas les permissions nécessaires.");
     return;
   }

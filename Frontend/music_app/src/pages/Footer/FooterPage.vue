@@ -18,7 +18,7 @@
                     <ul>
                         <li><a @click="goToCityPage" href="">Plan</a></li>
                         <li><a @click="goToEventsPage" href="">Liste d'évènements</a></li>
-                        <li><a @click="goToForumPage" href="">Forum</a></li>
+                        <li><a @click="goToForumPage" href="">Annonces</a></li>
                         <li><a @click="goToContactPage" href="">Contactez-nous</a></li>
                     </ul>
                 </div>
@@ -80,9 +80,7 @@
 
 <script setup lang="ts">
 import { useRouter, useRoute } from 'vue-router';
-import { onMounted } from 'vue';
 const router = useRouter();
-const route = useRoute();
 
 const goToCityPage = (event: Event) => {
     event.preventDefault()
@@ -96,7 +94,7 @@ const goToEventsPage = (event: Event) => {
 
 const goToForumPage = (event: Event) => {
     event.preventDefault()
-    router.push({ path : '/forum' });
+    router.push({ path : '/announcements' });
 };
 
 const goToContactPage = (event: Event) => {
@@ -104,10 +102,10 @@ const goToContactPage = (event: Event) => {
     router.push({ path : '/contact' });
 };
 
-onMounted(() => {
-    const findScriptDesignesiajs = document.getElementById('designesiajs');
-    if (findScriptDesignesiajs) {
-        findScriptDesignesiajs.remove();
+router.afterEach(() => {
+    const existingScript = document.getElementById('designesiajs');
+    if (existingScript) {
+        existingScript.remove();
     }
     const designesiajs = document.createElement('script');
     designesiajs.id = 'designesiajs';

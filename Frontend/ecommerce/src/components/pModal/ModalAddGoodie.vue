@@ -11,6 +11,10 @@
             <input class="text-center w-full p-2 border rounded shadow-md text-dark" type="text" v-model="request.goodieName" placeholder="Entrez le nom" required />
         </div>
         <div class="mb-4">
+            <label class="block text-m font-medium leading-tight text-light">Description</label>
+            <input class="text-center w-full p-2 border rounded shadow-md text-dark" type="text" v-model="request.goodieDescription" placeholder="Entrez une description" required />
+        </div>
+        <div class="mb-4">
             <label class="block text-m font-medium leading-tight text-light">Type</label>
             <select class="form-select" v-model="request.goodieTypeId" aria-label="">
                 <option selected value="none">Sélectionnez le type</option>
@@ -55,9 +59,10 @@
   const router = useRouter();
   const request = ref<Goodie>({
     goodieName: '',
+    goodieDescription: '',
     goodieTypeId: '',
-    goodiePrice: '',
-    goodieQuantity: '',
+    goodiePrice: 0,
+    goodieQuantity: 0,
     goodieAvailable: false,
     goodieImage: null 
   });
@@ -85,13 +90,14 @@
       }
       const formData = new FormData();
       formData.append('goodieName', request.value.goodieName);
+      formData.append('goodieDescription', request.value.goodieDescription);
       formData.append('goodieTypeId', request.value.goodieTypeId);
-      formData.append('goodiePrice', request.value.goodiePrice);
-      formData.append('goodieQuantity', request.value.goodieQuantity);
+      formData.append('goodiePrice', String(request.value.goodiePrice));
+      formData.append('goodieQuantity', String(request.value.goodieQuantity));
       formData.append('goodieAvailable', request.value.goodieAvailable.toString());
       formData.append('goodieImage', request.value.goodieImage);
       console.log(formData);
-      const response = await ApiService.post('/goodie/add', formData, {
+      await ApiService.post('/goodie/add', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
             Authorization: `Bearer ${authToken}`,

@@ -931,7 +931,6 @@
          });
          // mainmenu arrow click
          jQuery("#mainmenu > li > span").on("click", function() {
-             
              var iteration = $(this).data('iteration') || 1;
              switch (iteration) {
                  case 1:
@@ -1596,7 +1595,6 @@
      // navigation for mobile
      // --------------------------------------------------
      jQuery('#menu-btn').on("click", function() {
-
         var h = jQuery('header')[0].scrollHeight;
         
          if (mobile_menu_show == 0) {
@@ -1802,14 +1800,14 @@
              if (this.href.indexOf('#') != -1) {
                  var href = jQuery(this).attr('href');
                 if (location.hash!=="") {
-                     if (jQuery(window).scrollTop() > jQuery(href).offset().top - 140) {
-                         clearTimeout($.data(this, "scrollCheck"));
-                         $.data(this, "scrollCheck", setTimeout(function() {
-                             jQuery('#mainmenu li a').removeClass('active');
-                             cur.addClass('active');
-                         }, 250));
+                    //  if (jQuery(window).scrollTop() > jQuery(href).offset().top - 140) {
+                    //      clearTimeout($.data(this, "scrollCheck"));
+                    //      $.data(this, "scrollCheck", setTimeout(function() {
+                    //          jQuery('#mainmenu li a').removeClass('active');
+                    //          cur.addClass('active');
+                    //      }, 250));
 
-                     }
+                    //  }
                  }
              }
          });

@@ -102,7 +102,7 @@
                     <div class="row">
                         <div class="col-md-12 text-center">
                             <div class="wm wow slideInUp">Sponsors</div>
-                            <h2 class="wow fadeInUp" data-wow-delay=".2s"><span class="id-color">03</span> Sponsorisé par :</h2>
+                            <h2 class="wow fadeInUp" data-wow-delay=".2s"><span class="id-color">02</span> Sponsorisé par :</h2>
                             <div class="small-border bg-color wow zoomIn" data-wow-delay=".4s"></div>
                         </div>
                         <div class="spacer-single"></div>
@@ -157,28 +157,6 @@
     const isAuthorized = ref(false);
     const isFullAuthorized = ref(false);
     const router = useRouter();
-
-    const goToCityPage = () => {
-        router.push('/city').then(() => {
-            window.location.reload();
-        });
-    };
-
-    const goAddEventPage = () => {
-        if (isFullAuthorized.value) {
-            router.push('/add').then(() => {
-                window.location.reload();
-            });
-        }
-    };
-
-    const goForumPage = () => {
-        if (isFullAuthorized.value) {
-            router.push('/forum').then(() => {
-                window.location.reload();
-            });
-        }
-    };
 
     onMounted(async () => {
         try {

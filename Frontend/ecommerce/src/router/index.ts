@@ -10,6 +10,7 @@ import ErrorView from '@/components/404View.vue';
 import authMiddleware from '@/middlewares/auth';
 import authAdmin from '@/middlewares/authAdmin';
 import GoodieDetailsView from '@/components/GoodieDetailsView.vue';
+import CartView from '@/components/CartView.vue';
 
 const routes = [
   {
@@ -41,6 +42,11 @@ const routes = [
     path: '/group',
     name: 'group',
     component: GroupView,
+  },
+  {
+    path: '/cart',
+    name: 'cart',
+    component: CartView,
   },
   {
     path: '/contact',

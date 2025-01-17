@@ -11,7 +11,7 @@ import SingleForumView from '@/components/SingleForumView.vue';
 import SinglePaymentPageView from '@/components/SinglePaymentPageView.vue';
 import SingleTokenView from '@/components/SingleTokenView.vue';
 import ContactView from '@/components/ContactView.vue';
-import ForumView from '@/components/ForumView.vue';
+import AnnouncementsView from '@/components/AnnouncementsView.vue';
 import ErrorView from '@/components/404View.vue';
 import PostView from '@/components/AddPostView.vue';
 import authMiddleware from '@/middlewares/auth';
@@ -41,15 +41,15 @@ const routes = [
     component: ContactView,
   },
   {
-    path: '/forum',
-    name: 'forum',
-    component: ForumView,
+    path: '/announcements',
+    name: 'announcements',
+    component: AnnouncementsView,
     meta: {
       middleware: [authMiddleware],
     },
   },
   {
-    path: '/forum/add',
+    path: '/announcements/add',
     name: 'addPost',
     component: PostView,
     meta: {
@@ -57,7 +57,7 @@ const routes = [
     },
   },
   {
-    path: '/forum/:idpost',
+    path: '/announcements/:idpost',
     name: 'SingleForum',
     component: SingleForumView,
   },
@@ -107,14 +107,14 @@ const routes = [
     component: SinglePaymentPageView,
   },
   {
-    path: '/error',
-    name: 'ErrorView',
-    component: ErrorView,
-  },
-  {
     path: '/event/token/3AGZEYG&1386SFAFTFDA',
     name: 'Singletoken',
     component: SingleTokenView,
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'not-found',
+    component: ErrorView,
   },
 ];
 
@@ -123,11 +123,11 @@ const router = createRouter({
   routes,
 });
 
-function nextFactory(context: any, middleware: any, index: any) {
+function nextFactory(context, middleware, index) {
   const subsequentMiddleware = middleware[index];
   if (!subsequentMiddleware) return context.next;
 
-  return (...parameters: any) => {
+  return (...parameters) => {
     context.next(...parameters);
     const nextMiddleware = nextFactory(context, middleware, index + 1);
     subsequentMiddleware({ ...context, next: nextMiddleware });
