@@ -6,6 +6,8 @@ if [ "$1" = "-run" ]; then
 elif [ "$1" = "-test" ]; then
     echo "Running npm test..."
     npm run test
+elif [ "$1" = "-full" ]; then   
+    docker-compose up -d
 else
     echo "You forgot flag -run or -test"
 fi
