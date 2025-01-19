@@ -66,6 +66,10 @@ const goodLogin = {
     password: "test",
     pseudo: "bechari"
 };
+const goodLoginAdmin = {
+    password: "admin",
+    pseudo: "admin"
+};
 const wrongLogin = {
     password: "test2",
     pseudo: "bechari"
@@ -124,7 +128,7 @@ describe("Test case for user controller", () => {
             expect(res.status).toHaveBeenCalledWith(400);
         });
         it("4 - should return 500 user if user already exists", async () => {
-            jest.spyOn(User, 'create').mockRejectedValue(newUser);
+            jest.spyOn(User, 'create').mockRejectedValue(null);
             const req = httpMocks.createRequest({
                 method: 'POST',
                 body: newUser
@@ -151,12 +155,12 @@ describe("Test case for user controller", () => {
             tokenUser = (res.json as jest.Mock).mock.calls[0][0].token;
             expect(res.status).toHaveBeenCalledWith(200);
         });
-        it("1 - should signin admin and return 200", async () => {
-            jest.spyOn(User, 'findOne').mockResolvedValue(existUser);
+        it("2 - should signin admin and return 200", async () => {
+            jest.spyOn(User, 'findOne').mockResolvedValue(existAdmin);
             bcrypt.compare = jest.fn().mockResolvedValue(true);
             const req = httpMocks.createRequest({
                 method: 'POST',
-                body: goodLogin
+                body: goodLoginAdmin
             });
             const res = httpMocks.createResponse();
             res.status = jest.fn().mockReturnThis();
@@ -190,7 +194,7 @@ describe("Test case for user controller", () => {
             expect(res.status).toHaveBeenCalledWith(401);
         });
         it("5 - should return 500 if error occured", async () => {
-            jest.spyOn(User, 'findOne').mockRejectedValue(badLogin);
+            jest.spyOn(User, 'findOne').mockRejectedValue(null);
             const req = httpMocks.createRequest({
                 method: 'POST',
                 body: badLogin
