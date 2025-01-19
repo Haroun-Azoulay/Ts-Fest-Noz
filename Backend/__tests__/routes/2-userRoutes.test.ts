@@ -17,28 +17,32 @@ const newAdmin = {
   firstname: "admin",
   email: "admin@example.com",
   password: "admin",
-  pseudo: "admin"
+  pseudo: "admin",
+  city: "Paris"
 };
 const newUser = {
   lastname: "Dey",
   firstname: "Haroun-Rachid",
   email: "haroun@ooredoo.dz",
   password: "test",
-  pseudo: "bechari"
+  pseudo: "bechari",
+  city: "Paris"
 };
 const newArtist = {
   lastname: "artist",
   firstname: "artist",
   email: "artist@example.com",
   password: "artist",
-  pseudo: "artist"
+  pseudo: "artist",
+  city: "Paris",
 };
 const newOrganizer = {
   lastname: "organizer",
   firstname: "organizer",
   email: "organizer@example.com",
   password: "organizer",
-  pseudo: "organizer"
+  pseudo: "organizer",
+  city: "Paris"
 };
 const userLogin = {
   pseudo: "bechari",
@@ -59,6 +63,7 @@ let existArtist = new User({
   email: "",
   pseudo: "",
   password: "",
+  city: "",
   role: "artist"
 });
 const roleRequest = {

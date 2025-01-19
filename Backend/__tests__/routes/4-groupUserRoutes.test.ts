@@ -23,6 +23,7 @@ let existUser = new User({
   pseudo: "",
   password: "",
   email: "",
+  city: "",
   role: "user"
 });
 let existArtist = new User({
@@ -32,6 +33,7 @@ let existArtist = new User({
   pseudo: "",
   password: "",
   email: "",
+  city: "",
   role: "artist"
 });
 let existGroup = {

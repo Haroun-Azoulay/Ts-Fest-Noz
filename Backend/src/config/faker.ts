@@ -1,4 +1,4 @@
-import { faker } from "@faker-js/faker";
+import { faker, fakerFR } from "@faker-js/faker";
 import logger from "node-color-log";
 import { v4 as uuidv4 } from "uuid";
 
@@ -40,6 +40,7 @@ export function createRandomUser(index: number) {
     password: faker.internet.password(),
     email: faker.internet.email(),
     pseudo: faker.person.firstName(),
+    city: fakerFR.location.city(),
     registeredAt: faker.date.past(),
     role: faker.helpers.arrayElement(["admin", "artist", "organizer", "user"]),
   };

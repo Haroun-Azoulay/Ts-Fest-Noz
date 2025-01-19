@@ -9,7 +9,7 @@ const signup = async (
   res: Response,
 ): Promise<Response<any, Record<string, any>>> => {
   try {
-    const { lastname, firstname, password, email, pseudo } = req.body;
+    const { lastname, firstname, password, email, pseudo, city } = req.body;
 
     if (!lastname || !firstname || !password || !email || !pseudo) {
       return res.status(400).json({
@@ -28,6 +28,7 @@ const signup = async (
       firstname,
       password: hashedPassword,
       pseudo,
+      city,
       role: assignedRole,
     });
 
@@ -63,6 +64,7 @@ const getUserInfo = async (
       email: user.email,
       lastname: user.lastname,
       firstname: user.firstname,
+      city: user.city,
       role: user.role,
       pseudo: user.pseudo,
     };

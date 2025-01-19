@@ -23,6 +23,7 @@ const existUser = new User({
     email: "haroun@ooredoo.dz",
     password: bcrypt.hash("test", 10),
     pseudo: "bechari",
+    city: "Paris",
     role: "user"
 });
 const existArtist = new User({
@@ -32,6 +33,7 @@ const existArtist = new User({
     email: "artist@example.com",
     password: bcrypt.hash("artist", 10),
     pseudo: "artist",
+    city: "Paris",
     role: "artist"
 });
 const existGroup = new Group({

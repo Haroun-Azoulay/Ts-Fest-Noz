@@ -24,6 +24,7 @@ const existUser = new User({
     email: "haroun@ooredoo.dz",
     password: bcrypt.hash("test", 10),
     pseudo: "bechari",
+    city: "Paris",
     role: "user"
 });
 const goodLogin = {
