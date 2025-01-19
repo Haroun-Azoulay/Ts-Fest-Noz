@@ -53,7 +53,6 @@ describe("Test case for group routes", () => {
   });
 
   it("5 - test case to get group", async () => {
-    console.log(existGroup);
     const response = await request(app).get(`/get-group/${existGroup.id}`).set("Authorization", `Bearer ${tokenUser}`);
     expect(response.status).toBe(200);
   });

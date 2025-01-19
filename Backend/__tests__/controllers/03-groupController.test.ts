@@ -1,7 +1,7 @@
-import groupController from "../../src/controllers/groupController";
-import Group from "../../src/models/Group";
-import userController from "../../src/controllers/userController";
 import User from "../../src/models/User";
+import Group from "../../src/models/Group";
+import groupController from "../../src/controllers/groupController";
+import userController from "../../src/controllers/userController";
 import httpMocks from 'node-mocks-http';
 import { Request, Response, NextFunction } from 'express';
 import verifyToken from "../../src/middlewares/verifyToken";
@@ -11,6 +11,7 @@ const bcrypt = require("bcrypt");
 jest.mock("../../src/middlewares/verifyToken");
 jest.mock("../../src/middlewares/verifyTokenAdmin");
 jest.mock("../../src/models/Group");
+jest.mock("../../src/models/User");
 jest.mock('bcrypt');
 
 let tokenUser: string;
@@ -25,31 +26,9 @@ const existUser = new User({
     pseudo: "bechari",
     role: "user"
 });
-const existAdmin = new User({
-    id: "5cbfa5dc-7999-4fb1-a443-33894fb52ccc",
-    lastname: "admin",
-    firstname: "admin",
-    email: "admin@example.com",
-    password: "admin",
-    pseudo: "admin",
-    role: "admin"
-});
-const existArtist = new User({
-    id: "5cbfa5dc-7999-4fb1-a443-33894fb52ccd",
-    lastname: "artist",
-    firstname: "artist",
-    email: "artist@example.com",
-    password: "admin",
-    pseudo: "admin",
-    role: "admin"
-});
 const goodLogin = {
     password: "test",
     pseudo: "bechari"
-};
-const goodLoginArtist = {
-    password: "artist",
-    pseudo: "artist"
 };
 const goodLoginAdmin = {
     password: "admin",
@@ -79,21 +58,7 @@ describe("Test case for group controller", () => {
             tokenUser = (res.json as jest.Mock).mock.calls[0][0].token;
             expect(res.status).toHaveBeenCalledWith(200);
         });
-        it("2 - should signin artist and return 200", async () => {
-            jest.spyOn(User, 'findOne').mockResolvedValue(existArtist);
-            bcrypt.compare = jest.fn().mockResolvedValue(true);
-            const req = httpMocks.createRequest({
-                method: 'POST',
-                body: goodLoginArtist
-            });
-            const res = httpMocks.createResponse();
-            res.status = jest.fn().mockReturnThis();
-            res.json = jest.fn();
-            await userController.signin(req, res);
-            tokenArtist = (res.json as jest.Mock).mock.calls[0][0].token;
-            expect(res.status).toHaveBeenCalledWith(200);
-        });
-        it("3 - should signin admin and return 200", async () => {
+        it("2 - should signin admin and return 200", async () => {
             jest.spyOn(User, 'findOne').mockResolvedValue(existUser);
             bcrypt.compare = jest.fn().mockResolvedValue(true);
             const req = httpMocks.createRequest({

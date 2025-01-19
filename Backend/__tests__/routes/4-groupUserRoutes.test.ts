@@ -16,7 +16,7 @@ app.use(groupUserRoutes);
 let tokenUser : string | undefined;
 let tokenAdmin : string | undefined;
 
-let user = new User({
+let existUser = new User({
   id: "",
   lastname: "",
   firstname: "",
@@ -25,7 +25,7 @@ let user = new User({
   email: "",
   role: "user"
 });
-let artist = new User({
+let existArtist = new User({
   id: "",
   lastname: "",
   firstname: "",
@@ -34,6 +34,10 @@ let artist = new User({
   email: "",
   role: "artist"
 });
+let existGroup = {
+  id: "",
+  name: "group-test"
+}
 const userLogin = {
   pseudo: "bechari",
   password: "test"
@@ -46,22 +50,18 @@ const adminLogin = {
   pseudo: "admin",
   password: "admin"
 };
-let existGroup = {
-  id: undefined,
-  name: "group-test"
-}
 
 describe("Test case for group routes", () => {
   it("1 - test case to signin user", async () => {
-      const response = await request(app).post("/signin").send(userLogin);
-      expect(response.status).toBe(200);
-      tokenUser = response.body.token;
-      user = response.body.user;
+    const response = await request(app).post("/signin").send(userLogin);
+    expect(response.status).toBe(200);
+    tokenUser = response.body.token;
+    existUser = response.body.user;
   });
   it("2 - test case to signin artist", async () => {
     const response = await request(app).post("/signin").send(artistLogin);
     expect(response.status).toBe(200);
-    artist = response.body.user;
+    existArtist = response.body.user;
   });
   it("3 - test case to signin admin", async () => {
     const response = await request(app).post("/signin").send(adminLogin);
@@ -75,16 +75,28 @@ describe("Test case for group routes", () => {
     existGroup = response.body.filter(
       (group: Group) =>
         group.name === existGroup.name
-    );
+    )[0];
     expect(response.status).toBe(200);
   });
-  it("5 - test case to add user in group", async () => {
-    console.log(existGroup);
-    console.log(user);
+  it("5 - test case to add artist user in group", async () => {
     const response = await request(app)
     .post(`/groups/${existGroup.id}/users`)
-    .send({userId: artist.id})
+    .send({userId: existArtist.id})
+    .set("Authorization", `Bearer ${tokenAdmin}`);
+    expect(response.status).toBe(201);
+  });
+  it("5 - test case to delete artist user from a group", async () => {
+    const response = await request(app)
+    .delete(`/groups/${existGroup.id}/users`)
+    .send({userId: existArtist.id})
     .set("Authorization", `Bearer ${tokenAdmin}`);
     expect(response.status).toBe(200);
+  });
+  it("6 - test case to readd artist user in group", async () => {
+    const response = await request(app)
+    .post(`/groups/${existGroup.id}/users`)
+    .send({userId: existArtist.id})
+    .set("Authorization", `Bearer ${tokenAdmin}`);
+    expect(response.status).toBe(201);
   });
 });

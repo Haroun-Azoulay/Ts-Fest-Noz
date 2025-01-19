@@ -28,7 +28,7 @@ const createGroupUser = async (
       message: "User not an artist."
     });
   } catch (error) {
-    console.error("Error when adding a post:", error);
+    console.error("Error when adding a user to the group :", error);
     return res.status(500).json({
       message: "An error occurred while adding user to group",
     });
@@ -44,7 +44,7 @@ const deleteGroupUser = async (
   try {
     const groupUser: GroupUserModel | null = await GroupUserModel.findOne({
       where: {
-        id: groupId,
+        groupId: groupId,
         userId: userId
       }
     });
