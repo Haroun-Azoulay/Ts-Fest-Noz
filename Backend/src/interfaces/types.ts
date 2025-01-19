@@ -105,6 +105,7 @@ export interface UserAttributes {
   firstname: string;
   password: string;
   email: string;
+  city: string;
   role: string;
   pseudo: string;
 }
@@ -114,6 +115,7 @@ export interface UserRequest {
   firstname: string;
   password: string;
   email: string;
+  city: string;
   pseudo: string;
 }
 
@@ -122,6 +124,7 @@ export interface UserInfo {
   email: string;
   lastname: string;
   firstname: string;
+  city: string;
   role: string;
   pseudo: string;
 }

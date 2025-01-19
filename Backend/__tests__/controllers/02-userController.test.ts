@@ -20,14 +20,16 @@ const newAdmin : UserRequest = {
     firstname: "admin",
     email: "admin@example.com",
     password: "admin",
-    pseudo: "admin"
+    pseudo: "admin",
+    city: "Paris"
 };
 const newUser : UserRequest = {
     lastname: "Dey",
     firstname: "Haroun-Rachid",
     email: "haroun@ooredoo.dz",
     password: "test",
-    pseudo: "bechari"
+    pseudo: "bechari",
+    city: "Paris"
 };
 const wrongUser = {
     lastname: "test",
@@ -42,6 +44,7 @@ const existUser = new User({
     email: "haroun@ooredoo.dz",
     password: bcrypt.hash("test", 10),
     pseudo: "bechari",
+    city: "Paris",
     role: "user"
 });
 const existAdmin = new User({
@@ -51,6 +54,7 @@ const existAdmin = new User({
     email: "admin@example.com",
     password: "admin",
     pseudo: "admin",
+    city: "Paris",
     role: "admin"
 });
 const updatedUser = new User({
@@ -60,6 +64,7 @@ const updatedUser = new User({
     email: "haroun@ooredoo.dz",
     password: bcrypt.hash("test", 10),
     pseudo: "bechari",
+    city: "Paris",
     role: "artist"
 });
 const goodLogin = {

@@ -8,6 +8,7 @@ class User extends Model<UserAttributes> {
   public firstname!: string;
   public password!: string;
   public email!: string;
+  public city!: string;
   public role!: string;
   public pseudo!: string;
 }
@@ -39,6 +40,10 @@ User.init(
       validate: {
         isEmail: true,
       },
+    },
+    city: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     role: {
       type: DataTypes.STRING,
