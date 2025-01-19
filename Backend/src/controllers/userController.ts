@@ -93,18 +93,18 @@ const signin = async (
     const foundUser: UserModel | null = await UserModel.findOne({
       where: { pseudo },
     });
-
+    
     if (!foundUser) {
       return res.status(401).json({
         message: "Invalid credentials. Check your username and password.",
       });
     }
-
-    const passwordMatch: string = await bcrypt.compare(
+    
+    const passwordMatch: boolean = await bcrypt.compare(
       password,
-      foundUser.password,
+      foundUser.password
     );
-
+    
     if (!passwordMatch) {
       return res.status(401).json({
         message: "Invalid credentials. Check your username and password.",
@@ -130,19 +130,36 @@ const signin = async (
   }
 };
 
-const logout = async (req: Request, res: Response): Promise<void> => {
-  res.status(200).json({ message: "Logout successful" });
+// const logout = async (req: Request, res: Response): Promise<void> => {
+//   res.status(200).json({ message: "Logout successful" });
+// };
+
+const getAllUsers = async (req: Request, res: Response): Promise<Response<any, Record<string, any>>> => {
+  const result = await UserModel.findAll();
+  return res.status(200).json(result);
 };
 
-const getAllUsers = async (req: Request, res: Response): Promise<void> => {
-  UserModel.findAll()
-    .then((result) => {
-      return res.json(result);
-    })
-    .catch((error) => {
-      console.log(error);
-      return res.json({});
+const deleteUser = async (
+  req: Request,
+  res: Response
+): Promise<Response<any, Record<string, any>>> => {
+  try {
+    const pseudo: string | undefined = req.params.pseudo;
+    const foundUser: UserModel | null = await UserModel.findOne({
+      where: { pseudo },
     });
+    if (!foundUser) {
+      return res.status(401).json({
+        message: "Invalid pseudo or unexisting user.",
+      });
+    }
+    await foundUser.destroy();
+    return res.status(200).json({ message: "User deleted successfully." });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Unable to delete user.",
+    });
+  }
 };
 
 const updateUserRole = async (
@@ -152,23 +169,18 @@ const updateUserRole = async (
   try {
     const userId: string = req.params.userId;
     const newRole: string = req.body.newRole;
-    console.log(userId);
-    console.log(newRole);
-
     if (!newRole) {
       return res.status(400).json({ message: "New role is required." });
     }
-
-    const updateSuccess: boolean = await UserModel.updateUserRole(
-      userId,
-      newRole,
-    );
-
-    if (updateSuccess) {
-      return res.status(200).json({ message: "Role updated successfully." });
-    } else {
-      return res.status(403).json({ message: "Admin role cannot be updated." });
+    const user = await UserModel.findByPk(userId);
+    if (!user) {
+      throw new Error("User not found.");
     }
+    if (newRole !== "admin") {
+      await user.update({ role: newRole });
+      return res.status(200).json({ message: "Role updated successfully." });
+    }
+    return res.status(403).json({ message: "Admin role cannot be updated." });
   } catch (error) {
     console.error(error);
     return res.status(500).json({
@@ -180,8 +192,8 @@ const updateUserRole = async (
 export default {
   signup,
   signin,
-  logout,
   getAllUsers,
   getUserInfo,
+  deleteUser,
   updateUserRole,
 };

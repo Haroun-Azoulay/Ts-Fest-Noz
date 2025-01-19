@@ -10,7 +10,7 @@ router.get("/get-group/:id", verifyToken, groupController.getGroup);
 
 router.get("/get-all-groups", verifyToken, groupController.getAllGroups);
 
-router.delete("/delete-group/:id", verifyToken, groupController.deleteGroup);
+router.delete("/delete-group/:id", verifyTokenAdmin, groupController.deleteGroup);
 
 export default router;
 

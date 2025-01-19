@@ -158,7 +158,7 @@ const getPaymentById = async (
   }
 };
 
-const verifyTokenOATUH = async (
+const verifyTokenOAUTH = async (
   req: Request,
   res: Response,
 ): Promise<Response<any, Record<string, any>> | undefined> => {
@@ -218,7 +218,7 @@ const deleteToken = async (
 };
 
 export default {
-  verifyTokenOATUH,
+  verifyTokenOAUTH,
   deleteToken,
   addEvent,
   getEventsByCity,
