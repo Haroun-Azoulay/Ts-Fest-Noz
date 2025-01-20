@@ -3,7 +3,7 @@
       <div class="flex gap-16">
         <SigninPage></SigninPage>
         <div class="flex items-center justify-center">
-          <img class="object-contain rounded-full" src="../assets/images/authentification-image.avif">
+          <img class="object-contain rounded-full w-full max-md:hidden" src="../assets/images/authentification-image.avif" style="width: 100%">
         </div>
       </div>
     </div>
@@ -17,5 +17,6 @@
   @tailwind base;
   @tailwind components;
   @tailwind utilities;
+
   </style>
   

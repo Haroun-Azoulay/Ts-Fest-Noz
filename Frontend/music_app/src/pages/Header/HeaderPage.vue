@@ -4,12 +4,12 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="de-flex sm-pt10" style="flex-direction:row;">
-                    <div class="de-flex-col">
+                    <div class="de-flex-col ">
                         <div class="de-flex-col">
                             <!-- logo begin -->
                             <div id="logo">
                                 <a @click.prevent="goToHomePage">
-                                    <img alt="" style="height:100px;" src="../../assets/images/logo.png" />
+                                    <img alt="" style="height:80px;" src="../../assets/images/logo.png" />
                                 </a>
                             </div>
                             <!-- logo close -->
@@ -20,31 +20,31 @@
                     <div class="de-flex-col header-col-mid">
                         <!-- mainmenu begin -->
                         <ul id="mainmenu">
-                            <li><a href="/#de-carousel">Home</a></li>                                   
-                            <li><a href="/#section-artists">Artistes</a></li>                  
-                            <li><a href="/#section-plan">Plan</a></li>             
-                            <li><a href="/#section-tickets">Tickets</a></li>
-                            <li><a href="/#section-announcements">Annonces</a></li>
-                            <li><a href="/#section-gallery">Galerie</a></li>
+                            <li class="hover:bg-lime-500"><a href="/#de-carousel" >Home</a></li>                                   
+                            <li class="hover:bg-lime-500"><a href="/#section-artists">Artistes</a></li>                  
+                            <li class="hover:bg-lime-500"><a href="/#section-plan">Plan</a></li>             
+                            <li class="hover:bg-lime-500"><a href="/#section-tickets">Tickets</a></li>
+                            <li class="hover:bg-lime-500"><a href="/#section-announcements">Annonces</a></li>
+                            <li class="hover:bg-lime-500"><a href="/#section-gallery">Galerie</a></li>
                             <li><a href="">Pages</a>
                                 <ul>
-                                    <li><a @click.prevent="goToCityPage">Rechercher un evenement</a></li>
-                                    <li><a @click.prevent="goAddEventPage">Proposer un evenement</a></li>
-                                    <li><a @click.prevent="goForumPage">Annonces</a></li>
-                                    <li><a @click.prevent="goContactPage">Contact</a></li>
+                                    <li class="hover:bg-lime-500"><a @click.prevent="goToCityPage">Rechercher un evenement</a></li>
+                                    <li class="hover:bg-lime-500"><a @click.prevent="goAddEventPage">Proposer un evenement</a></li>
+                                    <li class="hover:bg-lime-500"><a @click.prevent="goForumPage">Annonces</a></li>
+                                    <li class="hover:bg-lime-500"><a @click.prevent="goContactPage">Contact</a></li>
                                 </ul>
                             </li>
                         </ul>
                     </div>
                     <div class="de-flex-col">
-                        <div v-if="!isLoggedIn" class="menu_side_area" style="text-align:center;">
-                            <a @click="goToSignupPage" class="btn-main" style="margin-right:5px;"><i class="fa fa-sign-in"></i><span>Inscription</span></a>
+                        <div v-if="!isLoggedIn" class="menu_side_area" style="text-align:center; height:50px">
+                            <a @click="goToSignupPage" class="btn-main" style="margin-right:10px;"><i class="fa fa-circle"></i><span>Inscription</span></a>
                             <a @click="goToSigninPage" class="btn-main"><i class="fa fa-sign-in"></i><span>Connexion</span></a>
                             <span id="menu-btn"></span>
                         </div>
                         <div v-if="isLoggedIn" class="menu_side_area" style="text-align:center;">
-                            <a @click="logout" class="btn-main" style="background-color:red;margin-right:5px;"><span>Deconnexion</span></a>
-                            <a v-if="isAdmin" @click="goToAdminHomePage" class="btn-main" style="background-color:green;margin-right:5px;"><span>Admin</span></a>
+                            <a @click="logout" class="btn-main" style="background-color:red;margin-right:10px;"><span>Deconnexion</span></a>
+                            <a v-if="isAdmin" @click="goToAdminHomePage" class="btn-main" style="background-color:green;margin-right:10px;"><span>Admin</span></a>
                             <a @click="goToEventsPage" class="btn-main">Evenements</a>
                             <span id="menu-btn"></span>
                         </div>
@@ -118,7 +118,7 @@ onMounted(async () => {
   try {
     const authToken = localStorage.getItem('authToken');
     if (authToken) {
-      await ApiService.get('/users/my-user', {
+      await ApiService.get('/my-user', {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },

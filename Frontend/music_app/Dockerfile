@@ -4,7 +4,6 @@ WORKDIR /app
 
 RUN apt update && apt upgrade -y \
     && apt install -y npm \
-    && apt install curl -y \
     && apt clean \
     && rm -rf /var/lib/apt/lists/*
 
