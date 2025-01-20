@@ -68,7 +68,7 @@ const buttonClass = computed(() => {
 const signin = async () => {
     if (!isButtonDisabled.value) {
         try {
-            const response = await ApiService.post('/users/signin', request.value);
+            const response = await ApiService.post('/signin', request.value);
             const token = response.data.token;
             router.push({ path: "/" });
             localStorage.setItem('authToken', token);

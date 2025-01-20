@@ -83,7 +83,7 @@ const isAuthorized = ref<boolean>(false);
       },
     };
 
-    const response = await ApiService.get("/post/get-all-posts", config);
+    const response = await ApiService.get("/get-all-posts", config);
     post.value = response.data;
     console.log(post.value);
     console.log("test");

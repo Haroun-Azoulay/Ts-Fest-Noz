@@ -180,7 +180,7 @@ const addPoint = async () => {
 
     const authToken = await getAuthToken();
 
-    const response_event = await ApiService.post('/event/add-event', Event, {
+    const response_event = await ApiService.post('/add-event', Event, {
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
@@ -190,7 +190,7 @@ const addPoint = async () => {
     const event_url = `http://localhost:5173/event/${eventId}`;
     Point.url_point = event_url;
 
-    const response = await ApiService.post('/city/add-point', Point, {
+    const response = await ApiService.post('/add-point', Point, {
       headers: {
         Authorization: `Bearer ${authToken}`,
       },

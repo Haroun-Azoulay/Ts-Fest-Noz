@@ -453,7 +453,7 @@
         };
 
         try {
-            const response = await ApiService.get("/city/get-all-points", config);
+            const response = await ApiService.get("/get-all-points", config);
             points.value = response.data;
             addMarkers();
         } catch (error) {

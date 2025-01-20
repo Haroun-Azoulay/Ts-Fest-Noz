@@ -117,7 +117,7 @@ onMounted(async () => {
   try {
     const authToken = localStorage.getItem('authToken');
     if (authToken) {
-      await ApiService.get('/users/my-user', {
+      await ApiService.get('/my-user', {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },

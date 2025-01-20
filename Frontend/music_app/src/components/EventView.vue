@@ -102,7 +102,7 @@ onMounted(async () => {
   };
 
   try {
-    const response = await ApiService.get("/event/get-all-events", config);
+    const response = await ApiService.get("/get-all-events", config);
     events.value = response.data;
   } catch (error) {
     console.error("Erreur lors de la requête :", error);

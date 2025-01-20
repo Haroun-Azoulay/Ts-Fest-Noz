@@ -98,7 +98,7 @@
     try {
       request.value.userId = userId;
   
-      const response = await ApiService.post('/post/add-post', request.value, {
+      const response = await ApiService.post('/add-post', request.value, {
         headers: {
           Authorization: `Bearer ${authToken.value}`,
         },
