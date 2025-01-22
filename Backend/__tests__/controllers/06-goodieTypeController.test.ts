@@ -45,16 +45,20 @@ const goodLoginAdmin = {
     pseudo: "admin"
 };
 const newGoodieType = {
-    name: "Chaussure"
+    name: "goodie_type_test"
 }
 const existGoodieType = new GoodieType({
     id: "5cbfa5dc-7999-4fb1-a443-33894fb56ccb",
-    name: "Chaussure"
+    name: "goodie_type_test"
+});
+const wrongGoodieType = new GoodieType({
+    id: "5cbfa5dc-7999-4fb1-a443-33894fb56ccc",
+    name: "Nothing"
 });
 
-describe("Test case for city controller", () => {
+describe("Test case for goodie type controller", () => {
     describe("1 - signin", () => {
-        it("1 - should signin admin and return 200", async () => {
+        it("1 - should signin user and return 200", async () => {
             jest.spyOn(User, 'findOne').mockResolvedValue(existUser);
             bcrypt.compare = jest.fn().mockResolvedValue(true);
             const req = httpMocks.createRequest({
@@ -120,7 +124,63 @@ describe("Test case for city controller", () => {
             expect(res.status).toHaveBeenCalledWith(500);
         });
     });
-    describe("3 - getAllgoodieType", () => {
+    describe("3 - getGoodieType", () => {
+        it("1 - should get goodie type and return 200", async () => {
+            (verifyToken as jest.Mock).mockImplementation(
+                (req: Request, res: Response, next: NextFunction) => {
+                    next();
+                }
+            );
+            jest.spyOn(GoodieType, 'findByPk').mockResolvedValue(existGoodieType);
+            const req = httpMocks.createRequest({
+                method: 'GET',
+                params: { goodieTypeId: existGoodieType.name },
+                headers: { Authorization: `Bearer ${tokenUser}` }
+            });
+            const res = httpMocks.createResponse();
+            res.status = jest.fn().mockReturnThis();
+            res.json = jest.fn();
+            await goodieTypeController.getGoodieType(req, res);
+            expect(res.status).toHaveBeenCalledWith(200);
+        });
+        it("2 - should return 404 if goodie type doesn't exist", async () => {
+            (verifyToken as jest.Mock).mockImplementation(
+                (req: Request, res: Response, next: NextFunction) => {
+                    next();
+                }
+            );
+            jest.spyOn(GoodieType, 'findByPk').mockResolvedValue(null);
+            const req = httpMocks.createRequest({
+                method: 'GET',
+                params: { goodieTypeId: wrongGoodieType.name },
+                headers: { Authorization: `Bearer ${tokenUser}` }
+            });
+            const res = httpMocks.createResponse();
+            res.status = jest.fn().mockReturnThis();
+            res.json = jest.fn();
+            await goodieTypeController.getGoodieType(req, res);
+            expect(res.status).toHaveBeenCalledWith(404);
+        });
+        it("3 - should return 500 if invalid request", async () => {
+            (verifyToken as jest.Mock).mockImplementation(
+                (req: Request, res: Response, next: NextFunction) => {
+                    next();
+                }
+            );
+            jest.spyOn(GoodieType, 'findByPk').mockRejectedValue(null);
+            const req = httpMocks.createRequest({
+                method: 'GET',
+                params: { goodieTypeId: "-" },
+                headers: { Authorization: `Bearer ${tokenUser}` }
+            });
+            const res = httpMocks.createResponse();
+            res.status = jest.fn().mockReturnThis();
+            res.json = jest.fn();
+            await goodieTypeController.getGoodieType(req, res);
+            expect(res.status).toHaveBeenCalledWith(500);
+        });
+    });
+    describe("4 - getAllgoodieType", () => {
         it("1 - should get all goodie types and return 200", async () => {
             (verifyToken as jest.Mock).mockImplementation(
                 (req: Request, res: Response, next: NextFunction) => {
@@ -155,7 +215,7 @@ describe("Test case for city controller", () => {
             expect(res.status).toHaveBeenCalledWith(500);
         });
     });
-    describe("4 - deleteGoodieType", () => {
+    describe("5 - deleteGoodieType", () => {
         it("1 - should delete goodie type and return 200", async () => {
             (verifyTokenAdmin as jest.Mock).mockImplementation(
                 (req: Request, res: Response, next: NextFunction) => {
@@ -165,6 +225,7 @@ describe("Test case for city controller", () => {
             jest.spyOn(GoodieType, 'findByPk').mockResolvedValue(existGoodieType);
             const req = httpMocks.createRequest({
                 method: 'GET',
+                params: { goodieTypeId: existGoodieType.id},
                 headers: { Authorization: `Bearer ${tokenAdmin}` }
             });
             const res = httpMocks.createResponse();
@@ -182,6 +243,7 @@ describe("Test case for city controller", () => {
             jest.spyOn(GoodieType, 'findByPk').mockResolvedValue(null);
             const req = httpMocks.createRequest({
                 method: 'GET',
+                params: { goodieTypeId: wrongGoodieType.id},
                 headers: { Authorization: `Bearer ${tokenAdmin}` }
             });
             const res = httpMocks.createResponse();

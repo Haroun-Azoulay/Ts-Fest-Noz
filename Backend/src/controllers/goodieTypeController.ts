@@ -20,6 +20,24 @@ const addgoodieType = async (
   }
 };
 
+const getGoodieType = async (
+  req: Request,
+  res: Response,
+): Promise<Response<any, Record<string, any>>> => {
+  try {
+    const goodieTypeId : string = req.params.goodieTypeId;
+    const goodieType : GoodieTypeModel | null = await GoodieTypeModel.findByPk(goodieTypeId);
+    if (!goodieType) {
+      return res.status(404).json({ message: "Goodie Type doesn't exist."});
+    }
+    return res.status(200).json(goodieType);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Error retrieving goodie type" });
+  }
+};
+
+
 const getAllgoodieType = async (
   req: Request,
   res: Response,
@@ -54,6 +72,7 @@ const deletegoodieType = async (
 
 export default {
   addgoodieType,
+  getGoodieType,
   getAllgoodieType,
   deletegoodieType,
 };

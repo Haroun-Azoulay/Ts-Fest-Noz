@@ -45,6 +45,16 @@ const existUser = new User({
   city: "Paris",
   role: "user",
 });
+const unknownUser = new User({
+    id: "6cbfa5dc-7999-4fb1-a443-33894fb52ccb",
+    lastname: "unknown",
+    firstname: "unknown",
+    email: "unknown@example.com",
+    password: bcrypt.hash("unknown", 10),
+    pseudo: "unknown",
+    city: "Paris",
+    role: "user"
+});
 const existAdmin = new User({
   id: "5cbfa5dc-7999-4fb1-a443-33894fb52ccc",
   lastname: "admin",
@@ -257,7 +267,7 @@ describe("Test case for user controller", () => {
             const req = httpMocks.createRequest({
                 method: 'DELETE',
                 headers: { Authorization: `Bearer ${tokenAdmin}` },
-                params: { pseudo: "bechari" }
+                params: { userId: existUser.id }
             });
             const res = httpMocks.createResponse();
             res.status = jest.fn().mockReturnThis();
@@ -272,9 +282,7 @@ describe("Test case for user controller", () => {
             const req = httpMocks.createRequest({
                 method: 'DELETE',
                 headers: { Authorization: `Bearer ${tokenAdmin}` },
-                params: {
-                    pseudo: "user_not_exist"
-                }
+                params: { id: unknownUser.id}
             });
             const res = httpMocks.createResponse();
             res.status = jest.fn().mockReturnThis();
@@ -290,9 +298,7 @@ describe("Test case for user controller", () => {
             const req = httpMocks.createRequest({
                 method: 'DELETE',
                 headers: { Authorization: `Bearer ${tokenAdmin}` },
-                params: {
-                    pseudo: "bechari"
-                }
+                params: { id: existUser.id }
             });
             const res = httpMocks.createResponse();
             res.status = jest.fn().mockReturnThis();

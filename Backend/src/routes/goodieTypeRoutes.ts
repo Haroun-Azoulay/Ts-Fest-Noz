@@ -6,6 +6,12 @@ import verifyTokenAdmin from "../middlewares/verifyTokenAdmin";
 const router: Router = express.Router();
 
 router.get(
+  "/get-goodie-type/:goodieTypeId",
+  verifyToken,
+  goodieTypeController.getGoodieType
+);
+
+router.get(
   "/get-all-types",
   verifyToken,
   goodieTypeController.getAllgoodieType,

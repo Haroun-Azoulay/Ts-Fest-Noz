@@ -13,7 +13,7 @@ router.get("/my-user", verifyToken, userController.getUserInfo);
 
 router.get("/get-all-users", verifyToken, userController.getAllUsers);
 
-router.delete("/delete-user/:pseudo", verifyTokenAdmin, userController.deleteUser);
+router.delete("/delete-user/:userId", verifyTokenAdmin, userController.deleteUser);
 
 export default router;
 
