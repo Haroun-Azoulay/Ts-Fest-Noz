@@ -20,12 +20,12 @@ const verifyTokenAdmin = (
       return res.status(401).json({ message: "Invalid token" });
     }
     const decodedToken = decoded as JwtPayload;
-    const roleToken = decodedToken.role;
-    if (roleToken === "admin") {
-      next();
-    } else {
+    req.userId = decodedToken.userId;
+    req.role = decodedToken.role;
+    if (req.role !== "admin") {
       return res.status(403).json({ message: "You are not Admin." });
     }
+    next();
   });
 };
 

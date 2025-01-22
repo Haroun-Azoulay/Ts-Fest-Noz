@@ -7,8 +7,6 @@ import verifyToken from "../../src/middlewares/verifyToken";
 import verifyTokenAdmin from "../../src/middlewares/verifyTokenAdmin";
 const bcrypt = require("bcrypt");
 
-jest.mock("../../src/middlewares/verifyToken");
-jest.mock("../../src/middlewares/verifyTokenAdmin");
 jest.mock("../../src/models/User");
 jest.mock("bcrypt");
 
@@ -202,11 +200,6 @@ describe("Test case for user controller", () => {
     });
     describe("3 - getAllUsers", () => {
         it("1 - should get all users and return 200", async () => {
-            (verifyToken as jest.Mock).mockImplementation(
-                (req: Request, res: Response, next: NextFunction) => {
-                    next();
-                }
-            );
             const req = httpMocks.createRequest({
                 method: 'GET',
                 headers: { Authorization: `Bearer ${tokenUser}` }
@@ -214,15 +207,12 @@ describe("Test case for user controller", () => {
             const res = httpMocks.createResponse();
             res.status = jest.fn().mockReturnThis();
             res.json = jest.fn();
+            const next = jest.fn() as unknown as NextFunction;
+            verifyToken(req, res, next);
             await userController.getAllUsers(req, res);
             expect(res.status).toHaveBeenCalledWith(200);
         });
         it("2 - should return 401 if invalid user token", async () => {
-            (verifyToken as jest.Mock).mockImplementation(
-                (req: Request, res: Response, next: NextFunction) => {
-                    return res.status(401).json({ message: "Invalid token" });
-                }
-            );
             const req = httpMocks.createRequest({
                 method: 'GET',
                 headers: { Authorization: `Bearer qgjpoqhjoprhjpqokg` }
@@ -230,16 +220,12 @@ describe("Test case for user controller", () => {
             const res = httpMocks.createResponse();
             res.status = jest.fn().mockReturnThis();
             res.json = jest.fn();
-            verifyToken(req, res, () => {});
+            const next = jest.fn() as unknown as NextFunction;
+            verifyToken(req, res, next);
             await userController.getAllUsers(req, res);
             expect(res.status).toHaveBeenCalledWith(401);
         });
         it("3 - should return 401 if user token missing", async () => {
-            (verifyToken as jest.Mock).mockImplementation(
-                (req: Request, res: Response, next: NextFunction) => {
-                    return res.status(401).json({ message: "Authentication is required" });
-                }
-            );
             const req = httpMocks.createRequest({
                 method: 'GET',
                 headers: { Authorization: `Bearer ` }
@@ -247,50 +233,117 @@ describe("Test case for user controller", () => {
             const res = httpMocks.createResponse();
             res.status = jest.fn().mockReturnThis();
             res.json = jest.fn();
-            verifyToken(req, res, () => {});
+            const next = jest.fn() as unknown as NextFunction;
+            verifyToken(req, res, next);
             await userController.getAllUsers(req, res);
             expect(res.status).toHaveBeenCalledWith(401);
         });
         it("4 - should return 401 if header missing", async () => {
-            (verifyToken as jest.Mock).mockImplementation(
-                (req: Request, res: Response, next: NextFunction) => {
-                    return res.status(401).json({ message: "Authentication is required" });
-                }
-            );
             const req = httpMocks.createRequest({
                 method: 'GET'
             });
             const res = httpMocks.createResponse();
             res.status = jest.fn().mockReturnThis();
             res.json = jest.fn();
-            verifyToken(req, res, () => {});
+            const next = jest.fn() as unknown as NextFunction;
+            verifyToken(req, res, next);
             await userController.getAllUsers(req, res);
             expect(res.status).toHaveBeenCalledWith(401);
         });
     });
-  });
-  describe("2 - signin", () => {
-    it("1 - should signin and return 200", async () => {
-      jest.spyOn(User, "findOne").mockResolvedValue(existUser);
-      bcrypt.compare = jest.fn().mockResolvedValue(true);
-      const req = httpMocks.createRequest({
-        method: "POST",
-        body: goodLogin,
-      });
-      const res = httpMocks.createResponse();
-      res.status = jest.fn().mockReturnThis();
-      res.json = jest.fn();
-      await userController.signin(req, res);
-      tokenUser = (res.json as jest.Mock).mock.calls[0][0].token;
-      expect(res.status).toHaveBeenCalledWith(200);
+    describe("4 - deleteUser", () => {
+        it("1 - should delete user and return 200", async () => {
+            jest.spyOn(User, 'findOne').mockResolvedValue(existUser);
+            const req = httpMocks.createRequest({
+                method: 'DELETE',
+                headers: { Authorization: `Bearer ${tokenAdmin}` },
+                params: { pseudo: "bechari" }
+            });
+            const res = httpMocks.createResponse();
+            res.status = jest.fn().mockReturnThis();
+            res.json = jest.fn();
+            const next = jest.fn() as unknown as NextFunction;
+            verifyTokenAdmin(req, res, next);
+            await userController.deleteUser(req, res);
+            expect(res.status).toHaveBeenCalledWith(200);
+        });
+        it("2 - should return 401 if user doesn't exist", async () => {
+            jest.spyOn(User, 'findOne').mockResolvedValue(null);
+            const req = httpMocks.createRequest({
+                method: 'DELETE',
+                headers: { Authorization: `Bearer ${tokenAdmin}` },
+                params: {
+                    pseudo: "user_not_exist"
+                }
+            });
+            const res = httpMocks.createResponse();
+            res.status = jest.fn().mockReturnThis();
+            res.json = jest.fn();
+            const next = jest.fn() as unknown as NextFunction;
+            verifyTokenAdmin(req, res, next);
+            await userController.deleteUser(req, res);
+            expect(res.status).toHaveBeenCalledWith(401);
+        });
+        it("3 - should return 500 if user is linked to other tables data", async () => {
+            jest.spyOn(User, 'findOne').mockResolvedValue(existUser);
+            jest.spyOn(existUser, 'destroy').mockRejectedValue(new Error("Unable to delete user."));
+            const req = httpMocks.createRequest({
+                method: 'DELETE',
+                headers: { Authorization: `Bearer ${tokenAdmin}` },
+                params: {
+                    pseudo: "bechari"
+                }
+            });
+            const res = httpMocks.createResponse();
+            res.status = jest.fn().mockReturnThis();
+            res.json = jest.fn();
+            const next = jest.fn() as unknown as NextFunction;
+            verifyTokenAdmin(req, res, next);
+            await userController.deleteUser(req, res);
+            expect(res.status).toHaveBeenCalledWith(500);
+        });
+        it("4 - should return 401 if invalid token admin", async () => {
+            const req = httpMocks.createRequest({
+                method: 'GET',
+                headers: { Authorization: `Bearer qgjpoqhjoprhjpqokg` }
+            });
+            const res = httpMocks.createResponse();
+            res.status = jest.fn().mockReturnThis();
+            res.json = jest.fn();
+            const next = jest.fn() as unknown as NextFunction;
+            verifyTokenAdmin(req, res, next);
+            await userController.deleteUser(req, res);
+            expect(res.status).toHaveBeenCalledWith(401);
+        });
+        it("5 - should return 401 if token missing admin", async () => {
+            const req = httpMocks.createRequest({
+                method: 'GET',
+                headers: { Authorization: `Bearer ` }
+            });
+            const res = httpMocks.createResponse();
+            res.status = jest.fn().mockReturnThis();
+            res.json = jest.fn();
+            const next = jest.fn() as unknown as NextFunction;
+            verifyTokenAdmin(req, res, next);
+            await userController.deleteUser(req, res);
+            expect(res.status).toHaveBeenCalledWith(401);
+        });
+        it("6 - should return 403 if user not admin", async () => {
+            const req = httpMocks.createRequest({
+                method: 'GET',
+                headers: { Authorization: `Bearer ${tokenUser}` }
+            });
+            const res = httpMocks.createResponse();
+            res.status = jest.fn().mockReturnThis();
+            res.json = jest.fn();
+            const next = jest.fn() as unknown as NextFunction;
+            verifyTokenAdmin(req, res, next);
+            await userController.deleteUser(req, res);
+            expect(res.status).toHaveBeenCalledWith(403);
+        });
     });
     describe("5 - updateUserRole", () => {
         it("1 - should update user and return 200", async () => {
-            (verifyTokenAdmin as jest.Mock).mockImplementation(
-                (req: Request, res: Response, next: NextFunction) => {
-                    next();
-                }
-            );
             jest.spyOn(User, 'findByPk').mockResolvedValue(existUser);
             jest.spyOn(existUser, 'update').mockResolvedValue(updatedUser);
             const req = httpMocks.createRequest({
@@ -301,16 +354,12 @@ describe("Test case for user controller", () => {
             const res = httpMocks.createResponse();
             res.status = jest.fn().mockReturnThis();
             res.json = jest.fn();
-            verifyTokenAdmin(req, res, () => {});
+            const next = jest.fn() as unknown as NextFunction;
+            verifyTokenAdmin(req, res, next);
             await userController.updateUserRole(req, res);
             expect(res.status).toHaveBeenCalledWith(200);
         });
         it("2 - should return 500 if user not found", async () => {
-            (verifyTokenAdmin as jest.Mock).mockImplementation(
-                (req: Request, res: Response, next: NextFunction) => {
-                    next();
-                }
-            );
             jest.spyOn(User, 'findByPk').mockResolvedValue(null);
             jest.spyOn(existUser, 'update').mockResolvedValue(updatedUser);
             const req = httpMocks.createRequest({
@@ -321,16 +370,12 @@ describe("Test case for user controller", () => {
             const res = httpMocks.createResponse();
             res.status = jest.fn().mockReturnThis();
             res.json = jest.fn();
-            verifyTokenAdmin(req, res, () => {});
+            const next = jest.fn() as unknown as NextFunction;
+            verifyTokenAdmin(req, res, next);
             await userController.updateUserRole(req, res);
             expect(res.status).toHaveBeenCalledWith(500);
         });
         it("3 - should return 400 if invalid request", async () => {
-            (verifyTokenAdmin as jest.Mock).mockImplementation(
-                (req: Request, res: Response, next: NextFunction) => {
-                    next();
-                }
-            );
             const req = httpMocks.createRequest({
                 method: 'PUT',
                 params: { userId: existUser.id }
@@ -338,16 +383,12 @@ describe("Test case for user controller", () => {
             const res = httpMocks.createResponse();
             res.status = jest.fn().mockReturnThis();
             res.json = jest.fn();
-            verifyTokenAdmin(req, res, () => {});
+            const next = jest.fn() as unknown as NextFunction;
+            verifyTokenAdmin(req, res, next);
             await userController.updateUserRole(req, res);
             expect(res.status).toHaveBeenCalledWith(400);
         });
         it("4 - should return 403 if attempt for admin role", async () => {
-            (verifyTokenAdmin as jest.Mock).mockImplementation(
-                (req: Request, res: Response, next: NextFunction) => {
-                    next();
-                }
-            );
             jest.spyOn(User, 'findByPk').mockResolvedValue(existUser);
             jest.spyOn(existUser, 'update').mockResolvedValue(updatedUser);
             const req = httpMocks.createRequest({
@@ -358,16 +399,12 @@ describe("Test case for user controller", () => {
             const res = httpMocks.createResponse();
             res.status = jest.fn().mockReturnThis();
             res.json = jest.fn();
-            verifyTokenAdmin(req, res, () => {});
+            const next = jest.fn() as unknown as NextFunction;
+            verifyTokenAdmin(req, res, next);
             await userController.updateUserRole(req, res);
             expect(res.status).toHaveBeenCalledWith(403);
         });
         it("5 - should return 500 if something went wrong", async () => {
-            (verifyTokenAdmin as jest.Mock).mockImplementation(
-                (req: Request, res: Response, next: NextFunction) => {
-                    next();
-                }
-            );
             jest.spyOn(User, 'findByPk').mockRejectedValue(null);
             const req = httpMocks.createRequest({
                 method: 'PUT',
@@ -376,7 +413,8 @@ describe("Test case for user controller", () => {
             const res = httpMocks.createResponse();
             res.status = jest.fn().mockReturnThis();
             res.json = jest.fn();
-            verifyTokenAdmin(req, res, () => {});
+            const next = jest.fn() as unknown as NextFunction;
+            verifyTokenAdmin(req, res, next);
             await userController.updateUserRole(req, res);
             expect(res.status).toHaveBeenCalledWith(500);
         });

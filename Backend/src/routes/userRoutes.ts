@@ -1,6 +1,7 @@
 import express, { Router } from "express";
 import userController from "../controllers/userController";
 import verifyToken from "../middlewares/verifyToken";
+import verifyTokenAdmin from "../middlewares/verifyTokenAdmin";
 
 const router: Router = express.Router();
 
@@ -12,7 +13,7 @@ router.get("/my-user", verifyToken, userController.getUserInfo);
 
 router.get("/get-all-users", verifyToken, userController.getAllUsers);
 
-router.delete("/delete-user/:pseudo", verifyToken, userController.deleteUser);
+router.delete("/delete-user/:pseudo", verifyTokenAdmin, userController.deleteUser);
 
 export default router;
 
