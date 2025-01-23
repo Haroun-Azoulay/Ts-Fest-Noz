@@ -6,14 +6,16 @@ signinpage.vue:
   <div class="flex flex-col justify-center items-center min-h-screen bg-gray-100">
     <div
       class="bg-white shadow-md flex flex-col justify-center items-center gap-1"
-      style="height: 58.5rem"
+      style="height: 100%"
     >
       <a href="/" class="flex items-center justify-center mb-8">
         <img src="../../assets/images/logo.png" style="height: 200px" />
       </a>
       <div class="font-semibold mb-8 text-2xl">Connexion</div>
       <div class="w-96 h-24 px-2.5 pt-2.5 flex-col justify-start items-start gap-1 flex mb-8">
-        <label class="w-96 px-2 text-gray-800 text-sm font-medium leading-tight">Votre Pseudo</label>
+        <label class="w-96 px-2 text-gray-800 text-sm font-medium leading-tight"
+          >Votre Pseudo</label
+        >
         <input
           class="self-stretch h-11 p-4 bg-white rounded-lg border border-neutral-400 text-sm leading-tight bg-slate-50"
           placeholder="Saisissez votre pseudo"
@@ -21,9 +23,11 @@ signinpage.vue:
         />
       </div>
       <div class="w-96 h-24 px-2.5 pb-2.5 flex-col justify-start items-start gap-2.5 flex">
-        <label class="w-96 px-2 text-gray-800 text-sm font-medium leading-tight">Mot de passe</label>
+        <label class="w-96 px-2 text-gray-800 text-sm font-medium leading-tight"
+          >Mot de passe</label
+        >
         <input
-          class="self-stretch h-11 p-4 bg-white rounded-lg border border-neutral-400 text-sm leading-tight bg-slate-50"
+          class="self-stretch h-11 p-2 bg-white rounded-lg border border-neutral-400 text-sm leading-tight bg-slate-50"
           id="password"
           type="password"
           placeholder="********"
@@ -41,7 +45,7 @@ signinpage.vue:
       >
         <span class="text-white text-base font-bold">Connexion</span>
       </button>
-      <div class="flex justify-center items-center gap-2.5">
+      <div class="flex justify-center items-center gap-2">
         <span class="text-slate-900 font-semibold">Nouveau venu ?</span>
         <a href="/signup" class="text-violet-600 font-semibold">Inscrivez vous !</a>
       </div>
@@ -55,19 +59,20 @@ import type { Signin } from '../../../models/authentification'
 import ApiService from '@/services/ApiService'
 import { ref, computed } from 'vue'
 import ModalConfirm from '../../components/pModal/ModalConfirm.vue'
+import axios from 'axios';
+
 
 const show = ref(false)
 const errorMessage = ref('')
-
 const confirm = () => {
   show.value = false
 }
 
 const router = useRouter()
 
- const request = ref<Signin>({
+const request = ref<Signin>({
   pseudo: '',
-  password: '',
+  password: ''
 })
 
 const isButtonDisabled = computed(() => {
@@ -92,6 +97,10 @@ const signin = async () => {
     }
   }
 }
+
+
+
+
 </script>
 
 <style>

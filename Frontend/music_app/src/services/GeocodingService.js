@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const BASE_URL = 'https://api.mapbox.com/geocoding/v5/mapbox.places/';
-const ACCESS_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN; 
+const ACCESS_TOKEN = "pk.eyJ1IjoiYmVjaGFyaTkzIiwiYSI6ImNtNjgwYTgwdzA4em0ycnFyczM2bXR2ZXgifQ.NNk_nOdxatVzztXUH1yIKA";
 const parsePlaceName = (placeName) => {
 
   const streetRegex = /^(\d+)/;

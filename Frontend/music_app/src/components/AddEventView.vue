@@ -229,7 +229,8 @@ const updateMap = (coordinates) => {
 };
 
 onMounted(() => {
-  const token: string = import.meta.env.VITE_MAPBOX_TOKEN;
+  const token: string = "pk.eyJ1IjoiYmVjaGFyaTkzIiwiYSI6ImNtNjgwYTgwdzA4em0ycnFyczM2bXR2ZXgifQ.NNk_nOdxatVzztXUH1yIKA";
+
   mapboxgl.accessToken = token;
 
 });

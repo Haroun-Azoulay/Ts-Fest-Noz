@@ -3,7 +3,7 @@
       <div class="flex gap-16">
             <SignupPage></SignupPage>
             <div class="flex items-center justify-center">
-                <img class="object-contain rounded-full w-full max-md:hidden" src="../assets/images/authentification-image.avif" style="width: 100%">
+             <img class="object-contain rounded-full w-full max-md:hidden" src="../assets/images/authentification-image.avif" style="width: 100%">
             </div>
         </div>
     </div>

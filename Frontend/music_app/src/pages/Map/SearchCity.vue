@@ -33,7 +33,7 @@ searchcity.vue : <template>
           <div class="card-body">
             <h5 class="card-title text-black">{{ city.name }}</h5>
             <p class="card-text text-black">{{ city.description }}</p>
-            <a :href="`/event/${city.id}`" class="btn btn-primary">Détails</a>
+            <a :href="`/${city.id}`" class="btn btn-primary">Détails</a>
           </div>
         </div>
       </div>
@@ -71,7 +71,7 @@ const handleInput = async () => {
 const geocodeAndSubmit = async () => {
   try {
     const authToken = localStorage.getItem('authToken');
-    const response = await ApiService.get(`/event/get-event-city/${geocoding_city.value}`, {
+    const response = await ApiService.get(`/get-event-city/${geocoding_city.value}`, {
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
@@ -98,7 +98,8 @@ const fetchCities = async (query: any) => {
 };
 
 onMounted(() => {
-  mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
+  // mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
+  mapboxgl.accessToken = "pk.eyJ1IjoiYmVjaGFyaTkzIiwiYSI6ImNtNjgwYTgwdzA4em0ycnFyczM2bXR2ZXgifQ.NNk_nOdxatVzztXUH1yIKA";
 });
 
 </script>

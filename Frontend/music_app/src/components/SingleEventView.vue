@@ -84,7 +84,7 @@ onMounted(async () => {
 
   if (eventId) {
     try {
-      const response = await ApiService.get(`/event/get-event/${eventId}`);
+      const response = await ApiService.get(`/get-event/${eventId}`);
       event.value = response.data;
     } catch (error) {
       console.error("Erreur lors de la requête :", error);
@@ -108,7 +108,7 @@ const goToPaymentPage = async () => {
     };
 
     const eventId = route.params.id;
-    const response = await ApiService.post(`/event/get-event/${event.value?.id}/payment`, QRCODE, config);
+    const response = await ApiService.post(`/get-event/${event.value?.id}/payment`, QRCODE, config);
     const token = response.data.token;
     localStorage.setItem('QRCODE', token);
     console.log("ca marche");

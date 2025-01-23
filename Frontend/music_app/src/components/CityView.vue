@@ -142,7 +142,7 @@ const filterPointsByDate = () => {
 };
 
 const createMap = () => {
-  const token: string = import.meta.env.VITE_MAPBOX_TOKEN;
+  const token: string = "pk.eyJ1IjoiYmVjaGFyaTkzIiwiYSI6ImNtNjgwYTgwdzA4em0ycnFyczM2bXR2ZXgifQ.NNk_nOdxatVzztXUH1yIKA";
   console.log(token);
   mapboxgl.accessToken = token;
   map = new mapboxgl.Map({
@@ -205,7 +205,7 @@ const handleChangeAllPoints = async () => {
   };
 
   try {
-    const response = await ApiService.get("/city/get-all-points", config);
+    const response = await ApiService.get("/get-all-points", config);
     points.value = response.data;
     addMarkers();
   } catch (error) {
@@ -229,7 +229,7 @@ window.deletePoint = async (pointId: number) => {
       },
     };
 
-    await ApiService.delete(`/city/delete-point/${pointId}`, config);
+    await ApiService.delete(`/delete-point/${pointId}`, config);
     successMessage.value = "Le point a bien été supprimé";
     showSuccess.value = true;
     handleChangeAllPoints(); 
@@ -283,7 +283,7 @@ const handleChangeMyPoints = async () => {
   };
 
   try {
-    const response = await ApiService.get(`/city/get-point/${userId}`, config);
+    const response = await ApiService.get(`/get-point/${userId}`, config);
     points.value = response.data;
     addMarkers();
   } catch (error) {

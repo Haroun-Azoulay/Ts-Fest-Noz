@@ -109,7 +109,7 @@ onMounted(async () => {
   };
 
   try {
-    const response = await ApiService.get("/admin/all-users", config);
+    const response = await ApiService.get("/all-users", config);
     users.value = response.data;
   } catch (error) {
     console.error("Erreur lors de la requête :", error);

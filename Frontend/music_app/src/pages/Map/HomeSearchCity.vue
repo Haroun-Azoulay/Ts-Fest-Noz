@@ -6,7 +6,7 @@ homesearchcity.vue : <template>
           <div class="card-body">
             <h5 class="card-title text-black">{{ city.name }}</h5>
             <p class="card-text text-black">{{ city.description }}</p>
-            <a :href="`/event/${city.id}`" class="btn btn-primary">Détails</a>
+            <a :href="`/${city.id}`" class="btn btn-primary">Détails</a>
           </div>
         </div>
       </div>
@@ -27,16 +27,16 @@ const result = ref(null);
 const emit = defineEmits(['geocodeResult']);
 
 onMounted(async () => {
-  mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
+  mapboxgl.accessToken = "pk.eyJ1IjoiYmVjaGFyaTkzIiwiYSI6ImNtNjgwYTgwdzA4em0ycnFyczM2bXR2ZXgifQ.NNk_nOdxatVzztXUH1yIKA";
   try {
     const authToken = localStorage.getItem('authToken');
-    const getUser = await ApiService.get(`/users/my-user`, {
+    const getUser = await ApiService.get(`/my-user`, {
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
     });
     const user : User = getUser.data;
-    const response = await ApiService.get(`/city/get-city-points/${user.city}`, {
+    const response = await ApiService.get(`/get-city-points/${user.city}`, {
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
