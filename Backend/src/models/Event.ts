@@ -23,7 +23,7 @@ Event.init(
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
     },
     city_id: {
       type: DataTypes.UUID,

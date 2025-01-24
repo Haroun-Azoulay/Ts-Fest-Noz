@@ -10,23 +10,19 @@ const addEvent = async (
   res: Response,
 ): Promise<Response<any, Record<string, any>>> => {
   try {
-    console.log("addEvent - req.body:", req.body);
-
     const event: EventModel = await EventModel.create({
       ...req.body,
     });
 
-    const formattedEvent: EventAttributes = {
+    return res.status(201).json({
       id: event.id,
       name: event.name,
       city_id: event.city_id,
       user_id: event.user_id,
       description: event.description,
       url: event.url,
-      mapId: event.mapId,
-    };
-
-    return res.status(201).json(formattedEvent);
+      mapId: event.mapId
+    });
   } catch (error) {
     console.error("Error adding an event:", error);
     return res.status(500).send("Error adding event");
@@ -49,7 +45,7 @@ const getEventsByCity = async (
       });
       eventsByCityName!.push(event!);
     }
-    return res.json(eventsByCityName);
+    return res.status(200).json(eventsByCityName);
   } catch (error) {
     return res.status(500).json({ message: "Error retrieving events by city" });
   }
@@ -61,17 +57,13 @@ const getEventById = async (
 ): Promise<Response<any, Record<string, any>>> => {
   try {
     const eventId: string = req.params.id;
-    console.log("getEventById - eventId:", eventId);
-
     const event: EventModel | null = await EventModel.findByPk(eventId, {
       attributes: ["id", "name", "description"],
     });
-
     if (event) {
-      return res.json(event);
-    } else {
-      return res.status(404).json({ message: "Event non trouvé" });
+      return res.status(200).json(event);
     }
+    return res.status(404).json({ message: "Event non trouvé" });
   } catch (error) {
     console.error("Error retrieving event by ID", error);
     return res.status(500).json({ message: "Error retrieving event by ID" });
@@ -84,7 +76,7 @@ const getAllEvents = async (
 ): Promise<Response<any, Record<string, any>>> => {
   try {
     const events: EventModel[] = await EventModel.findAll();
-    return res.json(events);
+    return res.status(200).json(events);
   } catch (error) {
     console.error("Error retrieving events", error);
     return res.status(500).json({ message: "Error retrieving events" });
@@ -96,6 +88,7 @@ const addPayment = async (
   res: Response,
 ): Promise<Response<any, Record<string, any>>> => {
   try {
+<<<<<<< HEAD
     const userId: string | undefined = req.userId;
     const eventId: string | undefined = req.params.id;
 
@@ -106,6 +99,10 @@ const addPayment = async (
       return res.status(400).json({ error: "eventId est requis" });
     }
 
+=======
+    const userId: string = req.userId!;
+    const eventId: string = req.params.id;
+>>>>>>> cc7f5544 (Unit Tests of Event 90% Overall Result coverage)
     console.log(
       "📌 addPayment - userId:",
       userId,
@@ -114,12 +111,11 @@ const addPayment = async (
       "req.body:",
       req.body,
     );
-
     const token: string = jwt.sign({ userId: userId }, "RANDOM_SECRET_KEY", {
       expiresIn: "24h",
     });
-
     const payment: PaymentModel = await PaymentModel.create({
+<<<<<<< HEAD
       ...req.body,
       userId,
       eventId,
@@ -127,15 +123,27 @@ const addPayment = async (
     });
 
     const formattedPayment: PaymentAttributes = {
+=======
+      token: token,
+      payment: req.body.payment,
+      userId: userId,
+      eventId: eventId
+    });
+    return res.status(201).json({
+>>>>>>> cc7f5544 (Unit Tests of Event 90% Overall Result coverage)
       id: payment.id,
       payment: payment.payment,
       token: token,
       eventId: eventId,
+<<<<<<< HEAD
       userId: userId,
     };
 
     console.log("✅ addPayment - formattedPayment:", formattedPayment);
     return res.status(201).json(formattedPayment);
+=======
+    });
+>>>>>>> cc7f5544 (Unit Tests of Event 90% Overall Result coverage)
   } catch (error) {
     console.error("❌ Error adding a payment:", error);
     return res.status(500).send("Error adding a payment");
@@ -159,10 +167,9 @@ const getPaymentById = async (
     });
 
     if (payment) {
-      return res.json(payment);
-    } else {
-      return res.status(404).json({ message: "Payment not found" });
+      return res.status(200).json(payment);
     }
+    return res.status(404).json({ message: "Payment not found" });
   } catch (error) {
     console.error("Error retrieving payment by ID", error);
     return res.status(500).json({ message: "Error retrieving payment by ID" });

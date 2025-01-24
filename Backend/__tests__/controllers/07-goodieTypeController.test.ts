@@ -48,11 +48,11 @@ const newGoodieType = {
     name: "goodie_type_test"
 }
 const existGoodieType = new GoodieType({
-    id: "5cbfa5dc-7999-4fb1-a443-33894fb56ccb",
+    id: "5cbfa5dc-7999-4fb1-a443-33894fb57ccb",
     name: "goodie_type_test"
 });
 const wrongGoodieType = new GoodieType({
-    id: "5cbfa5dc-7999-4fb1-a443-33894fb56ccc",
+    id: "5cbfa5dc-7999-4fb1-a443-33894fb57ccc",
     name: "Nothing"
 });
 

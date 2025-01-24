@@ -12,16 +12,6 @@ jest.mock('bcrypt');
 
 let tokenOrganizer: string;
 
-const existOrganizer = new User({
-    id: "5cbfa5dc-7999-4fb1-a443-33894fb52ccc",
-    lastname: "organizer",
-    firstname: "organizer",
-    email: "organizer@example.com",
-    password: bcrypt.hash("organizer", 10),
-    pseudo: "organizer",
-    city: "Paris",
-    role: "organizer"
-});
 const existPoint = new City({
     id: "5cbfa5dc-7999-4fb1-a443-33894fb55ccb",
     userId: "5cbfa5dc-7999-4fb1-a443-33894fb52ccc",
@@ -39,10 +29,6 @@ const existPoint = new City({
     region_name: "Île-de-France",
     url_point: ""
 });
-const goodLoginOrganizer = {
-    password: "organizer",
-    pseudo: "organizer"
-};
 const newPoint = {
     longitude: 1,
     latitude: 1,
@@ -58,6 +44,20 @@ const newPoint = {
     region_name: "Île-de-France",
     url_point: "",
 }
+const existOrganizer = new User({
+    id: "5cbfa5dc-7999-4fb1-a443-33894fb52ccc",
+    lastname: "organizer",
+    firstname: "organizer",
+    email: "organizer@example.com",
+    password: bcrypt.hash("organizer", 10),
+    pseudo: "organizer",
+    city: "Paris",
+    role: "organizer"
+});
+const goodLoginOrganizer = {
+    password: "organizer",
+    pseudo: "organizer"
+};
 
 describe("Test case for city controller", () => {
     describe("1 - signin", () => {

@@ -70,8 +70,8 @@ Event.belongsTo(City, { foreignKey: "city_id" });
 Event.hasMany(Payment, { foreignKey: "event_id" });
 Payment.belongsTo(Event, { foreignKey: "event_id" });
 
-User.hasMany(Event, { foreignKey: "userId" });
-Event.belongsTo(User, { foreignKey: "userId" });
+User.hasMany(Event, { foreignKey: "user_id" });
+Event.belongsTo(User, { foreignKey: "user_id" });
 
 User.hasOne(ArtistProfil, {
   foreignKey: "userId",
