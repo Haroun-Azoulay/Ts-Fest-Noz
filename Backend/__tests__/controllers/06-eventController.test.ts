@@ -7,6 +7,7 @@ import { Request, Response, NextFunction } from 'express';
 import userController from "../../src/controllers/userController";
 import eventController from "../../src/controllers/eventController";
 import verifyToken from "../../src/middlewares/verifyToken";
+import jwt from 'jsonwebtoken';
 const bcrypt = require("bcrypt");
 
 jest.mock("../../src/middlewares/verifyToken");
@@ -14,6 +15,7 @@ jest.mock("../../src/middlewares/isAuthorizedPost");
 jest.mock("../../src/models/Event");
 jest.mock("../../src/models/Payment");
 jest.mock('bcrypt');
+jest.mock("jsonwebtoken");
 
 let tokenUser: string;
 let tokenOrganizer: string;
@@ -362,7 +364,25 @@ describe("Test case for event controller", () => {
             await eventController.getPaymentById(req, res);
             expect(res.status).toHaveBeenCalledWith(200);
         });
-        it("2 - should return 500 if invalid id", async () => {
+        it("2 - should not get payment by id and return 404", async () => {
+            jest.spyOn(Payment, 'findOne').mockResolvedValue(null);
+            (verifyToken as jest.Mock).mockImplementation(
+                (req: Request, res: Response, next: NextFunction) => {
+                    next();
+                }
+            );
+            const req = httpMocks.createRequest({
+                method: 'POST',
+                params: { eventId: existEvent.id, paymentId: existPayment.id },
+                headers: { Authorization: `Bearer ${tokenUser}` }
+            });
+            const res = httpMocks.createResponse();
+            res.status = jest.fn().mockReturnThis();
+            res.json = jest.fn();
+            await eventController.getPaymentById(req, res);
+            expect(res.status).toHaveBeenCalledWith(404);
+        });
+        it("3 - should return 500 if invalid id", async () => {
             jest.spyOn(Payment, 'findOne').mockRejectedValue(null);
             (verifyToken as jest.Mock).mockImplementation(
                 (req: Request, res: Response, next: NextFunction) => {
@@ -378,6 +398,110 @@ describe("Test case for event controller", () => {
             res.status = jest.fn().mockReturnThis();
             res.json = jest.fn();
             await eventController.getPaymentById(req, res);
+            expect(res.status).toHaveBeenCalledWith(500);
+        });
+    });
+    describe("8 - verifyTokenOAUTH", () => {
+        it("1 - should generate a new token and return 200", async () => {
+            jest.spyOn(Payment, 'findOne').mockResolvedValue(existPayment);
+            const req = httpMocks.createRequest({
+                method: 'POST',
+                body: { token: "ngdAXMejlnEqMYovrFjR" }
+            });
+            const res = httpMocks.createResponse();
+            res.status = jest.fn().mockReturnThis();
+            res.json = jest.fn();
+            (jwt.verify as jest.Mock).mockReturnValue(
+                res.status(201).json({ message: "Valid token", data: "" })
+            );
+            await eventController.verifyTokenOAUTH(req, res);
+            expect(res.status).toHaveBeenCalledWith(201);
+        });
+        it("2 - should return 401 if invalid token", async () => {
+            jest.spyOn(Payment, 'findOne').mockResolvedValue(existPayment);
+            const req = httpMocks.createRequest({
+                method: 'POST',
+                body: { token: "----------" }
+            });
+            const res = httpMocks.createResponse();
+            res.status = jest.fn().mockReturnThis();
+            res.json = jest.fn();
+            (jwt.verify as jest.Mock).mockReturnValue(
+                res.status(401).json({ message: "Invalid token" })
+            );
+            await eventController.verifyTokenOAUTH(req, res);
+            expect(res.status).toHaveBeenCalledWith(401);
+        });
+        it("3 - should return 401 if payment not found", async () => {
+            jest.spyOn(Payment, 'findOne').mockResolvedValue(null);
+            const req = httpMocks.createRequest({
+                method: 'POST',
+                body: { token: "----------" }
+            });
+            const res = httpMocks.createResponse();
+            res.status = jest.fn().mockReturnThis();
+            res.json = jest.fn();
+            await eventController.verifyTokenOAUTH(req, res);
+            expect(res.status).toHaveBeenCalledWith(401);
+        });
+        it("4 - should return 400 if missing token", async () => {
+            jest.spyOn(Payment, 'findOne').mockResolvedValue(existPayment);
+            const req = httpMocks.createRequest({
+                method: 'POST'
+            });
+            const res = httpMocks.createResponse();
+            res.status = jest.fn().mockReturnThis();
+            res.json = jest.fn();
+            await eventController.verifyTokenOAUTH(req, res);
+            expect(res.status).toHaveBeenCalledWith(400);
+        });
+        it("5 - should return 500 if invalid token but found in db", async () => {
+            jest.spyOn(Payment, 'findOne').mockRejectedValue(null);
+            const req = httpMocks.createRequest({
+                method: 'POST',
+                body: { token: "----------" }
+            });
+            const res = httpMocks.createResponse();
+            res.status = jest.fn().mockReturnThis();
+            res.json = jest.fn();
+            await eventController.verifyTokenOAUTH(req, res);
+            expect(res.status).toHaveBeenCalledWith(500);
+        });
+    });
+    describe("9 - deleteToken", () => {
+        it("1 - should delete token and return 200", async () => {
+            jest.spyOn(Payment, 'findOne').mockResolvedValue(existPayment);
+            const req = httpMocks.createRequest({
+                method: 'DELETE',
+                body: { token: "ngdAXMejlnEqMYovrFjR" }
+            });
+            const res = httpMocks.createResponse();
+            res.status = jest.fn().mockReturnThis();
+            res.json = jest.fn();
+            await eventController.deleteToken(req, res);
+            expect(res.status).toHaveBeenCalledWith(200);
+        });
+        it("2 - should return 404 if payment not found", async () => {
+            jest.spyOn(Payment, 'findOne').mockResolvedValue(null);
+            const req = httpMocks.createRequest({
+                method: 'DELETE',
+                body: { token: "-------------" }
+            });
+            const res = httpMocks.createResponse();
+            res.status = jest.fn().mockReturnThis();
+            res.json = jest.fn();
+            await eventController.deleteToken(req, res);
+            expect(res.status).toHaveBeenCalledWith(404);
+        });
+        it("3 - should return 500 if token not sent", async () => {
+            jest.spyOn(Payment, 'findOne').mockRejectedValue(null);
+            const req = httpMocks.createRequest({
+                method: 'DELETE'
+            });
+            const res = httpMocks.createResponse();
+            res.status = jest.fn().mockReturnThis();
+            res.json = jest.fn();
+            await eventController.deleteToken(req, res);
             expect(res.status).toHaveBeenCalledWith(500);
         });
     });

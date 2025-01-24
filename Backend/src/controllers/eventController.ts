@@ -185,7 +185,6 @@ const verifyTokenOAUTH = async (
     if (!token) {
       return res.status(400).json({ message: "Missing token" });
     }
-
     const payment: PaymentModel | null = await PaymentModel.findOne({
       where: { token },
     });
@@ -194,13 +193,11 @@ const verifyTokenOAUTH = async (
         .status(401)
         .json({ message: "Invalid token or not found in database" });
     }
-
     jwt.verify(token, "RANDOM_SECRET_KEY", (err: any, decoded: any) => {
       if (err) {
         console.error("Invalid token :", err);
         return res.status(401).json({ message: "Invalid token" });
       }
-
       return res.status(201).json({ message: "Valid token", data: decoded });
     });
   } catch (error) {
@@ -216,16 +213,13 @@ const deleteToken = async (
   try {
     const token: string = req.params.token;
     console.log("deleteToken - token:", token);
-
     const payment: PaymentModel | null = await PaymentModel.findOne({
       where: { token },
     });
     if (!payment) {
       return res.status(404).json({ message: "The token does not exist" });
     }
-
     await payment.destroy();
-
     return res
       .status(200)
       .json({ message: "The token was successfully deleted" });
