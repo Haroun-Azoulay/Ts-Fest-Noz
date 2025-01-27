@@ -15,7 +15,7 @@ const center = ref({ latitude: 45.4215, longitude: -75.6972 });
 const zoom = ref(12); 
 let map; 
 onMounted(() => {
-  mapboxgl.accessToken = "pk.eyJ1IjoiYmVjaGFyaTkzIiwiYSI6ImNscGFleXpqYzA1eHgycW5rdGdma2JoOGwifQ.3I3YPCqSxPKBgvwyksQRwg"
+  mapboxgl.accessToken = "pk.eyJ1IjoiYmVjaGFyaTkzIiwiYSI6ImNtNjgwYTgwdzA4em0ycnFyczM2bXR2ZXgifQ.NNk_nOdxatVzztXUH1yIKAJ1IjoiYmVjaGFyaTkzIiwiYSI6ImNtNjgwMWFpZDA5aXoyanF2Yjd1ZXMxNHgifQ.f1gSUVzB52Ki1rKnITzKlAeyJ1IjoiYmVjaGFyaTkzIiwiYSI6ImNscGFleXpqYzA1eHgycW5rdGdma2JoOGwifQ.3I3YPCqSxPKBgvwyksQRwg"
   createMap();
 });
 

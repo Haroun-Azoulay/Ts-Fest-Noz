@@ -107,6 +107,4 @@ const signup = async () => {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-
 </style>

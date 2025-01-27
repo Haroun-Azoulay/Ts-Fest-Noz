@@ -166,7 +166,7 @@ const verifyTown = (queryResponse: string, queryApi: string[]): Promise<void> =>
 
 const fetchCities = async (query: any) => {
   if (!query) return []
-  const url = `https://geo.api.gouv.fr/communes?nom=${query}&fields=nom`
+  const url = `https://geo.api.gouv.fr/communes?nom=${query}&fields=nom,centre`
   try {
     const response = await axios.get(url)
     const test = response.data.map((city: any) => city.nom)
