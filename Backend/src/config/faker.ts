@@ -1,4 +1,4 @@
-import { faker } from "@faker-js/faker";
+import { faker, fakerFR } from "@faker-js/faker";
 import logger from "node-color-log";
 import { v4 as uuidv4 } from "uuid";
 
@@ -21,7 +21,7 @@ const userUUIDs = Array.from({ length: 30 }, () => myuuid);
 const postUUIDs = Array.from({ length: 30 }, () => myuuid);
 const cityUUIDs = Array.from({ length: 30 }, () => myuuid);
 const commentaryUUIDs = Array.from({ length: 10 }, () => myuuid);
-const eventUUIDs = Array.from({ length: 10 }, () => myuuid);
+const eventUUIDs = Array.from({ length: 30 }, () => myuuid);
 const goodieTypeUUIDs = Array.from({ length: 30 }, () => myuuid);
 const groupUUIDs = Array.from({ length: 30 }, () => myuuid);
 const orderDetailUUIDs = Array.from({ length: 30 }, () => myuuid);
@@ -39,6 +39,9 @@ export function createRandomUser(index: number) {
     firstname: faker.person.firstName(),
     password: faker.internet.password(),
     email: faker.internet.email(),
+    city: fakerFR.location.city(),
+    latitude: fakerFR.location.latitude(),
+    longitude: fakerFR.location.longitude(),
     pseudo: faker.person.firstName(),
     registeredAt: faker.date.past(),
     role: faker.helpers.arrayElement(["admin", "artist", "organize", "user"]),
@@ -57,9 +60,9 @@ export function createRandomPost(index: number) {
 
 export function createRandomCity(index: number) {
   return {
-    id: cityUUIDs[index],
+    id: uuidv4(),
     user_id: faker.helpers.arrayElement(userUUIDs),
-    city_name: faker.location.city(),
+    city_name: fakerFR.location.city(),
     address: faker.location.streetAddress(),
     text: faker.lorem.sentence(),
     zip_code: parseInt(faker.location.zipCode()),
@@ -192,13 +195,13 @@ export const users = Array.from({ length: 50 }, (_, index) =>
 export const posts = Array.from({ length: 50 }, (_, index) =>
   createRandomPost(index),
 );
-export const cities = Array.from({ length: 50 }, (_, index) =>
+export const cities = Array.from({ length: 30 }, (_, index) =>
   createRandomCity(index),
 );
 export const commentaries = Array.from({ length: 5 }, (_, index) =>
   createRandomCommentary(index),
 );
-export const events = Array.from({ length: 5 }, (_, index) =>
+export const events = Array.from({ length: 30 }, (_, index) =>
   createRandomEvent(index),
 );
 export const goodieTypes = Array.from({ length: 5 }, (_, index) =>

@@ -1,7 +1,12 @@
+import { CalculateDistance } from "../algorithmic/haversine";
 import { CityAttributes } from "../interfaces/types";
+import { CoordinateAttributes } from "../interfaces/types";
 import CityModel from "../models/City";
 import Event from "../models/Event";
+import UserModel from "../models/User";
+import HaversineFormula from "../algorithmic/haversine";
 import { Request, Response } from "express";
+import axios from "axios";
 
 const addPoint = async (
   req: Request,
@@ -70,6 +75,77 @@ const getAllPoints = async (
     return res.status(500).json({ message: "Error retrieving points" });
   }
 };
+
+const getPointNearUser = async (
+  req: Request,
+  res: Response,
+): Promise<Response<any, Record<string, any>>> => {
+  try {
+    let responseFinal: any = {};
+    const userId: string = req.params.userId;
+    const points: CityModel[] | undefined = await CityModel.findAll();
+
+    if (!userId) {
+      return res.status(400).json({ message: "User ID is required" });
+    }
+
+    const user = await UserModel.findOne({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // if (!user.latitude || !user.longitude) {
+    //   return res.status(400).json({ message: "User location is incomplete" });
+    // }
+
+    if (points) {
+      let result: CoordinateAttributes[] = points.map((point) => {
+        const distance = HaversineFormula.CalculateDistance(
+          user.latitude,
+          user.longitude,
+          point.latitude,
+          point.longitude,
+        );
+        return {
+          id: point.id,
+          latitude: point.latitude,
+          longitude: point.longitude,
+          distance: distance,
+        };
+      });
+
+      result.sort((a, b) => a.distance - b.distance);
+      const resultCut = result.slice(0, 5);
+
+      const detailedResults = await Promise.all(
+        resultCut.map(async (point) => {
+          try {
+            const response = await axios.get(
+              `http://localhost:3000/get-point-id/${point.id}`,
+            );
+            return { ...point, details: response.data };
+          } catch (error) {
+            console.error(error);
+            return { ...point };
+          }
+        }),
+      );
+
+      responseFinal = detailedResults;
+    }
+
+    return res.json(responseFinal);
+  } catch (error) {
+    console.error("Error in getPointNearUser:", error);
+    return res.status(500).json({ message: "Internal Server Error", error });
+  }
+};
+
 const getPointByUser = async (
   req: Request,
   res: Response,
@@ -84,6 +160,42 @@ const getPointByUser = async (
       where: {
         user_id: userId,
       },
+    });
+
+    return res.json(points);
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .json({ message: "Error retrieving points per user" });
+  }
+};
+
+const getPointById = async (
+  req: Request,
+  res: Response,
+): Promise<Response<any, Record<string, any>>> => {
+  try {
+    const cityId: string = req.params.cityId;
+    if (!cityId) {
+      return res.status(400).json({ message: "City ID is required" });
+    }
+
+    const points: CityModel | null = await CityModel.findByPk(cityId, {
+      attributes: [
+        "id",
+        "city_name",
+        "text",
+        "address",
+        "zip_code",
+        "label",
+        "date",
+        "style",
+        "color",
+        "departement_number",
+        "region_name",
+        "url_point",
+      ],
     });
 
     return res.json(points);
@@ -166,4 +278,6 @@ export default {
   deletePoint,
   getAllPoints,
   getPointByUser,
+  getPointNearUser,
+  getPointById,
 };
