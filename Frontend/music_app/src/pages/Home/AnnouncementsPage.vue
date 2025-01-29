@@ -51,24 +51,13 @@ announcementspage.vue :
         <div class="col-md-10 offset-md-1 text-center">
           <div class="spacer-single"></div>
           <ul class="list-inline-style-1">
-            <li>Albetad</li>
-            <li>Formulary</li>
-            <li>Stylewort</li>
-            <li>Windgalled</li>
-            <li>Taxidermize</li>
-            <li>Lysimachus</li>
-            <li>Cassinese</li>
-            <li>Abiezer</li>
-            <li>Chevelle</li>
-            <li>Carabus</li>
-            <li>Aggrieved</li>
-            <li>Floater</li>
-            <li>Ovidae</li>
-            <li>Rockward</li>
-            <li>Hotbox</li>
-            <li>Emarcid</li>
-            <li>Victuallership</li>
-            <li>Barnard</li>
+            <li>
+              Découvrez aussi quelques artistes sélectionnés au hasard avec lesquels nous
+              collaborons :
+            </li>
+            <li v-for="artist in artistsRandom">
+              {{ artist.name + ' ' }}
+            </li>
           </ul>
         </div>
       </div>
@@ -84,13 +73,13 @@ announcementspage.vue :
               Vous êtes <span class="id-color">Organisateur</span>, vous avez une question ?
             </h2>
           </div>
-          <div v-bind:style="isUser || !isUser ? '' : 'display:none;'">
-            <h2 class="wow fadeInUp mt-9" data-wow-delay=".2s">
-              Contactez <span class="id-color">Notre Equipe</span> pour une remarque ou bien vous
-              souhaitez devenir <span class="id-color">organisateur</span> ou
-              <span class="id-color">artiste</span> ?
-            </h2>
-          </div>
+          <div v-if="isNotLoginOrUser">
+  <h2 class="wow fadeInUp mt-9" data-wow-delay=".2s">
+    Contactez <span class="id-color">Notre Equipe</span> pour une remarque ou bien vous
+    souhaitez devenir <span class="id-color">organisateur</span> ou
+    <span class="id-color">artiste</span> ?
+  </h2>
+</div>
           <div v-bind:style="isFullAuthorized ? '' : 'display:none;'">
             <h2 class="wow fadeInUp mt-9" data-wow-delay=".2s">
               Faire un test d'envoie de formulaire de contact
@@ -102,7 +91,7 @@ announcementspage.vue :
             <div class="row">
               <div class="col-md-12 text-center">
                 <ul class="list-boxed-s1">
-                  <li @click="goToContactPage">
+                  <li @click="goToContactPage" style="cursor: pointer;">
                     <h3>Contactez-nous</h3>
                   </li>
                 </ul>
@@ -112,13 +101,13 @@ announcementspage.vue :
         </div>
       </div>
     </div>
-    <div class="container" v-if="isArtist">
+    <div class="container mt-12" v-if="isArtist">
       <div class="row g-custom-x align-items-center">
         <div class="col-lg-12">
           <div class="text-center">
             <div class="wm wow slideInUp">Annonces</div>
             <h2 class="wow fadeInUp" data-wow-delay=".2s">
-              <span class="id-color">01</span> Annonces des organisateurs près de vous
+              <span class="id-color">Annonces des organisateurs à venir !</span>
             </h2>
             <div class="small-border bg-color-2"></div>
             <div class="spacer-single"></div>
@@ -148,20 +137,9 @@ announcementspage.vue :
       <div class="d-flex justify-content-center">
         <button
           @click="goToForumPage()"
-          class="ButtonPrimary text-white w-full md:w-80 h-12 px-6 m-2 py-2.5 bg-gradient-to-r from-violet-500 to-purple-700 rounded-lg flex justify-center items-center shadow-lg transform hover:scale-105 transition-transform duration-300"
+          class="ButtonPrimary font-bold text-white w-full md:w-80 h-12 px-6 m-2 py-2.5 bg-gradient-to-r from-violet-500 to-purple-700 rounded-lg flex justify-center items-center shadow-lg transform hover:scale-105 transition-transform duration-300"
         >
           Voir tous les annonces
-        </button>
-      </div>
-      <div class="d-flex justify-content-center align-items-center" style="flex-direction: column">
-        <h2 class="mb-6 mt-6" style="font-size: 22px; font-weight: 600">
-          Vous souhaitez laisser une annonce ?
-        </h2>
-        <button
-          @click="goToAddPostPage()"
-          class="ButtonPrimary text-white w-full md:w-80 h-12 px-6 m-2 py-2.5 bg-gradient-to-r from-violet-500 to-purple-700 rounded-lg flex justify-center items-center shadow-lg transform hover:scale-105 transition-transform duration-300"
-        >
-          Créez la vôtre
         </button>
       </div>
     </div>
@@ -171,7 +149,7 @@ announcementspage.vue :
           <div class="text-center">
             <div class="wm wow slideInUp">Annonces</div>
             <h2 class="wow fadeInUp" data-wow-delay=".2s">
-              <span class="id-color">01</span> Annonces des artistes près de vous
+              <span class="id-color text-color:#371990 bold">01</span> Annonces des artistes près de vous
             </h2>
             <div class="small-border bg-color-2"></div>
             <div class="spacer-single"></div>
@@ -219,18 +197,6 @@ announcementspage.vue :
         >
           Créez la vôtre
         </button>
-      </div>
-      <div class="row g-custom-x align-items-center">
-        <div class="col-lg-12">
-          <div class="text-center">
-            <h2 class="wow fadeInUp" data-wow-delay=".2s">Artistes près de vous</h2>
-          </div>
-        </div>
-      </div>
-      <div
-        id="list-announcement-posts"
-        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
-      >
         <div
           v-for="artist in closeArtists"
           class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
@@ -261,6 +227,8 @@ const artistAnnouncements = ref([])
 const organizerAnnouncements = ref([])
 const closeArtists = ref<ArtistInfo[]>([])
 const router = useRouter()
+const artistsRandom = ref()
+const isNotLoginOrUser = ref(true)
 
 const goToSingleAnnouncement = (postId: number) => {
   if (postId) {
@@ -285,6 +253,8 @@ const goToContactPage = (event: Event) => {
 
 onMounted(async () => {
   try {
+    const showArtistRandom = await ApiService.get(`/get-random-groups`, {})
+    artistsRandom.value = showArtistRandom.data
     const authToken = localStorage.getItem('authToken')
     if (authToken) {
       const { payload } = useJwt(authToken)
@@ -296,10 +266,13 @@ onMounted(async () => {
         }
         if (roleId === 'admin') {
           isFullAuthorized.value = true
+          isNotLoginOrUser.value = false
         } else if (roleId === 'artist') {
           isArtist.value = true
+          isNotLoginOrUser.value = false
         } else if (roleId === 'organizer') {
           isOrganizer.value = true
+          isNotLoginOrUser.value = false
         }
         if (roleId === 'artist') {
           const getOrganizerAnnouncements = await ApiService.get(`/get-close-organizer-posts`, {

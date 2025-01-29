@@ -130,12 +130,54 @@
                 <h2 class="mb-6" style="font-size: 22px; font-weight: 600">
                   Trouvez les meilleurs évènements à proximité !
                 </h2>
-                <div v-if="isUser || isArtist || isOrganizer || isFullAuthorized">
-                  <HomeSearchCity @geocodeResult="handleGeocodeResult"></HomeSearchCity>
-                  <div id="map"></div>
+
+                <div class="flex flex-row flex-wrap gap-6 justify-center mt-6">
+                  <div
+                    v-for="event in eventNearby"
+                    class="flex mt-6 hover:scale-110 flex-col items-center max-w-sm p-6 bg-gradient-to-b from-[#5D26C1] to-[#2B86C5] border-4 border-white rounded-2xl shadow-lg"
+                    style="height: 20rem"
+                  >
+                    <a href="#">
+                      <p class="mb-2 text-xl font-extrabold tracking-tight text-[#F9F9F9]">
+                        {{ event.details.text }}
+                      </p>
+                    </a>
+                    <p class="mb-2 text-lg font-semibold tracking-tight text-[#D1D5DB]">
+                      {{ event.details.city_name }}
+                    </p>
+                    <p class="mb-4 font-normal text-[#E5E7EB]">
+                      À seulement <span class="font-bold">{{ event.distance }}</span> km de votre lieu d'inscription !
+                    </p>
+                    <a
+                      href="#"
+                      class="hover:scale-110 inline-flex items-center px-4 py-2 text-sm font-bold text-white bg-gradient-to-b from-[#cdff6b] to-[#2B86C5] rounded-lg transition-all"
+                    >
+                      En savoir plus
+                      <svg
+                        class="rtl:rotate-180 w-4 h-4 ms-2"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 14 10"
+                      >
+                        <path
+                          stroke="currentColor"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M1 5h12m0 0L9 1m4 4L9 9"
+                        />
+                      </svg>
+                    </a>
+                  </div>
                 </div>
 
-                <div v-bind:style="isOrganizer || isFullAuthorized ? '' : 'display:none;'">
+                <!-- <div v-if="isUser || isArtist || isOrganizer || isFullAuthorized">
+                  <HomeSearchCity @geocodeResult="handleGeocodeResult"></HomeSearchCity>
+                  <div id="map"></div>
+                </div> -->
+
+                <div class="mt-6" v-bind:style="isOrganizer || isFullAuthorized ? '' : 'display:none;'">
                   <h2><span class="id-color">OU</span></h2>
                   <h2 class="mb-6" style="font-size: 22px; font-weight: 800">
                     Proposez ou assistez aux meilleurs évenements proches
@@ -143,7 +185,7 @@
                     de chez vous ou que vous soyez !
                   </h2>
                 </div>
-                <div class="de_tab_content text-left">
+                <div class="de_tab_content text-left mt-5">
                   <div id="tab1" class="tab_single_content">
                     <div class="row">
                       <div class="col-md-12 text-center">
@@ -175,7 +217,6 @@
                             @click="goAddEventPage"
                           >
                             <h3>Proposer un evenement</h3>
-                            <span></span>
                           </li>
                         </ul>
                       </div>
@@ -209,18 +250,14 @@
                 faites des rencontres qui dureront peut-être toute la vie !
               </p>
               <a
-                v-if="!isUser"
+                v-if="!isUser && !isArtist && !isOrganizer"
                 style="background-color: #cdff6b; color: black"
                 class="btn-main"
                 @click="goToLoginPage"
               >
                 <span>Connectez vous</span>
-            </a>
-              <a
-                v-if="isUser"
-                class="btn-main"
-                @click="goForumPage"
-              >
+              </a>
+              <a v-if="isUser || isArtist || isOrganizer" class="btn-main" @click="goForumPage">
                 <span>Accedez au Forum</span></a
               >
             </div>
@@ -388,7 +425,8 @@ import mapboxgl, { Map } from 'mapbox-gl'
 import { format } from 'date-fns'
 import HomeSearchCity from '@/pages/Map/HomeSearchCity.vue'
 import AnnouncementsPage from '@/pages/Home/AnnouncementsPage.vue'
-
+import { useRoute } from 'vue-router'
+const route = useRoute()
 const result = ref(null)
 const isUser = ref(false)
 const isArtist = ref(false)
@@ -397,7 +435,7 @@ const isFullAuthorized = ref(false)
 const router = useRouter()
 const points = ref<Maps[]>([])
 const markers = ref<mapboxgl.Marker[]>([])
-
+const eventNearby = ref()
 let map: Map
 
 interface Maps {
@@ -519,8 +557,21 @@ const goForumPage = () => {
 onMounted(async () => {
   try {
     const authToken = localStorage.getItem('authToken')
+
     if (authToken) {
       const { payload } = useJwt(authToken)
+      const userId = payload.value?.userId
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+          'Content-Type': 'application/json',
+          Origin: 'http://localhost:5173'
+        }
+      }
+
+      const showEventNearby = await ApiService.get(`/get-point-near-user/${userId}`, config)
+      eventNearby.value = showEventNearby.data
       const roleId = payload.value?.role
       if (roleId) {
         isUser.value = true
@@ -547,7 +598,6 @@ onMounted(async () => {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 
 .btn-main:hover {
   font-size: 110%;

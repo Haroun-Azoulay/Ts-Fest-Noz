@@ -150,36 +150,36 @@ async function syncModels() {
                 ignoreDuplicates: true,
               }),
             );
-          case countGoodieType:
-            await retryDb(() =>
-              GoodieType.bulkCreate(faker.goodieTypes, {
-                ignoreDuplicates: true,
-              }),
-            );
-          case countGoodie:
-            await retryDb(() =>
-              Goodie.bulkCreate(faker.goodies, {
-                ignoreDuplicates: true,
-              }),
-            );
-          case countOrderDetail:
-            await retryDb(() =>
-              OrderDetail.bulkCreate(faker.orderDetails, {
-                ignoreDuplicates: true,
-              }),
-            );
-          case countOrder:
-            await retryDb(() =>
-              Order.bulkCreate(faker.orders, {
-                ignoreDuplicates: true,
-              }),
-            );
-          case countPayment:
-            await retryDb(() =>
-              Payment.bulkCreate(faker.payments, {
-                ignoreDuplicates: true,
-              }),
-            );
+          // case countGoodieType:
+          //   await retryDb(() =>
+          //     GoodieType.bulkCreate(faker.goodieTypes, {
+          //       ignoreDuplicates: true,
+          //     }),
+          //   );
+          // case countGoodie:
+          //   await retryDb(() =>
+          //     Goodie.bulkCreate(faker.goodies, {
+          //       ignoreDuplicates: true,
+          //     }),
+          //   );
+          // case countOrderDetail:
+          //   await retryDb(() =>
+          //     OrderDetail.bulkCreate(faker.orderDetails, {
+          //       ignoreDuplicates: true,
+          //     }),
+          //   );
+          // case countOrder:
+          //   await retryDb(() =>
+          //     Order.bulkCreate(faker.orders, {
+          //       ignoreDuplicates: true,
+          //     }),
+          //   );
+          // case countPayment:
+          //   await retryDb(() =>
+          //     Payment.bulkCreate(faker.payments, {
+          //       ignoreDuplicates: true,
+          //     }),
+          //   );
           case countOrganizeProfil:
             await retryDb(() =>
               OrganizerProfil.bulkCreate(faker.organizerProfils, {

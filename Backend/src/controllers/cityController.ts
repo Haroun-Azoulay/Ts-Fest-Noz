@@ -120,7 +120,7 @@ const getPointNearUser = async (
       });
 
       result.sort((a, b) => a.distance - b.distance);
-      const resultCut = result.slice(0, 5);
+      const resultCut = result.slice(0, 3);
 
       const detailedResults = await Promise.all(
         resultCut.map(async (point) => {

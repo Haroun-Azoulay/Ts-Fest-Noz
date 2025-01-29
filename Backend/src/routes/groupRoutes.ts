@@ -11,7 +11,7 @@ router.get("/get-group/:id", verifyToken, groupController.getGroup);
 
 router.get("/get-all-groups", verifyToken, groupController.getAllGroups);
 
-router.get("/get-random-groups", verifyToken, groupController.getRandomGroups);
+router.get("/get-random-groups", groupController.getRandomGroups);
 
 router.delete("/delete-group/:id", verifyToken, groupController.deleteGroup);
 
@@ -100,8 +100,6 @@ export default router;
  *     description: Get random groups.
  *     tags:
  *       - Group
- *     security:
- *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Random group information retrieved successfully.
