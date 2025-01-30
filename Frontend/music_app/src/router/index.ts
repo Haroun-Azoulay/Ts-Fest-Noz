@@ -1,19 +1,20 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import SignupView from '@/components/SignupView.vue'
-import SigninView from '@/components/SigninView.vue'
-import HomeView from '@/components/HomeView.vue'
-import AddEvent from '@/components/AddEventView.vue'
-import CityView from '@/components/CityView.vue'
-import EventView from '@/components/EventView.vue'
-import AdminHomeView from '@/components/AdminHomeView.vue'
-import SingleEventView from '@/components/SingleEventView.vue'
-import SingleForumView from '@/components/SingleForumView.vue'
-import SinglePaymentPageView from '@/components/SinglePaymentPageView.vue'
-import SingleTokenView from '@/components/SingleTokenView.vue'
-import ContactView from '@/components/ContactView.vue'
-import AnnouncementsView from '@/components/AnnouncementsView.vue'
-import ErrorView from '@/components/404View.vue'
-import PostView from '@/components/AddPostView.vue'
+import SignupView from '@/views/Authentification/SignupView.vue'
+import SigninView from '@/views/Authentification/SigninView.vue'
+import HomeView from '@/views/HomeView.vue'
+import AddEvent from '@/views/AddEventView.vue'
+import CityView from '@/views/CityView.vue'
+import EventView from '@/views/EventView.vue'
+import AdminHomeView from '@/views/AdminHomeView.vue'
+import SingleEventView from '@/views/SingleEventView.vue'
+import SingleForumView from '@/views/Forum/SingleForumView.vue'
+import ForumView from '@/views/Forum/ForumView.vue'
+import SinglePaymentPageView from '@/views/SinglePaymentPageView.vue'
+import SingleTokenView from '@/views/SingleTokenView.vue'
+import ContactView from '@/views/Contact/ContactView.vue'
+import AnnouncementsView from '@/views/AnnouncementsView.vue'
+import ErrorView from '@/views/404/404View.vue'
+import PostView from '@/views/Forum/AddPostView.vue'
 import authMiddleware from '@/middlewares/auth'
 import authEvent from '@/middlewares/authEvent'
 import authAdmin from '@/middlewares/authAdmin'
@@ -41,15 +42,15 @@ const routes = [
     component: ContactView
   },
   {
-    path: '/announcements',
-    name: 'announcements',
-    component: AnnouncementsView,
+    path: '/forum',
+    name: 'forum',
+    component: ForumView,
     meta: {
       middleware: [authMiddleware]
     }
   },
   {
-    path: '/announcements/add',
+    path: '/forum/add',
     name: 'addPost',
     component: PostView,
     meta: {
@@ -57,7 +58,7 @@ const routes = [
     }
   },
   {
-    path: '/announcements/:idpost',
+    path: '/forum/:idpost',
     name: 'SingleForum',
     component: SingleForumView
   },

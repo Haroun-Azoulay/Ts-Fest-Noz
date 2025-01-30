@@ -27,8 +27,8 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
-import HeaderPage from '../pages/Header/HeaderPage.vue';
-import FooterPage from '../pages/Footer/FooterPage.vue';
+import HeaderPage from '../composables/Header/HeaderPage.vue';
+import FooterPage from '../composables/Footer/FooterPage.vue';
 import ApiService from '../services/ApiService';
 import { useRouter, useRoute } from 'vue-router';
 

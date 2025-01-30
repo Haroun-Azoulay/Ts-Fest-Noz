@@ -88,8 +88,8 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import ApiService from "@/services/ApiService";
-import HeaderPage from '../pages/Header/HeaderPage.vue';
-import FooterPage from '../pages/Footer/FooterPage.vue';
+import HeaderPage from '../composables/Header/HeaderPage.vue';
+import FooterPage from '../composables/Footer/FooterPage.vue';
 
 const users = ref([]);
 

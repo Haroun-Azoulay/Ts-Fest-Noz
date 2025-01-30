@@ -59,8 +59,8 @@
 </template>
   <script setup lang="ts">
   import { ref, onMounted } from 'vue';
-  import HeaderPage from '../pages/Header/HeaderPage.vue';
-  import FooterPage from '../pages/Footer/FooterPage.vue';
+  import HeaderPage from '../../composables/Header/HeaderPage.vue';
+  import FooterPage from '../../composables/Footer/FooterPage.vue';
   import { useRouter } from 'vue-router';
   import ApiService from "@/services/ApiService";
   import { useJwt } from '@vueuse/integrations/useJwt';
@@ -105,7 +105,7 @@
       });
       
       const token = response.data.token;
-      router.push({ path: "/announcements" });
+      router.push({ path: "/forum" });
     } catch (error: any) {
       console.error(error);
       errorMessage.value = error.response?.data?.message || error.message;

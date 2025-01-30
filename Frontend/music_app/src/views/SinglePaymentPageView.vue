@@ -27,8 +27,8 @@
 </template>
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue';
-import HeaderPage from '../pages/Header/HeaderPage.vue';
-import FooterPage from '../pages/Footer/FooterPage.vue';
+import HeaderPage from '../composables/Header/HeaderPage.vue';
+import FooterPage from '../composables/Footer/FooterPage.vue';
 import { useRouter } from 'vue-router';
 import QrcodeVue, { Level, RenderAs } from 'qrcode.vue';
 

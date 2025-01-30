@@ -239,11 +239,11 @@ const goToSingleAnnouncement = (postId: number) => {
 }
 
 const goToForumPage = () => {
-  router.push({ path: '/announcements' })
+  router.push({ path: '/forum' })
 }
 
 const goToAddPostPage = () => {
-  router.push({ path: '/announcements/add' })
+  router.push({ path: '/forum/add' })
 }
 
 const goToContactPage = (event: Event) => {

@@ -142,13 +142,13 @@
 </template>
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import HeaderPage from '../pages/Header/HeaderPage.vue'
+import HeaderPage from '../../composables/Header/HeaderPage.vue'
 import { useRouter, useRoute } from 'vue-router'
 import ApiService from '@/services/ApiService'
 import { useJwt } from '@vueuse/integrations/useJwt'
 import { provide } from 'vue'
-import FooterPage from '../pages/Footer/FooterPage.vue'
-import Email from '../assets/smtp/smtp.js'
+import FooterPage from '../../composables/Footer/FooterPage.vue'
+import Email from '../../assets/smtp/smtp.js'
 
 const name = ref('')
 const email = ref('')

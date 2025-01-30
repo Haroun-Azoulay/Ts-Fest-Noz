@@ -57,10 +57,10 @@ import mapboxgl, { Map } from 'mapbox-gl';
 import { useJwt } from '@vueuse/integrations/useJwt';
 import ApiService from "@/services/ApiService";
 import { format } from 'date-fns';
-import HeaderPage from '../pages/Header/HeaderPage.vue';
-import FooterPage from '../pages/Footer/FooterPage.vue';
-import ModalConfirm from './pModal/ModalConfirm.vue';
-import SearchCityPage from '../pages/Map/SearchCity.vue';
+import HeaderPage from '../composables/Header/HeaderPage.vue';
+import FooterPage from '../composables/Footer/FooterPage.vue';
+import ModalConfirm from '../components/pModal/ModalConfirm.vue';
+import SearchCityPage from '../composables/Map/SearchCity.vue';
 
 const showError = ref(false);
 const errorMessage = ref('');

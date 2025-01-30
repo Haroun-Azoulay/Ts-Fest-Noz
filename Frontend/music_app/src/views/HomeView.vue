@@ -106,7 +106,7 @@
           </div>
         </div>
       </section>
-      <AnnouncementsPage></AnnouncementsPage>
+      <HomePage></HomePage>
       <section
         id="section-plan"
         class="map_box_container_city"
@@ -415,16 +415,16 @@
 </template>
 
 <script setup lang="ts">
-import HeaderPage from '../pages/Header/HeaderPage.vue'
-import FooterPage from '../pages/Footer/FooterPage.vue'
+import HeaderPage from '../composables/Header/HeaderPage.vue'
+import FooterPage from '../composables/Footer/FooterPage.vue'
 import ApiService from '@/services/ApiService'
 import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
 import { useJwt } from '@vueuse/integrations/useJwt'
 import mapboxgl, { Map } from 'mapbox-gl'
 import { format } from 'date-fns'
-import HomeSearchCity from '@/pages/Map/HomeSearchCity.vue'
-import AnnouncementsPage from '@/pages/Home/AnnouncementsPage.vue'
+import HomeSearchCity from '@/composables/Map/HomeSearchCity.vue'
+import HomePage from '@/composables/Home/HomePage.vue'
 import { useRoute } from 'vue-router'
 const route = useRoute()
 const result = ref(null)
@@ -550,7 +550,7 @@ const goAddEventPage = () => {
 
 const goForumPage = () => {
   if (isUser.value || isArtist.value || isOrganizer.value || isFullAuthorized.value) {
-    router.push('/announcements')
+    router.push('/forum')
   }
 }
 

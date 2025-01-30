@@ -3,14 +3,14 @@
       <div class="flex gap-16">
         <SigninPage></SigninPage>
         <div class="flex items-center justify-center">
-          <img class="object-contain rounded-full w-full max-md:hidden" src="../assets/images/authentification-image.avif" style="width: 100%">
+          <img class="object-contain rounded-full w-full max-md:hidden" src="../../assets/images/authentification-image.avif" style="width: 100%">
         </div>
       </div>
     </div>
   </template>
   
   <script setup lang="ts">
-  import SigninPage from '../pages/Authentification/SigninPage.vue';
+  import SigninPage from '../../composables/Authentification/SigninPage.vue';
   </script>
   
   <style>
