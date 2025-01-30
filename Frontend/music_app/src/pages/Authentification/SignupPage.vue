@@ -56,10 +56,10 @@
           <li
             v-for="(city, index) in cities"
             :key="index"
-            @click="selectCity(city)"
+            @click="selectCity(city.nom, city.centre.coordinates[0], city.centre.coordinates[1])"
             class="p-2 text-sm font-medium text-gray-700 cursor-pointer hover:bg-gray-300 active:bg-gray-400"
           >
-            {{ city }}
+            {{ city.nom }}
           </li>
         </ul>
       </div>
@@ -111,6 +111,8 @@ const cities = ref<string[]>([])
 const geocoding_city = ref('')
 const showDropdown = ref(false)
 const show = ref(false)
+const requestLatitude = ref()
+const requestLongitude = ref()
 const errorMessage = ref('')
 const confirm = () => {
   show.value = false
@@ -125,7 +127,9 @@ const request = ref<Signup>({
   pseudo: '',
   role: 'user',
   password: '',
-  city: ''
+  city: '',
+  latitude: requestLatitude.value,
+  longitude: requestLongitude.value,
 })
 
 const isButtonDisabled = computed(() => {
@@ -135,7 +139,7 @@ const isButtonDisabled = computed(() => {
     request.value.email &&
     request.value.pseudo &&
     request.value.password &&
-    request.value.city
+    request.value.city 
   )
 })
 
@@ -151,12 +155,13 @@ const handleInput = async () => {
     cities.value = []
     showDropdown.value = false
   }
+
   request.value.city = geocoding_city.value
 }
 
 const verifyTown = (queryResponse: string, queryApi: string[]): Promise<void> => {
   return new Promise((resolve, reject) => {
-    if (queryApi.some((city) => city === queryResponse)) {
+    if (queryApi.some((city) => city.nom === queryResponse)) {
       resolve()
     } else {
       reject(new Error('The town don´t exist'))
@@ -169,23 +174,26 @@ const fetchCities = async (query: any) => {
   const url = `https://geo.api.gouv.fr/communes?nom=${query}&fields=nom,centre`
   try {
     const response = await axios.get(url)
-    const test = response.data.map((city: any) => city.nom)
-    console.log(test)
-    return test
+    const responseMap = response.data.map((city: any) => city)
+    return responseMap
   } catch (error) {
-    console.error('Erreur lors de la récupération des villes :', error)
+    console.error('Error to retrieve towns :', error)
     return []
   }
 }
 
-const selectCity = (city: string) => {
+const selectCity = (city: string, cityLatitude: number, cityLongitude: number) => {
   geocoding_city.value = city
   request.value.city = city
+  request.value.latitude = cityLatitude
+  request.value.longitude = cityLongitude
   showDropdown.value = false
+  return geocoding_city.value
 }
 const signup = async () => {
   try {
     await verifyTown(request.value.city, cities.value)
+    
     const response = await ApiService.post('/signup', request.value)
     const token = response.data.token
     router.push({ path: '/signin' })

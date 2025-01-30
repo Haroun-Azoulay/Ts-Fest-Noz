@@ -20,11 +20,20 @@ const signup = async (
       latitude,
     } = req.body;
 
-    // if (!lastname || !firstname || !password || !email || !pseudo || !city|| !longitude|| !latitude) {
-    //   return res.status(400).json({
-    //     message: "A required field is missing.",
-    //   });
-    // }
+    if (
+      !lastname ||
+      !firstname ||
+      !password ||
+      !email ||
+      !pseudo ||
+      !city ||
+      !longitude ||
+      !latitude
+    ) {
+      return res.status(400).json({
+        message: "A required field is missing.",
+      });
+    }
 
     const defaultRole: string = "user";
     const isAdmin: boolean = email === "admin@example.com";
