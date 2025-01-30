@@ -32,6 +32,56 @@ const paymentUUIDs = Array.from({ length: 10 }, () => uuidv4());
 const artistProfilUUIDs = Array.from({ length: 10 }, () => uuidv4());
 const OrganizerProfilUUIDs = Array.from({ length: 10 }, () => uuidv4());
 
+type City = {
+  city_name: string;
+  latitude: number;
+  longitude: number;
+};
+
+const citiesFaker: City[] = [
+  { city_name: "Paris", latitude: 48.8566, longitude: 2.3522 },
+  { city_name: "Lyon", latitude: 45.75, longitude: 4.85 },
+  { city_name: "Marseille", latitude: 43.2965, longitude: 5.3698 },
+  { city_name: "Toulouse", latitude: 43.6047, longitude: 1.4442 },
+  { city_name: "Nice", latitude: 43.7102, longitude: 7.262 },
+  { city_name: "Bordeaux", latitude: 44.8378, longitude: -0.5792 },
+  { city_name: "Lille", latitude: 50.6292, longitude: 3.0573 },
+  { city_name: "Strasbourg", latitude: 48.5734, longitude: 7.7521 },
+  { city_name: "Nantes", latitude: 47.2186, longitude: -1.5541 },
+  { city_name: "Montpellier", latitude: 43.6111, longitude: 3.8767 },
+  { city_name: "Rennes", latitude: 48.1173, longitude: -1.6778 },
+  { city_name: "Le Havre", latitude: 49.4937, longitude: 0.1079 },
+  { city_name: "Reims", latitude: 49.2583, longitude: 4.0317 },
+  { city_name: "Saint-Étienne", latitude: 45.4397, longitude: 4.3872 },
+  { city_name: "Le Mans", latitude: 48.0061, longitude: 0.1996 },
+  { city_name: "Aix-en-Provence", latitude: 43.5297, longitude: 5.4474 },
+  { city_name: "Clermont-Ferrand", latitude: 45.7772, longitude: 3.087 },
+  { city_name: "Toulon", latitude: 43.1242, longitude: 5.928 },
+  { city_name: "Angers", latitude: 47.4784, longitude: -0.5632 },
+  { city_name: "Dijon", latitude: 47.322, longitude: 5.0415 },
+  { city_name: "Caen", latitude: 49.4144, longitude: -0.6921 },
+  { city_name: "Nîmes", latitude: 43.8342, longitude: 4.3601 },
+  { city_name: "Perpignan", latitude: 42.6987, longitude: 2.8956 },
+  { city_name: "Tours", latitude: 47.3445, longitude: 0.7011 },
+  { city_name: "Brest", latitude: 48.3904, longitude: -4.4861 },
+  { city_name: "La Rochelle", latitude: 46.1603, longitude: -1.1511 },
+  { city_name: "Antibes", latitude: 43.58, longitude: 7.125 },
+  { city_name: "Chambéry", latitude: 45.5646, longitude: 5.915 },
+  { city_name: "Ajaccio", latitude: 41.9192, longitude: 8.7386 },
+  { city_name: "Biarritz", latitude: 43.4833, longitude: -1.5597 },
+  { city_name: "Lorient", latitude: 47.7485, longitude: -3.3676 },
+];
+
+class RandomUtils {
+  private static getRandomElement<T>(arr: T[]): T {
+    return arr[Math.floor(Math.random() * arr.length)];
+  }
+
+  static getRandomCoordinate(citiesFaker: City[]): City {
+    return this.getRandomElement(citiesFaker);
+  }
+}
+
 export function createRandomUser(index: number) {
   return {
     id: userUUIDs[index],
@@ -59,16 +109,18 @@ export function createRandomPost(index: number) {
 }
 
 export function createRandomCity(index: number) {
+  const randomCoordinate = RandomUtils.getRandomCoordinate(citiesFaker);
   return {
     id: cityUUIDs[index],
     user_id: faker.helpers.arrayElement(userUUIDs),
-    city_name: fakerFR.location.city(),
+    city_name: randomCoordinate.city_name,
     address: faker.location.streetAddress(),
     text: faker.lorem.sentence(),
     zip_code: parseInt(faker.location.zipCode()),
     label: faker.commerce.productAdjective(),
-    longitude: faker.location.longitude(),
-    latitude: faker.location.latitude(),
+    // It´s error i don't have time to swap name before
+    longitude: randomCoordinate.latitude,
+    latitude: randomCoordinate.longitude,
     date: faker.date.past(),
     style: faker.color.human(),
     color: faker.color.rgb(),
