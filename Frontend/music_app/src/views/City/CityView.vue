@@ -7,7 +7,7 @@
     <ModalConfirm v-model="showSuccess" title="Confirmation" @confirm="confirmSuccess">
       <p>{{ successMessage }}</p>
     </ModalConfirm>
-    <section id="subheader" class="text-light" data-bgimage="url(/images-dj/background/subheader.jpg) bottom">
+    <section id="subheader" class="text-light h-50" data-bgimage="url(/images-dj/background/subheader.jpg) bottom">
       <div class="center-y relative text-center">
           <div class="container">
               <div class="row">
@@ -19,11 +19,11 @@
           </div>
       </div>
     </section>
-    <fieldset style="background:#371990">
-      <h2>Paramètres d'événements</h2>
-      <div>
+    <section style="height:280px" class="bg-white flex flex-row gap-4 justify-center items-center">
+    <fieldset style="height:280px; border: none;" class="bg-white">
+      <h1 class="text-black mt-4 text-xl text-center">Paramètres d'événements</h1>
         <input type="radio" id="huey" name="drone" value="huey" @change="handleChangeAllPoints" checked />
-        <label for="huey"> Tous les points </label>
+        <label class="text-black font-semibold m-2 mt-4" for="huey"> Tous les points</label>
         <input
           v-if="isAuthorized"
           type="radio"
@@ -32,19 +32,18 @@
           value="dewey"
           @change="handleChangeMyPoints"
         />
-        <label v-if="isAuthorized" for="dewey"> Mes points</label>
-      </div>
-      <div>
-        <label for="startDate">Date de début :</label>
-        <input type="date" id="startDate" v-model="startDate" />
-        <label for="endDate">Date de fin :</label>
-        <input type="date" id="endDate" v-model="endDate" />
-        <button @click="filterPointsByDate">Filtrer</button>
-      </div>
+        <label class="text-black font-semibold p-2" v-if="isAuthorized" for="dewey"> Mes points</label>
+        <label class="text-black font-semibold p-2" for="startDate">Date de début :</label>
+        <input class="text-white font-semibold hover:bg-violet-400 rounded-xl p-2 bg-violet-600" type="date" id="startDate" lang="fr-CA" v-model="startDate" />
+        <label class="text-black font-semibold p-2" for="endDate">Date de fin :</label>
+        <input class="text-white font-semibold hover:bg-violet-400 rounded-xl p-2 bg-violet-600" type="date" id="endDate" lang="fr-CA" vv-model="endDate" />
+        <button type="submit" class="w-full font-semibold bg-violet-600 text-white mt-[42px] p-2 rounded shadow-md hover:bg-violet-400" @click="filterPointsByDate">Filtrer</button>
     </fieldset>
+    <div class= "vertical"></div>
     <SearchCityPage @geocodeResult="handleGeocodeResult"></SearchCityPage>
+    </section>
     <section class="map_box_container_city">
-      <div id="map">
+      <div class="rounded-xl" id="map">
       </div>
     </section>
   </div>
@@ -57,10 +56,10 @@ import mapboxgl, { Map } from 'mapbox-gl';
 import { useJwt } from '@vueuse/integrations/useJwt';
 import ApiService from "@/services/ApiService";
 import { format } from 'date-fns';
-import HeaderPage from '../composables/Header/HeaderPage.vue';
-import FooterPage from '../composables/Footer/FooterPage.vue';
-import ModalConfirm from '../components/pModal/ModalConfirm.vue';
-import SearchCityPage from '../composables/Map/SearchCity.vue';
+import HeaderPage from '../../composables/Header/HeaderPage.vue';
+import FooterPage from '../../composables/Footer/FooterPage.vue';
+import ModalConfirm from '../../components/pModal/ModalConfirm.vue';
+import SearchCityPage from '../../composables/Map/SearchCity.vue';
 
 const showError = ref(false);
 const errorMessage = ref('');
@@ -310,6 +309,11 @@ legend {
   font-weight: bold;
 }
 
+.vertical {
+            border-left: 1px solid black;
+            height: 230px;
+        }
+
 .radio-group {
   display: flex;
   gap: 10px;
@@ -335,19 +339,5 @@ legend {
   padding: 5px;
   border: 1px solid #ccc;
   border-radius: 4px;
-}
-
-button {
-  padding: 5px 10px;
-  border: none;
-  border-radius: 4px;
-  background-color: #9333ea;
-  color: white;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #9333ea;
 }
 </style>

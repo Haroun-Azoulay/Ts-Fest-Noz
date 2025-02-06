@@ -63,8 +63,8 @@ import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { format } from 'date-fns';
 import ApiService from "@/services/ApiService";
-import HeaderPage from '../composables/Header/HeaderPage.vue';
-import FooterPage from '../composables/Footer/FooterPage.vue';
+import HeaderPage from '../../composables/Header/HeaderPage.vue';
+import FooterPage from '../../composables/Footer/FooterPage.vue';
 
 const router = useRouter();
 

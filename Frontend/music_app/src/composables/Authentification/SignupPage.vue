@@ -57,7 +57,7 @@
             v-for="(city, index) in cities"
             :key="index"
             @click="selectCity(city.nom, city.centre.coordinates[0], city.centre.coordinates[1])"
-            class="p-2 text-sm font-medium text-gray-700 cursor-pointer hover:bg-gray-300 active:bg-gray-400"
+            class="text-sm font-medium text-gray-700 cursor-pointer hover:bg-gray-300 active:bg-gray-400"
           >
             {{ city.nom }}
           </li>

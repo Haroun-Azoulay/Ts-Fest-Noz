@@ -89,7 +89,7 @@ announcementspage.vue :
         <div class="de_tab_content text-left">
           <div id="tab1" class="tab_single_content pb-0 mb-0">
             <div class="row">
-              <div class="col-md-12 text-center">
+              <div class="col-md-12 mb-5 text-center">
                 <ul class="list-boxed-s1">
                   <li @click="goToContactPage" style="cursor: pointer;">
                     <h3>Contactez-nous</h3>
@@ -136,7 +136,7 @@ announcementspage.vue :
       <br />
       <div class="d-flex justify-content-center">
         <button
-          @click="goToForumPage()"
+          @click="goToEventPage()"
           class="ButtonPrimary font-bold text-white w-full md:w-80 h-12 px-6 m-2 py-2.5 bg-gradient-to-r from-violet-500 to-purple-700 rounded-lg flex justify-center items-center shadow-lg transform hover:scale-105 transition-transform duration-300"
         >
           Voir tous les annonces
@@ -178,24 +178,10 @@ announcementspage.vue :
       <br />
       <div class="d-flex justify-content-center">
         <button
-          @click="goToForumPage()"
-          class="ButtonPrimary text-white w-full md:w-80 h-12 px-6 m-2 py-2.5 bg-gradient-to-r from-violet-500 to-purple-700 rounded-lg flex justify-center items-center shadow-lg transform hover:scale-105 transition-transform duration-300"
+          @click="goToEventPage()"
+          class="ButtonPrimary text-white w-full md:w-80 h-12 px-6 m-2 font-bold py-2.5 bg-gradient-to-r from-violet-500 to-purple-700 rounded-lg flex justify-center items-center shadow-lg transform hover:scale-105 transition-transform duration-300"
         >
           Voir tous les annonces
-        </button>
-      </div>
-      <div
-        class="d-flex justify-content-center align-items-center"
-        style="flex-direction: column; margin-bottom: 5%"
-      >
-        <h2 class="mb-6 mt-6" style="font-size: 22px; font-weight: 600">
-          Vous souhaitez laisser une annonce ?
-        </h2>
-        <button
-          @click="goToAddPostPage()"
-          class="ButtonPrimary text-white w-full md:w-80 h-12 px-6 m-2 py-2.5 bg-gradient-to-r from-violet-500 to-purple-700 rounded-lg flex justify-center items-center shadow-lg transform hover:scale-105 transition-transform duration-300"
-        >
-          Créez la vôtre
         </button>
         <div
           v-for="artist in closeArtists"
@@ -238,12 +224,12 @@ const goToSingleAnnouncement = (postId: number) => {
   }
 }
 
-const goToForumPage = () => {
-  router.push({ path: '/forum' })
+const goToEventPage = () => {
+  router.push({ path: '/event' })
 }
 
-const goToAddPostPage = () => {
-  router.push({ path: '/forum/add' })
+const goToAddEventPage = () => {
+  router.push({ path: '/event/add' })
 }
 
 const goToContactPage = (event: Event) => {

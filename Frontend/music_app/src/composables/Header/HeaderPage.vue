@@ -60,7 +60,7 @@
               <div v-if="isLoggedIn" class="menu_side_area" style="text-align: center">
                 <a
                   @click="logout"
-                  class="btn-main"
+                  class="btn-main text-white"
                   style="background-color: red; margin-right: 10px"
                   ><span>Deconnexion</span></a
                 >

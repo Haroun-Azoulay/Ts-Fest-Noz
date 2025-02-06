@@ -263,7 +263,7 @@
             </div>
             <div class="flex-1 mt-8 md:mt-0 md:ml-8">
               <img
-                src="../assets/images/forum.png"
+                src="../../assets/images/forum.png"
                 alt="Message image"
                 class="rounded-lg shadow-md"
               />
@@ -415,15 +415,15 @@
 </template>
 
 <script setup lang="ts">
-import HeaderPage from '../composables/Header/HeaderPage.vue'
-import FooterPage from '../composables/Footer/FooterPage.vue'
+import HeaderPage from '../../composables/Header/HeaderPage.vue'
+import FooterPage from '../../composables/Footer/FooterPage.vue'
 import ApiService from '@/services/ApiService'
 import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
 import { useJwt } from '@vueuse/integrations/useJwt'
 import mapboxgl, { Map } from 'mapbox-gl'
 import { format } from 'date-fns'
-import HomeSearchCity from '@/composables/Map/HomeSearchCity.vue'
+import HomeSearchCity from '../../composables/Map/HomeSearchCity.vue'
 import HomePage from '@/composables/Home/HomePage.vue'
 import { useRoute } from 'vue-router'
 const route = useRoute()
@@ -531,9 +531,7 @@ const addMarkers = () => {
 }
 
 const goToCityPage = () => {
-  router.push('/city').then(() => {
-    window.location.reload()
-  })
+  router.push('/city')
 }
 
 const goToLoginPage = () => {
@@ -542,9 +540,7 @@ const goToLoginPage = () => {
 
 const goAddEventPage = () => {
   if (isArtist.value || isOrganizer.value || isFullAuthorized.value) {
-    router.push('/add').then(() => {
-      window.location.reload()
-    })
+    router.push('/add')
   }
 }
 

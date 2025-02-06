@@ -17,25 +17,38 @@
     <h2 class="" style="text-align:center;background:#371990;margin-bottom:0;">
         Entrez vos informations et situez<br/> <span class="id-color">votre événement sur la carte !</span>
     </h2>
-    <SearchPage @geocodeResult="handleGeocodeResult"></SearchPage>
     <ModalConfirm v-model="showError" title="Erreur" @confirm="confirmError">
       <p>{{ errorMessage }}</p>
     </ModalConfirm>
     <ModalConfirm v-model="showSuccess" title="Confirmation" @confirm="confirmSuccess">
       <p>{{ successMessage }}</p>
     </ModalConfirm>
-    <section class="flex flex-col lg:flex-row justify-center items-center">
-      <!--<h2 style="text-align:center;position:absolute;z-index:1;">La carte s'affichera après que vous ayez cliqué sur Rechercher.</h2>-->
-      <div id="add-event-map" class="row" style="height:0vh;">
-        <div class="col-lg-6 map_box_container" style="height:100%;">
-          <div id="map"></div>
-        </div>
+    <section class="flex flex-col lg:flex-row justify-center items-center rounded-xl">
+      <Wizard
+  v-model="currentTabIndex"
+  horizontal-tabs
+  card-background
+  navigable-tabs
+  scrollable-tabs
+  :buttonClass
+  :nextButton="nextButtonOptions"
+  :backButton="backButtonOptions"
+  :custom-tabs="customTabs"
+  :beforeChange="onTabBeforeChange"
+  @change="onChangeCurrentTab"
+  @complete:wizard="wizardCompleted"
+  class="rounded-lg shadow-md w-full max-w-3xl"
+>
+<h5 v-if="currentTabIndex === 0">
+  <SearchPage @geocodeResult="handleGeocodeResult"></SearchPage>
+</h5>
+
+<h5 class="flex justify-center items-center m-0 flex-col " v-if="currentTabIndex === 1">
         <div
-          class="col-lg-6 border-2 w-full lg:w-1/5 flex justify-center items-center flex-col bg-violet-600 rounded-md lg:mt-0 p-4"
-          v-if="result" style="height: 100%;">
-          <h1 class="text-white mb-4 text-xl font-bold text-center">Ajout de l'evenement</h1>
-          <label class="text-white text-m font-medium leading-tight text-center">Adresse complète</label>
-          <p class="text-m text-white mb-4 text-center">Nom de l'emplacement : {{ result.place }} {{ result.postalCode }}
+          class="col-lg-6 w-full text-black lg:w-1/5 flex justify-center items-center flex-col"
+          v-if="result" style="height: 600px;">
+          <label class="text-black text-m font-medium leading-tight text-center">Adresse complète</label>
+          <p class="text-m text-black mb-4 text-center">Nom de l'emplacement : {{ result.place }} {{ result.postalCode }}
             {{ result.city }} {{ result.country }}</p>
           <label class="text-white text-m font-medium leading-tight mb-1 text-center">Nom de l'evenement</label>
           <input class="w-full mb-4 p-2 rounded" placeholder="Saisissez le nom de l'événement" v-model="event_name" />
@@ -61,23 +74,18 @@
           <label class="text-white text-m font-medium leading-tight mb-1 text-center">Description de l'événement</label>
           <textarea class="mb-1 w-full h-24 p-2 rounded" v-model="event_txt" type="text"
             placeholder="Entrez la description" required></textarea>
-          <button @click="addPoint" type="submit"
-            class="mt-1 bg-white text-violet-600 p-2 rounded hover:text-violet-300 focus:outline-none focus:ring focus:ring-violet-600 focus:ring-opacity-50">
-            Ajouter un point et l'événement
-          </button>
+      </div>
+</h5>
+<h5 class="flex justify-center items-center m-0 flex-col" v-if="currentTabIndex === 2">
+        <div style="width:450px" class="items-center rounded-xl flex justify-center">
+          <div id="map"></div>
         </div>
-      </div>
+</h5>
+
+</Wizard>
+
     </section>
-    <!--<section class="max-w-screen-lg mx-auto p-4 md:p-16">
-      <div class="flex justify-evenly items-center">
-        <img src="../assets/images/jazze.PNG" alt="Jazz Logo" class="w-32 h-32 object-contain mx-4 my-4">
-        <img src="../assets/images/rock.PNG" alt="Rock Logo" class="w-32 h-32 object-contain mx-4 my-4">
-        <img src="../assets/images/salsa.PNG" alt="Salsa Logo" class="w-32 h-32 object-contain mx-4 my-4">
-        <img src="../assets/images/piano.PNG" alt="Classical Logo" class="w-32 h-32 object-contain mx-4 my-4">
-        <img src="../assets/images/rap.PNG" alt="Rap Logo" class="w-32 h-32 object-contain mx-4 my-4">
-      </div>
-    </section>
-    <hr class="my-8 border-gray-200">-->
+ 
     <ModalConfirm v-model="showError" title="Erreur" @confirm="confirmError">
       <p>{{ errorMessage }}</p>
     </ModalConfirm>
@@ -86,41 +94,48 @@
     </ModalConfirm>
   </div>
   <FooterPage></FooterPage>
+
 </template>
 
 
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue';
-import mapboxgl from 'mapbox-gl';
+import mapboxgl, { Map } from 'mapbox-gl';
 import ApiService from "@/services/ApiService";
-import HeaderPage from '../composables/Header/HeaderPage.vue';
-import SearchPage from '../composables/Map/SearchPage.vue';
-import ModalConfirm from '../components/pModal/ModalConfirm.vue'
-import FooterPage from '../composables/Footer/FooterPage.vue';
+import HeaderPage from '../../composables/Header/HeaderPage.vue';
+import SearchPage from '../../composables/Map/SearchPage.vue';
+import ModalConfirm from '../../components/pModal/ModalConfirm.vue'
+import FooterPage from '../../composables/Footer/FooterPage.vue';
+import Wizard from 'form-wizard-vue3'
+import { useRouter } from 'vue-router'
+import 'form-wizard-vue3/dist/form-wizard-vue3.css';
 
+const currentTabIndex = ref(0)
 const result = ref(null);
 const event_name = ref('');
 const event_label = ref('');
 const event_txt = ref('');
 const selectedStyle = ref('');
-let map;
+let map: Map;
+const neWPointMap = ref([])
 const showError = ref(false);
 const errorMessage = ref('');
 const successMessage = ref('');
 const showSuccess = ref(false);
 const meetingTime = ref(''); 
-
+const isUpdateMap = ref(false)
+const router = useRouter()
 const confirmError = () => {
   showError.value = false;
 };
 
-const confirmSuccess = () => {
-  showSuccess.value = false;
-  const elem = document.getElementById('add-event-map');
-  if (elem) {
-    elem.style.height = '100%';
-  }
-};
+
+const customTabs = ref([
+  { title: "Localisation", icon: "user" },
+  { title: "Ajout de l´évenement", icon: "search" },
+  { title: "Carte", icon: "map" },
+]);
+
 
 const styleColor = computed(() => {
   switch (selectedStyle.value) {
@@ -141,9 +156,76 @@ const styleColor = computed(() => {
   }
 });
 
+
+const nextButtonOptions = computed(() => {
+  if (currentTabIndex.value === 1) { 
+    return {
+      addPoint,
+      text: "Suivant ",
+      icon: "arrow-right",
+      hideIcon: false,
+      hideText: false,
+      disabled: false,
+    };
+  } else if (currentTabIndex.value === 2) {
+  return {
+      text: "Suivant",
+      icon: "arrow-right",
+      hideIcon: true,
+      hideText: true,
+      disabled: currentTabIndex.value === 2
+    };
+  } else {
+    return {
+      text: "Suivant",
+      icon: "arrow-right",
+      hideIcon: false,
+      hideText: false,
+      disabled: false,
+    };
+  }
+});
+
+const onChangeCurrentTab = (index, oldIndex) => {
+  console.log(index, oldIndex);
+  currentTabIndex.value = index;
+};
+
+const onTabBeforeChange = () => {
+  if (currentTabIndex.value === 0) {
+    console.log('0 Tab');
+    console.log(currentTabIndex.value)
+  }
+
+  if (currentTabIndex.value === 1) {
+    console.log('1 Tab');
+    console.log(currentTabIndex.value)
+  }
+
+  if (currentTabIndex.value === 2) {
+      createMapFunction();
+  }
+};
+
+const wizardCompleted = () => {
+  alert("The point is added !");
+};
+
+const backButtonOptions = computed(() => {
+  return {
+    text: "Retour",
+    icon: "arrow-left",
+    hideIcon: false,
+    hideText: false,
+    disabled: currentTabIndex.value === 0,
+  };
+});
+
+
+
 const handleGeocodeResult = (geocodeResult) => {
   result.value = geocodeResult;
-  updateMap([geocodeResult.longitude, geocodeResult.latitude]);
+  neWPointMap.value= ([geocodeResult.longitude, geocodeResult.latitude]);
   const elem = document.getElementById("map");
   if (elem) {
     elem.style.height = "600px";
@@ -153,7 +235,7 @@ const handleGeocodeResult = (geocodeResult) => {
 const addPoint = async () => {
   try {
     if (!result.value) {
-      throw new Error("Aucune donnée de géocodage disponible.");
+      throw new Error("No geocoding data available.");
     }
 
     const Point = {
@@ -197,7 +279,7 @@ const addPoint = async () => {
     });
     console.log(meetingTime)
     console.log(response.data);
-    successMessage.value = "Le point a bien été ajouté";
+    successMessage.value = "The point has been successfully added.";
     showSuccess.value = true;
     location.reload();
   } catch (error: any) {
@@ -211,27 +293,39 @@ const getAuthToken = async () => {
   return localStorage.getItem('authToken');
 };
 
-const updateMap = (coordinates) => {
-  if (map) {
-    map.remove();
-  }
+const createMapFunction = () => {
 
+  setTimeout(() => {
+    createMap(neWPointMap.value);
+  }, 500); 
+};
+
+
+
+const createMap = (coordinates:any | null) => {
+  if (coordinates != null) {
   map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/streets-v12',
     center: coordinates,
     zoom: 15,
+  }) 
+}  else {
+  map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v12',
+    center: [2.3522, 48.8566], 
+    zoom: 10,
   });
-
-  new mapboxgl.Marker()
-    .setLngLat(coordinates)
-    .addTo(map);
+  }
 };
 
+
 onMounted(() => {
+  currentTabIndex.value = 0;
   const token: string = "pk.eyJ1IjoiYmVjaGFyaTkzIiwiYSI6ImNtNjgwYTgwdzA4em0ycnFyczM2bXR2ZXgifQ.NNk_nOdxatVzztXUH1yIKA";
 
-  mapboxgl.accessToken = token;
+mapboxgl.accessToken = token;
 
 });
 </script>
