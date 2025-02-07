@@ -2,6 +2,7 @@ import express, { Router } from "express";
 import groupController from "../controllers/groupController";
 import verifyToken from "../middlewares/verifyToken";
 import verifyTokenAdmin from "../middlewares/verifyToken";
+
 const router: Router = express.Router();
 
 router.post("/create-group", verifyTokenAdmin, groupController.createGroup);
@@ -10,7 +11,9 @@ router.get("/get-group/:id", verifyToken, groupController.getGroup);
 
 router.get("/get-all-groups", verifyToken, groupController.getAllGroups);
 
-router.delete("/delete-group/:id", verifyTokenAdmin, groupController.deleteGroup);
+router.get("/get-random-groups", groupController.getRandomGroups);
+
+router.delete("/delete-group/:id", verifyToken, groupController.deleteGroup);
 
 export default router;
 
@@ -41,7 +44,7 @@ export default router;
  *               - name
  *             properties:
  *               name:
- *                 name: string
+ *                 type: string
  *                 description: The group's name.
  *     responses:
  *       201:
@@ -53,8 +56,8 @@ export default router;
  *
  * /get-all-groups:
  *   get:
- *     summary: Retrieve all group on the e-shop
- *     description: Get details of all group.
+ *     summary: Retrieve all groups on the e-shop
+ *     description: Get details of all groups.
  *     tags:
  *       - Group
  *     security:
@@ -78,7 +81,7 @@ export default router;
  *         schema:
  *           type: string
  *           format: uuid
- *         description: Numeric UUID of the group to retrieve his e-shop.
+ *         description: Numeric UUID of the group to retrieve in the e-shop.
  *     tags:
  *       - Group
  *     security:
@@ -91,10 +94,24 @@ export default router;
  *       401:
  *         description: Unauthorized.
  *
+ * /get-random-groups:
+ *   get:
+ *     summary: Retrieve random group's information
+ *     description: Get random groups.
+ *     tags:
+ *       - Group
+ *     responses:
+ *       200:
+ *         description: Random group information retrieved successfully.
+ *       400:
+ *         description: Bad request.
+ *       401:
+ *         description: Unauthorized.
+ *
  * /delete-group/{id}:
  *   delete:
- *     summary: Delete group with his ID
- *     description: Delete a group with his ID.
+ *     summary: Delete group with its ID
+ *     description: Delete a group with its ID.
  *     parameters:
  *       - in: path
  *         name: id
@@ -102,7 +119,7 @@ export default router;
  *         schema:
  *           type: string
  *           format: uuid
- *         description: Numeric UUID of the group to delete
+ *         description: Numeric UUID of the group to delete.
  *     tags:
  *       - Group
  *     security:

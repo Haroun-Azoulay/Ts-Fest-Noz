@@ -5,32 +5,32 @@ import { v4 as uuidv4 } from "uuid";
 // Don't remove you don't use generate uuid with faker because it's don't work !
 let myuuid = uuidv4();
 
-export async function retryDb<T>(fn: () => Promise<T>, retries = 30) {
+export async function retryDb<T>(fn: () => Promise<T>, retries = 10) {
   for (let i = 0; i < retries; i++) {
     try {
       return await fn();
     } catch (err) {
-      logger.info(`${i}: try to mock the database.`);
+      logger.info(`${i}: Try to mock the database.`);
       if (i === 0) logger.error(`You have an error with the faker.`);
       if (i === retries - 1) throw err;
     }
   }
 }
 
-const userUUIDs = Array.from({ length: 30 }, () => myuuid);
-const postUUIDs = Array.from({ length: 30 }, () => myuuid);
-const cityUUIDs = Array.from({ length: 30 }, () => myuuid);
-const commentaryUUIDs = Array.from({ length: 10 }, () => myuuid);
-const eventUUIDs = Array.from({ length: 10 }, () => myuuid);
-const goodieTypeUUIDs = Array.from({ length: 30 }, () => myuuid);
-const groupUUIDs = Array.from({ length: 30 }, () => myuuid);
-const orderDetailUUIDs = Array.from({ length: 30 }, () => myuuid);
-const orderUUIDs = Array.from({ length: 10 }, () => myuuid);
-const goodieUUIDs = Array.from({ length: 10 }, () => myuuid);
-const groupUserUUIDs = Array.from({ length: 10 }, () => myuuid);
-const paymentUUIDs = Array.from({ length: 5 }, () => myuuid);
-const artistProfilUUIDs = Array.from({ length: 10 }, () => myuuid);
-const OrganizerProfilUUIDs = Array.from({ length: 10 }, () => myuuid);
+const userUUIDs = Array.from({ length: 10 }, () => uuidv4());
+const postUUIDs = Array.from({ length: 10 }, () => uuidv4());
+const cityUUIDs = Array.from({ length: 10 }, () => uuidv4());
+const commentaryUUIDs = Array.from({ length: 10 }, () => uuidv4());
+const eventUUIDs = Array.from({ length: 10 }, () => uuidv4());
+const goodieTypeUUIDs = Array.from({ length: 10 }, () => uuidv4());
+const groupUUIDs = Array.from({ length: 10 }, () => uuidv4());
+const orderDetailUUIDs = Array.from({ length: 10 }, () => uuidv4());
+const orderUUIDs = Array.from({ length: 10 }, () => uuidv4());
+const goodieUUIDs = Array.from({ length: 10 }, () => uuidv4());
+const groupUserUUIDs = Array.from({ length: 10 }, () => uuidv4());
+const paymentUUIDs = Array.from({ length: 10 }, () => uuidv4());
+const artistProfilUUIDs = Array.from({ length: 10 }, () => uuidv4());
+const OrganizerProfilUUIDs = Array.from({ length: 10 }, () => uuidv4());
 
 export function createRandomUser(index: number) {
   return {
@@ -39,6 +39,9 @@ export function createRandomUser(index: number) {
     firstname: faker.person.firstName(),
     password: faker.internet.password(),
     email: faker.internet.email(),
+    city: fakerFR.location.city(),
+    latitude: fakerFR.location.latitude(),
+    longitude: fakerFR.location.longitude(),
     pseudo: faker.person.firstName(),
     city: fakerFR.location.city(),
     registeredAt: faker.date.past(),
@@ -60,7 +63,7 @@ export function createRandomCity(index: number) {
   return {
     id: cityUUIDs[index],
     user_id: faker.helpers.arrayElement(userUUIDs),
-    city_name: faker.location.city(),
+    city_name: fakerFR.location.city(),
     address: faker.location.streetAddress(),
     text: faker.lorem.sentence(),
     zip_code: parseInt(faker.location.zipCode()),
@@ -178,46 +181,46 @@ export function createArtistProfil(index: number) {
 export function createOrganizerProfil(index: number) {
   return {
     id: OrganizerProfilUUIDs[index],
-    denomination: faker.book.author(),
+    denomination: faker.book.author().slice(0, 100),
     phone_number: faker.phone.number(),
-    full_adress: faker.location.secondaryAddress(),
+    full_adress: faker.location.secondaryAddress().slice(0, 255),
     SIRET_number: faker.number.int({ min: 1000, max: 10000 }),
-    more_info: faker.lorem.lines(),
+    more_info: faker.lorem.lines().slice(0, 100),
     userId: faker.helpers.arrayElement(userUUIDs),
   };
 }
 
-export const users = Array.from({ length: 50 }, (_, index) =>
+export const users = Array.from({ length: 40 }, (_, index) =>
   createRandomUser(index),
 );
-export const posts = Array.from({ length: 50 }, (_, index) =>
+export const posts = Array.from({ length: 10 }, (_, index) =>
   createRandomPost(index),
 );
-export const cities = Array.from({ length: 50 }, (_, index) =>
+export const cities = Array.from({ length: 10 }, (_, index) =>
   createRandomCity(index),
 );
-export const commentaries = Array.from({ length: 5 }, (_, index) =>
+export const commentaries = Array.from({ length: 10 }, (_, index) =>
   createRandomCommentary(index),
 );
-export const events = Array.from({ length: 5 }, (_, index) =>
+export const events = Array.from({ length: 10 }, (_, index) =>
   createRandomEvent(index),
 );
-export const goodieTypes = Array.from({ length: 5 }, (_, index) =>
+export const goodieTypes = Array.from({ length: 10 }, (_, index) =>
   createGoodieType(index),
 );
-export const groups = Array.from({ length: 50 }, (_, index) =>
+export const groups = Array.from({ length: 10 }, (_, index) =>
   createGroup(index),
 );
-export const groupUsers = Array.from({ length: 5 }, (_, index) =>
+export const groupUsers = Array.from({ length: 10 }, (_, index) =>
   createGroupUser(index),
 );
-export const goodies = Array.from({ length: 50 }, (_, index) =>
+export const goodies = Array.from({ length: 10 }, (_, index) =>
   createGoodie(index),
 );
 export const orderDetails = Array.from({ length: 10 }, (_, index) =>
   createOrderDetail(index),
 );
-export const orders = Array.from({ length: 5 }, (_, index) =>
+export const orders = Array.from({ length: 10 }, (_, index) =>
   createOrder(index),
 );
 
@@ -225,11 +228,11 @@ export const payments = Array.from({ length: 10 }, (_, index) =>
   createPayment(index),
 );
 
-export const artistProfils = Array.from({ length: 5 }, (_, index) =>
+export const artistProfils = Array.from({ length: 10 }, (_, index) =>
   createArtistProfil(index),
 );
 
-export const organizerProfils = Array.from({ length: 5 }, (_, index) =>
+export const organizerProfils = Array.from({ length: 10 }, (_, index) =>
   createOrganizerProfil(index),
 );
 

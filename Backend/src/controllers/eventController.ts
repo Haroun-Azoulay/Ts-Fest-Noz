@@ -97,9 +97,17 @@ const addPayment = async (
 ): Promise<Response<any, Record<string, any>>> => {
   try {
     const userId: string | undefined = req.userId;
-    const eventId: string = req.params.id;
+    const eventId: string | undefined = req.params.id;
+
+    if (!userId) {
+      return res.status(400).json({ error: "userId est requis" });
+    }
+    if (!eventId) {
+      return res.status(400).json({ error: "eventId est requis" });
+    }
+
     console.log(
-      "addPayment - userId:",
+      "📌 addPayment - userId:",
       userId,
       "eventId:",
       eventId,
@@ -113,20 +121,23 @@ const addPayment = async (
 
     const payment: PaymentModel = await PaymentModel.create({
       ...req.body,
+      userId,
+      eventId,
       token,
     });
+
     const formattedPayment: PaymentAttributes = {
       id: payment.id,
       payment: payment.payment,
       token: token,
       eventId: eventId,
-      userId: payment.userId,
+      userId: userId,
     };
 
-    console.log("addPayment - formattedPayment:", formattedPayment);
+    console.log("✅ addPayment - formattedPayment:", formattedPayment);
     return res.status(201).json(formattedPayment);
   } catch (error) {
-    console.error("Error adding a payment:", error);
+    console.error("❌ Error adding a payment:", error);
     return res.status(500).send("Error adding a payment");
   }
 };

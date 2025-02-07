@@ -43,6 +43,9 @@ export default router;
  *               - pseudo
  *               - firstname
  *               - lastname
+ *               - city
+ *               - longitude
+ *                 latitude
  *             properties:
  *               email:
  *                 type: string
@@ -58,7 +61,16 @@ export default router;
  *                 description: The user's firstname.
  *               lastname:
  *                 type: string
- *                 description: The user's lastname.
+ *                 description: The user's lastname..
+ *               city:
+ *                 type: string
+ *                 description: The user's city.
+ *               longitude:
+ *                 type: number
+ *                 description: The user's longitude.
+ *               latitude:
+ *                 type: number
+ *                 description: The user's latitude.
  *     responses:
  *       201:
  *         description: User created successfully.

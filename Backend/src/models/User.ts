@@ -9,6 +9,8 @@ class User extends Model<UserAttributes> {
   public password!: string;
   public email!: string;
   public city!: string;
+  public longitude!: number;
+  public latitude!: number;
   public role!: string;
   public pseudo!: string;
 }
@@ -44,6 +46,14 @@ User.init(
     city: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    longitude: {
+      type: DataTypes.FLOAT,
+      allowNull: true,
+    },
+    latitude: {
+      type: DataTypes.FLOAT,
+      allowNull: true,
     },
     role: {
       type: DataTypes.STRING,

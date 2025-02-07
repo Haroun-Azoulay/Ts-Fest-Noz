@@ -16,6 +16,13 @@ export interface ArtistProfilAttributes {
 // ============================================= ArtistProfil Interfaces (End) =============================================
 
 // ============================================= City Interfaces (Start) =============================================
+export interface CoordinateAttributes {
+  id: string;
+  latitude: number;
+  longitude: number;
+  distance: number;
+}
+// ============================================= City Interfaces (Start) =============================================
 export interface CityAttributes {
   id: string;
   user_id: string;
@@ -104,8 +111,10 @@ export interface UserAttributes {
   lastname: string;
   firstname: string;
   password: string;
-  email: string;
   city: string;
+  longitude: number;
+  latitude: number;
+  email: string;
   role: string;
   pseudo: string;
 }
@@ -125,6 +134,8 @@ export interface UserInfo {
   lastname: string;
   firstname: string;
   city: string;
+  longitude: number;
+  latitude: number;
   role: string;
   pseudo: string;
 }

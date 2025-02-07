@@ -4,7 +4,8 @@ export interface Signup {
     password: string,
     email: string,
     role: string,
-    pseudo:string
+    pseudo:string,
+    city: string
 }
 
 export interface Signin {

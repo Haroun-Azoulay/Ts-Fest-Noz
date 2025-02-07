@@ -1,149 +1,149 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import SignupView from '@/components/SignupView.vue';
-import SigninView from '@/components/SigninView.vue';
-import HomeView from '@/components/HomeView.vue';
-import AddEvent from '@/components/AddEventView.vue';
-import CityView from '@/components/CityView.vue';
-import EventView from '@/components/EventView.vue';
-import AdminHomeView from '@/components/AdminHomeView.vue';
-import SingleEventView from '@/components/SingleEventView.vue';
-import SingleForumView from '@/components/SingleForumView.vue';
-import SinglePaymentPageView from '@/components/SinglePaymentPageView.vue';
-import SingleTokenView from '@/components/SingleTokenView.vue';
-import ContactView from '@/components/ContactView.vue';
-import ForumView from '@/components/ForumView.vue';
-import ErrorView from '@/components/404View.vue';
-import PostView from '@/components/AddPostView.vue';
-import authMiddleware from '@/middlewares/auth';
-import authEvent from '@/middlewares/authEvent';
-import authAdmin from '@/middlewares/authAdmin';
-import auth from '@/middlewares/auth';
+import { createRouter, createWebHistory } from 'vue-router'
+import SignupView from '@/views/Authentification/SignupView.vue'
+import SigninView from '@/views/Authentification/SigninView.vue'
+import HomeView from '@/views/Home/HomeView.vue'
+import AddEvent from '@/views/City/AddEventView.vue'
+import CityView from '@/views/City/CityView.vue'
+import EventView from '@/views/Events/EventView.vue'
+import AdminHomeView from '@/views/Admin/AdminHomeView.vue'
+import SingleEventView from '@/views/Events/SingleEventView.vue'
+import SingleForumView from '@/views/Forum/SingleForumView.vue'
+import ForumView from '@/views/Forum/ForumView.vue'
+import SinglePaymentPageView from '@/views/SinglePaymentPageView.vue'
+import SingleTokenView from '@/views/SingleTokenView.vue'
+import ContactView from '@/views/Contact/ContactView.vue'
+import ErrorView from '@/views/404/404View.vue'
+import PostView from '@/views/Forum/AddPostView.vue'
+import authMiddleware from '@/middlewares/auth'
+import authEvent from '@/middlewares/authEvent'
+import authAdmin from '@/middlewares/authAdmin'
+import auth from '@/middlewares/auth'
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView,
+    component: HomeView
   },
   {
     path: '/signup',
     name: 'signup',
-    component: SignupView,
+    component: SignupView
   },
   {
     path: '/signin',
     name: 'signin',
-    component: SigninView,
+    component: SigninView
   },
   {
     path: '/contact',
     name: 'contact',
-    component: ContactView,
+    component: ContactView
   },
   {
     path: '/forum',
     name: 'forum',
     component: ForumView,
     meta: {
-      middleware: [authMiddleware],
-    },
+      middleware: [authMiddleware]
+    }
   },
   {
     path: '/forum/add',
     name: 'addPost',
     component: PostView,
     meta: {
-      middleware: [authEvent],
-    },
+      middleware: [authEvent]
+    }
   },
   {
     path: '/forum/:idpost',
     name: 'SingleForum',
-    component: SingleForumView,
+    component: SingleForumView
   },
   {
     path: '/add',
     name: 'add',
     component: AddEvent,
     meta: {
-      middleware: [authEvent],
-    },
+      middleware: [authEvent]
+    }
   },
   {
     path: '/city',
     name: 'city',
     component: CityView,
     meta: {
-      middleware: [authMiddleware],
-    },
+      middleware: [authMiddleware]
+    }
   },
   {
     path: '/event',
     name: 'event',
     component: EventView,
     meta: {
-      middleware: [auth],
-    },
+      middleware: [auth]
+    }
   },
   {
     path: '/admin',
     name: 'admin',
     component: AdminHomeView,
     meta: {
-      middleware: [authAdmin],
-    },
+      middleware: [authAdmin]
+    }
   },
   {
     path: '/event/:id',
     name: 'Singleevent',
     component: SingleEventView,
     meta: {
-      middleware: [auth],
-    },
+      middleware: [auth]
+    }
   },
   {
     path: '/event/:id/:userid',
     name: 'Singlepayment',
-    component: SinglePaymentPageView,
+    component: SinglePaymentPageView
   },
   {
-    path: '/error',
-    name: 'ErrorView',
-    component: ErrorView,
-  },
-  {
-    path: '/event/token/3AGZEYG&1386SFAFTFDA',
+    path: '/event/token/:token',
     name: 'Singletoken',
-    component: SingleTokenView,
+    component: SingleTokenView
   },
-];
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'not-found',
+    component: ErrorView
+  },
+]
 
 const router = createRouter({
   history: createWebHistory(),
-  routes,
-});
+  routes
+})
 
-function nextFactory(context: any, middleware: any, index: any) {
-  const subsequentMiddleware = middleware[index];
-  if (!subsequentMiddleware) return context.next;
+function nextFactory(context, middleware, index) {
+  const subsequentMiddleware = middleware[index]
+  if (!subsequentMiddleware) return context.next
 
-  return (...parameters: any) => {
-    context.next(...parameters);
-    const nextMiddleware = nextFactory(context, middleware, index + 1);
-    subsequentMiddleware({ ...context, next: nextMiddleware });
-  };
+  return (...parameters) => {
+    context.next(...parameters)
+    const nextMiddleware = nextFactory(context, middleware, index + 1)
+    subsequentMiddleware({ ...context, next: nextMiddleware })
+  }
 }
 
 router.beforeEach((to, from, next) => {
   if (to.meta.middleware) {
-    const middleware = Array.isArray(to.meta.middleware) ? to.meta.middleware : [to.meta.middleware];
-    const context = { from, next, router, to };
-    const nextMiddleware = nextFactory(context, middleware, 1);
+    const middleware = Array.isArray(to.meta.middleware) ? to.meta.middleware : [to.meta.middleware]
+    const context = { from, next, router, to }
+    const nextMiddleware = nextFactory(context, middleware, 1)
 
-    return middleware[0]({ ...context, next: nextMiddleware });
+    return middleware[0]({ ...context, next: nextMiddleware })
   }
 
-  return next();
-});
+  return next()
+})
 
-export default router;
+export default router

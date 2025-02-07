@@ -1,32 +1,19 @@
 FROM debian:bookworm
 
-
-RUN apt-get update && apt-get upgrade -y \
-    && apt-get update && apt-get install -y nodejs \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN apt-get update && apt-get upgrade -y && \
-    apt-get install -y npm \
-
-
 WORKDIR /app
 
-
-COPY package*.json ./
-
-
-RUN npm install \
-    npm install --save jwt-decode \
-    npm install --save @types/jwt-decode
-
+RUN apt update && apt upgrade -y \
+    && apt install -y nodejs npm \
+    && apt clean \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY . .
-# voir une image node js fixe nginx pour file static utiliser proxy
 
+RUN rm -rf node_modules package-lock.json \
+    && npm install --legacy-peer-deps
 
 EXPOSE 5173
 
+CMD ["npm", "run", "dev"]
 
-CMD ["npm", "run", "serve"]
 

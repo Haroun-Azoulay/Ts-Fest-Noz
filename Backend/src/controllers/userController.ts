@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import UserModel from "../models/User";
 import { UserInfo } from "../interfaces/types";
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const signup = async (
@@ -9,9 +9,27 @@ const signup = async (
   res: Response,
 ): Promise<Response<any, Record<string, any>>> => {
   try {
-    const { lastname, firstname, password, email, pseudo, city } = req.body;
+    const {
+      lastname,
+      firstname,
+      password,
+      email,
+      pseudo,
+      city,
+      longitude,
+      latitude,
+    } = req.body;
 
-    if (!lastname || !firstname || !password || !email || !pseudo) {
+    if (
+      !lastname ||
+      !firstname ||
+      !password ||
+      !email ||
+      !pseudo ||
+      !city ||
+      !longitude ||
+      !latitude
+    ) {
       return res.status(400).json({
         message: "A required field is missing.",
       });
@@ -29,6 +47,8 @@ const signup = async (
       password: hashedPassword,
       pseudo,
       city,
+      longitude,
+      latitude,
       role: assignedRole,
     });
 
@@ -65,6 +85,8 @@ const getUserInfo = async (
       lastname: user.lastname,
       firstname: user.firstname,
       city: user.city,
+      longitude: user.longitude,
+      latitude: user.latitude,
       role: user.role,
       pseudo: user.pseudo,
     };
@@ -101,7 +123,6 @@ const signin = async (
         message: "Invalid credentials. Check your username and password.",
       });
     }
-    
     const passwordMatch: boolean = await bcrypt.compare(
       password,
       foundUser.password
@@ -136,14 +157,17 @@ const signin = async (
 //   res.status(200).json({ message: "Logout successful" });
 // };
 
-const getAllUsers = async (req: Request, res: Response): Promise<Response<any, Record<string, any>>> => {
+const getAllUsers = async (
+  req: Request,
+  res: Response,
+): Promise<Response<any, Record<string, any>>> => {
   const result = await UserModel.findAll();
   return res.status(200).json(result);
 };
 
 const deleteUser = async (
   req: Request,
-  res: Response
+  res: Response,
 ): Promise<Response<any, Record<string, any>>> => {
   try {
     const pseudo: string | undefined = req.params.pseudo;

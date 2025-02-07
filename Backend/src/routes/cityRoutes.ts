@@ -14,7 +14,16 @@ router.post(
 
 router.get("/get-all-points", verifyToken, cityController.getAllPoints);
 
-router.get("/get-point/:userId", verifyToken, cityController.getPointByUser);
+router.get("/get-all-points", verifyToken, cityController.getAllPoints);
+
+// I'm not adding a token but it's just to simplify the call on the route below
+router.get("/get-point-id/:cityId", cityController.getPointById);
+
+router.get(
+  "/get-point-near-user/:userId",
+  verifyToken,
+  cityController.getPointNearUser,
+);
 
 //  I don't know why this line is comment ?
 // router.put("/update-point/:pointId", verifyToken, cityController.updatePoint);
@@ -99,10 +108,59 @@ export default router;
  *       401:
  *         description: Unauthorized.
  *
+ *
+ * /get-point-id/{cityId}:
+ *   get:
+ *     summary: Retrieve all points's information with this UUID
+ *     description: Get details of the point by this UUID.
+ *     parameters:
+ *       - in: path
+ *         name: cityId
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *         description: Numeric UUID of the point to retrieve this.
+ *     tags:
+ *       - City
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Points information retrieved successfully.
+ *       400:
+ *         description: Bad request.
+ *       401:
+ *         description: Unauthorized.
+ *
  * /get-point/{userId}:
  *   get:
  *     summary: Retrieve all points's information with the UUID User
  *     description: Get details of the point by the UUID User.
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *         description: Numeric UUID of the user to retrieve his point.
+ *     tags:
+ *       - City
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Points information retrieved successfully.
+ *       400:
+ *         description: Bad request.
+ *       401:
+ *         description: Unauthorized.
+ *
+ * /get-point-near-user/{userId}:
+ *   get:
+ *     summary: Retrieve with Haversine formula all points's information near User
+ *     description: Get details of the point by the UUID User with Haversine formula.
  *     parameters:
  *       - in: path
  *         name: userId

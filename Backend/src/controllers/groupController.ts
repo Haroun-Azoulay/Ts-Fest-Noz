@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import UserModel from "../models/User";
 import GroupModel from "../models/Group";
+import { Sequelize } from "sequelize";
 
 const createGroup = async (
   req: Request,
@@ -82,9 +83,26 @@ const getAllGroups = async (
   }
 };
 
+const getRandomGroups = async (
+  req: Request,
+  res: Response,
+): Promise<Response<any, Record<any, any>>> => {
+  try {
+    const randomGroups: GroupModel[] = await GroupModel.findAll({
+      order: Sequelize.literal("RANDOM()"),
+      limit: 5,
+    });
+    return res.json(randomGroups);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Error getting all groups." });
+  }
+};
+
 export default {
   createGroup,
   deleteGroup,
   getGroup,
   getAllGroups,
+  getRandomGroups,
 };

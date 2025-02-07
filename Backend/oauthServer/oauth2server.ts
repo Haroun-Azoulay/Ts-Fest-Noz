@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import express, { Request, Response, NextFunction } from "express";
 import bodyParser from "body-parser";
+import cors from "cors";
 import OAuth2Server, {
   Request as OAuthRequest,
   Response as OAuthResponse,
@@ -13,6 +14,8 @@ const oauthModel = require("./model").default;
 dotenv.config();
 
 const app = express();
+
+app.use(cors());
 
 // Middleware setup
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -48,15 +51,25 @@ app.post(
   },
 );
 
-app.all("/oauth/token", (req: Request, res: Response) => {
-  obtainToken(req, res);
+import { Token } from "oauth2-server";
+
+let storedAccessToken: string | null = null;
+
+app.all("/oauth/token", async (req: Request, res: Response) => {
+  try {
+    const token: Token = await obtainToken(req, res);
+
+    if (token && token.accessToken) {
+      storedAccessToken = token.accessToken;
+      res.redirect(`http://localhost:5173/event/token/${token.accessToken}`);
+    }
+  } catch (error) {
+    console.error( error);
+    res.status(500).json({ error });
+  }
 });
 
-app.get("/", authenticateRequest, (req: Request, res: Response) => {
-  res.send("Congratulations, you are in a secret area!");
-});
-
-function obtainToken(req: Request, res: Response) {
+async function obtainToken(req: Request, res: Response): Promise<Token> {
   req.body.client_id = process.env.CLIENT_ID || "";
   req.body.client_secret = process.env.CLIENT_SECRET || "";
 
@@ -69,15 +82,18 @@ function obtainToken(req: Request, res: Response) {
 
   const response = new OAuthResponse(res);
 
-  return app.oauth
-    .token(request, response)
-    .then((token) => {
-      res.json(token);
-    })
-    .catch((err) => {
-      res.status(err.code || 500).json(err);
-    });
+  try {
+    const token: Token = await app.oauth.token(request, response);
+    return token;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 }
+
+app.get("/", authenticateRequest, (req: Request, res: Response) => {
+  res.send("Congratulations, you are in a secret area!");
+});
 
 function authenticateRequest(req: Request, res: Response, next: NextFunction) {
   const request = new OAuthRequest({
