@@ -120,7 +120,12 @@ export interface UserAttributes {
 }
 
 export interface UserRequest {
-  user?: UserAttributes;
+  lastname: string;
+  firstname: string;
+  password: string;
+  email: string;
+  city: string;
+  pseudo: string;
 }
 
 export interface UserInfo {

@@ -13,27 +13,6 @@ class User extends Model<UserAttributes> {
   public latitude!: number;
   public role!: string;
   public pseudo!: string;
-
-  public static updateUserRole = async (
-    userId: string,
-    newRole: string,
-  ): Promise<boolean> => {
-    try {
-      const user = await this.findByPk(userId);
-      if (!user) {
-        throw new Error("User not found.");
-      }
-      if (newRole !== "admin") {
-        await user.update({ role: newRole });
-        return true;
-      } else {
-        return false;
-      }
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  };
 }
 
 User.init(
@@ -84,8 +63,8 @@ User.init(
       },
     },
     pseudo: {
-      type: DataTypes.STRING,
-      allowNull: false,
+      type: DataTypes.STRING(32),
+      allowNull: false
     },
   },
   {

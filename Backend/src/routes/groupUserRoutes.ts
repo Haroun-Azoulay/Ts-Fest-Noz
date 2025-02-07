@@ -10,6 +10,12 @@ router.post(
   groupUserController.createGroupUser,
 );
 
+router.delete(
+  "/groups/:groupId/users",
+  verifyTokenAdmin,
+  groupUserController.deleteGroupUser,
+);
+
 export default router;
 
 /**

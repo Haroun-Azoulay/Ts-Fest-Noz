@@ -26,7 +26,7 @@ router.get(
   eventController.getPaymentById,
 );
 
-router.post("/get-event/token", eventController.verifyTokenOATUH);
+router.post("/get-event/token", eventController.verifyTokenOAUTH);
 
 router.delete("/delete-token/:token", eventController.deleteToken);
 

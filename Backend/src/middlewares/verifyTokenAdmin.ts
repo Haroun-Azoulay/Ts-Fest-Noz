@@ -8,22 +8,17 @@ const verifyTokenAdmin = (
   next: NextFunction,
 ): Response<any, Record<string, any>> | undefined => {
   const authorizationHeader = req.headers.authorization;
-
   if (!authorizationHeader) {
     return res.status(401).json({ message: "Authentication is required" });
   }
-
   const token = authorizationHeader.split(" ")[1];
-
   jwt.verify(token, "RANDOM_SECRET_KEY", (err, decoded) => {
     if (err) {
       return res.status(401).json({ message: "Invalid token" });
     }
-
     const decodedToken = decoded as JwtPayload;
     console.log(decodedToken);
     const roleToken = decodedToken.role;
-
     if (roleToken === "admin") {
       next();
     } else {
