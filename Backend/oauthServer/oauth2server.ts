@@ -61,7 +61,7 @@ app.all("/oauth/token", async (req: Request, res: Response) => {
 
     if (token && token.accessToken) {
       storedAccessToken = token.accessToken;
-      res.redirect(`http://localhost:5174/event/token/${token.accessToken}`);
+      res.redirect(`http://localhost:5173/event/token/${token.accessToken}`);
     }
   } catch (error) {
     console.error( error);
