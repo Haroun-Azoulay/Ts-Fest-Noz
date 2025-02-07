@@ -28,9 +28,9 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
-import HeaderPage from '../composables/Header/HeaderPage.vue';
-import FooterPage from '../composables/Footer/FooterPage.vue';
-import ApiService from '../services/ApiService';
+import HeaderPage from '../../composables/Header/HeaderPage.vue';
+import FooterPage from '../../composables/Footer/FooterPage.vue';
+import ApiService from '../../services/ApiService';
 import { useRoute, } from 'vue-router';
 const route = useRoute();
 const url = ref(route.params.token);
