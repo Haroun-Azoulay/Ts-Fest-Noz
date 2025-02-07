@@ -101,49 +101,7 @@ announcementspage.vue :
         </div>
       </div>
     </div>
-    <div class="container mt-12" v-if="isArtist">
-      <div class="row g-custom-x align-items-center">
-        <div class="col-lg-12">
-          <div class="text-center">
-            <div class="wm wow slideInUp">Annonces</div>
-            <h2 class="wow fadeInUp" data-wow-delay=".2s">
-              <span class="id-color">Annonces des organisateurs à venir !</span>
-            </h2>
-            <div class="small-border bg-color-2"></div>
-            <div class="spacer-single"></div>
-          </div>
-        </div>
-      </div>
-      <div
-        id="list-announcement-posts"
-        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
-      >
-        <div
-          v-for="organizerAnnouncement in organizerAnnouncements"
-          :key="organizerAnnouncement.id"
-          class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
-        >
-          <h2 class="text-xl font-semibold mb-2 text-black">{{ organizerAnnouncement.title }}</h2>
-          <p class="text-black-700 mb-4">{{ organizerAnnouncement.description }}</p>
-          <button
-            class="ButtonPrimary text-white w-full md:w-80 h-12 px-6 m-2 py-2.5 bg-gradient-to-r from-violet-500 to-purple-700 rounded-lg flex justify-center items-center shadow-lg transform hover:scale-105 transition-transform duration-300"
-            @click="goToSingleAnnouncement(organizerAnnouncement.id)"
-          >
-            Consulter le post
-          </button>
-        </div>
-      </div>
-      <br />
-      <div class="d-flex justify-content-center">
-        <button
-          @click="goToEventPage()"
-          class="ButtonPrimary font-bold text-white w-full md:w-80 h-12 px-6 m-2 py-2.5 bg-gradient-to-r from-violet-500 to-purple-700 rounded-lg flex justify-center items-center shadow-lg transform hover:scale-105 transition-transform duration-300"
-        >
-          Voir tous les annonces
-        </button>
-      </div>
-    </div>
-    <div class="container" v-if="isOrganizer">
+    <div class="container mt-12" v-if="isArtist || isUser || isOrganizer || isFullAuthorized">
       <div class="row g-custom-x align-items-center">
         <div class="col-lg-12">
           <div class="text-center">

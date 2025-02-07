@@ -11,6 +11,7 @@
   "type": "commonjs",
   "dependencies": {
     "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
     "csurf": "^1.11.0",
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
@@ -20,6 +21,7 @@
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.8",
+    "@types/cors": "^2.8.17",
     "@types/csurf": "^1.11.5",
     "@types/oauth2-server": "^3.0.18",
     "@typescript-eslint/eslint-plugin": "^6.21.0",

@@ -107,7 +107,7 @@ const routes = [
     component: SinglePaymentPageView
   },
   {
-    path: '/event/token/3AGZEYG&1386SFAFTFDA',
+    path: '/event/token/:token',
     name: 'Singletoken',
     component: SingleTokenView
   },
@@ -115,7 +115,7 @@ const routes = [
     path: '/:pathMatch(.*)*',
     name: 'not-found',
     component: ErrorView
-  }
+  },
 ]
 
 const router = createRouter({

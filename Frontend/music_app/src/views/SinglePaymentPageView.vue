@@ -31,6 +31,7 @@ import HeaderPage from '../composables/Header/HeaderPage.vue';
 import FooterPage from '../composables/Footer/FooterPage.vue';
 import { useRouter } from 'vue-router';
 import QrcodeVue, { Level, RenderAs } from 'qrcode.vue';
+import axios from "axios";
 
 const router = useRouter();
 
@@ -46,15 +47,23 @@ onMounted(() => {
 });
 
 const qrValue = computed(() => {
-  const baseUrl = "http://localhost:5000/login";
+  const baseUrl = "http://localhost:3001/form";
   if (token.value) {
     return `${baseUrl}?token=${token.value}`;
   }
   return baseUrl;
 });
 
-const goToIdentificationPage = () => {
-  const externalUrl = 'http://localhost:5000/login';
-  window.location.href = externalUrl;
+
+const goToIdentificationPage = async () => {
+  try {
+
+    window.location.href = "http://localhost:3001/form"; 
+
+  } catch (error) {
+    console.error(error);
+  }
 };
+
+
 </script>
