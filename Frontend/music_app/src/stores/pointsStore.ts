@@ -1,9 +1,9 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-;
+  ;
 
 export const pointsStore = defineStore("points", () => {
-  const points = ref<{ 
+  const points = ref<{
     id: string;
     longitude: number;
     latitude: number;

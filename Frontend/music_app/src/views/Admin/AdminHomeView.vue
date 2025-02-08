@@ -1,18 +1,18 @@
 <template>
   <HeaderPage></HeaderPage>
   <section id="subheader" class="text-light" data-bgimage="url(/images-dj/background/subheader.jpg) bottom">
-      <div class="center-y relative text-center">
-          <div class="container">
-              <div class="row">
-                  
-                  <div class="col-md-12 text-center">
-                    <h1>Gestion des utilisateurs</h1>
-                  </div>
-                  <div class="clearfix"></div>
-              </div>
+    <div class="center-y relative text-center">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-md-12 text-center">
+            <h1>Gestion des utilisateurs</h1>
           </div>
+          <div class="clearfix"></div>
+        </div>
       </div>
-    </section>
+    </div>
+  </section>
   <section>
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
       <table class="w-full text-sm text-left rtl:text-right text-blue-100 dark:text-blue-100">
@@ -40,7 +40,7 @@
               Pseudo
             </th>
             <th scope="col" class="px-6 py-3">
-             Role
+              Role
             </th>
           </tr>
         </thead>
@@ -82,7 +82,7 @@
       </table>
     </div>
   </section>
-  <FooterPage/>
+  <FooterPage />
 </template>
 
 <script setup lang="ts">

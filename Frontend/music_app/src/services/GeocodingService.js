@@ -20,7 +20,7 @@ const parsePlaceName = (placeName) => {
   const postalCode = postalCodeMatch ? postalCodeMatch[0] : '';
   const city = cityMatch ? cityMatch : '';
   const country = countryMatch ? countryMatch[0] : '';
-  const place = placeMatch? placeMatch[0]: '';
+  const place = placeMatch ? placeMatch[0] : '';
 
   return { streetAddress, postalCode, city, country, place };
 };
@@ -41,7 +41,7 @@ const geocodeAddress = async (geocoding_adress) => {
       const { streetAddress, postalCode, city, country, place } = parsePlaceName(place_name);
       const [longitude, latitude] = center;
 
-      console.log("geocodingservice : "+ JSON.stringify(parsePlaceName(place_name)));
+      console.log("geocodingservice : " + JSON.stringify(parsePlaceName(place_name)));
 
       return { latitude, longitude, streetAddress, postalCode, city, country, place };
     }
@@ -68,7 +68,7 @@ const geocodeAddressByPlace = async (geocoding_adress) => {
       const { streetAddress, postalCode, city, country, place } = parsePlaceName(place_name);
       const [longitude, latitude] = center;
 
-      console.log("geocodingservice : "+ JSON.stringify(parsePlaceName(place_name)));
+      console.log("geocodingservice : " + JSON.stringify(parsePlaceName(place_name)));
 
       return { latitude, longitude, streetAddress, postalCode, city, country, place };
     }
