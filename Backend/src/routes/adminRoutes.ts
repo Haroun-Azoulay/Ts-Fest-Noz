@@ -1,13 +1,12 @@
 import express, { Router } from "express";
 import userController from "../controllers/userController";
 import verifyToken from "../middlewares/verifyToken";
-import isAdmin from "../middlewares/isAdmin";
 import verifyTokenAdmin from "../middlewares/verifyTokenAdmin";
 
 const router: Router = express.Router();
 
 // it's the same like user i can change after !!!
-router.get("/all-users", verifyToken, isAdmin, userController.getAllUsers);
+router.get("/all-users", verifyToken, userController.getAllUsers);
 
 router.put(
   "/update-role/:userId",

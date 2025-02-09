@@ -2,62 +2,58 @@ import { Request, Response } from "express";
 import GoodieTypeModel from "../models/GoodieType";
 import { GoodieTypeAttributes } from "../interfaces/types";
 
-const addGoodieTypes = async (
+const addgoodieType = async (
   req: Request,
   res: Response,
 ): Promise<Response<any, Record<string, any>>> => {
   try {
-    const role: string | undefined = req.role;
-    const goodieTypes: GoodieTypeAttributes = await GoodieTypeModel.create({
+    const goodieType: GoodieTypeAttributes = await GoodieTypeModel.create({
       ...req.body,
     });
-
-    const formattedGoodieType = {
-      id: goodieTypes.id,
-      name: goodieTypes.name,
-    };
-
-    return res.status(201).json(formattedGoodieType);
+    return res.status(201).json({
+      id: goodieType.id,
+      name: goodieType.name,
+    });
   } catch (error) {
     console.error("Error adding an goodie type:", error);
     return res.status(500).send("Error adding goodie type");
   }
 };
 
-const getAllGoodieTypes = async (
+const getAllgoodieType = async (
   req: Request,
   res: Response,
 ): Promise<Response<any, Record<string, any>>> => {
   try {
-    const allGoodieTypes: GoodieTypeModel[] | undefined =
+    const allgoodieType: GoodieTypeModel[] | undefined =
       await GoodieTypeModel.findAll();
-    return res.json(allGoodieTypes);
+    return res.status(200).json(allgoodieType);
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: "Error retrieving goodie types" });
+    return res.status(500).json({ message: "Error retrieving goodie type" });
   }
 };
 
-const deleteGoodieTypes = async (
+const deletegoodieType = async (
   req: Request,
   res: Response,
 ): Promise<Response<any, Record<string, any>>> => {
   try {
-    const goodieTypesId: string = req.params.id;
-    const goodieTypes = await GoodieTypeModel.findByPk(goodieTypesId);
-    if (!goodieTypes) {
-      return res.status(404).json({ message: "The goodie Types don't exist." });
+    const goodieTypeId: string = req.params.id;
+    const goodieType = await GoodieTypeModel.findByPk(goodieTypeId);
+    if (!goodieType) {
+      return res.status(404).json({ message: "The goodie Type don't exist." });
     }
-    await goodieTypes.destroy();
-    return res.status(204).json({ message: "Goodie Types removed success." });
+    await goodieType.destroy();
+    return res.status(200).json({ message: "Goodie Type removed success." });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: "Error to remove goodie types." });
+    return res.status(500).json({ message: "Error to remove goodie type." });
   }
 };
 
 export default {
-  addGoodieTypes,
-  getAllGoodieTypes,
-  deleteGoodieTypes,
+  addgoodieType,
+  getAllgoodieType,
+  deletegoodieType,
 };

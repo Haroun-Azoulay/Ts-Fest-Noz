@@ -5,7 +5,7 @@ import User from "./User";
 
 class City extends Model<CityAttributes> {
   public id!: string;
-  public user_id!: string;
+  public userId!: string;
   public city_name!: string;
   public address!: string;
   public text!: string;
@@ -29,7 +29,7 @@ City.init(
       allowNull: false,
       primaryKey: true,
     },
-    user_id: {
+    userId: {
       type: DataTypes.UUID,
       references: {
         model: User,
@@ -58,11 +58,11 @@ City.init(
     },
     longitude: {
       type: DataTypes.FLOAT,
-      allowNull: true,
+      allowNull: false,
     },
     latitude: {
       type: DataTypes.FLOAT,
-      allowNull: true,
+      allowNull: false,
     },
     date: {
       type: DataTypes.DATE,

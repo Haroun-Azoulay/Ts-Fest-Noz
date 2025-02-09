@@ -24,8 +24,8 @@ export interface CoordinateAttributes {
 }
 // ============================================= City Interfaces (Start) =============================================
 export interface CityAttributes {
-  id: string;
-  user_id: string;
+  id?: string;
+  userId: string;
   city_name: string;
   text: string;
   address: string;

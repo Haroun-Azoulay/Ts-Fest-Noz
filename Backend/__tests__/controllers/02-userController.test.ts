@@ -121,29 +121,152 @@ describe("Test case for user controller", () => {
       await userController.signup(req, res);
       expect(res.status).toHaveBeenCalledWith(201);
     });
-    it("3 - should return 400 if invalid request", async () => {
-      jest.spyOn(User, "findOne").mockResolvedValue(null);
-      const req = httpMocks.createRequest({
-        method: "POST",
-        body: wrongUser,
-      });
-      const res = httpMocks.createResponse();
-      res.status = jest.fn().mockReturnThis();
-      res.json = jest.fn();
-      await userController.signup(req, res);
-      expect(res.status).toHaveBeenCalledWith(400);
+    describe("2 - signin", () => {
+        it("1 - should signin and return 200", async () => {
+            jest.spyOn(User, 'findOne').mockResolvedValue(existUser);
+            bcrypt.compare = jest.fn().mockResolvedValue(true);
+            const req = httpMocks.createRequest({
+                method: 'POST',
+                body: goodLogin
+            });
+            const res = httpMocks.createResponse();
+            res.status = jest.fn().mockReturnThis();
+            res.json = jest.fn();
+            await userController.signin(req, res);
+            tokenUser = (res.json as jest.Mock).mock.calls[0][0].token;
+            expect(res.status).toHaveBeenCalledWith(200);
+        });
+        it("2 - should signin admin and return 200", async () => {
+            jest.spyOn(User, 'findOne').mockResolvedValue(existAdmin);
+            bcrypt.compare = jest.fn().mockResolvedValue(true);
+            const req = httpMocks.createRequest({
+                method: 'POST',
+                body: goodLoginAdmin
+            });
+            const res = httpMocks.createResponse();
+            res.status = jest.fn().mockReturnThis();
+            res.json = jest.fn();
+            await userController.signin(req, res);
+            tokenAdmin = (res.json as jest.Mock).mock.calls[0][0].token;
+            expect(res.status).toHaveBeenCalledWith(200);
+        });
+        it("3 - should return 400 if invalid request", async () => {
+            const req = httpMocks.createRequest({
+                method: 'POST',
+                body: uncompletedLogin
+            });
+            const res = httpMocks.createResponse();
+            res.status = jest.fn().mockReturnThis();
+            res.json = jest.fn();
+            await userController.signin(req, res);
+            expect(res.status).toHaveBeenCalledWith(400);
+        });
+        it("4 - should return 401 if wrong login", async () => {
+            jest.spyOn(User, 'findOne').mockResolvedValue(null);
+            bcrypt.compare = jest.fn().mockResolvedValue(false);
+            const req = httpMocks.createRequest({
+                method: 'POST',
+                body: wrongLogin
+            });
+            const res = httpMocks.createResponse();
+            res.status = jest.fn().mockReturnThis();
+            res.json = jest.fn();
+            await userController.signin(req, res);
+            expect(res.status).toHaveBeenCalledWith(401);
+        });
+        it("5 - should return 401 if wrong login", async () => {
+            jest.spyOn(User, 'findOne').mockResolvedValue(existUser);
+            bcrypt.compare = jest.fn().mockResolvedValue(false);
+            const req = httpMocks.createRequest({
+                method: 'POST',
+                body: wrongLogin
+            });
+            const res = httpMocks.createResponse();
+            res.status = jest.fn().mockReturnThis();
+            res.json = jest.fn();
+            await userController.signin(req, res);
+            expect(res.status).toHaveBeenCalledWith(401);
+        });
+        it("6 - should return 500 if error occured", async () => {
+            jest.spyOn(User, 'findOne').mockRejectedValue(null);
+            const req = httpMocks.createRequest({
+                method: 'POST',
+                body: badLogin
+            });
+            const res = httpMocks.createResponse();
+            res.status = jest.fn().mockReturnThis();
+            res.json = jest.fn();
+            await userController.signin(req, res);
+            expect(res.status).toHaveBeenCalledWith(500);
+        });
     });
-    it("4 - should return 500 user if user already exists", async () => {
-      jest.spyOn(User, "create").mockRejectedValue(null);
-      const req = httpMocks.createRequest({
-        method: "POST",
-        body: newUser,
-      });
-      const res = httpMocks.createResponse();
-      res.status = jest.fn().mockReturnThis();
-      res.json = jest.fn();
-      await userController.signup(req, res);
-      expect(res.status).toHaveBeenCalledWith(500);
+    describe("3 - getAllUsers", () => {
+        it("1 - should get all users and return 200", async () => {
+            (verifyToken as jest.Mock).mockImplementation(
+                (req: Request, res: Response, next: NextFunction) => {
+                    next();
+                }
+            );
+            const req = httpMocks.createRequest({
+                method: 'GET',
+                headers: { Authorization: `Bearer ${tokenUser}` }
+            });
+            const res = httpMocks.createResponse();
+            res.status = jest.fn().mockReturnThis();
+            res.json = jest.fn();
+            await userController.getAllUsers(req, res);
+            expect(res.status).toHaveBeenCalledWith(200);
+        });
+        it("2 - should return 401 if invalid user token", async () => {
+            (verifyToken as jest.Mock).mockImplementation(
+                (req: Request, res: Response, next: NextFunction) => {
+                    return res.status(401).json({ message: "Invalid token" });
+                }
+            );
+            const req = httpMocks.createRequest({
+                method: 'GET',
+                headers: { Authorization: `Bearer qgjpoqhjoprhjpqokg` }
+            });
+            const res = httpMocks.createResponse();
+            res.status = jest.fn().mockReturnThis();
+            res.json = jest.fn();
+            verifyToken(req, res, () => {});
+            await userController.getAllUsers(req, res);
+            expect(res.status).toHaveBeenCalledWith(401);
+        });
+        it("3 - should return 401 if user token missing", async () => {
+            (verifyToken as jest.Mock).mockImplementation(
+                (req: Request, res: Response, next: NextFunction) => {
+                    return res.status(401).json({ message: "Authentication is required" });
+                }
+            );
+            const req = httpMocks.createRequest({
+                method: 'GET',
+                headers: { Authorization: `Bearer ` }
+            });
+            const res = httpMocks.createResponse();
+            res.status = jest.fn().mockReturnThis();
+            res.json = jest.fn();
+            verifyToken(req, res, () => {});
+            await userController.getAllUsers(req, res);
+            expect(res.status).toHaveBeenCalledWith(401);
+        });
+        it("4 - should return 401 if header missing", async () => {
+            (verifyToken as jest.Mock).mockImplementation(
+                (req: Request, res: Response, next: NextFunction) => {
+                    return res.status(401).json({ message: "Authentication is required" });
+                }
+            );
+            const req = httpMocks.createRequest({
+                method: 'GET'
+            });
+            const res = httpMocks.createResponse();
+            res.status = jest.fn().mockReturnThis();
+            res.json = jest.fn();
+            verifyToken(req, res, () => {});
+            await userController.getAllUsers(req, res);
+            expect(res.status).toHaveBeenCalledWith(401);
+        });
     });
   });
   describe("2 - signin", () => {
@@ -161,19 +284,102 @@ describe("Test case for user controller", () => {
       tokenUser = (res.json as jest.Mock).mock.calls[0][0].token;
       expect(res.status).toHaveBeenCalledWith(200);
     });
-    it("2 - should signin admin and return 200", async () => {
-      jest.spyOn(User, "findOne").mockResolvedValue(existAdmin);
-      bcrypt.compare = jest.fn().mockResolvedValue(true);
-      const req = httpMocks.createRequest({
-        method: "POST",
-        body: goodLoginAdmin,
-      });
-      const res = httpMocks.createResponse();
-      res.status = jest.fn().mockReturnThis();
-      res.json = jest.fn();
-      await userController.signin(req, res);
-      tokenAdmin = (res.json as jest.Mock).mock.calls[0][0].token;
-      expect(res.status).toHaveBeenCalledWith(200);
+    describe("5 - updateUserRole", () => {
+        it("1 - should update user and return 200", async () => {
+            (verifyTokenAdmin as jest.Mock).mockImplementation(
+                (req: Request, res: Response, next: NextFunction) => {
+                    next();
+                }
+            );
+            jest.spyOn(User, 'findByPk').mockResolvedValue(existUser);
+            jest.spyOn(existUser, 'update').mockResolvedValue(updatedUser);
+            const req = httpMocks.createRequest({
+                method: 'PUT',
+                params: { userId: existUser.id },
+                body: { newRole: "artist" }
+            });
+            const res = httpMocks.createResponse();
+            res.status = jest.fn().mockReturnThis();
+            res.json = jest.fn();
+            verifyTokenAdmin(req, res, () => {});
+            await userController.updateUserRole(req, res);
+            expect(res.status).toHaveBeenCalledWith(200);
+        });
+        it("2 - should return 500 if user not found", async () => {
+            (verifyTokenAdmin as jest.Mock).mockImplementation(
+                (req: Request, res: Response, next: NextFunction) => {
+                    next();
+                }
+            );
+            jest.spyOn(User, 'findByPk').mockResolvedValue(null);
+            jest.spyOn(existUser, 'update').mockResolvedValue(updatedUser);
+            const req = httpMocks.createRequest({
+                method: 'PUT',
+                params: { userId: existUser.id },
+                body: { newRole: "artist" }
+            });
+            const res = httpMocks.createResponse();
+            res.status = jest.fn().mockReturnThis();
+            res.json = jest.fn();
+            verifyTokenAdmin(req, res, () => {});
+            await userController.updateUserRole(req, res);
+            expect(res.status).toHaveBeenCalledWith(500);
+        });
+        it("3 - should return 400 if invalid request", async () => {
+            (verifyTokenAdmin as jest.Mock).mockImplementation(
+                (req: Request, res: Response, next: NextFunction) => {
+                    next();
+                }
+            );
+            const req = httpMocks.createRequest({
+                method: 'PUT',
+                params: { userId: existUser.id }
+            });
+            const res = httpMocks.createResponse();
+            res.status = jest.fn().mockReturnThis();
+            res.json = jest.fn();
+            verifyTokenAdmin(req, res, () => {});
+            await userController.updateUserRole(req, res);
+            expect(res.status).toHaveBeenCalledWith(400);
+        });
+        it("4 - should return 403 if attempt for admin role", async () => {
+            (verifyTokenAdmin as jest.Mock).mockImplementation(
+                (req: Request, res: Response, next: NextFunction) => {
+                    next();
+                }
+            );
+            jest.spyOn(User, 'findByPk').mockResolvedValue(existUser);
+            jest.spyOn(existUser, 'update').mockResolvedValue(updatedUser);
+            const req = httpMocks.createRequest({
+                method: 'PUT',
+                params: { userId: existUser.id },
+                body: { newRole: "admin" }
+            });
+            const res = httpMocks.createResponse();
+            res.status = jest.fn().mockReturnThis();
+            res.json = jest.fn();
+            verifyTokenAdmin(req, res, () => {});
+            await userController.updateUserRole(req, res);
+            expect(res.status).toHaveBeenCalledWith(403);
+        });
+        it("5 - should return 500 if something went wrong", async () => {
+            (verifyTokenAdmin as jest.Mock).mockImplementation(
+                (req: Request, res: Response, next: NextFunction) => {
+                    next();
+                }
+            );
+            jest.spyOn(User, 'findByPk').mockRejectedValue(null);
+            const req = httpMocks.createRequest({
+                method: 'PUT',
+                body: { newRole: "artist" }
+            });
+            const res = httpMocks.createResponse();
+            res.status = jest.fn().mockReturnThis();
+            res.json = jest.fn();
+            verifyTokenAdmin(req, res, () => {});
+            await userController.updateUserRole(req, res);
+            expect(res.status).toHaveBeenCalledWith(500);
+        });
     });
     it("3 - should return 400 if invalid request", async () => {
       const req = httpMocks.createRequest({

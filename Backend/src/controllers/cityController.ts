@@ -15,21 +15,18 @@ const addPoint = async (
   try {
     const userId: string | undefined = req.userId;
     const role: string | undefined = req.role;
-
     if (!userId) {
       return res
         .status(400)
         .json({ message: "The user must be authenticated" });
     }
-
     const point: CityModel | null = await CityModel.create({
       ...req.body,
-      user_id: userId,
+      userId: userId,
     });
-
     const formattedPoint: CityAttributes = {
       id: point.id,
-      user_id: userId,
+      userId: userId,
       longitude: point.longitude,
       latitude: point.latitude,
       date: point.date,
@@ -56,7 +53,7 @@ const getAllPoints = async (
   res: Response,
 ): Promise<Response<any, Record<string, any>>> => {
   try {
-    const points: CityModel[] | undefined = await CityModel.findAll();
+    const points: CityModel[] = await CityModel.findAll();
 
     // const pointsWithUserDetails = await Promise.all(points.map(async (point) => {
     //   //const user = await UserModel.findByPk(point.userId, { attributes: ["id", "pseudo"] });
@@ -69,7 +66,7 @@ const getAllPoints = async (
     // };
     // }));
 
-    return res.json(points);
+    return res.status(200).json(points);
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Error retrieving points" });
@@ -155,14 +152,12 @@ const getPointByUser = async (
     if (!userId) {
       return res.status(400).json({ message: "User ID is required" });
     }
-
     const points: CityModel[] | null = await CityModel.findAll({
       where: {
-        user_id: userId,
+        userId: userId,
       },
     });
-
-    return res.json(points);
+    return res.status(200).json(points);
   } catch (error) {
     console.error(error);
     return res
@@ -242,28 +237,24 @@ const deletePoint = async (
 ): Promise<Response<any, Record<string, any>>> => {
   try {
     const userId: string | undefined = req.userId;
-    // const isAdmin = req.isAdmin;
     const { pointId } = req.params;
-
-    const point: CityModel | null = await CityModel.findByPk(pointId);
+    const point: CityModel | null = await CityModel.findOne(
+      {where : {id: pointId, userId: userId}}
+    );
     if (!point) {
       return res.status(404).json({ message: "The point does not exist" });
     }
-
-    if (point.user_id !== userId) {
-      return res
-        .status(403)
-        .json({ message: "You do not have permission to delete this item" });
-    }
-
+    // if (point.userId !== userId) {
+    //   return res
+    //     .status(403)
+    //     .json({ message: "You do not have permission to delete this item" });
+    // }
     CityModel.beforeDestroy(async (city, options) => {
       await Event.destroy({
         where: { id: point.id },
       });
     });
-
     await point.destroy();
-
     return res
       .status(200)
       .json({ message: "The point was successfully deleted" });

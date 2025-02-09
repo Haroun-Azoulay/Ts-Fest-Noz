@@ -1,7 +1,7 @@
-import userRoutes from "../../src/routes/userRoutes";
-import groupRoutes from "../../src/routes/groupRoutes";
 import request from "supertest";
 import express from "express";
+import userRoutes from "../../src/routes/userRoutes";
+import groupRoutes from "../../src/routes/groupRoutes";
 import Group from "../../src/models/Group";
 
 const app = express();

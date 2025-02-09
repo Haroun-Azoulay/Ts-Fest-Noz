@@ -27,7 +27,6 @@ const verifyToken = (
       return res.status(401).json({ message: "Invalid token" });
     }
     const decodedToken = decoded as JwtPayload;
-    console.log(decodedToken);
     req.userId = decodedToken.userId;
     req.role = decodedToken.role;
     next();

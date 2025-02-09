@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/routes/groupUserRoutes.ts</title>
+    <title>Code coverage report for src/models/Event.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,13 +19,13 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/routes</a> groupUserRoutes.ts</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/models</a> Event.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>66/66</span>
+                <span class='fraction'>62/62</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>66/66</span>
+                <span class='fraction'>62/62</span>
             </div>
         
             
@@ -125,11 +125,7 @@
 <a name='L60'></a><a href='#L60'>60</a>
 <a name='L61'></a><a href='#L61'>61</a>
 <a name='L62'></a><a href='#L62'>62</a>
-<a name='L63'></a><a href='#L63'>63</a>
-<a name='L64'></a><a href='#L64'>64</a>
-<a name='L65'></a><a href='#L65'>65</a>
-<a name='L66'></a><a href='#L66'>66</a>
-<a name='L67'></a><a href='#L67'>67</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L63'></a><a href='#L63'>63</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -191,76 +187,68 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import express, { Router } from "express";
-import verifyTokenAdmin from "../middlewares/verifyToken";
-import groupUserController from "../controllers/groupUserController";
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { DataTypes, Model } from "sequelize";
+import sequelizeConnection from "../../config/database";
+import { EventAttributes } from "../interfaces/types";
+import City from "./City";
+import User from "./User";
 &nbsp;
-const router: Router = express.Router();
+class Event extends Model&lt;EventAttributes&gt; implements EventAttributes {
+  public id!: string;
+  public name!: string;
+  public description!: string;
+  public url!: string;
+  public mapId!: number;
+  public city_id!: string;
+  public user_id!: string;
+}
 &nbsp;
-router.post(
-  "/groups/:groupId/users",
-  verifyTokenAdmin,
-  groupUserController.createGroupUser,
+Event.init(
+  {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    city_id: {
+      type: DataTypes.UUID,
+      references: {
+        model: City,
+        key: "id",
+      },
+    },
+    user_id: {
+      type: DataTypes.UUID,
+      references: {
+        model: User,
+        key: "id",
+      },
+    },
+    description: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    url: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    mapId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+  },
+  {
+    sequelize: sequelizeConnection,
+    modelName: "Event",
+    tableName: "events",
+  },
 );
 &nbsp;
-router.delete(
-  "/groups/:groupId/users",
-  verifyTokenAdmin,
-  groupUserController.deleteGroupUser,
-);
-&nbsp;
-export default router;
-&nbsp;
-/**
- * @swagger
- * components:
- *   securitySchemes:
- *     bearerAuth:
- *       type: http
- *       scheme: bearer
- *       bearerFormat: JWT
- *
- * /groups/{groupId}/users:
- *   post:
- *     summary: Add a user to a group
- *     description: Adds a user to a group by specifying the group ID and user ID.
- *     tags:
- *       - Group Users
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: groupId
- *         required: true
- *         schema:
- *           type: string
- *         description: The ID of the group to which the user will be added.
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - userId
- *             properties:
- *               userId:
- *                 type: string
- *                 description: The ID of the user to be added to the group.
- *     responses:
- *       201:
- *         description: User added to group successfully.
- *       400:
- *         description: Bad request.
- *       401:
- *         description: Unauthorized.
- *       500:
- *         description: Internal server error.
- */
+export default Event;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->

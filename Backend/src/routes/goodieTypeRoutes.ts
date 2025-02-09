@@ -8,19 +8,19 @@ const router: Router = express.Router();
 router.get(
   "/get-all-types",
   verifyToken,
-  goodieTypeController.getAllGoodieTypes,
+  goodieTypeController.getAllgoodieType,
 );
 
 router.post(
   "/create-goodie-type",
   verifyTokenAdmin,
-  goodieTypeController.addGoodieTypes,
+  goodieTypeController.addgoodieType,
 );
 
 router.delete(
   "/delete-goodie-type/:id",
   verifyTokenAdmin,
-  goodieTypeController.deleteGoodieTypes,
+  goodieTypeController.deletegoodieType,
 );
 
 export default router;
