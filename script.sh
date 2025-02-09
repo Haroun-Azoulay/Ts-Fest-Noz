@@ -3,7 +3,7 @@
 
 cleanup() {
 
-    echo -n "Do you want to shut down all servers? (Y/n): "
+    echo -n " Do you want to shut down all servers? (Y/n): "
     read -r response
 
     response=$(echo "$response")

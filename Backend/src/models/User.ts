@@ -64,7 +64,7 @@ User.init(
     },
     pseudo: {
       type: DataTypes.STRING(32),
-      allowNull: false
+      allowNull: false,
     },
   },
   {

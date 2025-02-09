@@ -45,11 +45,10 @@ declare module "express" {
     userId?: string;
   }
 }
-
 const app = express();
+app.use(cors());
 
 app.use(express.json());
-app.use(cors());
 
 // Endpoint swagger
 app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
