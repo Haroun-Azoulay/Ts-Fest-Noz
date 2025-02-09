@@ -24,8 +24,8 @@ export interface CoordinateAttributes {
 }
 // ============================================= City Interfaces (Start) =============================================
 export interface CityAttributes {
-  id: string;
-  user_id: string;
+  id?: string;
+  userId: string;
   city_name: string;
   text: string;
   address: string;
@@ -87,7 +87,7 @@ export interface OrganizerProfilAttributes {
 
 // ============================================= Payment Interfaces(Start) =============================================
 export interface PaymentAttributes {
-  id: string;
+  id?: string;
   token: string;
   payment: boolean;
   userId: string;

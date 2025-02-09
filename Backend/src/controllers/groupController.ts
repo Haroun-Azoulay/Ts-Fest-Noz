@@ -9,11 +9,12 @@ const createGroup = async (
 ): Promise<Response<any, Record<string, any>>> => {
   try {
     const groupName = req.body.name;
-
+    if (!groupName) {
+      throw new Error("No group name been sent.")
+    }
     const checkExistGroup: GroupModel | null = await GroupModel.findOne({
       where: { name: groupName },
     });
-
     if (checkExistGroup) {
       return res.status(409).json({
         message: "Unable to create a group because the name already exists",
@@ -33,8 +34,8 @@ const deleteGroup = async (
   req: Request,
   res: Response,
 ): Promise<Response<any, Record<string, any>>> => {
-  const groupId: string = req.params.id;
   try {
+    const groupId: string = req.params.id;
     const checkExistGroup: GroupModel | null = await GroupModel.findOne({
       where: { id: groupId },
     });

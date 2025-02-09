@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/routes/groupRoutes.ts</title>
+    <title>Code coverage report for src/models/City.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,13 +19,13 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/routes</a> groupRoutes.ts</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/models</a> City.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>117/117</span>
+                <span class='fraction'>99/99</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>117/117</span>
+                <span class='fraction'>99/99</span>
             </div>
         
             
@@ -162,25 +162,7 @@
 <a name='L97'></a><a href='#L97'>97</a>
 <a name='L98'></a><a href='#L98'>98</a>
 <a name='L99'></a><a href='#L99'>99</a>
-<a name='L100'></a><a href='#L100'>100</a>
-<a name='L101'></a><a href='#L101'>101</a>
-<a name='L102'></a><a href='#L102'>102</a>
-<a name='L103'></a><a href='#L103'>103</a>
-<a name='L104'></a><a href='#L104'>104</a>
-<a name='L105'></a><a href='#L105'>105</a>
-<a name='L106'></a><a href='#L106'>106</a>
-<a name='L107'></a><a href='#L107'>107</a>
-<a name='L108'></a><a href='#L108'>108</a>
-<a name='L109'></a><a href='#L109'>109</a>
-<a name='L110'></a><a href='#L110'>110</a>
-<a name='L111'></a><a href='#L111'>111</a>
-<a name='L112'></a><a href='#L112'>112</a>
-<a name='L113'></a><a href='#L113'>113</a>
-<a name='L114'></a><a href='#L114'>114</a>
-<a name='L115'></a><a href='#L115'>115</a>
-<a name='L116'></a><a href='#L116'>116</a>
-<a name='L117'></a><a href='#L117'>117</a>
-<a name='L118'></a><a href='#L118'>118</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L100'></a><a href='#L100'>100</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -279,141 +261,105 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import express, { Router } from "express";
-import groupController from "../controllers/groupController";
-import verifyToken from "../middlewares/verifyToken";
-import verifyTokenAdmin from "../middlewares/verifyToken";
-const router: Router = express.Router();
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { DataTypes, Model } from "sequelize";
+import sequelizeConnection from "../../config/database";
+import { CityAttributes } from "../interfaces/types";
+import User from "./User";
 &nbsp;
-router.post("/create-group", verifyTokenAdmin, groupController.createGroup);
+class City extends Model&lt;CityAttributes&gt; {
+  public id!: string;
+  public userId!: string;
+  public city_name!: string;
+  public address!: string;
+  public text!: string;
+  public zip_code!: number;
+  public label!: string;
+  public longitude!: number;
+  public latitude!: number;
+  public date!: Date;
+  public style!: string;
+  public color!: string;
+  public departement_number!: number;
+  public region_name!: string;
+  public url_point!: string;
+}
 &nbsp;
-router.get("/get-group/:id", verifyToken, groupController.getGroup);
+City.init(
+  {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      primaryKey: true,
+    },
+    userId: {
+      type: DataTypes.UUID,
+      references: {
+        model: User,
+        key: "id",
+      },
+    },
+    city_name: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    text: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    address: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    zip_code: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    label: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    longitude: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+    },
+    latitude: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+    },
+    date: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    style: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    color: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    departement_number: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    region_name: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    url_point: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+  },
+  {
+    sequelize: sequelizeConnection,
+    modelName: "City",
+    tableName: "cities",
+  },
+);
 &nbsp;
-router.get("/get-all-groups", verifyToken, groupController.getAllGroups);
-&nbsp;
-router.delete("/delete-group/:id", verifyTokenAdmin, groupController.deleteGroup);
-&nbsp;
-export default router;
-&nbsp;
-/**
- * @swagger
- * components:
- *   securitySchemes:
- *     bearerAuth:
- *       type: http
- *       scheme: bearer
- *       bearerFormat: JWT
- *
- * /create-group:
- *   post:
- *     summary: Create a new group
- *     description: Create a new group in the e-shop.
- *     tags:
- *       - Group
- *     security:
- *       - bearerAuth: []
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - name
- *             properties:
- *               name:
- *                 name: string
- *                 description: The group's name.
- *     responses:
- *       201:
- *         description: Group created successfully.
- *       400:
- *         description: Bad request.
- *       401:
- *         description: Unauthorized.
- *
- * /get-all-groups:
- *   get:
- *     summary: Retrieve all group on the e-shop
- *     description: Get details of all group.
- *     tags:
- *       - Group
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: Group information retrieved successfully.
- *       400:
- *         description: Bad request.
- *       401:
- *         description: Unauthorized.
- *
- * /get-group/{id}:
- *   get:
- *     summary: Retrieve group's information with the UUID Group
- *     description: Get details of the group by the UUID Group.
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *           format: uuid
- *         description: Numeric UUID of the group to retrieve his e-shop.
- *     tags:
- *       - Group
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: Group information retrieved successfully.
- *       400:
- *         description: Bad request.
- *       401:
- *         description: Unauthorized.
- *
- * /delete-group/{id}:
- *   delete:
- *     summary: Delete group with his ID
- *     description: Delete a group with his ID.
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *           format: uuid
- *         description: Numeric UUID of the group to delete
- *     tags:
- *       - Group
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       204:
- *         description: Group has been removed.
- *       400:
- *         description: Bad request.
- *       401:
- *         description: Unauthorized.
- */
+export default City;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -421,7 +367,7 @@ export default router;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-01-22T20:18:33.325Z
+                at 2025-01-24T10:01:53.284Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

@@ -69,7 +69,6 @@ const getUserInfo = async (
   res: Response,
 ): Promise<Response<any, Record<string, any>>> => {
   const userId: string | undefined = req.userId;
-  console.log(req.userId);
   try {
     const user: UserModel | null = await UserModel.findOne({
       where: { id: userId },
@@ -107,17 +106,14 @@ const signin = async (
   try {
     const pseudo: string = req.body.pseudo;
     const password: string = req.body.password;
-
     if (!pseudo || !password) {
       return res.status(400).json({
         message: "Username and password are required for login.",
       });
     }
-
     const foundUser: UserModel | null = await UserModel.findOne({
       where: { pseudo },
     });
-
     if (!foundUser) {
       return res.status(401).json({
         message: "Invalid credentials. Check your username and password.",
@@ -170,13 +166,13 @@ const deleteUser = async (
   res: Response,
 ): Promise<Response<any, Record<string, any>>> => {
   try {
-    const pseudo: string | undefined = req.params.pseudo;
+    const userId: string = req.params.userId;
     const foundUser: UserModel | null = await UserModel.findOne({
-      where: { pseudo },
+      where: { id: userId },
     });
     if (!foundUser) {
       return res.status(401).json({
-        message: "Invalid pseudo or unexisting user.",
+        message: "Invalid id or unexisting user.",
       });
     }
     await foundUser.destroy();

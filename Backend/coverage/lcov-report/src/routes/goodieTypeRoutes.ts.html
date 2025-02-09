@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/routes/groupRoutes.ts</title>
+    <title>Code coverage report for src/routes/goodieTypeRoutes.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,13 +19,13 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/routes</a> groupRoutes.ts</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/routes</a> goodieTypeRoutes.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>117/117</span>
+                <span class='fraction'>113/113</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>117/117</span>
+                <span class='fraction'>113/113</span>
             </div>
         
             
@@ -176,15 +176,7 @@
 <a name='L111'></a><a href='#L111'>111</a>
 <a name='L112'></a><a href='#L112'>112</a>
 <a name='L113'></a><a href='#L113'>113</a>
-<a name='L114'></a><a href='#L114'>114</a>
-<a name='L115'></a><a href='#L115'>115</a>
-<a name='L116'></a><a href='#L116'>116</a>
-<a name='L117'></a><a href='#L117'>117</a>
-<a name='L118'></a><a href='#L118'>118</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L114'></a><a href='#L114'>114</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -298,18 +290,35 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import express, { Router } from "express";
-import groupController from "../controllers/groupController";
+import goodieTypeController from "../controllers/goodieTypeController";
 import verifyToken from "../middlewares/verifyToken";
-import verifyTokenAdmin from "../middlewares/verifyToken";
+import verifyTokenAdmin from "../middlewares/verifyTokenAdmin";
+&nbsp;
 const router: Router = express.Router();
 &nbsp;
-router.post("/create-group", verifyTokenAdmin, groupController.createGroup);
+router.get(
+  "/get-goodie-type/:goodieTypeId",
+  verifyToken,
+  goodieTypeController.getGoodieType
+);
 &nbsp;
-router.get("/get-group/:id", verifyToken, groupController.getGroup);
+router.get(
+  "/get-all-types",
+  verifyToken,
+  goodieTypeController.getAllgoodieType,
+);
 &nbsp;
-router.get("/get-all-groups", verifyToken, groupController.getAllGroups);
+router.post(
+  "/create-goodie-type",
+  verifyTokenAdmin,
+  goodieTypeController.addgoodieType,
+);
 &nbsp;
-router.delete("/delete-group/:id", verifyTokenAdmin, groupController.deleteGroup);
+router.delete(
+  "/delete-goodie-type/:id",
+  verifyTokenAdmin,
+  goodieTypeController.deletegoodieType,
+);
 &nbsp;
 export default router;
 &nbsp;
@@ -322,97 +331,76 @@ export default router;
  *       scheme: bearer
  *       bearerFormat: JWT
  *
- * /create-group:
- *   post:
- *     summary: Create a new group
- *     description: Create a new group in the e-shop.
- *     tags:
- *       - Group
- *     security:
- *       - bearerAuth: []
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
+ * paths:
+ *   /create-goodie-type:
+ *     post:
+ *       summary: Add a new goodie type
+ *       description: Add a new goodie type to the e-shop.
+ *       tags:
+ *         - E-SHOP - Goodie-Type
+ *       security:
+ *         - bearerAuth: []
+ *       requestBody:
+ *         required: true
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               required:
+ *                 - name
+ *               properties:
+ *                 name:
+ *                   type: string
+ *                   description: The name of the goodie type.
+ *       responses:
+ *         201:
+ *           description: Goodie type created successfully.
+ *         400:
+ *           description: Bad request.
+ *         401:
+ *           description: Unauthorized.
+ *
+ *   /get-all-types:
+ *     get:
+ *       summary: Retrieve all goodie types in the e-shop
+ *       description: Get details of all goodie types.
+ *       tags:
+ *         - E-SHOP - Goodie-Type
+ *       security:
+ *         - bearerAuth: []
+ *       responses:
+ *         200:
+ *           description: Goodie type information retrieved successfully.
+ *         400:
+ *           description: Bad request.
+ *         401:
+ *           description: Unauthorized.
+ *
+ *   /delete-goodie-type/{id}:
+ *     delete:
+ *       summary: Delete a goodie type by ID
+ *       description: Delete a specific goodie type using its unique ID.
+ *       tags:
+ *         - E-SHOP - Goodie-Type
+ *       security:
+ *         - bearerAuth: []
+ *       parameters:
+ *         - in: path
+ *           name: id
+ *           required: true
  *           schema:
- *             type: object
- *             required:
- *               - name
- *             properties:
- *               name:
- *                 name: string
- *                 description: The group's name.
- *     responses:
- *       201:
- *         description: Group created successfully.
- *       400:
- *         description: Bad request.
- *       401:
- *         description: Unauthorized.
- *
- * /get-all-groups:
- *   get:
- *     summary: Retrieve all group on the e-shop
- *     description: Get details of all group.
- *     tags:
- *       - Group
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: Group information retrieved successfully.
- *       400:
- *         description: Bad request.
- *       401:
- *         description: Unauthorized.
- *
- * /get-group/{id}:
- *   get:
- *     summary: Retrieve group's information with the UUID Group
- *     description: Get details of the group by the UUID Group.
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *           format: uuid
- *         description: Numeric UUID of the group to retrieve his e-shop.
- *     tags:
- *       - Group
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: Group information retrieved successfully.
- *       400:
- *         description: Bad request.
- *       401:
- *         description: Unauthorized.
- *
- * /delete-group/{id}:
- *   delete:
- *     summary: Delete group with his ID
- *     description: Delete a group with his ID.
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *           format: uuid
- *         description: Numeric UUID of the group to delete
- *     tags:
- *       - Group
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       204:
- *         description: Group has been removed.
- *       400:
- *         description: Bad request.
- *       401:
- *         description: Unauthorized.
+ *             type: string
+ *             format: uuid
+ *           description: UUID of the goodie type to delete.
+ *       responses:
+ *         204:
+ *           description: Goodie type has been removed successfully.
+ *         400:
+ *           description: Bad request.
+ *         401:
+ *           description: Unauthorized.
+ *         404:
+ *           description: Goodie type not found.
  */
 &nbsp;</pre></td></tr></table></pre>
 

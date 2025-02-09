@@ -54,11 +54,11 @@ Post.hasMany(Commentary, {
 Commentary.belongsTo(Post, { foreignKey: "postId" });
 
 User.hasMany(City, {
-  foreignKey: "user_id",
+  foreignKey: "userId",
   onDelete: "CASCADE",
   onUpdate: "CASCADE",
 });
-City.belongsTo(User, { foreignKey: "user_id" });
+City.belongsTo(User, { foreignKey: "userId" });
 
 City.hasOne(Event, {
   foreignKey: "city_id",
@@ -70,8 +70,8 @@ Event.belongsTo(City, { foreignKey: "city_id" });
 Event.hasMany(Payment, { foreignKey: "event_id" });
 Payment.belongsTo(Event, { foreignKey: "event_id" });
 
-User.hasMany(Event, { foreignKey: "userId" });
-Event.belongsTo(User, { foreignKey: "userId" });
+User.hasMany(Event, { foreignKey: "user_id" });
+Event.belongsTo(User, { foreignKey: "user_id" });
 
 User.hasOne(ArtistProfil, {
   foreignKey: "userId",

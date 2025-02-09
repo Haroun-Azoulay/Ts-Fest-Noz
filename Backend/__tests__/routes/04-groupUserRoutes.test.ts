@@ -1,10 +1,9 @@
+import request from "supertest";
+import express from "express";
 import userRoutes from "../../src/routes/userRoutes";
 import groupRoutes from "../../src/routes/groupRoutes";
 import groupUserRoutes from "../../src/routes/groupUserRoutes";
-import request from "supertest";
-import express from "express";
 import Group from "../../src/models/Group";
-import GroupUser from "../../src/models/GroupUser";
 import User from "../../src/models/User";
 
 const app = express();
@@ -86,14 +85,42 @@ describe("Test case for group routes", () => {
       .set("Authorization", `Bearer ${tokenAdmin}`);
     expect(response.status).toBe(201);
   });
-  it("5 - test case to delete artist user from a group", async () => {
+  it("6 - test case to add user in group", async () => {
+    const response = await request(app)
+    .post(`/groups/${existGroup.id}/users`)
+    .send({userId: existUser.id})
+    .set("Authorization", `Bearer ${tokenAdmin}`);
+    expect(response.status).toBe(401);
+  });
+  it("7 - test case to add user in group", async () => {
+    const response = await request(app)
+    .post(`/groups/-/users`)
+    .send({userId: existArtist.id})
+    .set("Authorization", `Bearer ${tokenAdmin}`);
+    expect(response.status).toBe(500);
+  });
+  it("8 - test case to delete artist user from a group", async () => {
     const response = await request(app)
       .delete(`/groups/${existGroup.id}/users`)
       .send({ userId: existArtist.id })
       .set("Authorization", `Bearer ${tokenAdmin}`);
     expect(response.status).toBe(200);
   });
-  it("6 - test case to readd artist user in group", async () => {
+  it("9 - test case to delete non-existing user from a group", async () => {
+    const response = await request(app)
+    .delete(`/groups/${existGroup.id}/users`)
+    .send({userId: existArtist.id})
+    .set("Authorization", `Bearer ${tokenAdmin}`);
+    expect(response.status).toBe(404);
+  });
+  it("10 - test case to delete user from a group without id", async () => {
+    const response = await request(app)
+    .delete(`/groups/-/users`)
+    .send({userId: existArtist.id})
+    .set("Authorization", `Bearer ${tokenAdmin}`);
+    expect(response.status).toBe(500);
+  });
+  it("11 - test case to read artist user in group", async () => {
     const response = await request(app)
       .post(`/groups/${existGroup.id}/users`)
       .send({ userId: existArtist.id })

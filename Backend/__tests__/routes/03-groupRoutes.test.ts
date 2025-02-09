@@ -1,7 +1,7 @@
-import userRoutes from "../../src/routes/userRoutes";
-import groupRoutes from "../../src/routes/groupRoutes";
 import request from "supertest";
 import express from "express";
+import userRoutes from "../../src/routes/userRoutes";
+import groupRoutes from "../../src/routes/groupRoutes";
 import Group from "../../src/models/Group";
 
 const app = express();
@@ -25,8 +25,9 @@ const newGroup = {
 };
 let existGroup = {
   id: undefined,
-  name: "",
-};
+  name: ""
+}
+const unknownId : string = "99999999-7999-4fb1-a443-33894fb52ccb";
 
 describe("Test case for group routes", () => {
   it("1 - test case to signin user", async () => {
@@ -58,24 +59,28 @@ describe("Test case for group routes", () => {
     expect(response.status).toBe(409);
   });
 
-  it("5 - test case to get group", async () => {
-    const response = await request(app)
-      .get(`/get-group/${existGroup.id}`)
-      .set("Authorization", `Bearer ${tokenUser}`);
+  it("5 - test case to create a group without body", async () => {
+    const response = await request(app).post("/create-group").set("Authorization", `Bearer ${tokenAdmin}`);
+    expect(response.status).toBe(500);
+  });
+
+  it("6 - test case to get group", async () => {
+    const response = await request(app).get(`/get-group/${existGroup.id}`).set("Authorization", `Bearer ${tokenUser}`);
     expect(response.status).toBe(200);
   });
 
-  it("6 - test case to get non-existing group", async () => {
-    const response = await request(app)
-      .get(`/get-group/`)
-      .set("Authorization", `Bearer ${tokenUser}`);
+  it("7 - test case to get non-existing group", async () => {
+    const response = await request(app).get(`/get-group/${unknownId}`).set("Authorization", `Bearer ${tokenUser}`);
     expect(response.status).toBe(404);
   });
 
-  it("7 - test case to get all groups", async () => {
-    const response = await request(app)
-      .get(`/get-all-groups`)
-      .set("Authorization", `Bearer ${tokenUser}`);
+  it("8 - test case to get non-existing group", async () => {
+    const response = await request(app).get(`/get-group/-`).set("Authorization", `Bearer ${tokenUser}`);
+    expect(response.status).toBe(500);
+  });
+
+  it("9 - test case to get all groups", async () => {
+    const response = await request(app).get(`/get-all-groups`).set("Authorization", `Bearer ${tokenUser}`);
     expect(response.status).toBe(200);
     const groupExist = response.body.some(
       (group: Group) => group.name === existGroup.name,
@@ -83,25 +88,23 @@ describe("Test case for group routes", () => {
     expect(groupExist).toBe(true);
   });
 
-  it("8 - test case to delete a group", async () => {
-    const response = await request(app)
-      .delete(`/delete-group/${existGroup.id}`)
-      .set("Authorization", `Bearer ${tokenAdmin}`);
+  it("10 - test case to delete a group", async () => {
+    const response = await request(app).delete(`/delete-group/${existGroup.id}`).set("Authorization", `Bearer ${tokenAdmin}`);
     expect(response.status).toBe(200);
   });
 
-  it("9 - test case to delete a non-existing group", async () => {
-    const response = await request(app)
-      .delete(`/delete-group/${existGroup.id}`)
-      .set("Authorization", `Bearer ${tokenAdmin}`);
+  it("11 - test case to delete a non-existing group", async () => {
+    const response = await request(app).delete(`/delete-group/${existGroup.id}`).set("Authorization", `Bearer ${tokenAdmin}`);
     expect(response.status).toBe(404);
   });
 
-  it("10 - test case to create a group once again", async () => {
-    const response = await request(app)
-      .post("/create-group")
-      .send(newGroup)
-      .set("Authorization", `Bearer ${tokenAdmin}`);
+  it("12 - test case to delete a non-existing group", async () => {
+    const response = await request(app).delete(`/delete-group/-`).set("Authorization", `Bearer ${tokenAdmin}`);
+    expect(response.status).toBe(500);
+  });
+
+  it("13 - test case to create a group once again", async () => {
+    const response = await request(app).post("/create-group").send(newGroup).set("Authorization", `Bearer ${tokenAdmin}`);
     expect(response.status).toBe(201);
     existGroup = response.body.newGroup;
   });

@@ -4,7 +4,7 @@ const isAuthorizedPost = (
   req: Request,
   res: Response,
   next: NextFunction,
-): void => {
+): Response<any, Record<string, any>> | undefined => {
   const role: string | undefined = req.role;
 
   console.log("req.role:", role);
@@ -12,7 +12,7 @@ const isAuthorizedPost = (
   if (role && (role === "admin" || role === "artist" || role === "organizer")) {
     next();
   } else {
-    res.status(403).json({
+    return res.status(403).json({
       message: "Access forbidden. You do not have the necessary permissions",
     });
   }
