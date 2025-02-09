@@ -12,7 +12,7 @@ const createGroupUser = async (
 
   try {
     const user = await UserModel.findOne({
-      where: {id: userId}
+      where: { id: userId },
     });
     if (user?.role === "artist") {
       const groupUser = await GroupUserModel.create({
@@ -25,7 +25,7 @@ const createGroupUser = async (
       });
     }
     return res.status(401).json({
-      message: "User not an artist."
+      message: "User not an artist.",
     });
   } catch (error) {
     console.error("Error when adding a user to the group :", error);
@@ -45,16 +45,18 @@ const deleteGroupUser = async (
     const groupUser: GroupUserModel | null = await GroupUserModel.findOne({
       where: {
         groupId: groupId,
-        userId: userId
-      }
+        userId: userId,
+      },
     });
     if (!groupUser) {
       return res.status(404).json({ message: "Group User not found." });
     }
-    const removeGroupUser = await GroupUserModel.destroy({where: {
-      groupId: groupId,
-      userId: userId,
-    }});
+    const removeGroupUser = await GroupUserModel.destroy({
+      where: {
+        groupId: groupId,
+        userId: userId,
+      },
+    });
     return res.status(200).json({
       message: "User removed successfully.",
       data: removeGroupUser,
@@ -69,5 +71,5 @@ const deleteGroupUser = async (
 
 export default {
   createGroupUser,
-  deleteGroupUser
+  deleteGroupUser,
 };

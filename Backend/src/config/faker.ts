@@ -43,7 +43,6 @@ export function createRandomUser(index: number) {
     latitude: fakerFR.location.latitude(),
     longitude: fakerFR.location.longitude(),
     pseudo: faker.person.firstName(),
-    city: fakerFR.location.city(),
     registeredAt: faker.date.past(),
     role: faker.helpers.arrayElement(["admin", "artist", "organizer", "user"]),
   };

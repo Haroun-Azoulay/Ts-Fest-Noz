@@ -9,8 +9,8 @@ app.use(express.json());
 app.use(userRoutes);
 app.use(adminRoutes);
 
-let tokenUser : string | undefined;
-let tokenAdmin : string | undefined;
+let tokenUser: string | undefined;
+let tokenAdmin: string | undefined;
 
 const newAdmin = {
   lastname: "admin",
@@ -18,7 +18,7 @@ const newAdmin = {
   email: "admin@example.com",
   password: "admin",
   pseudo: "admin",
-  city: "Paris"
+  city: "Paris",
 };
 const newUser = {
   lastname: "Dey",
@@ -26,7 +26,7 @@ const newUser = {
   email: "haroun@ooredoo.dz",
   password: "test",
   pseudo: "bechari",
-  city: "Paris"
+  city: "Paris",
 };
 const newArtist = {
   lastname: "artist",
@@ -42,19 +42,19 @@ const newOrganizer = {
   email: "organizer@example.com",
   password: "organizer",
   pseudo: "organizer",
-  city: "Paris"
+  city: "Paris",
 };
 const userLogin = {
   pseudo: "bechari",
-  password: "test"
+  password: "test",
 };
 const artistLogin = {
   pseudo: "artist",
-  password: "artist"
+  password: "artist",
 };
 const adminLogin = {
   pseudo: "admin",
-  password: "admin"
+  password: "admin",
 };
 let existArtist = new User({
   id: "",
@@ -64,11 +64,11 @@ let existArtist = new User({
   pseudo: "",
   password: "",
   city: "",
-  role: "artist"
+  role: "artist",
 });
 const roleRequest = {
-  newRole: "artist"
-}
+  newRole: "artist",
+};
 
 describe("Test case for user routes", () => {
   it("1 - test case to signup user", async () => {
@@ -95,7 +95,7 @@ describe("Test case for user routes", () => {
     const response = await request(app).post("/signin").send(artistLogin);
     expect(response.status).toBe(200);
     existArtist = response.body.user;
-    console.log(existArtist)
+    console.log(existArtist);
   });
 
   it("6 - test case to log the user with admin credentials", async () => {
@@ -105,8 +105,9 @@ describe("Test case for user routes", () => {
   });
 
   it("7 - test case to delete an user as admin", async () => {
-    const response = await request(app).delete(`/delete-user/${newUser.pseudo}`)
-    .set("Authorization", `Bearer ${tokenAdmin}`);
+    const response = await request(app)
+      .delete(`/delete-user/${newUser.pseudo}`)
+      .set("Authorization", `Bearer ${tokenAdmin}`);
     expect(response.status).toBe(200);
   });
 
@@ -127,25 +128,28 @@ describe("Test case for user routes", () => {
   });
 
   it("11 - test case to get current user info", async () => {
-    const response = await request(app).get("/my-user").set("Authorization", `Bearer ${tokenUser}`);
+    const response = await request(app)
+      .get("/my-user")
+      .set("Authorization", `Bearer ${tokenUser}`);
     expect(response.status).toBe(200);
   });
 
   it("12 - test case to get all users", async () => {
-    const response = await request(app).get("/get-all-users").set("Authorization", `Bearer ${tokenUser}`);
+    const response = await request(app)
+      .get("/get-all-users")
+      .set("Authorization", `Bearer ${tokenUser}`);
     expect(response.status).toBe(200);
     const userExist = response.body.some(
-      (user: User) =>
-        user.pseudo === userLogin.pseudo
+      (user: User) => user.pseudo === userLogin.pseudo,
     );
     expect(userExist).toBe(true);
   });
 
   it("13 - test case to update artist user role", async () => {
     const response = await request(app)
-    .put(`/update-role/${existArtist.id}`)
-    .set("Authorization", `Bearer ${tokenAdmin}`)
-    .send(roleRequest);
+      .put(`/update-role/${existArtist.id}`)
+      .set("Authorization", `Bearer ${tokenAdmin}`)
+      .send(roleRequest);
     expect(response.status).toBe(200);
   });
 });

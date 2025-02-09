@@ -117,7 +117,7 @@ const signin = async (
     const foundUser: UserModel | null = await UserModel.findOne({
       where: { pseudo },
     });
-    
+
     if (!foundUser) {
       return res.status(401).json({
         message: "Invalid credentials. Check your username and password.",
@@ -125,9 +125,9 @@ const signin = async (
     }
     const passwordMatch: boolean = await bcrypt.compare(
       password,
-      foundUser.password
+      foundUser.password,
     );
-    
+
     if (!passwordMatch) {
       return res.status(401).json({
         message: "Invalid credentials. Check your username and password.",

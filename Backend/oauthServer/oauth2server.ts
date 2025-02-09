@@ -64,7 +64,7 @@ app.all("/oauth/token", async (req: Request, res: Response) => {
       res.redirect(`http://localhost:5173/event/token/${token.accessToken}`);
     }
   } catch (error) {
-    console.error( error);
+    console.error(error);
     res.status(500).json({ error });
   }
 });
