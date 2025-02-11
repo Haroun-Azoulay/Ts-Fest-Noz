@@ -61,7 +61,7 @@ export function createRandomPost(index: number) {
 export function createRandomCity(index: number) {
   return {
     id: cityUUIDs[index],
-    user_id: faker.helpers.arrayElement(userUUIDs),
+    userId: faker.helpers.arrayElement(userUUIDs),
     city_name: fakerFR.location.city(),
     address: faker.location.streetAddress(),
     text: faker.lorem.sentence(),

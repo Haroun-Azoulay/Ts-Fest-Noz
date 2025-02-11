@@ -8,7 +8,7 @@ const router: Router = express.Router();
 router.get(
   "/get-goodie-type/:goodieTypeId",
   verifyToken,
-  goodieTypeController.getGoodieType
+  goodieTypeController.getGoodieType,
 );
 
 router.get(

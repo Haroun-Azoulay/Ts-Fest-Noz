@@ -57,9 +57,9 @@
     import { ref, onMounted } from 'vue';
     import { useRouter, useRoute } from 'vue-router';
     import ApiService from "@/services/ApiService";
-    import HeaderPage from '../pages/Header/HeaderPage.vue';
-    import ModalConfirm from './pModal/ModalConfirm.vue';
-    import FooterPage from '../pages/Footer/FooterPage.vue';
+    import HeaderPage from '../../composables/Header/HeaderPage.vue';
+    import ModalConfirm from '../../components/pModal/ModalConfirm.vue';
+    import FooterPage from '../../composables/Footer/FooterPage.vue';
     import { useJwt } from '@vueuse/integrations/useJwt';
     
     const router = useRouter();
@@ -101,30 +101,30 @@
         return localStorage.getItem('authToken');
     };
 
-    onMounted(async () => {
-        try {
-            const authToken = localStorage.getItem('authToken');
-            if (!authToken)  {
-                router.push({ path : '/' });
-            } else {
-                const { payload } = useJwt(authToken);
-                const roleId = payload.value?.role;
-                if (roleId !== "artist") {
-                    router.push({ path : '/' });
-                }
-                const response = await ApiService.get('/groupdetail/me', {
-                    headers: {
-                        Authorization: `Bearer ${authToken}`,
-                    },
-                });
-                if ('message' in response.data === false) {
-                    router.push({ path : '/' });
-                }
-            }
-        } catch (error) {
-            console.error('Erreur lors de la requête :', error);
-        }
-    });
+    // onMounted(async () => {
+    //     try {
+    //         const authToken = localStorage.getItem('authToken');
+    //         if (!authToken)  {
+    //             router.push({ path : '/' });
+    //         } else {
+    //             const { payload } = useJwt(authToken);
+    //             const roleId = payload.value?.role;
+    //             if (roleId !== "artist") {
+    //                 router.push({ path : '/' });
+    //             }
+    //             const response = await ApiService.get('/get-all-groups', {
+    //                 headers: {
+    //                     Authorization: `Bearer ${authToken}`,
+    //                 },
+    //             });
+    //             if ('message' in response.data === false) {
+    //                 router.push({ path : '/' });
+    //             }
+    //         }
+    //     } catch (error) {
+    //         console.error('Erreur lors de la requête :', error);
+    //     }
+    // });
 
     const addMember = async () => {
         try {
@@ -132,7 +132,7 @@
             createGroup.name = groupName.value;
             createGroup.members = [];
             dynamicInputs.value.forEach((element) => createGroup.members.push(element.value));
-            const response = await ApiService.post('/group/create-group', createGroup, {
+            const response = await ApiService.post('/create-group', createGroup, {
                 headers: {
                     Authorization: `Bearer ${authToken}`,
                 },

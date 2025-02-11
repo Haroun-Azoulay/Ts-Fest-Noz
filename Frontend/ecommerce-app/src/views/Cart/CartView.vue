@@ -62,9 +62,9 @@
 
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue';
-import HeaderPage from '../pages/Header/HeaderPage.vue';
-import FooterPage from '../pages/Footer/FooterPage.vue';
-import ModalConfirm from './pModal/ModalConfirm.vue';
+import HeaderPage from '../../composables/Header/HeaderPage.vue';
+import FooterPage from '../../composables/Footer/FooterPage.vue';
+import ModalConfirm from '../../components/pModal/ModalConfirm.vue';
 import { useRouter, useRoute } from 'vue-router';
 import type { GoodieType, GoodieInCart, Goodie } from 'models/goodie';
 import type { Cart } from 'models/cart';

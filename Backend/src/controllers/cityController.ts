@@ -238,9 +238,9 @@ const deletePoint = async (
   try {
     const userId: string | undefined = req.userId;
     const { pointId } = req.params;
-    const point: CityModel | null = await CityModel.findOne(
-      {where : {id: pointId, userId: userId}}
-    );
+    const point: CityModel | null = await CityModel.findOne({
+      where: { id: pointId, userId: userId },
+    });
     if (!point) {
       return res.status(404).json({ message: "The point does not exist" });
     }

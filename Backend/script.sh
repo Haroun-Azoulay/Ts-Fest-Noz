@@ -9,7 +9,7 @@ elif [ "$1" = "-test" ]; then
 elif [ "$1" = "-full" ]; then   
     docker-compose up --build -d
 else
-    echo "You forgot flag -run or -test"
+    echo "You forgot flag -run or -test or -full"
 fi
 
 

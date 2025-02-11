@@ -15,8 +15,8 @@ app.use(groupRoutes);
 app.use(groupUserRoutes);
 app.use(goodieTypeRoutes);
 
-let tokenUser : string | undefined;
-let tokenAdmin : string | undefined;
+let tokenUser: string | undefined;
+let tokenAdmin: string | undefined;
 
 let existUser = new User({
   id: "",
@@ -26,7 +26,7 @@ let existUser = new User({
   password: "",
   email: "",
   city: "",
-  role: "user"
+  role: "user",
 });
 let existArtist = new User({
   id: "",
@@ -36,7 +36,7 @@ let existArtist = new User({
   password: "",
   email: "",
   city: "",
-  role: "artist"
+  role: "artist",
 });
 let existOrganizer = new User({
   id: "",
@@ -46,7 +46,7 @@ let existOrganizer = new User({
   password: "",
   email: "",
   city: "",
-  role: "organizer"
+  role: "organizer",
 });
 let existAdmin = new User({
   id: "",
@@ -56,31 +56,31 @@ let existAdmin = new User({
   password: "",
   email: "",
   city: "",
-  role: "admin"
+  role: "admin",
 });
 let existGroup = {
   id: "",
-  name: "group-test"
-}
+  name: "group-test",
+};
 let existGoodieType = {
   id: "",
-  name: ""
-}
+  name: "",
+};
 const userLogin = {
   pseudo: "bechari",
-  password: "test"
+  password: "test",
 };
 const artistLogin = {
   pseudo: "artist",
-  password: "artist"
+  password: "artist",
 };
 const organizerLogin = {
   pseudo: "organizer",
-  password: "organizer"
+  password: "organizer",
 };
 const adminLogin = {
   pseudo: "admin",
-  password: "admin"
+  password: "admin",
 };
 
 describe("Test case for cleaning phase", () => {
@@ -107,58 +107,64 @@ describe("Test case for cleaning phase", () => {
     existAdmin = response.body.user;
   });
   it("5 - test case to get specific group among all", async () => {
-    const response = await request(app).get(`/get-all-groups`).set("Authorization", `Bearer ${tokenUser}`);
+    const response = await request(app)
+      .get(`/get-all-groups`)
+      .set("Authorization", `Bearer ${tokenUser}`);
     expect(response.status).toBe(200);
     existGroup = response.body.filter(
-      (group: Group) =>
-        group.name === existGroup.name
+      (group: Group) => group.name === existGroup.name,
     )[0];
   });
   it("6 - test case to delete artist user from a group", async () => {
     const response = await request(app)
-    .delete(`/groups/${existGroup.id}/users`)
-    .send({userId: existArtist.id})
-    .set("Authorization", `Bearer ${tokenAdmin}`);
+      .delete(`/groups/${existGroup.id}/users`)
+      .send({ userId: existArtist.id })
+      .set("Authorization", `Bearer ${tokenAdmin}`);
     expect(response.status).toBe(200);
   });
   it("7 - test case to delete a group", async () => {
     const response = await request(app)
-    .delete(`/delete-group/${existGroup.id}`)
-    .set("Authorization", `Bearer ${tokenAdmin}`);
+      .delete(`/delete-group/${existGroup.id}`)
+      .set("Authorization", `Bearer ${tokenAdmin}`);
     expect(response.status).toBe(200);
   });
   it("8 - test case to get specific goodie type among all", async () => {
-    const response = await request(app).get(`/get-all-types`).set("Authorization", `Bearer ${tokenUser}`);
+    const response = await request(app)
+      .get(`/get-all-types`)
+      .set("Authorization", `Bearer ${tokenUser}`);
     expect(response.status).toBe(200);
     existGoodieType = response.body.filter(
-      (goodieType: GoodieType) =>
-        goodieType.name === "goodie_type_test"
+      (goodieType: GoodieType) => goodieType.name === "goodie_type_test",
     )[0];
   });
   it("9 - test case to delete existing goodie type", async () => {
     const response = await request(app)
-    .delete(`/delete-goodie-type/${existGoodieType.id}`)
-    .set("Authorization", `Bearer ${tokenAdmin}`);
+      .delete(`/delete-goodie-type/${existGoodieType.id}`)
+      .set("Authorization", `Bearer ${tokenAdmin}`);
     expect(response.status).toBe(200);
   });
   it("10 - test case to delete an user as admin", async () => {
-    const response = await request(app).delete(`/delete-user/${existUser.id}`)
-    .set("Authorization", `Bearer ${tokenAdmin}`);
+    const response = await request(app)
+      .delete(`/delete-user/${existUser.id}`)
+      .set("Authorization", `Bearer ${tokenAdmin}`);
     expect(response.status).toBe(200);
   });
   it("11 - test case to delete an artist as admin", async () => {
-    const response = await request(app).delete(`/delete-user/${existArtist.id}`)
-    .set("Authorization", `Bearer ${tokenAdmin}`);
+    const response = await request(app)
+      .delete(`/delete-user/${existArtist.id}`)
+      .set("Authorization", `Bearer ${tokenAdmin}`);
     expect(response.status).toBe(200);
   });
   it("12 - test case to delete an artist as admin", async () => {
-    const response = await request(app).delete(`/delete-user/${existOrganizer.id}`)
-    .set("Authorization", `Bearer ${tokenAdmin}`);
+    const response = await request(app)
+      .delete(`/delete-user/${existOrganizer.id}`)
+      .set("Authorization", `Bearer ${tokenAdmin}`);
     expect(response.status).toBe(200);
   });
   it("13 - test case to delete an admin as admin", async () => {
-    const response = await request(app).delete(`/delete-user/${existAdmin.id}`)
-    .set("Authorization", `Bearer ${tokenAdmin}`);
+    const response = await request(app)
+      .delete(`/delete-user/${existAdmin.id}`)
+      .set("Authorization", `Bearer ${tokenAdmin}`);
     expect(response.status).toBe(200);
   });
 });

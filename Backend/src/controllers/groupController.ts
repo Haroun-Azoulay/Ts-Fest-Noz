@@ -10,7 +10,7 @@ const createGroup = async (
   try {
     const groupName = req.body.name;
     if (!groupName) {
-      throw new Error("No group name been sent.")
+      throw new Error("No group name been sent.");
     }
     const checkExistGroup: GroupModel | null = await GroupModel.findOne({
       where: { name: groupName },

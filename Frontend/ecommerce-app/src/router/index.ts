@@ -1,17 +1,16 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import SignupView from '@/components/SignupView.vue';
-import SigninView from '@/components/SigninView.vue';
-import HomeView from '@/components/HomeView.vue';
-import DashboardView from '@/components/DashboardView.vue';
-import GroupView from '@/components/GroupView.vue';
-import AdminHomeView from '@/components/AdminHomeView.vue';
-import ContactView from '@/components/ContactView.vue';
-import ErrorView from '@/components/404View.vue';
+import SignupView from '@/views/Authentification/SignupView.vue';
+import SigninView from '@/views/Authentification/SigninView.vue';
+import HomeView from '@/views/Home/HomeView.vue';
+import DashboardView from '@/views/Dashboard/DashboardView.vue';
+import GroupView from '@/views/Group/GroupView.vue';
+import AdminHomeView from '@/views/Admin/AdminHomeView.vue';
+import ContactView from '@/views/Contact/ContactView.vue';
+import ErrorView from '@/views/404/404View.vue';
 import authMiddleware from '@/middlewares/auth';
 import authAdmin from '@/middlewares/authAdmin';
-import GoodieDetailsView from '@/components/GoodieDetailsView.vue';
-import CartView from '@/components/CartView.vue';
-
+import GoodieDetailsView from '@/views/Goodie/GoodieDetailsView.vue';
+import CartView from '@/views/Cart/CartView.vue';
 const routes = [
   {
     path: '/',

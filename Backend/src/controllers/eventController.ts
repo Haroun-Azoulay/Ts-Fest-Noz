@@ -21,7 +21,7 @@ const addEvent = async (
       user_id: event.user_id,
       description: event.description,
       url: event.url,
-      mapId: event.mapId
+      mapId: event.mapId,
     });
   } catch (error) {
     console.error("Error adding an event:", error);
@@ -88,21 +88,16 @@ const addPayment = async (
   res: Response,
 ): Promise<Response<any, Record<string, any>>> => {
   try {
-<<<<<<< HEAD
     const userId: string | undefined = req.userId;
     const eventId: string | undefined = req.params.id;
 
     if (!userId) {
-      return res.status(400).json({ error: "userId est requis" });
+      return res.status(400).json({ error: "userId  is required." });
     }
     if (!eventId) {
-      return res.status(400).json({ error: "eventId est requis" });
+      return res.status(400).json({ error: "eventId  is required." });
     }
 
-=======
-    const userId: string = req.userId!;
-    const eventId: string = req.params.id;
->>>>>>> cc7f5544 (Unit Tests of Event 90% Overall Result coverage)
     console.log(
       "📌 addPayment - userId:",
       userId,
@@ -115,7 +110,6 @@ const addPayment = async (
       expiresIn: "24h",
     });
     const payment: PaymentModel = await PaymentModel.create({
-<<<<<<< HEAD
       ...req.body,
       userId,
       eventId,
@@ -123,29 +117,17 @@ const addPayment = async (
     });
 
     const formattedPayment: PaymentAttributes = {
-=======
-      token: token,
-      payment: req.body.payment,
-      userId: userId,
-      eventId: eventId
-    });
-    return res.status(201).json({
->>>>>>> cc7f5544 (Unit Tests of Event 90% Overall Result coverage)
       id: payment.id,
       payment: payment.payment,
       token: token,
       eventId: eventId,
-<<<<<<< HEAD
       userId: userId,
     };
 
-    console.log("✅ addPayment - formattedPayment:", formattedPayment);
+    console.log("addPayment - formattedPayment:", formattedPayment);
     return res.status(201).json(formattedPayment);
-=======
-    });
->>>>>>> cc7f5544 (Unit Tests of Event 90% Overall Result coverage)
   } catch (error) {
-    console.error("❌ Error adding a payment:", error);
+    console.error("Error adding a payment:", error);
     return res.status(500).send("Error adding a payment");
   }
 };

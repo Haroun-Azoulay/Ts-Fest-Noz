@@ -76,16 +76,20 @@
     onMounted(async () => {
         try {
             const authToken = localStorage.getItem('authToken');
-            const getAllGoodieTypes = await ApiService.get('/goodietype/get-all-types');
+            const getAllGoodieTypes = await ApiService.get('/get-all-types', {
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                },
+            });
             getAllGoodieTypes.data.forEach((type : GoodieType) => allGoodieTypes.value.push(type));
-            const getAllGroups = await ApiService.get('/group/get-all-groups', {
+            const getAllGroups = await ApiService.get('/get-all-groups', {
                 headers: {
                     Authorization: `Bearer ${authToken}`,
                 },
             });
             getAllGroups.data.forEach((group : Group) => allGroups.value.push(group));
 
-            const getAllGoodies = await ApiService.get('/goodie/get-all-goodies', {
+            const getAllGoodies = await ApiService.get('/get-all-goodies', {
                 headers: {
                     Authorization: `Bearer ${authToken}`,
                 },

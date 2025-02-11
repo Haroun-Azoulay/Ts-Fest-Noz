@@ -99,14 +99,14 @@
 
 <script setup lang="ts">
   import { ref, onMounted } from 'vue'
-  import HeaderPage from '../pages/Header/HeaderPage.vue'
+  import HeaderPage from '../../composables/Header/HeaderPage.vue'
   import { useRouter, useRoute } from 'vue-router'
   import ApiService from '@/services/ApiService'
   import { useJwt } from '@vueuse/integrations/useJwt'
-  import ModalConfirm from './pModal/ModalConfirm.vue';
-  import ModalAddGoodie from './pModal/ModalAddGoodie.vue';
-  import FooterPage from '../pages/Footer/FooterPage.vue'
-  import type { Goodie, GoodieType } from '../../models/goodie';
+  import ModalConfirm from '../../components/pModal/ModalConfirm.vue';
+  import ModalAddGoodie from '../../components/pModal/ModalAddGoodie.vue';
+  import FooterPage from '../../composables/Footer/FooterPage.vue'
+  import type { Goodie, GoodieType } from '../../../models/goodie';
   import type { OrdersAndDetails } from 'models/order'
 
   const router = useRouter();

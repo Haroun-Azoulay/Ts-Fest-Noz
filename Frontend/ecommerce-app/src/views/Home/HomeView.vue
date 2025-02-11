@@ -147,9 +147,9 @@
 </template>
 
 <script setup lang="ts">
-    import HeaderPage from '../pages/Header/HeaderPage.vue';
-    import FooterPage from '../pages/Footer/FooterPage.vue';
-    import ShopPage from '../pages/Shop/ShopPage.vue';
+    import HeaderPage from '../../composables/Header/HeaderPage.vue';
+    import FooterPage from '../../composables/Footer/FooterPage.vue';
+    import ShopPage from '../../composables/Shop/ShopPage.vue';
     import { useRouter } from 'vue-router';
     import { ref, onMounted } from 'vue';
     import { useJwt } from '@vueuse/integrations/useJwt';

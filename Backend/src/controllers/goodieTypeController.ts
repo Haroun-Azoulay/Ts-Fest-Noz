@@ -25,10 +25,11 @@ const getGoodieType = async (
   res: Response,
 ): Promise<Response<any, Record<string, any>>> => {
   try {
-    const goodieTypeId : string = req.params.goodieTypeId;
-    const goodieType : GoodieTypeModel | null = await GoodieTypeModel.findByPk(goodieTypeId);
+    const goodieTypeId: string = req.params.goodieTypeId;
+    const goodieType: GoodieTypeModel | null =
+      await GoodieTypeModel.findByPk(goodieTypeId);
     if (!goodieType) {
-      return res.status(404).json({ message: "Goodie Type doesn't exist."});
+      return res.status(404).json({ message: "Goodie Type doesn't exist." });
     }
     return res.status(200).json(goodieType);
   } catch (error) {
@@ -36,7 +37,6 @@ const getGoodieType = async (
     return res.status(500).json({ message: "Error retrieving goodie type" });
   }
 };
-
 
 const getAllgoodieType = async (
   req: Request,

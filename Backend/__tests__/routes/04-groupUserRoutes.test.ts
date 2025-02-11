@@ -87,16 +87,16 @@ describe("Test case for group routes", () => {
   });
   it("6 - test case to add user in group", async () => {
     const response = await request(app)
-    .post(`/groups/${existGroup.id}/users`)
-    .send({userId: existUser.id})
-    .set("Authorization", `Bearer ${tokenAdmin}`);
+      .post(`/groups/${existGroup.id}/users`)
+      .send({ userId: existUser.id })
+      .set("Authorization", `Bearer ${tokenAdmin}`);
     expect(response.status).toBe(401);
   });
   it("7 - test case to add user in group", async () => {
     const response = await request(app)
-    .post(`/groups/-/users`)
-    .send({userId: existArtist.id})
-    .set("Authorization", `Bearer ${tokenAdmin}`);
+      .post(`/groups/-/users`)
+      .send({ userId: existArtist.id })
+      .set("Authorization", `Bearer ${tokenAdmin}`);
     expect(response.status).toBe(500);
   });
   it("8 - test case to delete artist user from a group", async () => {
@@ -108,16 +108,16 @@ describe("Test case for group routes", () => {
   });
   it("9 - test case to delete non-existing user from a group", async () => {
     const response = await request(app)
-    .delete(`/groups/${existGroup.id}/users`)
-    .send({userId: existArtist.id})
-    .set("Authorization", `Bearer ${tokenAdmin}`);
+      .delete(`/groups/${existGroup.id}/users`)
+      .send({ userId: existArtist.id })
+      .set("Authorization", `Bearer ${tokenAdmin}`);
     expect(response.status).toBe(404);
   });
   it("10 - test case to delete user from a group without id", async () => {
     const response = await request(app)
-    .delete(`/groups/-/users`)
-    .send({userId: existArtist.id})
-    .set("Authorization", `Bearer ${tokenAdmin}`);
+      .delete(`/groups/-/users`)
+      .send({ userId: existArtist.id })
+      .set("Authorization", `Bearer ${tokenAdmin}`);
     expect(response.status).toBe(500);
   });
   it("11 - test case to read artist user in group", async () => {
