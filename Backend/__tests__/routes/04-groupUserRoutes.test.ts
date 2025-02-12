@@ -24,6 +24,8 @@ let existUser = new User({
   email: "",
   city: "",
   role: "user",
+  longitude: 1,
+  latitude: 1
 });
 let existArtist = new User({
   id: "",
@@ -34,6 +36,8 @@ let existArtist = new User({
   email: "",
   city: "",
   role: "artist",
+  longitude: 1,
+  latitude: 1
 });
 let existGroup = {
   id: "",

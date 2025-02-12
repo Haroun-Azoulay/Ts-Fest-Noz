@@ -25,6 +25,8 @@ const existUser = new User({
   pseudo: "bechari",
   city: "Paris",
   role: "user",
+  longitude: 1,
+  latitude: 1
 });
 const existArtist = new User({
   id: "5cbfa5dc-7999-4fb1-a443-33894fb52ccd",
@@ -35,6 +37,8 @@ const existArtist = new User({
   pseudo: "artist",
   city: "Paris",
   role: "artist",
+  longitude: 1,
+  latitude: 1
 });
 const existGroup = new Group({
   id: "5cbfa5dc-7999-4fb1-a443-33894fb53ccb",

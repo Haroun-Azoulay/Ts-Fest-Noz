@@ -17,6 +17,7 @@ signinpage.vue:
           >Votre Pseudo</label
         >
         <input
+          data-test="loginPseudo"
           class="self-stretch h-11 p-4 bg-white rounded-lg border border-neutral-400 text-sm leading-tight bg-slate-50"
           placeholder="Saisissez votre pseudo"
           v-model="request.pseudo"
@@ -27,6 +28,7 @@ signinpage.vue:
           >Mot de passe</label
         >
         <input
+          data-test="loginPassword"
           class="self-stretch h-11 p-2 bg-white rounded-lg border border-neutral-400 text-sm leading-tight bg-slate-50"
           id="password"
           type="password"
@@ -36,6 +38,7 @@ signinpage.vue:
         />
       </div>
       <button
+        data-test="submitLoginForm"
         :class="[
           'w-80 h-12 px-12 py-2.5 rounded-lg flex justify-center items-center gap-2.5 mb-8 mt-8',
           buttonClass
@@ -60,7 +63,6 @@ import ApiService from '@/services/ApiService'
 import { ref, computed } from 'vue'
 import ModalConfirm from '../../components/pModal/ModalConfirm.vue'
 import axios from 'axios';
-
 
 const show = ref(false)
 const errorMessage = ref('')
@@ -97,10 +99,6 @@ const signin = async () => {
     }
   }
 }
-
-
-
-
 </script>
 
 <style>

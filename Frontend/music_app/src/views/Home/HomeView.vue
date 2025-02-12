@@ -193,19 +193,19 @@
                           <li>
                             <template v-if="isUser || isArtist || isOrganizer || isFullAuthorized">
                               <h3
+                                data-test="goToCityPage"
                                 v-bind:style="'pointer-events:auto;cursor:pointer;'"
-                                @click="goToCityPage"
-                              >
+                                @click="goToCityPage">
                                 Trouver un événement
                               </h3>
                             </template>
                             <template v-else>
-                              <button
+                              <h3
+                                data-test="goToLoginPage"
                                 v-bind:style="'pointer-events:auto;cursor:pointer;'"
-                                @click="goToLoginPage"
-                              >
+                                @click="goToLoginPage">
                                 Connectez-Vous
-                              </button>
+                              </h3>
                             </template>
                           </li>
                           <li

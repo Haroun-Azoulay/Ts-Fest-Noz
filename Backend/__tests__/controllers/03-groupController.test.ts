@@ -26,6 +26,8 @@ const existUser = new User({
   pseudo: "bechari",
   city: "Paris",
   role: "user",
+  longitude: 1,
+  latitude: 1
 });
 const goodLogin = {
   password: "test",

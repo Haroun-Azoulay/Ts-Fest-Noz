@@ -9,7 +9,7 @@
     "test:routes": "jest __tests__/routes",
     "coverage": "jest --coverage",
     "build": "npx tsc",
-    "start": "node dist/Backend/app.js",
+    "start": "node dist/app.js",
     "dev": "nodemon app.ts",
     "docker": "docker run -p 3000:3000 -ti music-app-back",
     "docker-compose": "docker-compose up"
@@ -20,7 +20,8 @@
   "dependencies": {
     "@types/bcrypt": "^5.0.2",
     "@types/sequelize": "^4.28.20",
-    "axios": "^0.21.1",
+    "axios": "^0.21.4",
+    "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",

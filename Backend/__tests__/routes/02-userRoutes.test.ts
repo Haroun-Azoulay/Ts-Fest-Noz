@@ -19,6 +19,8 @@ const newAdmin = {
   password: "admin",
   pseudo: "admin",
   city: "Paris",
+  longitude: 1,
+  latitude: 1
 };
 const newInvalidUser = {
   lastname: "Dey",
@@ -32,6 +34,8 @@ const newUser = {
   password: "test",
   pseudo: "bechari",
   city: "Paris",
+  longitude: 1,
+  latitude: 1
 };
 const newArtist = {
   lastname: "artist",
@@ -40,6 +44,8 @@ const newArtist = {
   password: "artist",
   pseudo: "artist",
   city: "Paris",
+  longitude: 1,
+  latitude: 1
 };
 const newOrganizer = {
   lastname: "organizer",
@@ -48,17 +54,19 @@ const newOrganizer = {
   password: "organizer",
   pseudo: "organizer",
   city: "Paris",
+  longitude: 1,
+  latitude: 1
 };
 const userLogin = {
   pseudo: "bechari",
   password: "test",
 };
 const uncompletedLogin = {
-  pseudo: "bechari\'",
+  pseudo: "bechari\'"
 };
 const wrongLogin = {
   password: "test2",
-  pseudo: "bechari",
+  pseudo: "bechari"
 };
 const artistLogin = {
   pseudo: "artist",
@@ -66,7 +74,7 @@ const artistLogin = {
 };
 const organizerLogin = {
   pseudo: "organizer",
-  password: "organizer",
+  password: "organizer"
 };
 const adminLogin = {
   pseudo: "admin",
@@ -81,6 +89,8 @@ let existUser = new User({
   password: "",
   city: "",
   role: "user",
+  longitude: 1,
+  latitude: 1
 });
 let existArtist = new User({
   id: "",
@@ -91,6 +101,8 @@ let existArtist = new User({
   password: "",
   city: "",
   role: "artist",
+  longitude: 1,
+  latitude: 1
 });
 let existOrganizer = new User({
   id: "",
@@ -101,17 +113,19 @@ let existOrganizer = new User({
   password: "",
   city: "",
   role: "organizer",
+  longitude: 1,
+  latitude: 1
 });
 const roleRequestArtist = {
-  newRole: "artist",
-};
+  newRole: "artist"
+}
 const roleRequestOrganizer = {
-  newRole: "organizer",
-};
+  newRole: "organizer"
+}
 const roleRequestAdmin = {
-  newRole: "admin",
-};
-const unknownId: string = "5cbfa5dc-7999-4fb1-a443-33894fb52ccb";
+  newRole: "admin"
+}
+const unknownId : string = "5cbfa5dc-7999-4fb1-a443-33894fb52ccb";
 
 describe("Test case for user routes", () => {
   it("1 - test case to signup user", async () => {
@@ -174,23 +188,21 @@ describe("Test case for user routes", () => {
   });
 
   it("12 - test case to delete an user as admin", async () => {
-    const response = await request(app)
-      .delete(`/delete-user/${existUser.id}`)
-      .set("Authorization", `Bearer ${tokenAdmin}`);
+    const response = await request(app).delete(`/delete-user/${existUser.id}`)
+    .set("Authorization", `Bearer ${tokenAdmin}`);
     expect(response.status).toBe(200);
   });
 
   it("13 - test case to delete an non-existing user as admin", async () => {
-    const response = await request(app)
-      .delete(`/delete-user/${existUser.id}`)
-      .set("Authorization", `Bearer ${tokenAdmin}`);
+    const response = await request(app).delete(`/delete-user/${existUser.id}`)
+    .set("Authorization", `Bearer ${tokenAdmin}`);
     expect(response.status).toBe(401);
   });
 
   it("14 - test case to delete an user without id as admin", async () => {
     const response = await request(app)
-      .delete(`/delete-user/sdzrfskgjzijcqsfkogdjporjqogjriketjpore`)
-      .set("Authorization", `Bearer ${tokenAdmin}`);
+    .delete(`/delete-user/sdzrfskgjzijcqsfkogdjporjqogjriketjpore`)
+    .set("Authorization", `Bearer ${tokenAdmin}`);
     expect(response.status).toBe(500);
   });
 
@@ -211,16 +223,12 @@ describe("Test case for user routes", () => {
   });
 
   it("18 - test case to get current user info", async () => {
-    const response = await request(app)
-      .get("/my-user")
-      .set("Authorization", `Bearer ${tokenUser}`);
+    const response = await request(app).get("/my-user").set("Authorization", `Bearer ${tokenUser}`);
     expect(response.status).toBe(200);
   });
 
   it("19 - test case to send request without user token", async () => {
-    const response = await request(app)
-      .get("/my-user")
-      .set("Authorization", `Bearer `);
+    const response = await request(app).get("/my-user").set("Authorization", `Bearer `);
     expect(response.status).toBe(401);
   });
 
@@ -230,16 +238,12 @@ describe("Test case for user routes", () => {
   });
 
   it("21 - test case to send request with invalid user token", async () => {
-    const response = await request(app)
-      .get("/my-user")
-      .set("Authorization", `Bearer rrzopzropjezpogjjoprzop`);
+    const response = await request(app).get("/my-user").set("Authorization", `Bearer rrzopzropjezpogjjoprzop`);
     expect(response.status).toBe(401);
   });
 
   it("22 - test case to get all users", async () => {
-    const response = await request(app)
-      .get("/get-all-users")
-      .set("Authorization", `Bearer ${tokenUser}`);
+    const response = await request(app).get("/get-all-users").set("Authorization", `Bearer ${tokenUser}`);
     expect(response.status).toBe(200);
     const userExist = response.body.some(
       (user: User) => user.pseudo === userLogin.pseudo,
@@ -249,71 +253,71 @@ describe("Test case for user routes", () => {
 
   it("23 - test case to update artist user role", async () => {
     const response = await request(app)
-      .put(`/update-role/${existArtist.id}`)
-      .set("Authorization", `Bearer ${tokenAdmin}`)
-      .send(roleRequestArtist);
+    .put(`/update-role/${existArtist.id}`)
+    .set("Authorization", `Bearer ${tokenAdmin}`)
+    .send(roleRequestArtist);
     expect(response.status).toBe(200);
   });
 
   it("24 - test case to send request without admin token", async () => {
     const response = await request(app)
-      .put(`/update-role/${existArtist.id}`)
-      .set("Authorization", `Bearer `)
-      .send(roleRequestArtist);
+    .put(`/update-role/${existArtist.id}`)
+    .set("Authorization", `Bearer `)
+    .send(roleRequestArtist);
     expect(response.status).toBe(401);
   });
 
   it("25 - test case to send request without admin authorization bearer", async () => {
     const response = await request(app)
-      .put(`/update-role/${existArtist.id}`)
-      .send(roleRequestArtist);
+    .put(`/update-role/${existArtist.id}`)
+    .send(roleRequestArtist);
     expect(response.status).toBe(401);
   });
 
   it("26 - test case to send request with invalid admin token", async () => {
     const response = await request(app)
-      .put(`/update-role/${existArtist.id}`)
-      .set("Authorization", `Bearer goijzrijzrp`)
-      .send(roleRequestArtist);
+    .put(`/update-role/${existArtist.id}`)
+    .set("Authorization", `Bearer goijzrijzrp`)
+    .send(roleRequestArtist);
     expect(response.status).toBe(401);
   });
 
   it("27 - test case to send request with user token to update role", async () => {
     const response = await request(app)
-      .put(`/update-role/${existArtist.id}`)
-      .set("Authorization", `Bearer ${tokenUser}`)
-      .send(roleRequestArtist);
+    .put(`/update-role/${existArtist.id}`)
+    .set("Authorization", `Bearer ${tokenUser}`)
+    .send(roleRequestArtist);
     expect(response.status).toBe(403);
   });
 
   it("28 - test case to update organizer user role", async () => {
     const response = await request(app)
-      .put(`/update-role/${existOrganizer.id}`)
-      .set("Authorization", `Bearer ${tokenAdmin}`)
-      .send(roleRequestOrganizer);
+    .put(`/update-role/${existOrganizer.id}`)
+    .set("Authorization", `Bearer ${tokenAdmin}`)
+    .send(roleRequestOrganizer);
     expect(response.status).toBe(200);
   });
 
   it("29 - test case to update organizer user role without body", async () => {
     const response = await request(app)
-      .put(`/update-role/${existOrganizer.id}`)
-      .set("Authorization", `Bearer ${tokenAdmin}`);
+    .put(`/update-role/${existOrganizer.id}`)
+    .set("Authorization", `Bearer ${tokenAdmin}`)
     expect(response.status).toBe(400);
   });
 
   it("30 - test case to update organizer user role to admin", async () => {
     const response = await request(app)
-      .put(`/update-role/${existOrganizer.id}`)
-      .set("Authorization", `Bearer ${tokenAdmin}`)
-      .send(roleRequestAdmin);
+    .put(`/update-role/${existOrganizer.id}`)
+    .set("Authorization", `Bearer ${tokenAdmin}`)
+    .send(roleRequestAdmin)
     expect(response.status).toBe(403);
   });
 
   it("31 - test case to update organizer user role with unknown id", async () => {
     const response = await request(app)
-      .put(`/update-role/${unknownId}`)
-      .set("Authorization", `Bearer ${tokenAdmin}`)
-      .send(roleRequestOrganizer);
+    .put(`/update-role/${unknownId}`)
+    .set("Authorization", `Bearer ${tokenAdmin}`)
+    .send(roleRequestOrganizer)
     expect(response.status).toBe(500);
   });
 });

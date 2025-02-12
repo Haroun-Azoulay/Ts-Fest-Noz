@@ -25,7 +25,7 @@ export interface CoordinateAttributes {
 // ============================================= City Interfaces (Start) =============================================
 export interface CityAttributes {
   id?: string;
-  userId: string;
+  user_id: string;
   city_name: string;
   text: string;
   address: string;
@@ -125,6 +125,8 @@ export interface UserRequest {
   password: string;
   email: string;
   city: string;
+  longitude: number;
+  latitude: number;
   pseudo: string;
 }
 

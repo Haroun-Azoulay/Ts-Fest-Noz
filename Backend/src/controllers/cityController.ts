@@ -22,11 +22,11 @@ const addPoint = async (
     }
     const point: CityModel | null = await CityModel.create({
       ...req.body,
-      userId: userId,
+      user_id: userId,
     });
     const formattedPoint: CityAttributes = {
       id: point.id,
-      userId: userId,
+      user_id: userId,
       longitude: point.longitude,
       latitude: point.latitude,
       date: point.date,
@@ -81,11 +81,6 @@ const getPointNearUser = async (
     let responseFinal: any = {};
     const userId: string = req.params.userId;
     const points: CityModel[] | undefined = await CityModel.findAll();
-
-    if (!userId) {
-      return res.status(400).json({ message: "User ID is required" });
-    }
-
     const user = await UserModel.findOne({
       where: {
         id: userId,
@@ -95,7 +90,6 @@ const getPointNearUser = async (
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-
     // if (!user.latitude || !user.longitude) {
     //   return res.status(400).json({ message: "User location is incomplete" });
     // }
@@ -136,7 +130,7 @@ const getPointNearUser = async (
       responseFinal = detailedResults;
     }
 
-    return res.json(responseFinal);
+    return res.status(200).json(responseFinal);
   } catch (error) {
     console.error("Error in getPointNearUser:", error);
     return res.status(500).json({ message: "Internal Server Error", error });
@@ -149,12 +143,9 @@ const getPointByUser = async (
 ): Promise<Response<any, Record<string, any>>> => {
   try {
     const userId: string = req.params.userId;
-    if (!userId) {
-      return res.status(400).json({ message: "User ID is required" });
-    }
     const points: CityModel[] | null = await CityModel.findAll({
       where: {
-        userId: userId,
+        user_id: userId,
       },
     });
     return res.status(200).json(points);
@@ -172,10 +163,6 @@ const getPointById = async (
 ): Promise<Response<any, Record<string, any>>> => {
   try {
     const cityId: string = req.params.cityId;
-    if (!cityId) {
-      return res.status(400).json({ message: "City ID is required" });
-    }
-
     const points: CityModel | null = await CityModel.findByPk(cityId, {
       attributes: [
         "id",
@@ -192,8 +179,7 @@ const getPointById = async (
         "url_point",
       ],
     });
-
-    return res.json(points);
+    return res.status(200).json(points);
   } catch (error) {
     console.error(error);
     return res
@@ -238,9 +224,12 @@ const deletePoint = async (
   try {
     const userId: string | undefined = req.userId;
     const { pointId } = req.params;
-    const point: CityModel | null = await CityModel.findOne({
-      where: { id: pointId, userId: userId },
-    });
+    const point: CityModel | null = await CityModel.findOne(
+      {where : {id: pointId, user_id: userId}}
+    );
+    console.log("userId : " + userId);
+    console.log("pointId : " + pointId);
+    console.log("point : " + point);
     if (!point) {
       return res.status(404).json({ message: "The point does not exist" });
     }

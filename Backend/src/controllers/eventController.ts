@@ -90,7 +90,7 @@ const addPayment = async (
   try {
     const userId: string | undefined = req.userId;
     const eventId: string | undefined = req.params.id;
-
+    console.log(userId + " " + eventId);
     if (!userId) {
       return res.status(400).json({ error: "userId  is required." });
     }

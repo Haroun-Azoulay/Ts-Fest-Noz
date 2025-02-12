@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import UserModel from "../models/User";
 import { UserInfo } from "../interfaces/types";
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const signup = async (
@@ -19,7 +19,6 @@ const signup = async (
       longitude,
       latitude,
     } = req.body;
-
     if (
       !lastname ||
       !firstname ||
@@ -34,7 +33,6 @@ const signup = async (
         message: "A required field is missing.",
       });
     }
-
     const defaultRole: string = "user";
     const isAdmin: boolean = email === "admin@example.com";
     const assignedRole: string = isAdmin ? "admin" : defaultRole;
@@ -123,13 +121,11 @@ const signin = async (
       password,
       foundUser.password,
     );
-
     if (!passwordMatch) {
       return res.status(401).json({
         message: "Invalid credentials. Check your username and password.",
       });
     }
-
     const token: string = jwt.sign(
       { userId: foundUser.id, role: foundUser.role },
       "RANDOM_SECRET_KEY",

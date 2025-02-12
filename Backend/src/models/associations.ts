@@ -54,11 +54,11 @@ Post.hasMany(Commentary, {
 Commentary.belongsTo(Post, { foreignKey: "postId" });
 
 User.hasMany(City, {
-  foreignKey: "userId",
+  foreignKey: "user_id",
   onDelete: "CASCADE",
   onUpdate: "CASCADE",
 });
-City.belongsTo(User, { foreignKey: "userId" });
+City.belongsTo(User, { foreignKey: "user_id" });
 
 City.hasOne(Event, {
   foreignKey: "city_id",

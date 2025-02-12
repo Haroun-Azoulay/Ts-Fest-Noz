@@ -14,6 +14,7 @@
       <div class="w-96 h-20 px-2.5 flex-col justify-start items-start gap-1 flex">
         <label class="w-96 px-2 text-gray-800 text-sm font-medium leading-tight">Nom</label>
         <input
+          data-test="signupLastname"
           class="self-stretch h-11 p-4 bg-white rounded-lg border border-neutral-400 text-sm leading-tight bg-slate-50"
           placeholder="Saisissez votre nom"
           v-model="request.lastname"
@@ -23,6 +24,7 @@
       <div class="w-96 h-20 px-2.5 flex-col justify-start items-start gap-1 flex">
         <label class="w-96 px-2 text-gray-800 text-sm font-medium leading-tight">Prénom</label>
         <input
+          data-test="signupFirstname"
           class="self-stretch h-11 p-4 bg-white rounded-lg border border-neutral-400 text-sm leading-tight bg-slate-50"
           placeholder="Saisissez votre prénom"
           v-model="request.firstname"
@@ -32,6 +34,7 @@
       <div class="w-96 h-20 px-2.5 flex-col justify-start items-start gap-1 flex">
         <label class="w-96 px-2 text-gray-800 text-sm font-medium leading-tight">Email</label>
         <input
+          data-test="signupEmail"
           class="self-stretch h-11 p-4 bg-white rounded-lg border border-neutral-400 text-sm leading-tight bg-slate-50"
           placeholder="Saisissez votre email"
           v-model="request.email"
@@ -41,6 +44,7 @@
       <div class="w-96 h-20 px-2.5 pb-2.5 flex-col justify-start items-start gap-2.5 flex relative">
         <label class="w-96 px-2 text-gray-800 text-sm font-medium leading-tight">Ville</label>
         <input
+          data-test="signupCity"
           class="self-stretch h-11 p-4 bg-white rounded-lg border border-neutral-400 text-sm leading-tight bg-slate-50"
           list="cities-list"
           @input="handleInput"
@@ -54,6 +58,7 @@
           class="p-0 absolute w-96 left-0 top-full bg-white border border-gray-300 rounded-lg shadow-lg mt-1 z-10 max-h-56 overflow-y-auto"
         >
           <li
+            data-test="signupCoordinates"
             v-for="(city, index) in cities"
             :key="index"
             @click="selectCity(city.nom, city.centre.coordinates[0], city.centre.coordinates[1])"
@@ -66,6 +71,7 @@
       <div class="w-96 h-20 px-2.5 flex-col justify-start items-start gap-1 flex">
         <label class="w-96 px-2 text-gray-800 text-sm font-medium leading-tight">Pseudo</label>
         <input
+          data-test="signupPseudo"
           class="self-stretch h-11 p-4 bg-white rounded-lg border border-neutral-400 text-sm leading-tight bg-slate-50"
           placeholder="Saisissez votre pseudo"
           v-model="request.pseudo"
@@ -76,6 +82,7 @@
           >Mot de passe</label
         >
         <input
+          data-test="signupPassword"
           class="self-stretch h-11 p-4 bg-white rounded-lg border border-neutral-400 text-sm leading-tight bg-slate-50"
           id="password"
           type="password"
@@ -84,6 +91,7 @@
         />
       </div>
       <button
+        data-test="submitSignupForm"
         :class="[
           'w-80 h-12 px-12 mt-3 py-2.5 rounded-lg flex justify-center items-center gap-2.5 mb-8',
           buttonClass
@@ -160,6 +168,8 @@ const handleInput = async () => {
 }
 
 const verifyTown = (queryResponse: string, queryApi: string[]): Promise<void> => {
+  console.log(queryResponse);
+  console.log(queryApi);
   return new Promise((resolve, reject) => {
     if (queryApi.some((city) => city.nom === queryResponse)) {
       resolve()
@@ -192,8 +202,7 @@ const selectCity = (city: string, cityLatitude: number, cityLongitude: number) =
 }
 const signup = async () => {
   try {
-    await verifyTown(request.value.city, cities.value)
-    
+    await verifyTown(request.value.city, cities.value);
     const response = await ApiService.post('/signup', request.value)
     const token = response.data.token
     router.push({ path: '/signin' })
