@@ -173,7 +173,7 @@ const addMarkers = () => {
           <p style="margin: 5px 0;">Région: ${point.region_name}</p>
           <p style="margin: 5px 0;">Date: ${formatedDate}</p>
           <a href="${point.url_point}" style="display: inline-block; margin: 12px 12px; color: #fffff; text-decoration: none;">Cliquer ici</a>
-          <button onclick="window.deletePoint(${point.id})" style="padding: 5px 10px; border: none; border-radius: 4px; background-color: #9333ea; color: white; cursor: pointer; transition: background-color 0.3s ease;">Supprimer</button>
+          <button onclick="window.deletePoint('${point.id}')" style="padding: 5px 10px; border: none; border-radius: 4px; background-color: #9333ea; color: white; cursor: pointer; transition: background-color 0.3s ease;">Supprimer</button>
         </section>
       `;
 

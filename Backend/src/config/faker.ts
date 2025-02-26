@@ -32,6 +32,79 @@ const paymentUUIDs = Array.from({ length: 10 }, () => uuidv4());
 const artistProfilUUIDs = Array.from({ length: 10 }, () => uuidv4());
 const OrganizerProfilUUIDs = Array.from({ length: 10 }, () => uuidv4());
 
+const frenchCities = [
+  {
+    city: "Paris",
+    latitude: 48.8566,
+    longitude: 2.3522,
+    region: "Île-de-France",
+    department: 75,
+  },
+  {
+    city: "Marseille",
+    latitude: 43.2965,
+    longitude: 5.3698,
+    region: "Provence-Alpes-Côte d'Azur",
+    department: 13,
+  },
+  {
+    city: "Lyon",
+    latitude: 45.764,
+    longitude: 4.8357,
+    region: "Auvergne-Rhône-Alpes",
+    department: 69,
+  },
+  {
+    city: "Toulouse",
+    latitude: 43.6047,
+    longitude: 1.4442,
+    region: "Occitanie",
+    department: 31,
+  },
+  {
+    city: "Nice",
+    latitude: 43.7102,
+    longitude: 7.262,
+    region: "Provence-Alpes-Côte d'Azur",
+    department: 6,
+  },
+  {
+    city: "Nantes",
+    latitude: 47.2184,
+    longitude: -1.5536,
+    region: "Pays de la Loire",
+    department: 44,
+  },
+  {
+    city: "Strasbourg",
+    latitude: 48.5734,
+    longitude: 7.7521,
+    region: "Grand Est",
+    department: 67,
+  },
+  {
+    city: "Montpellier",
+    latitude: 43.6119,
+    longitude: 3.8772,
+    region: "Occitanie",
+    department: 34,
+  },
+  {
+    city: "Bordeaux",
+    latitude: 44.8378,
+    longitude: -0.5792,
+    region: "Nouvelle-Aquitaine",
+    department: 33,
+  },
+  {
+    city: "Lille",
+    latitude: 50.6292,
+    longitude: 3.0573,
+    region: "Hauts-de-France",
+    department: 59,
+  },
+];
+
 export function createRandomUser(index: number) {
   return {
     id: userUUIDs[index],
@@ -59,21 +132,23 @@ export function createRandomPost(index: number) {
 }
 
 export function createRandomCity(index: number) {
+  const randomIndex = faker.number.int({ min: 0, max: 9 });
+  const cityData = frenchCities[randomIndex];
   return {
     id: cityUUIDs[index],
-    userId: faker.helpers.arrayElement(userUUIDs),
-    city_name: fakerFR.location.city(),
+    user_id: faker.helpers.arrayElement(userUUIDs),
+    city_name: cityData.city,
     address: faker.location.streetAddress(),
     text: faker.lorem.sentence(),
-    zip_code: parseInt(faker.location.zipCode()),
+    zip_code: faker.number.int({ min: 10000, max: 99999 }),
     label: faker.commerce.productAdjective(),
-    longitude: faker.location.longitude(),
-    latitude: faker.location.latitude(),
+    longitude: cityData.longitude,
+    latitude: cityData.latitude,
     date: faker.date.past(),
     style: faker.color.human(),
     color: faker.color.rgb(),
-    departement_number: faker.number.int({ min: 1, max: 95 }),
-    region_name: faker.location.state(),
+    departement_number: cityData.department,
+    region_name: cityData.region,
     url_point: faker.internet.url(),
   };
 }

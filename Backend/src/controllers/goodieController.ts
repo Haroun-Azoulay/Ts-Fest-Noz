@@ -13,6 +13,16 @@ const createGoodie = async (
 ): Promise<Response<any, Record<string, any>>> => {
   const file = (req as MulterRequest).file;
 
+  if (!file) {
+    console.log("Aucun fichier reçu !");
+    return res.status(400).json({ message: "Aucun fichier fourni" });
+  }
+
+  console.log("Chemin du fichier :", file.path);
+  console.log("Nom original :", file.originalname);
+  console.log("MIME type :", file.mimetype);
+  console.log("Taille du fichier :", file.size);
+
   if (file === undefined) {
     return res.status(201).json("Not found");
   }
@@ -22,6 +32,7 @@ const createGoodie = async (
   try {
     const goodie: GoodieModel = await GoodieModel.create({
       ...req.body,
+      path: imagemBase64,
     });
 
     const formattedGoodie: GoodieAttributes = {
@@ -35,6 +46,8 @@ const createGoodie = async (
       price: goodie.price,
       available: goodie.available,
     };
+
+    console.log("Base64 Image Path:", imagemBase64);
 
     console.log("addPost:", formattedGoodie);
     return res.status(201).json(formattedGoodie);

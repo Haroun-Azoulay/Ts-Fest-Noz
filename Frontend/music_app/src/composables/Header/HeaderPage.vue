@@ -65,7 +65,7 @@
                   ><span>Deconnexion</span></a
                 >
                 <a
-                  v-if="isAdmin"
+                  v-if="isFullAuthorized"
                   @click="goToAdminHomePage"
                   class="btn-main"
                   style="background-color: green; margin-right: 10px"

@@ -1,12 +1,15 @@
-import { CalculateDistance } from "../algorithmic/haversine";
 import { CityAttributes } from "../interfaces/types";
 import { CoordinateAttributes } from "../interfaces/types";
 import CityModel from "../models/City";
 import Event from "../models/Event";
 import UserModel from "../models/User";
-import HaversineFormula from "../algorithmic/haversine";
 import { Request, Response } from "express";
 import axios from "axios";
+import haversine from 'formula-haversine'
+
+
+
+
 
 const addPoint = async (
   req: Request,
@@ -96,7 +99,7 @@ const getPointNearUser = async (
 
     if (points) {
       let result: CoordinateAttributes[] = points.map((point) => {
-        const distance = HaversineFormula.CalculateDistance(
+        const distance = haversine(
           user.latitude,
           user.longitude,
           point.latitude,
@@ -224,9 +227,9 @@ const deletePoint = async (
   try {
     const userId: string | undefined = req.userId;
     const { pointId } = req.params;
-    const point: CityModel | null = await CityModel.findOne(
-      {where : {id: pointId, user_id: userId}}
-    );
+    const point: CityModel | null = await CityModel.findOne({
+      where: { id: pointId, user_id: userId },
+    });
     console.log("userId : " + userId);
     console.log("pointId : " + pointId);
     console.log("point : " + point);
