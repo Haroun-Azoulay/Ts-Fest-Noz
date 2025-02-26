@@ -182,7 +182,7 @@ export interface GoodieAttributes {
   userId?: string;
   goodieTypeId?: string;
   name: string;
-  path?: string;
+  path?: any;
   quantity: number;
   price: number;
   available: boolean;

@@ -40,6 +40,7 @@
             <div v-if="myGoodies.length > 0">
               <div v-for="goodie in myGoodies" :key="goodie">
                 <div class="row" style="display:flex;align-items:center;">
+                  {{ goodie }}
                   <div class="col goodieSmallImage">
                     <img :src="`http://${goodie.path}`"/>
                   </div>
@@ -83,10 +84,18 @@
       </div>
     </section>
     <ModalAddGoodie v-model="showAddGoodie" title="Ajouter Goodie" @confirm="confirmAddGoodie">
-      <option v-for="type in allGoodieTypes" :key="type.name" :value="type.id">
-          {{ type.name }}
-      </option>
-    </ModalAddGoodie>
+    <template #goodieTypes>
+        <option v-for="type in allGoodieTypes" :key="type.name" :value="type.id">
+            {{ type.name }}
+        </option>
+    </template>
+    <template #groupOptions>
+        <option v-for="group in allGroups" :key="group.name" :value="group.id">
+            {{ group.name }}
+        </option>
+    </template>
+</ModalAddGoodie>
+
     <ModalConfirm v-model="showError" title="Erreur" @confirm="confirmError">
         <p>{{ errorMessage }}</p>
     </ModalConfirm>
@@ -117,6 +126,7 @@
   const showSuccess = ref(false);
   const showAddGoodie = ref(false);
   var allGroupMembers = ref([]);
+  var allGroups = ref([]);
   var myGoodies = ref<Goodie[]>([]);
   var addGoodiesCalledOnce = ref(false);
   var allGoodieTypes = ref<GoodieType[]>([]);
@@ -142,7 +152,7 @@
               Authorization: `Bearer ${authToken}`,
           },
       });
-      await ApiService.delete(`/group/delete-group/${getGroupDetail.data[0].groupId}`, {
+      await ApiService.delete(`/delete-group/${getGroupDetail.data[0].groupId}`, {
           headers: {
               Authorization: `Bearer ${authToken}`,
           },
@@ -175,29 +185,35 @@
         } else {
             const { payload } = useJwt(authToken);
             const role = payload.value?.role;
-            if (role !== "artist") {
-              router.push({ path : '/' });
-            }
-            const getMyGroup = await ApiService.get('/group/me', {
-                headers: {
-                    Authorization: `Bearer ${authToken}`,
-                },
+            // if (role !== "artist") {
+            //   router.push({ path : '/' });
+            // }
+            // const getMyGroup = await ApiService.get('/group/me', {
+            //     headers: {
+            //         Authorization: `Bearer ${authToken}`,
+            //     },
+            // });
+            // groupName.value = getMyGroup.data.name;
+            // const getMyGroupDetails = await ApiService.get('/groupdetail/me', {
+            //     headers: {
+            //         Authorization: `Bearer ${authToken}`,
+            //     },
+            // });
+            // getMyGroupDetails.data.forEach((element: { email: any; owner: any }) => {
+            //   allGroupMembers.value.push({ email: element.email, owner: element.owner});
+            // });
+            const getAllGoodieTypes = await ApiService.get('/get-all-types', {
+              headers: {
+                  Authorization: `Bearer ${authToken}`,
+              },
             });
-            groupName.value = getMyGroup.data.name;
-            const getMyGroupDetails = await ApiService.get('/groupdetail/me', {
-                headers: {
-                    Authorization: `Bearer ${authToken}`,
-                },
-            });
-            getMyGroupDetails.data.forEach((element: { email: any; owner: any }) => {
-              allGroupMembers.value.push({ email: element.email, owner: element.owner});
-            });
-            const getAllGoodieTypes = await ApiService.get('/goodietype/get-all-types', {
+            const getAllGroups = await ApiService.get('/get-all-groups', {
               headers: {
                   Authorization: `Bearer ${authToken}`,
               },
             });
             allGoodieTypes.value = getAllGoodieTypes.data;
+            allGroups.value = getAllGroups.data;
             const getMyGoodies = await ApiService.get('/goodie/me', {
                 headers: {
                     Authorization: `Bearer ${authToken}`,
@@ -209,8 +225,9 @@
                   element.goodieTypeId = goodieType.name;
                   myGoodies.value.push(element);
                 }
-              })
+              }) 
             });
+
             const getMyOrders = await ApiService.get('/order/me', {
                 headers: {
                     Authorization: `Bearer ${authToken}`,

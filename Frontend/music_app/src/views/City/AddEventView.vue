@@ -208,6 +208,7 @@ const onTabBeforeChange = () => {
 };
 
 const wizardCompleted = () => {
+  addPoint(),
   alert("The point is added !");
 };
 

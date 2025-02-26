@@ -25,6 +25,12 @@ router.get(
   cityController.getPointNearUser,
 );
 
+router.get(
+  "/get-point-user/:userId",
+  verifyToken,
+  cityController.getPointByUser,
+);
+
 //  I don't know why this line is comment ?
 // router.put("/update-point/:pointId", verifyToken, cityController.updatePoint);
 

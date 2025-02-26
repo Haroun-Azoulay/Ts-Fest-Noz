@@ -160,11 +160,11 @@ const selected = ref('')
 const sendEmail = (): void => {
   Email.send({
     Host: 'smtp.elasticemail.com',
-    Username: import.meta.env.VITE_USERNAME,
+    Username: "ha.azoulay93@gmail.com",
     Port: 587,
-    Password: import.meta.env.VITE_PASSWORD,
-    To: import.meta.env.VITE_TO,
-    From: import.meta.env.VITE_FROM,
+    Password: "56863FC72EFBABFEEFCE7700874DCB3E428F",
+    To: email.value,
+    From: "ha.azoulay93@gmail.com",
     Name: name.value,
     Subject: subjects.value,
     Body: `

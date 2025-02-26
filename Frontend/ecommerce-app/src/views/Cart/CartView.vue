@@ -20,6 +20,7 @@
             <i class="bi bi-x-lg" @click="removeGoodieFromCart(goodie.goodieId)" style="color:red;cursor:pointer;"></i>
           </div>
           <div class="col-lg-4 rounded-lg">
+            {{ goodie }}
             <img :src="`http://${goodie.goodieImage}`" style="position:sticky;top:100px;"/>
           </div>
           <div class="col-lg-4 bg-white shadow-md rounded-lg">

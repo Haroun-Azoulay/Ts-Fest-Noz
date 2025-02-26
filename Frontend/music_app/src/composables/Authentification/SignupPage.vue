@@ -195,8 +195,8 @@ const fetchCities = async (query: any) => {
 const selectCity = (city: string, cityLatitude: number, cityLongitude: number) => {
   geocoding_city.value = city
   request.value.city = city
-  request.value.latitude = cityLatitude
-  request.value.longitude = cityLongitude
+  request.value.latitude = cityLongitude
+  request.value.longitude = cityLatitude
   showDropdown.value = false
   return geocoding_city.value
 }

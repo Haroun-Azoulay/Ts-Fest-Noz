@@ -130,7 +130,7 @@ onMounted(async () => {
   try {
       const authToken = localStorage.getItem('authToken');
       if (authToken) {
-          const getGoodieDetails = await ApiService.get(`/goodie/get-goodie-details/${goodieId}`, {
+          const getGoodieDetails = await ApiService.get(`/get-goodie-details/${goodieId}`, {
               headers: {
                   Authorization: `Bearer ${authToken}`,
               },
@@ -144,13 +144,13 @@ onMounted(async () => {
           goodieDetails.value.goodieAvailable = getGoodieDetails.data.available;
           goodieInCart.value.goodieId = getGoodieDetails.data.id;
           goodieInCart.value.goodieGroupId = getGoodieDetails.data.groupId;
-          const getAllGoodieTypes = await ApiService.get('/goodietype/get-all-types', {
+          const getAllGoodieTypes = await ApiService.get('/get-all-types', {
               headers: {
                   Authorization: `Bearer ${authToken}`,
               },
           });
           getAllGoodieTypes.data.forEach((type : GoodieType) => type.id === goodieDetails.value.goodieTypeId ? goodieType.value = type.name : null);
-          const getGroup = await ApiService.get(`/group/get-group/${getGoodieDetails.data.groupId}`, {
+          const getGroup = await ApiService.get(`/get-group/${getGoodieDetails.data.groupId}`, {
               headers: {
                   Authorization: `Bearer ${authToken}`,
               },

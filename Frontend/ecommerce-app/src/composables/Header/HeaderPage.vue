@@ -25,7 +25,7 @@
                             <li><a href="">Pages</a>
                                 <ul>
                                     <li><a @click.prevent="goToGroupPage">Créer un groupe</a></li>
-                                    <li><a @click.prevent="goToGroupPage">Vendre un produit</a></li>
+                                    <li><a @click.prevent="goToDashboardPage">Vendre un produit</a></li>
                                     <li><a @click.prevent="goToGroupPage">Voir mes produits</a></li>
                                     <li><a @click.prevent="goToContactPage">Contact</a></li>
                                 </ul>

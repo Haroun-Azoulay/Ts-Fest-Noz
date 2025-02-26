@@ -22,7 +22,7 @@
     <div class="ecommerce-shop">
         <div class="ecommerce-cards" v-for="goodie in allGoodies">
             <div class="ecommerce-card card">
-                <img class="ecommerce-card-img" :src="`http://${goodie.path}`" alt="Card image cap">
+                <img :src="`data:image/png;base64,${goodie.path}`" alt="Goodie Image" />
                 <div class="card-body ecommerce-card-body">
                     <h5 class="card-title" style="color:black;">{{ goodie.name }}</h5>
                     <h5 class="card-title" style="color:black;">{{ goodie.price }} €</h5>
@@ -58,9 +58,9 @@
             const authToken = localStorage.getItem('authToken');
             var url = "";
             if (filters.value.selectedGroup === "null" && filters.value.selectedType === "null") {
-                url = "/goodie/get-all-goodies"
+                url = "/get-all-goodies"
             } else {
-                url = `/goodie/get-filtered-goodies?selectedGroup=${filters.value.selectedGroup}&selectedType=${filters.value.selectedType}`;
+                url = `/get-filtered-goodies?selectedGroup=${filters.value.selectedGroup}&selectedType=${filters.value.selectedType}`;
             }
             const getAllGoodies = await ApiService.get(`${url}`, {
                 headers: {

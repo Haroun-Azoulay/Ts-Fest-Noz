@@ -17,9 +17,17 @@
         <div class="mb-4">
             <label class="block text-m font-medium leading-tight text-light">Type</label>
             <select class="form-select" v-model="request.goodieTypeId" aria-label="">
-                <option selected value="none">Sélectionnez le type</option>
-                <slot/>
-            </select>
+              <option selected value="none">Sélectionnez le type</option>
+    <slot name="goodieTypes"/>
+</select>
+        </div>
+        <div class="mb-4">
+            <label class="block text-m font-medium leading-tight text-light">Nom du groupe</label>
+            
+<select class="form-select" v-model="request.group" aria-label="">
+  <option selected value="none">Sélectionnez le groupe</option>
+    <slot name="groupOptions"/>
+</select>
         </div>
         <div class="mb-4">
             <label class="block text-m font-medium leading-tight text-light">Prix / Unité</label>
@@ -39,7 +47,8 @@
         </div>
         <div class="mb-4">
             <label class="block text-m font-medium leading-tight text-light">Image</label>
-            <input class="text-center w-full p-2 border rounded shadow-md text-dark" type="file" @change="goodieChangeImage" placeholder="Envoyez une image" required />
+            <input ref="fileInput" class="text-center w-full p-2 border rounded shadow-md text-dark" 
+            type="file" accept="image/*" @change="goodieChangeImage" required />
         </div>
         <button type="submit" class="mt-1 ml-auto px-2 border border-white rounded-lg text-white hover:text-violet-600 bg-violet-600 hover:bg-white">
           Ajouter
@@ -49,65 +58,109 @@
 </template>
 
 <script setup lang="ts">
-  import ApiService from '@/services/ApiService';
-  import { useJwt } from '@vueuse/integrations/useJwt';
-  import { ref } from 'vue';
-  import { VueFinalModal } from 'vue-final-modal';
-  import { useRouter } from 'vue-router';
-  import type { Goodie } from '../../../models/goodie';
+import ApiService from '@/services/ApiService';
+import { useJwt } from '@vueuse/integrations/useJwt';
+import { ref, onMounted } from 'vue';
+import { VueFinalModal } from 'vue-final-modal';
+import { useRouter } from 'vue-router';
 
-  const router = useRouter();
-  const request = ref<Goodie>({
-    goodieName: '',
-    goodieDescription: '',
-    goodieTypeId: '',
-    goodiePrice: 0,
-    goodieQuantity: 0,
-    goodieAvailable: false,
-    goodieImage: null 
-  });
+const router = useRouter();
+const authToken = localStorage.getItem('authToken');
 
-  defineProps<{
-    title?: string
-  }>()
+const request = ref({
+  groupId: "199a484a-ff01-4acc-b689-4bec3ecad030",
+  userId: "",
+  goodieTypeId: "",
+  name: "toto",
+  description: "toto",
+  quantity: 10,
+  price: 10,
+  available: true,
+});
 
-  const emit = defineEmits<{
-    (e: 'update:modelValue', modelValue: boolean): void
-    (e: 'confirm'): void
-  }>()
+// Variable pour stocker le fichier sélectionné
+const selectedFile = ref<File | null>(null);
 
-  const goodieChangeImage = (event: { target: { files: any[]; }; }) => {
-    request.value.goodieImage = event.target.files[0];
+defineProps<{
+  title?: string
+}>();
+
+const emit = defineEmits<{
+  (e: 'update:modelValue', modelValue: boolean): void;
+  (e: 'confirm'): void;
+}>();
+
+// Fonction pour gérer la sélection d'image
+const goodieChangeImage = (event: Event) => {
+  const target = event.target as HTMLInputElement;
+  if (target.files && target.files.length > 0) {
+    selectedFile.value = target.files[0]; // Stocker le fichier directement
+    console.log("✅ Fichier sélectionné :", selectedFile.value.name);
+  } else {
+    console.error("❌ Aucun fichier sélectionné !");
   }
+};
 
-  const submitAddGoodie = async () => {
-    try {
-      const authToken = localStorage.getItem('authToken');
+onMounted(async () => {
+  try {
+    if (authToken) {
       const { payload } = useJwt(authToken);
-      const roleId = payload.value?.role;
-      if (roleId !== "artist") {
-          router.push({ path : '/' });
+      if (payload.value?.userId) {
+        request.value.userId = payload.value.userId;
+      } else {
+        console.error("❌ Impossible de récupérer l'ID utilisateur.");
       }
-      const formData = new FormData();
-      formData.append('goodieName', request.value.goodieName);
-      formData.append('goodieDescription', request.value.goodieDescription);
-      formData.append('goodieTypeId', request.value.goodieTypeId);
-      formData.append('goodiePrice', String(request.value.goodiePrice));
-      formData.append('goodieQuantity', String(request.value.goodieQuantity));
-      formData.append('goodieAvailable', request.value.goodieAvailable.toString());
-      formData.append('goodieImage', request.value.goodieImage);
-      console.log(formData);
-      await ApiService.post('/goodie/add', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${authToken}`,
-          },
-      });
-      window.location.reload();
-    } catch (error) {
-      console.error("Une erreur s'est produite :", error);
     }
+  } catch (error) {
+    console.error('Erreur lors de la récupération du User ID :', error);
   }
+});
+
+const submitAddGoodie = async () => {
+  try {
+    if (!authToken) {
+      console.error("❌ Utilisateur non authentifié.");
+      return;
+    }
+
+    // Création de l'objet FormData
+    const formData = new FormData();
+    formData.append("groupId", request.value.groupId);
+    formData.append("userId", request.value.userId);
+    formData.append("goodieTypeId", request.value.goodieTypeId);
+    formData.append("name", request.value.name);
+    formData.append("description", request.value.description);
+    formData.append("quantity", String(request.value.quantity));
+    formData.append("price", String(request.value.price));
+    formData.append("available", request.value.available.toString());
+
+    // Vérification et ajout de l'image
+    const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
+    if (fileInput.files && fileInput.files.length > 0) {
+      formData.append("image", fileInput.files[0]); // ⚠️ Doit être "file" pour Multer
+    } else {
+      console.error("❌ Aucune image sélectionnée !");
+      return;
+    }
+
+    // Envoi des données à l'API
+    const response = await ApiService.post("/create-goodie", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+
+    if (response.status === 201) {
+      console.log("✅ Goodie ajouté avec succès !");
+    } else {
+      console.error("❌ Erreur :", response);
+    }
+  } catch (error) {
+    console.error("❌ Une erreur s'est produite :", error);
+  }
+};
+
 </script>
 
 <style>
@@ -115,3 +168,4 @@
 @tailwind components;
 @tailwind utilities;
 </style>
+

@@ -1,11 +1,12 @@
 export interface Goodie {
-    goodieName: string;
-    goodieDescription: string;
-    goodieTypeId: string;
-    goodiePrice: number;
-    goodieQuantity: number;
-    goodieAvailable: boolean;
-    goodieImage: any;
+    groupId: string,
+    userId: string,
+    goodieTypeId: string,
+    name: string,
+    quantity: number,
+    price: number,
+    available: boolean ,
+    image: string,
 }
 
 export interface GoodieType {
