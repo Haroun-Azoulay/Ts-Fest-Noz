@@ -5,11 +5,11 @@ import userController from "../../src/controllers/userController";
 import httpMocks from "node-mocks-http";
 import { Request, Response, NextFunction } from "express";
 import verifyToken from "../../src/middlewares/verifyToken";
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 jest.mock("../../src/middlewares/isAuthorizedPost");
 jest.mock("../../src/models/City");
-jest.mock("bcrypt");
+jest.mock("bcryptjs");
 
 let tokenOrganizer: string;
 

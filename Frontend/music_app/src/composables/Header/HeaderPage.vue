@@ -22,22 +22,19 @@
                 <li class="hover:bg-lime-500"><a href="/#de-carousel">Home</a></li>
                 <li class="hover:bg-lime-500"><a href="/#section-artists">Artistes</a></li>
                 <li class="hover:bg-lime-500"><a href="/#section-plan">Evenement</a></li>
-                <li v-if="isUser" class="hover:bg-lime-500">
-                  <a href="/#section-tickets">Tickets</a>
-                </li>
                 <li class="hover:bg-lime-500"><a href="/#section-announcements">Annonces</a></li>
                 <li class="hover:bg-lime-500"><a href="/#section-gallery">Galerie</a></li>
                 <li class="hover:bg-lime-500"><a @click.prevent="goContactPage">Contact</a></li>
-                <li v-if="isUser">
-                  <a v-if="isUser" href="">Pages</a>
+                <li v-if="isUser || isArtist || isOrganizer || isAdmin">
+                  <a v-if="isUser || isArtist || isOrganizer || isAdmin" href="">Pages</a>
                   <ul>
                     <li class="hover:bg-lime-500">
                       <a @click.prevent="goToCityPage">Rechercher un evenement</a>
                     </li>
-                    <li class="hover:bg-lime-500">
+                    <li v-if="isOrganizer || isAdmin" class="hover:bg-lime-500">
                       <a @click.prevent="goAddEventPage">Proposer un evenement</a>
                     </li>
-                    <li class="hover:bg-lime-500"><a @click.prevent="goForumPage">Annonces</a></li>
+                    <li class="hover:bg-lime-500"><a @click.prevent="goToEventsPage">Liste d'évènements</a></li>
                     <li class="hover:bg-lime-500"><a @click.prevent="goContactPage">Contact</a></li>
                   </ul>
                 </li>

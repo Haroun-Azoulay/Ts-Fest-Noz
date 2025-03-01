@@ -8,13 +8,13 @@ import userController from "../../src/controllers/userController";
 import eventController from "../../src/controllers/eventController";
 import verifyToken from "../../src/middlewares/verifyToken";
 import jwt from "jsonwebtoken";
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 jest.mock("../../src/middlewares/verifyToken");
 jest.mock("../../src/middlewares/isAuthorizedPost");
 jest.mock("../../src/models/Event");
 jest.mock("../../src/models/Payment");
-jest.mock("bcrypt");
+jest.mock("bcryptjs");
 jest.mock("jsonwebtoken");
 
 let tokenUser: string;

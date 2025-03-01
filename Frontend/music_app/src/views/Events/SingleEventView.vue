@@ -13,10 +13,10 @@
         </div>
     </div>
   </section>
-  <div class="flex flex-col" style="background:#371990;height:50vh;padding-top:3%;">
+  <div class="flex flex-col" style="background:#371990;padding-top:3%;">
     <main class="flex-grow">
       <section class="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg mt-6">
-        <h2 class="text-2xl font-bold text-black">Détails</h2>
+        <h2 class="text-3xl font-bold text-black">Détails</h2>
         <div v-if="event" class="space-y-4">
           <div class="flex items-center">
             <span class="text-gray-500 font-semibold">Nom:</span>
@@ -26,9 +26,78 @@
             <span class="text-gray-500 font-semibold">Description:</span>
             <span class="ml-2 text-black">{{ event.description }}</span>
           </div>
-          <button @click="goToPaymentPage" class="font-bold mt-6 bg-violet-600 text-white py-2 px-6 rounded hover:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-600 focus:ring-opacity-50">
-            RÉSERVER
-          </button>
+          <hr>
+          <div>
+            <h2 class="text-3xl font-bold text-black">Paiement</h2>
+            <form id="eventPaymentForm" action="">
+              <h2 class="text-2xl font-bold text-black">Adresse de facturation</h2>
+              <span class="text-gray-500 font-semibold">Adresse :</span>
+              <input type="text" class="form-control" style="width:20em;" id="inputBillingAddressLocation" placeholder="">
+              <span class="text-gray-500 font-semibold">Code postal :</span>
+              <input type="number" class="form-control" style="width:20em;" id="inputBillingAddressPostalCode" placeholder="">
+              <span class="text-gray-500 font-semibold">Ville :</span>
+              <input type="text" class="form-control" style="width:20em;" id="inputBillingAddressCity" placeholder="">
+              <br>
+              <h2 class="text-2xl font-bold text-black">Méthode de paiement</h2>
+              <select class="form-control" id="eventPaymentMethods" style="width:20em;">
+                <option value="">Choisissez votre méthode paiement</option>
+                <option value="CC">Carte de crédit</option>
+              </select>
+              <div id="eventPaymentFormContent" style="display:none;" class="col-sm-10">
+                <span class="text-gray-500 font-semibold">Numéro de carte :</span>
+                <input type="number" class="form-control" style="width:20em;" id="inputCardNumber" placeholder="">
+                <span class="text-gray-500 font-semibold">Code de sécurité :</span>
+                <input type="number" class="form-control" style="width:20em;" id="inputCardSecurityCode" placeholder="">
+                <span class="text-gray-500 font-semibold">Nom et Prénom :</span>
+                <input type="text" class="form-control" style="width:20em;" id="inputCardName" placeholder="">
+                <span class="text-gray-500 font-semibold">Date d'expiration :</span>
+                <div style="display:flex;justify-content: row;">
+                  <select class="form-control" name="inputCardExpirationDay" id="inputCardExpirationDay" style="width:5em;">
+                    <option value="1">01</option>
+                    <option value="2">02</option>
+                    <option value="3">03</option>
+                    <option value="4">04</option>
+                    <option value="5">05</option>
+                    <option value="6">06</option>
+                    <option value="7">07</option>
+                    <option value="8">08</option>
+                    <option value="9">09</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                  </select>
+                  <select class="form-control" name="inputCardExpirationYear" id="inputCardExpirationYear" style="width:5em;">
+                    <option value="2025">2025</option>
+                    <option value="2026">2026</option>
+                    <option value="2027">2027</option>
+                    <option value="2028">2028</option>
+                    <option value="2029">2029</option>
+                    <option value="2030">2030</option>
+                    <option value="2031">2031</option>
+                    <option value="2032">2032</option>
+                    <option value="2033">2033</option>
+                    <option value="2034">2034</option>
+                    <option value="2035">2035</option>
+                  </select>
+                </div>
+                <!-- <img style="width:1em;height:1em;" src="https://media.tenor.com/wpSo-8CrXqUAAAAi/loading-loading-forever.gif"> -->
+                <span id="invalidCardMessage" style="color:red;display:none;">
+                  <i class="fa fa-exclamation fa-lg"></i>
+                  Carte invalide
+                </span>
+                <span id="validCardMessage" style="color:green;display:none;" >
+                  <i class="fa fa-check fa-lg"></i>
+                  Carte valide
+                </span>
+                <br>
+              </div>
+              <button disabled id="submitEventPaymentForm" @click="goToPaymentPage" class="font-bold mt-6 bg-gray-600 text-white py-2 px-6 rounded hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-600 focus:ring-opacity-50">
+                RÉSERVER
+              </button>
+              <br>
+              <span class="text-gray-500" style="font-size:0.9em"><i class="fa fa-solid fa-lock"></i> Sur FestNoz, vos données confidentielles sont protégées et ne seront jamais partagées à des parties tierces.</span>
+            </form>
+          </div>
         </div>
         <div v-else class="text-center">
           <p class="text-gray-500">Chargement des détails de l'événement...</p>
@@ -92,7 +161,8 @@ onMounted(async () => {
   }
 });
 
-const goToPaymentPage = async () => {
+const goToPaymentPage = async (event: Event) => {
+  event.preventDefault();
   try {
     const authToken = localStorage.getItem("authToken");
     if (!authToken) {

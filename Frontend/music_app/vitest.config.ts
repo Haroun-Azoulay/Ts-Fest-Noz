@@ -5,7 +5,7 @@ import vue from '@vitejs/plugin-vue';
 export default mergeConfig(
   viteConfig,
   defineConfig({
-    plugins: [vue()],
+    plugins: [],
     server: {
       port: 5173,
       host: true,

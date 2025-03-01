@@ -247,7 +247,7 @@
               </h2>
               <p class="text-gray-600 mb-6 text-white">
                 Commentez, Partagez, Parlez tout simplement, exprimez vous sur les événements et
-                faites des rencontres qui dureront peut-être toute la vie !
+                faites des rencontres qui dureront peut-être <br>toute votre vie !
               </p>
               <a
                 v-if="!isUser && !isArtist && !isOrganizer"

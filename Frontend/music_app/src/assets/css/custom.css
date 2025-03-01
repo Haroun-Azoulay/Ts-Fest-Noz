@@ -44,3 +44,21 @@ textarea {
     justify-content: center;
     align-items: center;
 }
+
+#inputBillingAddressPostalCode::-webkit-outer-spin-button,
+#inputBillingAddressPostalCode::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+#inputCardNumber::-webkit-outer-spin-button,
+#inputCardNumber::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+#inputCardSecurityCode::-webkit-outer-spin-button,
+#inputCardSecurityCode::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
