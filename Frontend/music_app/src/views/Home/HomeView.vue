@@ -106,7 +106,108 @@
           </div>
         </div>
       </section>
-      <HomePage></HomePage>
+      <section id="section-artists" class="pb-0">
+        <div class="container">
+          <div class="row g-custom-x align-items-center">
+            <div class="col-lg-12">
+              <div class="text-center">
+                <div class="wm wow slideInUp">Artistes</div>
+                <h2 class="wow fadeInUp" data-wow-delay=".2s">
+                  <span class="id-color">01 </span>Nos Artistes
+                </h2>
+                <div class="small-border bg-color-2"></div>
+                <div class="spacer-single"></div>
+              </div>
+            </div>
+            <div class="col-md-4 mb-sm-30">
+              <div class="de-image-text s2 wow flipInY">
+                <a href="#" class="d-text">
+                  <div class="arrow_wrap">
+                    <div class="arrow__up"></div>
+                  </div>
+                  <h3>DJ Neurogenic</h3>
+                </a>
+                <img src="/images-dj/misc/featured-1.jpg" class="img-fluid" alt="" />
+              </div>
+            </div>
+            <div class="col-md-4 mb-sm-30">
+              <div class="de-image-text s2 wow flipInY">
+                <a href="#" class="d-text">
+                  <div class="arrow_wrap">
+                    <div class="arrow__up"></div>
+                  </div>
+                  <h3>DJ Phenomenic</h3>
+                </a>
+                <img src="/images-dj/misc/featured-2.jpg" class="img-fluid" alt="" />
+              </div>
+            </div>
+            <div class="col-md-4 mb-sm-30">
+              <div class="de-image-text s2 wow flipInY">
+                <a href="#" class="d-text">
+                  <div class="arrow_wrap">
+                    <div class="arrow__up"></div>
+                  </div>
+                  <h3>DJ Fritz</h3>
+                </a>
+                <img src="/images-dj/misc/featured-3.jpg" class="img-fluid" alt="" />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-10 offset-md-1 text-center">
+              <div class="spacer-single"></div>
+              <ul class="list-inline-style-1">
+                <li>
+                  Découvrez aussi quelques artistes sélectionnés au hasard avec lesquels nous
+                  collaborons :
+                </li>
+                <li v-for="artist in artistsRandom">
+                  {{ artist.name + ' ' }}
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="de_tab tab_style_4 mt-5 text-center">
+            <div class="col-md-10 offset-md-1 text-center">
+              <div v-bind:style="isArtist ? '' : 'display:none;'">
+                <h2 class="wow fadeInUp mt-9" data-wow-delay=".2s">
+                  Vous êtes <span class="id-color">Artiste</span>, vous avez une question ?
+                </h2>
+              </div>
+              <div v-bind:style="isOrganizer ? '' : 'display:none;'">
+                <h2 class="wow fadeInUp mt-9" data-wow-delay=".2s">
+                  Vous êtes <span class="id-color">Organisateur</span>, vous avez une question ?
+                </h2>
+              </div>
+              <div v-if="isNotLoginOrUser">
+                <h2 class="wow fadeInUp mt-9" data-wow-delay=".2s">
+                  Contactez <span class="id-color">Notre Equipe</span> pour une remarque ou bien vous
+                  souhaitez devenir <span class="id-color">organisateur</span> ou
+                  <span class="id-color">artiste</span> ?
+                </h2>
+              </div>
+              <div v-bind:style="isFullAuthorized ? '' : 'display:none;'">
+                <h2 class="wow fadeInUp mt-9" data-wow-delay=".2s">
+                  Faire un test d'envoie de formulaire de contact
+                </h2>
+              </div>
+            </div>
+            <div class="de_tab_content text-left">
+              <div id="tab1" class="tab_single_content pb-0 mb-0">
+                <div class="row">
+                  <div class="col-md-12 mb-5 text-center">
+                    <ul class="list-boxed-s1">
+                      <li @click="goToContactPage" style="cursor: pointer;">
+                        <h3>Contactez-nous</h3>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       <section
         id="section-plan"
         class="map_box_container_city"
@@ -130,7 +231,6 @@
                 <h2 class="mb-6" style="font-size: 22px; font-weight: 600">
                   Trouvez les meilleurs évènements à proximité !
                 </h2>
-
                 <div class="flex flex-row flex-wrap gap-6 justify-center mt-6">
                   <div
                     v-for="event in eventNearby"
@@ -149,7 +249,7 @@
                       À seulement <span class="font-bold">{{ event.distance }}</span> km de votre lieu d'inscription !
                     </p>
                     <a
-                      href="#"
+                      @click="goToSpecificEventPage(`${event.details.url_point}`)"
                       class="hover:scale-110 inline-flex items-center px-4 py-2 text-sm font-bold text-white bg-gradient-to-b from-[#cdff6b] to-[#2B86C5] rounded-lg transition-all"
                     >
                       En savoir plus
@@ -169,6 +269,14 @@
                         />
                       </svg>
                     </a>
+                  </div>
+                  <div v-if="isUser || isArtist || isOrganizer">
+                    <button
+                      @click="goToEventPage()"
+                      class="ButtonPrimary text-white w-full md:w-80 h-12 px-6 m-2 font-bold py-2.5 bg-gradient-to-r from-violet-500 to-purple-700 rounded-lg flex justify-center items-center shadow-lg transform hover:scale-105 transition-transform duration-300"
+                    >
+                      Voir la liste des évènements &nbsp; <i class="fa fa-solid fa-list"></i>
+                    </button>
                   </div>
                 </div>
 
@@ -196,7 +304,7 @@
                                 data-test="goToCityPage"
                                 v-bind:style="'pointer-events:auto;cursor:pointer;'"
                                 @click="goToCityPage">
-                                Trouver un événement
+                                Trouver un événement <i class="fa fa-solid fa-map"></i>
                               </h3>
                             </template>
                             <template v-else>
@@ -216,7 +324,7 @@
                             "
                             @click="goAddEventPage"
                           >
-                            <h3>Proposer un evenement</h3>
+                            <h3>Proposer un evenement <i class="fa fa-solid fa-music"></i></h3>
                           </li>
                         </ul>
                       </div>
@@ -240,10 +348,11 @@
             </div>
             <div class="spacer-single"></div>
           </div>
+          <HomePage></HomePage>
           <div style="display: flex">
             <div class="text-center md:text-left flex-1">
               <h2 class="font-inter text-2xl md:text-4xl font-extrabold mb-6">
-                Laissez une annonce !
+                Laisser une <span class="id-color text-color:#371990 bold">annonce</span>
               </h2>
               <p class="text-gray-600 mb-6 text-white">
                 Commentez, Partagez, Parlez tout simplement, exprimez vous sur les événements et
@@ -258,7 +367,7 @@
                 <span>Connectez vous</span>
               </a>
               <a v-if="isUser || isArtist || isOrganizer" class="btn-main" @click="goForumPage">
-                <span>Accedez au Forum</span></a
+                <span>Acceder au Forum</span></a
               >
             </div>
             <div class="flex-1 mt-8 md:mt-0 md:ml-8">
@@ -534,6 +643,14 @@ const goToCityPage = () => {
   router.push('/city')
 }
 
+const goToEventPage = () => {
+  router.push({ path: '/event' })
+}
+
+const goToSpecificEventPage = (eventUrl) => {
+  router.push({ redirect: window.location.href = eventUrl })
+}
+
 const goToLoginPage = () => {
   router.push('/signin')
 }
@@ -568,6 +685,7 @@ onMounted(async () => {
 
       const showEventNearby = await ApiService.get(`/get-point-near-user/${userId}`, config)
       eventNearby.value = showEventNearby.data
+      console.log(eventNearby.value);
       const roleId = payload.value?.role
       if (roleId) {
         isUser.value = true

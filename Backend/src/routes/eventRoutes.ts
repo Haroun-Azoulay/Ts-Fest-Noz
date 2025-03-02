@@ -18,6 +18,8 @@ router.get("/get-event-city/:city", eventController.getEventsByCity);
 
 router.get("/get-event/:id", eventController.getEventById);
 
+router.delete("/delete-event/:id", verifyToken, eventController.deleteEvent);
+
 router.post("/get-event/:id/payment", verifyToken, eventController.addPayment);
 
 router.get(

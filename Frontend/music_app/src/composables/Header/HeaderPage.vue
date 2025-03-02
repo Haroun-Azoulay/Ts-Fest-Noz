@@ -54,12 +54,14 @@
                 >
                 <span id="menu-btn"></span>
               </div>
-              <div v-if="isLoggedIn" class="menu_side_area" style="text-align: center">
+              <div v-if="isLoggedIn" 
+              class="menu_side_area" 
+              style="text-align: center; height: 50px">
                 <a
                   @click="logout"
                   class="btn-main text-white"
                   style="background-color: red; margin-right: 10px"
-                  ><span>Deconnexion</span></a
+                  ><i class="fa fa-sign-out"></i><span>Deconnexion</span></a
                 >
                 <a
                   v-if="isFullAuthorized"
@@ -68,6 +70,7 @@
                   style="background-color: green; margin-right: 10px"
                   ><span>Admin</span></a
                 >
+                <span id="menu-btn"></span>
               </div>
             </div>
           </div>

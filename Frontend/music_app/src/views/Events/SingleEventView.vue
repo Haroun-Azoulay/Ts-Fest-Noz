@@ -52,7 +52,7 @@
                 <input type="text" class="form-control" style="width:20em;" id="inputCardName" placeholder="">
                 <span class="text-gray-500 font-semibold">Date d'expiration :</span>
                 <div style="display:flex;justify-content: row;">
-                  <select class="form-control" name="inputCardExpirationDay" id="inputCardExpirationDay" style="width:5em;">
+                  <select class="h-12 p-2" style="border-radius:7px;border-color: gray;border-width:1px;width:5em;" name="inputCardExpirationDay" id="inputCardExpirationDay">
                     <option value="1">01</option>
                     <option value="2">02</option>
                     <option value="3">03</option>
@@ -66,7 +66,7 @@
                     <option value="11">11</option>
                     <option value="12">12</option>
                   </select>
-                  <select class="form-control" name="inputCardExpirationYear" id="inputCardExpirationYear" style="width:5em;">
+                  <select class="h-12 p-2" style="border-radius:7px;border-color: gray;border-width:1px;width:5em;" name="inputCardExpirationYear" id="inputCardExpirationYear">
                     <option value="2025">2025</option>
                     <option value="2026">2026</option>
                     <option value="2027">2027</option>

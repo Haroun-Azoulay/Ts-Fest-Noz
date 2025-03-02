@@ -163,7 +163,7 @@ describe("Test case for cleaning phase", () => {
       .set("Authorization", `Bearer ${tokenAdmin}`);
     expect(response.status).toBe(200);
   });
-  it("12 - test case to delete an artist as admin", async () => {
+  it("12 - test case to delete an organizer as admin", async () => {
     const response = await request(app)
       .delete(`/delete-user/${existOrganizer.id}`)
       .set("Authorization", `Bearer ${tokenAdmin}`);

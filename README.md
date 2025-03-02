@@ -54,6 +54,16 @@ A simple star to this project repo is enough to keep me motivated on this projec
 
         
 ## 🙇 Author
+#### Bertrand LEGARREC
+Project Manager - Thanks a lot for your work on our scolarity
+- Github: No github :/
 #### Haroun Azoulay
+Software Engineer
 - Github: [@Haroun-Azoulay](https://github.com/Haroun-Azoulay)
+#### Jimmy HUYNH
+Software Engineer
+- Github: [@jimwinnie](https://github.com/jimwinnie)
+#### Valentin LAFITAU
+DevOps Engineer - Thanks a lot for your help in this schooling
+- Github: [@LtauV](https://github.com/LtauV)
         

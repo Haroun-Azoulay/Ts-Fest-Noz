@@ -19,8 +19,8 @@
           </div>
       </div>
     </section>
-    <section style="height:280px" class="bg-white flex flex-row gap-4 justify-center items-center">
-    <fieldset style="height:280px; border: none;" class="bg-white">
+    <section class="bg-white flex flex-row gap-4 justify-center items-center pt-0 pb-0">
+    <fieldset  style="border: none;" class="bg-white">
       <h1 class="text-black mt-4 text-xl text-center">Paramètres d'événements</h1>
         <input type="radio" id="huey" name="drone" value="huey" @change="handleChangeAllPoints" checked />
         <label class="text-black font-semibold m-2 mt-4" for="huey"> Tous les points</label>
@@ -37,7 +37,19 @@
         <input class="text-white font-semibold hover:bg-violet-400 rounded-xl p-2 bg-violet-600" type="date" id="startDate" lang="fr-CA" v-model="startDate" />
         <label class="text-black font-semibold p-2" for="endDate">Date de fin :</label>
         <input class="text-white font-semibold hover:bg-violet-400 rounded-xl p-2 bg-violet-600" type="date" id="endDate" lang="fr-CA" vv-model="endDate" />
-        <button type="submit" class="w-full font-semibold bg-violet-600 text-white mt-[42px] p-2 rounded shadow-md hover:bg-violet-400" @click="filterPointsByDate">Filtrer</button>
+        <br>
+        <label class="text-black font-semibold p-2" for="dewey">Type de musique :</label>
+        <select class="w-30 h-12 p-2 rounded-lg border-black border-1" style="margin-bottom: 0;" v-model="selectedStyle" name="style" id="music-style-select">
+          <option selected value="">Type de musique</option>
+          <option value="jazz">Jazz</option>
+          <option value="rap-rnb">Rap - R'N'B</option>
+          <option value="classique">Classique</option>
+          <option value="reggae">Reggae</option>
+          <option value="pop-rock">Pop - Rock</option>
+          <option value="country">Country</option>
+          <option value="autre">Autres</option>
+        </select>
+        <button class="w-full font-semibold bg-violet-600 text-white mt-[42px] p-2 rounded shadow-md hover:bg-violet-400" @click="filterPointsByDate">Filtrer</button>
     </fieldset>
     <div class= "vertical"></div>
     <SearchCityPage @geocodeResult="handleGeocodeResult"></SearchCityPage>
@@ -51,7 +63,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import mapboxgl, { Map } from 'mapbox-gl';
 import { useJwt } from '@vueuse/integrations/useJwt';
 import ApiService from "@/services/ApiService";
@@ -60,20 +72,6 @@ import HeaderPage from '../../composables/Header/HeaderPage.vue';
 import FooterPage from '../../composables/Footer/FooterPage.vue';
 import ModalConfirm from '../../components/pModal/ModalConfirm.vue';
 import SearchCityPage from '../../composables/Map/SearchCity.vue';
-
-const showError = ref(false);
-const errorMessage = ref('');
-const successMessage = ref('');
-const showSuccess = ref(false);
-
-const confirmError = () => {
-  showError.value = false;
-};
-
-const confirmSuccess = () => {
-  showSuccess.value = false;
-  window.location.reload();
-};
 
 interface Maps {
   id: number;
@@ -92,19 +90,51 @@ interface Coordinates {
   latitude: number;
 }
 
-const points = ref<Maps[]>([]);
-const center = ref<Coordinates>({ longitude: 2.3522, latitude: 48.8566 });
-const zoom = ref<number>(10.5);
-const markers = ref<mapboxgl.Marker[]>([]);
+const showError = ref(false);
+const errorMessage = ref('');
+const successMessage = ref('');
+const showSuccess = ref(false);
+const selectedStyle = ref('');
+
+const confirmError = () => {
+  showError.value = false;
+};
+
+const confirmSuccess = () => {
+  showSuccess.value = false;
+  window.location.reload();
+};
 
 let map: Map;
 let userId: string | null = null;
 let userRole: string | null = null;
-
 const startDate = ref<string>('');
 const endDate = ref<string>('');
 const isAuthorized = ref<boolean>(false);
+const filteredPoints = ref<Maps[]>([]);
 const result = ref(null);
+const points = ref<Maps[]>([]);
+const center = ref<Coordinates>({ longitude: 2.3522, latitude: 48.8566 });
+const zoom = ref<number>(10.5);
+const markers = ref<mapboxgl.Marker[]>([]);
+const styleColor = computed(() => {
+  switch (selectedStyle.value) {
+    case 'jazz':
+      return '#00FF7F';
+    case 'rap-rnb':
+      return '#6A5ACD';
+    case 'classique':
+      return '#FFC0CB';
+    case 'reggae':
+      return '#D2691E';
+    case 'pop-rock':
+      return '#FFE4E1';
+    case 'country':
+      return '#B0C4DE';
+    default:
+      return '#000000';
+  }
+});
 
 const updateMap = (coordinates) => {
   if (map) {
@@ -130,13 +160,17 @@ const handleGeocodeResult = (geocodeResult) => {
 };
 
 const filterPointsByDate = () => {
-  const filteredPoints = points.value.filter(point => {
+  points.value = filteredPoints.value.filter(point => {
+    let matchStyle = styleColor.value === point.color;
+    if (styleColor.value === '#000000') {
+      matchStyle = true;
+    }
+    console.log(styleColor.value + " " + point.color + " " + matchStyle);
     const pointDate = new Date(point.date);
     const start = startDate.value ? new Date(startDate.value) : new Date('1900-01-01');
     const end = endDate.value ? new Date(endDate.value) : new Date('2100-12-31');
-    return pointDate >= start && pointDate <= end;
+    return matchStyle && pointDate >= start && pointDate <= end;
   });
-  points.value = filteredPoints;
   addMarkers();
 };
 
@@ -173,7 +207,7 @@ const addMarkers = () => {
           <p style="margin: 5px 0;">Région: ${point.region_name}</p>
           <p style="margin: 5px 0;">Date: ${formatedDate}</p>
           <a href="${point.url_point}" style="display: inline-block; margin: 12px 12px; color: #fffff; text-decoration: none;">Cliquer ici</a>
-          <button onclick="window.deletePoint('${point.id}')" style="padding: 5px 10px; border: none; border-radius: 4px; background-color: #9333ea; color: white; cursor: pointer; transition: background-color 0.3s ease;">Supprimer</button>
+          <button onclick="window.deletePoint('${point.id}', '${point.url_point}')" style="padding: 5px 10px; border: none; border-radius: 4px; background-color: #9333ea; color: white; cursor: pointer; transition: background-color 0.3s ease;">Supprimer</button>
         </section>
       `;
 
@@ -206,13 +240,14 @@ const handleChangeAllPoints = async () => {
   try {
     const response = await ApiService.get("/get-all-points", config);
     points.value = response.data;
+    filteredPoints.value = response.data;
     addMarkers();
   } catch (error) {
     console.error("Erreur lors de la requête :", error);
   }
 };
 
-window.deletePoint = async (pointId: number) => {
+window.deletePoint = async (pointId: string, pointUrl: string) => {
   try {
     const authToken = localStorage.getItem("authToken");
     if (!authToken) {
@@ -227,8 +262,9 @@ window.deletePoint = async (pointId: number) => {
         Origin: "http://localhost:5173",
       },
     };
-
+    const eventId = pointUrl.split("/event/")[1];
     await ApiService.delete(`/delete-point/${pointId}`, config);
+    await ApiService.delete(`/delete-event/${eventId}`, config);
     successMessage.value = "Le point a bien été supprimé";
     showSuccess.value = true;
     handleChangeAllPoints(); 
@@ -282,7 +318,7 @@ const handleChangeMyPoints = async () => {
   };
 
   try {
-    const response = await ApiService.get(`/get-point/${userId}`, config);
+    const response = await ApiService.get(`/get-point-user/${userId}`, config);
     points.value = response.data;
     addMarkers();
   } catch (error) {

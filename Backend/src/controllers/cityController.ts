@@ -1,15 +1,11 @@
 import { CityAttributes } from "../interfaces/types";
 import { CoordinateAttributes } from "../interfaces/types";
 import CityModel from "../models/City";
-import Event from "../models/Event";
+import EventModel from "../models/Event";
 import UserModel from "../models/User";
 import { Request, Response } from "express";
 import axios from "axios";
 import haversine from 'formula-haversine'
-
-
-
-
 
 const addPoint = async (
   req: Request,
@@ -17,7 +13,7 @@ const addPoint = async (
 ): Promise<Response<any, Record<string, any>>> => {
   try {
     const userId: string | undefined = req.userId;
-    const role: string | undefined = req.role;
+    const eventId: string | undefined = req.body.event_id;
     if (!userId) {
       return res
         .status(400)
@@ -27,6 +23,16 @@ const addPoint = async (
       ...req.body,
       user_id: userId,
     });
+    const event: EventModel | null = await EventModel.findOne({
+      where: {
+        id: eventId
+      }
+    });
+    if (event) {
+      await event?.update({
+        city_id: point.id
+      });
+    }
     const formattedPoint: CityAttributes = {
       id: point.id,
       user_id: userId,
@@ -242,7 +248,7 @@ const deletePoint = async (
     //     .json({ message: "You do not have permission to delete this item" });
     // }
     CityModel.beforeDestroy(async (city, options) => {
-      await Event.destroy({
+      await EventModel.destroy({
         where: { id: point.id },
       });
     });

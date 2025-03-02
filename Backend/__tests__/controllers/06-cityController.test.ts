@@ -1,5 +1,6 @@
 import User from "../../src/models/User";
 import City from "../../src/models/City";
+import Event from "../../src/models/Event";
 import cityController from "../../src/controllers/cityController";
 import userController from "../../src/controllers/userController";
 import httpMocks from "node-mocks-http";
@@ -30,6 +31,24 @@ const existPoint = new City({
   region_name: "Île-de-France",
   url_point: "",
 });
+const existEvent = new Event({
+  id: "5cbfa5dc-7999-4fb1-a443-33894fb56ccb",
+  name: "ETNA EVENT",
+  city_id: "",
+  user_id: "5cbfa5dc-7999-4fb1-a443-33894fb52ccc",
+  description: "PARTICIPE IN ONE OF THE BEST CONCERT OF ALL TIME",
+  url: "",
+  mapId: 1,
+});
+const existEventUpdated = new Event({
+  id: "5cbfa5dc-7999-4fb1-a443-33894fb56ccb",
+  name: "ETNA EVENT",
+  city_id: "5cbfa5dc-7999-4fb1-a443-33894fb55ccb",
+  user_id: "5cbfa5dc-7999-4fb1-a443-33894fb52ccc",
+  description: "PARTICIPE IN ONE OF THE BEST CONCERT OF ALL TIME",
+  url: "",
+  mapId: 1,
+});
 const newPoint = {
   longitude: 1,
   latitude: 1,
@@ -44,6 +63,7 @@ const newPoint = {
   style: "green",
   region_name: "Île-de-France",
   url_point: "",
+  event_id: "5cbfa5dc-7999-4fb1-a443-33894fb56ccb"
 };
 const existOrganizer = new User({
   id: "5cbfa5dc-7999-4fb1-a443-33894fb52ccc",
@@ -82,6 +102,8 @@ describe("Test case for city controller", () => {
   describe("2 - addPoint", () => {
     it("1 - should add point and return 201", async () => {
       jest.spyOn(City, "create").mockResolvedValue(existPoint);
+      jest.spyOn(Event, "findOne").mockResolvedValue(existEvent);
+      jest.spyOn(existEvent, "update").mockResolvedValue(existEventUpdated);
       const req = httpMocks.createRequest({
         method: "POST",
         body: newPoint,
@@ -100,7 +122,6 @@ describe("Test case for city controller", () => {
       });
       verifyTokenMock(req, res, () => {});
       isAuthorizedPostMock(req, res, () => {});
-
       await cityController.addPoint(req, res);
       expect(res.status).toHaveBeenCalledWith(201);
     });

@@ -16,6 +16,8 @@ router.get("/get-all-posts", verifyToken, postController.getAllPosts);
 
 router.get("/get-post/:id", postController.getPostById);
 
+router.get("/get-close-posts", verifyToken, postController.getClosePosts);
+
 router.put("/update-post/:id", verifyToken, postController.updatePost);
 
 router.delete("/delete-post/:id", verifyToken, postController.deletePost);
