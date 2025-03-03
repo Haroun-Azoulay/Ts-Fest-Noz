@@ -6,12 +6,12 @@ import { Request, Response, NextFunction } from "express";
 import goodieTypeController from "../../src/controllers/goodieTypeController";
 import verifyToken from "../../src/middlewares/verifyToken";
 import verifyTokenAdmin from "../../src/middlewares/verifyTokenAdmin";
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 jest.mock("../../src/middlewares/verifyToken");
 jest.mock("../../src/middlewares/verifyTokenAdmin");
 jest.mock("../../src/models/GoodieType");
-jest.mock("bcrypt");
+jest.mock("bcryptjs");
 
 let tokenUser: string;
 let tokenAdmin: string;

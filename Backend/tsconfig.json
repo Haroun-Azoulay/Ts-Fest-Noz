@@ -22,5 +22,5 @@
     "__tests__/**/*",
     "global.d.ts"
   ],
-  "exclude": ["node_modules", "dist", "__tests__/setup/customTestSequencer.ts"]
+  "exclude": ["__tests__/setup/customTestSequencer.ts"]
 }

@@ -12,6 +12,7 @@ import Order from "./Order";
 import OrderDetail from "./OrderDetail";
 import ArtistProfil from "./ArtistsProfil";
 import OrganizerProfil from "./OrganizerProfil";
+import Billing from "./Billing";
 
 User.hasOne(Order, { foreignKey: "userId" });
 Order.belongsTo(User, { foreignKey: "userId" });
@@ -53,6 +54,13 @@ Post.hasMany(Commentary, {
 });
 Commentary.belongsTo(Post, { foreignKey: "postId" });
 
+User.hasMany(Commentary, {
+  foreignKey: "userId",
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
+Commentary.belongsTo(User, { foreignKey: "userId" });
+
 User.hasMany(City, {
   foreignKey: "user_id",
   onDelete: "CASCADE",
@@ -69,6 +77,12 @@ Event.belongsTo(City, { foreignKey: "city_id" });
 
 Event.hasMany(Payment, { foreignKey: "event_id" });
 Payment.belongsTo(Event, { foreignKey: "event_id" });
+
+User.hasMany(Billing, { foreignKey: "userId", onDelete: "CASCADE", });
+Billing.belongsTo(User, { foreignKey: "userId" });
+
+Event.hasMany(Billing, { foreignKey: "eventId", onDelete: "CASCADE" });
+Billing.belongsTo(Event, { foreignKey: "eventId" });
 
 User.hasMany(Event, { foreignKey: "user_id" });
 Event.belongsTo(User, { foreignKey: "user_id" });

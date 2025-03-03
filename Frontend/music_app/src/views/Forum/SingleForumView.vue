@@ -16,9 +16,18 @@
     <div class="p-4" style="background:#371990;">
       <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-lg">
         <div v-if="postSingle">
+          <span class="text-gray-500 text-lg ml-2 underline">Titre</span>
           <h1 class="text-2xl font-bold mb-4 text-black">{{ postSingle.title }}</h1>
+          <span class="text-gray-500 text-lg ml-2 underline">Sous-titre</span>
           <p class="mb-6 text-black">{{ postSingle.subtitle }}</p>
+          <span class="text-gray-500 text-lg ml-2 underline">Description</span>
           <p class="mb-6 text-gray-600">{{ postSingle.content }}</p>
+          <div style="display:flex;justify-content: center;">
+            <span class="text-xl text-black">
+            Créé le <span class="font-bold">{{ new Date(postSingle.createdAt).toLocaleString('fr-FR') }} </span>
+            par <span class="font-bold">{{postSingle.User.pseudo  }}</span>
+          </span>
+          </div>
           <div v-for="item in commentarySingle" :key="item.id" class="mb-4 p-4 border-b border-gray-200">
             <div v-for="user in users" :key="user.id">
               <div v-if="item?.userId == user?.id">
@@ -93,6 +102,7 @@
       if (postId) {
         const response = await ApiService.get(`/get-post/${postId}`, config);
         postSingle.value = response.data;
+        console.log(postSingle.value);
         const responseCommentary = await ApiService.get(`/get-commentary/${postId}`, config);
         commentarySingle.value = responseCommentary.data;
         const getAllUsers = await ApiService.get(`/get-all-users`, config);

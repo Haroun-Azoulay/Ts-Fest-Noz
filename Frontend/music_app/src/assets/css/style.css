@@ -15293,7 +15293,7 @@ img {
 
     header.header-mobile {
         overflow: hidden;
-        position: relative;
+        position: fixed;
         padding-top:0;
     }
     header.header-mobile .de-flex{

@@ -6,12 +6,12 @@ import userController from "../../src/controllers/userController";
 import httpMocks from "node-mocks-http";
 import { Request, Response, NextFunction } from "express";
 import verifyTokenAdmin from "../../src/middlewares/verifyTokenAdmin";
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 jest.mock("../../src/middlewares/verifyToken");
 jest.mock("../../src/middlewares/verifyTokenAdmin");
 jest.mock("../../src/models/GroupUser");
-jest.mock("bcrypt");
+jest.mock("bcryptjs");
 
 let tokenUser: string;
 let tokenAdmin: string;

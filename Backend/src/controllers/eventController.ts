@@ -29,6 +29,31 @@ const addEvent = async (
   }
 };
 
+const deleteEvent = async(
+  req: Request,
+  res: Response,
+): Promise<Response<any, Record<string, any>>> => {
+  try {
+    const userId: string | undefined = req.userId;
+    const eventId: string | undefined = req.params.id;
+    const role: string | undefined = req.role;
+    if (role === "organizer" || role === "admin") {
+      const event: EventModel | null = await EventModel.findOne({
+        where: {
+          user_id: userId,
+          id: eventId
+        }
+      });
+      await event?.destroy();
+      return res.status(201).json({message: "This event has been deleted."});
+    }
+    return res.status(401).json({message: "Not allowed to delete this event."});
+  } catch (error) {
+    console.error("Error deleting an event:", error);
+    return res.status(500).send("Error deleting event");
+  }
+};
+
 const getEventsByCity = async (
   req: Request,
   res: Response,
@@ -58,7 +83,7 @@ const getEventById = async (
   try {
     const eventId: string = req.params.id;
     const event: EventModel | null = await EventModel.findByPk(eventId, {
-      attributes: ["id", "name", "description"],
+      attributes: ["id", "name", "description", "price"],
     });
     if (event) {
       return res.status(200).json(event);
@@ -75,7 +100,12 @@ const getAllEvents = async (
   res: Response,
 ): Promise<Response<any, Record<string, any>>> => {
   try {
-    const events: EventModel[] = await EventModel.findAll();
+    const events: EventModel[] = await EventModel.findAll({
+      include: {
+        model: CityModel,
+        attributes: ["address", "city_name", "style", "color"]
+      }
+    });
     return res.status(200).json(events);
   } catch (error) {
     console.error("Error retrieving events", error);
@@ -214,6 +244,7 @@ const deleteToken = async (
 export default {
   verifyTokenOAUTH,
   deleteToken,
+  deleteEvent,
   addEvent,
   getEventsByCity,
   getAllEvents,

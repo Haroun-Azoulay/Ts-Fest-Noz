@@ -8,13 +8,13 @@ import userController from "../../src/controllers/userController";
 import eventController from "../../src/controllers/eventController";
 import verifyToken from "../../src/middlewares/verifyToken";
 import jwt from "jsonwebtoken";
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 jest.mock("../../src/middlewares/verifyToken");
 jest.mock("../../src/middlewares/isAuthorizedPost");
 jest.mock("../../src/models/Event");
 jest.mock("../../src/models/Payment");
-jest.mock("bcrypt");
+jest.mock("bcryptjs");
 jest.mock("jsonwebtoken");
 
 let tokenUser: string;
@@ -74,6 +74,7 @@ const newEvent = {
   city_id: "5cbfa5dc-7999-4fb1-a443-33894fb55ccb",
   user_id: "5cbfa5dc-7999-4fb1-a443-33894fb52ccc",
   description: "PARTICIPE IN ONE OF THE BEST CONCERT OF ALL TIME",
+  price: "0",
   url: "",
   mapId: 1,
 };
@@ -83,6 +84,7 @@ const existEvent = new Event({
   city_id: "5cbfa5dc-7999-4fb1-a443-33894fb55ccb",
   user_id: "5cbfa5dc-7999-4fb1-a443-33894fb52ccc",
   description: "PARTICIPE IN ONE OF THE BEST CONCERT OF ALL TIME",
+  price: "0",
   url: "",
   mapId: 1,
 });

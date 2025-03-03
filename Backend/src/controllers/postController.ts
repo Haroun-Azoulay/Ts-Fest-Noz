@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import PostModel from "../models/Post";
+import UserModel from "../models/User";
 import { PostAttributes } from "../interfaces/types";
 import Post from "../models/Post";
 
@@ -33,9 +34,10 @@ const createPost = async (
 const getPostById = async (req: Request, res: Response): Promise<void> => {
   const postId: string = req.params.id;
   PostModel.findOne({
-    attributes: ["id", "title", "subtitle", "content", "userId"],
-    where: {
-      id: postId,
+    where: { id: postId },
+    include: {
+      model: UserModel,
+      attributes: ['pseudo', 'city']
     },
   })
     .then((result) => {
@@ -48,6 +50,43 @@ const getPostById = async (req: Request, res: Response): Promise<void> => {
       console.log(error);
       return res.status(500).json({});
     });
+};
+
+const getClosePosts = async (req: Request, res: Response): Promise<Response<any, Record<string, any>>> => {
+  try {
+    const userId: string | undefined = req.userId;
+    const role: string | undefined = req.role;
+    var targetRole = "";
+    const user: UserModel | null = await UserModel.findOne({ 
+      where: {
+        id: userId,
+        role: role
+      }
+    });
+    if (!user) {
+      return res.status(404).json({ message: "The user don't exist." });
+    }
+    if (role == "artist") {
+      targetRole = "organizer";
+    } else if (role == "organizer") {
+      targetRole = "artist";
+    }
+    const allClosePosts: PostModel[] | null = await PostModel.findAll({ 
+      include: {
+        model: UserModel,
+        where: {
+          city: user.city,
+          role: targetRole
+        },
+        attributes: ['pseudo', 'city']
+      }
+    });
+    console.log("oui");
+    return res.status(200).json(allClosePosts);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Error during get request of close posts." });
+  }
 };
 
 const getAllPosts = async (req: Request, res: Response): Promise<void> => {
@@ -106,6 +145,7 @@ const deletePost = async (
 export default {
   createPost,
   getPostById,
+  getClosePosts,
   getAllPosts,
   updatePost,
   deletePost,

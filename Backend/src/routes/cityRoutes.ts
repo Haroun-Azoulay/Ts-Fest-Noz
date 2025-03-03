@@ -14,8 +14,6 @@ router.post(
 
 router.get("/get-all-points", verifyToken, cityController.getAllPoints);
 
-router.get("/get-all-points", verifyToken, cityController.getAllPoints);
-
 // I'm not adding a token but it's just to simplify the call on the route below
 router.get("/get-point-id/:cityId", cityController.getPointById);
 

@@ -170,6 +170,7 @@ export function createRandomEvent(index: number) {
     user_id: faker.helpers.arrayElement(userUUIDs),
     description: faker.lorem.sentence(),
     url: faker.internet.url(),
+    price:"0",
     mapId: faker.number.int(100),
   };
 }

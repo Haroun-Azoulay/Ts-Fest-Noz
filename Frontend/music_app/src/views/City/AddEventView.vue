@@ -50,12 +50,14 @@
           <label class="text-black text-m font-medium leading-tight text-center">Adresse complète</label>
           <p class="text-m text-black mb-4 text-center">Nom de l'emplacement : {{ result.place }} {{ result.postalCode }}
             {{ result.city }} {{ result.country }}</p>
-          <label class="text-white text-m font-medium leading-tight mb-1 text-center">Nom de l'evenement</label>
+          <label class="text-black text-m font-medium leading-tight mb-1 text-center">Nom de l'evenement</label>
           <input class="w-full mb-4 p-2 rounded" placeholder="Saisissez le nom de l'événement" v-model="event_name" />
-          <label class="text-white text-m font-medium leading-tight text-center">Choisissez une heure pour votre rendez-vous :</label>
+          <label class="text-black text-m font-medium leading-tight mb-1 text-center">Prix du billet</label>
+          <input class="w-full mb-4 p-2 rounded" placeholder="Saisissez le prix du billet" v-model="event_price" />
+          <label class="text-black text-m font-medium leading-tight text-center">Choisissez une heure pour votre rendez-vous :</label>
           <input type="datetime-local" class="mb-4 w-full h-12 p-2 rounded" name="meeting-time" v-model="meetingTime"
             min="2024-07-07T00:00" max="2025-07-14T00:00" />
-          <label for="music-style-select" class="mb-1 text-white text-m font-medium leading-tight text-center">Style de
+          <label for="music-style-select" class="mb-1 text-black text-m font-medium leading-tight text-center">Style de
             musique</label>
           <select class="mb-4 w-full h-12 p-2 rounded" v-model="selectedStyle" name="style" id="music-style-select">
             <option value="">Type de musique</option>
@@ -67,11 +69,11 @@
             <option value="country">Country</option>
             <option value="autre">Autres</option>
           </select>
-          <label class="text-white text-m font-medium leading-tight mb-1 text-center">Numéro du groupe / de
+          <label class="text-black text-m font-medium leading-tight mb-1 text-center">Nom du groupe / de
             l'artiste</label>
           <input class="mb-4 w-full p-2 rounded" v-model="event_label" type="text"
-            placeholder="Entrez le nom de l'événement" required>
-          <label class="text-white text-m font-medium leading-tight mb-1 text-center">Description de l'événement</label>
+            placeholder="Entrez le nom du groupe ou de l'artiste" required>
+          <label class="text-black text-m font-medium leading-tight mb-1 text-center">Description de l'événement</label>
           <textarea class="mb-1 w-full h-24 p-2 rounded" v-model="event_txt" type="text"
             placeholder="Entrez la description" required></textarea>
       </div>
@@ -109,10 +111,12 @@ import FooterPage from '../../composables/Footer/FooterPage.vue';
 import Wizard from 'form-wizard-vue3'
 import { useRouter } from 'vue-router'
 import 'form-wizard-vue3/dist/form-wizard-vue3.css';
+import { useJwt } from '@vueuse/integrations/useJwt';
 
 const currentTabIndex = ref(0)
 const result = ref(null);
 const event_name = ref('');
+const event_price = ref('');
 const event_label = ref('');
 const event_txt = ref('');
 const selectedStyle = ref('');
@@ -129,13 +133,11 @@ const confirmError = () => {
   showError.value = false;
 };
 
-
 const customTabs = ref([
   { title: "Localisation", icon: "user" },
   { title: "Ajout de l´évenement", icon: "search" },
   { title: "Carte", icon: "map" },
 ]);
-
 
 const styleColor = computed(() => {
   switch (selectedStyle.value) {
@@ -155,7 +157,6 @@ const styleColor = computed(() => {
       return '#000000';
   }
 });
-
 
 const nextButtonOptions = computed(() => {
   if (currentTabIndex.value === 1) { 
@@ -208,8 +209,7 @@ const onTabBeforeChange = () => {
 };
 
 const wizardCompleted = () => {
-  addPoint(),
-  alert("The point is added !");
+  addPoint()
 };
 
 const backButtonOptions = computed(() => {
@@ -238,6 +238,8 @@ const addPoint = async () => {
     if (!result.value) {
       throw new Error("No geocoding data available.");
     }
+    const authToken = await getAuthToken();
+    const { payload } = useJwt(authToken);
 
     const Point = {
       longitude: result.value.longitude,
@@ -252,16 +254,17 @@ const addPoint = async () => {
       color: styleColor.value,
       departement_number: result.value.postalCode,
       region_name: result.value.country,
-      url_point: ""
+      url_point: "",
+      event_id: ""
     };
 
     const Event = {
+      user_id: payload.value?.userId,
       name: event_name.value,
       description: event_txt.value,
+      price: event_price.value,
       url: "",
     };
-
-    const authToken = await getAuthToken();
 
     const response_event = await ApiService.post('/add-event', Event, {
       headers: {
@@ -272,6 +275,7 @@ const addPoint = async () => {
     const eventId = response_event.data.id;
     const event_url = `http://localhost:5173/event/${eventId}`;
     Point.url_point = event_url;
+    Point.event_id = eventId;
 
     const response = await ApiService.post('/add-point', Point, {
       headers: {

@@ -12,6 +12,7 @@ class Event extends Model<EventAttributes> implements EventAttributes {
   public mapId!: number;
   public city_id!: string;
   public user_id!: string;
+  public price!: string;
 }
 
 Event.init(
@@ -22,6 +23,10 @@ Event.init(
       primaryKey: true,
     },
     name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    price: {
       type: DataTypes.STRING,
       allowNull: false,
     },
