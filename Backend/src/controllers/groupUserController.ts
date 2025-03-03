@@ -8,16 +8,15 @@ const createGroupUser = async (
   res: Response,
 ): Promise<Response<any, Record<string, any>>> => {
   const { groupId } = req.params;
-  const { userId } = req.body;
-
   try {
+    const email = req.body[0];
     const user = await UserModel.findOne({
-      where: { id: userId },
+      where: { email: email },
     });
     if (user?.role === "artist") {
       const groupUser = await GroupUserModel.create({
-        groupId,
-        userId,
+        groupId: groupId,
+        userId: user.id,
       });
       return res.status(201).json({
         message: "User added to group successfully",

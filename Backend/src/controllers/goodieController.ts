@@ -26,15 +26,16 @@ const createGoodie = async (
   if (file === undefined) {
     return res.status(201).json("Not found");
   }
-  const readimagem = fs.readFileSync(`uploads/${file.originalname}`);
+  const readimagem = fs.readFileSync(`public/images/${file.originalname}`);
   const imagemBase64 = Buffer.from(readimagem).toString("base64");
 
   try {
+    console.log("oui");
     const goodie: GoodieModel = await GoodieModel.create({
       ...req.body,
-      path: imagemBase64,
+      path: "/images/" + file.originalname,
     });
-
+    console.log("non");
     const formattedGoodie: GoodieAttributes = {
       id: goodie.id,
       groupId: goodie.groupId,
@@ -47,9 +48,8 @@ const createGoodie = async (
       available: goodie.available,
     };
 
-    console.log("Base64 Image Path:", imagemBase64);
-
-    console.log("addPost:", formattedGoodie);
+    // console.log("Base64 Image Path:", imagemBase64);
+    // console.log("addPost:", formattedGoodie);
     return res.status(201).json(formattedGoodie);
   } catch (error) {
     return res.status(500).json({ message: "Error with creation goodie." });
@@ -69,6 +69,27 @@ const getAllAvailableGoodies = async (
     console.log(error);
     return res.status(500).json({
       message: "Unable to retrieve available goodie.",
+    });
+  }
+};
+
+const getGoodie = async (
+  req: Request,
+  res: Response,
+): Promise<Response<any, Record<string, any>>> => {
+  try {
+    const goodieId: string = req.params.id;
+    const goodie : GoodieModel | null = await GoodieModel.findOne({
+      where: { id: goodieId },
+    });
+    if (!goodie) {
+      return res.status(404).json({ message: "Goodie does not exist."});
+    }
+    return res.status(200).json(goodie);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: "Unable to retrieve your goodies",
     });
   }
 };
@@ -129,6 +150,7 @@ const getFilteredGoodies = async (
 
 export default {
   createGoodie,
+  getGoodie,
   getAllAvailableGoodies,
   getMyGoodies,
   getFilteredGoodies,

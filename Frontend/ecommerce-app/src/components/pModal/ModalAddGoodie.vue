@@ -8,38 +8,30 @@
     <form @submit.prevent="submitAddGoodie" class="w-full">
         <div class="mb-4">
             <label class="block text-m font-medium leading-tight text-light">Nom</label>
-            <input class="text-center w-full p-2 border rounded shadow-md text-dark" type="text" v-model="request.goodieName" placeholder="Entrez le nom" required />
+            <input class="text-center w-full p-2 border rounded shadow-md text-dark" type="text" v-model="request.name" placeholder="Entrez le nom" required />
         </div>
         <div class="mb-4">
             <label class="block text-m font-medium leading-tight text-light">Description</label>
-            <input class="text-center w-full p-2 border rounded shadow-md text-dark" type="text" v-model="request.goodieDescription" placeholder="Entrez une description" required />
+            <input class="text-center w-full p-2 border rounded shadow-md text-dark" type="text" v-model="request.description" placeholder="Entrez une description" required />
         </div>
         <div class="mb-4">
             <label class="block text-m font-medium leading-tight text-light">Type</label>
             <select class="form-select" v-model="request.goodieTypeId" aria-label="">
-              <option selected value="none">Sélectionnez le type</option>
-    <slot name="goodieTypes"/>
-</select>
-        </div>
-        <div class="mb-4">
-            <label class="block text-m font-medium leading-tight text-light">Nom du groupe</label>
-            
-<select class="form-select" v-model="request.group" aria-label="">
-  <option selected value="none">Sélectionnez le groupe</option>
-    <slot name="groupOptions"/>
-</select>
+                <option selected value="none">Sélectionnez le type</option>
+                <slot name="goodieTypes"/>
+            </select>
         </div>
         <div class="mb-4">
             <label class="block text-m font-medium leading-tight text-light">Prix / Unité</label>
-            <input class="text-center w-full p-2 border rounded shadow-md text-dark" type="number" v-model="request.goodiePrice" placeholder="Entrez le prix" required />
+            <input class="text-center w-full p-2 border rounded shadow-md text-dark" type="number" v-model="request.price" placeholder="Entrez le prix" required />
         </div>
         <div class="mb-4">
             <label class="block text-m font-medium leading-tight text-light">Quantité</label>
-            <input class="text-center w-full p-2 border rounded shadow-md text-dark" type="text" v-model="request.goodieQuantity" placeholder="Entrez la quantité" required />
+            <input class="text-center w-full p-2 border rounded shadow-md text-dark" type="text" v-model="request.quantity" placeholder="Entrez la quantité" required />
         </div>
         <div class="mb-4">
             <label class="block text-m font-medium leading-tight text-light">Disponible</label>
-            <select class="form-select" v-model="request.goodieAvailable" aria-label="">
+            <select class="form-select" v-model="request.available" aria-label="">
                 <option selected value="none">Exposer le produit ?</option>
                 <option value="true">Oui</option>
                 <option value="false">Non</option>
@@ -68,13 +60,13 @@ const router = useRouter();
 const authToken = localStorage.getItem('authToken');
 
 const request = ref({
-  groupId: "199a484a-ff01-4acc-b689-4bec3ecad030",
+  groupId: "",
   userId: "",
   goodieTypeId: "",
-  name: "toto",
-  description: "toto",
-  quantity: 10,
-  price: 10,
+  name: "",
+  description: "",
+  quantity: 0,
+  price: 0,
   available: true,
 });
 
@@ -125,6 +117,12 @@ const submitAddGoodie = async () => {
 
     // Création de l'objet FormData
     const formData = new FormData();
+    const getMyGroupDetails = await ApiService.get('/get-my-group', {
+        headers: {
+            Authorization: `Bearer ${authToken}`,
+        },
+    });
+    request.value.groupId = getMyGroupDetails.data.group.id;
     formData.append("groupId", request.value.groupId);
     formData.append("userId", request.value.userId);
     formData.append("goodieTypeId", request.value.goodieTypeId);
@@ -133,6 +131,8 @@ const submitAddGoodie = async () => {
     formData.append("quantity", String(request.value.quantity));
     formData.append("price", String(request.value.price));
     formData.append("available", request.value.available.toString());
+
+    console.log(request.value);
 
     // Vérification et ajout de l'image
     const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;

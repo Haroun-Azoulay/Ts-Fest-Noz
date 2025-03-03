@@ -41,8 +41,13 @@ GoodieType.hasMany(Goodie, {
 });
 Goodie.belongsTo(GoodieType, { foreignKey: "goodieTypeId" });
 
-Group.belongsToMany(User, { through: "GroupUsers" });
-User.belongsToMany(Group, { through: "GroupUsers" });
+Group.hasMany(GroupUser, {
+  foreignKey: "groupId",
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
+GroupUser.belongsTo(Group, { foreignKey: "groupId" });
+
 
 User.hasMany(Post, { foreignKey: "userId" });
 Post.belongsTo(User, { foreignKey: "userId" });

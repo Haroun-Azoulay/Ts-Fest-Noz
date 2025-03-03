@@ -25,15 +25,8 @@
         <div class="row">
           <div class="col-md-4">
             <h3>Groupe</h3>
-            <div v-if="allGroupMembers.length > 0">
-              <h4>{{ groupName }}</h4>
-              <p v-for="member in allGroupMembers" :key="member">
-                {{ member.email }}
-                <b v-if="member.owner">Créateur</b>
-              </p>
-              <a @click="deleteGroup" class="btn-main" style="background-color:red;">Supprimer</a>
-            </div>
-            <p v-if="allGroupMembers.length === 0">Vous n'appartenez à aucun groupe.</p>
+            <h4 v-if="groupName">{{ groupName }}</h4>
+            <p v-if="!groupName">Vous n'appartenez à aucun groupe.</p>
           </div>
           <div class="col-md-4">
             <h3>Vos produits</h3>
@@ -188,12 +181,12 @@
             // if (role !== "artist") {
             //   router.push({ path : '/' });
             // }
-            // const getMyGroup = await ApiService.get('/group/me', {
-            //     headers: {
-            //         Authorization: `Bearer ${authToken}`,
-            //     },
-            // });
-            // groupName.value = getMyGroup.data.name;
+            const getMyGroupDetails = await ApiService.get('/get-my-group', {
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                },
+            });
+            groupName.value = getMyGroupDetails.data.group.name;
             // const getMyGroupDetails = await ApiService.get('/groupdetail/me', {
             //     headers: {
             //         Authorization: `Bearer ${authToken}`,

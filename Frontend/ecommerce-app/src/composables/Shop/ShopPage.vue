@@ -22,7 +22,7 @@
     <div class="ecommerce-shop">
         <div class="ecommerce-cards" v-for="goodie in allGoodies">
             <div class="ecommerce-card card">
-                <img :src="`data:image/png;base64,${goodie.path}`" alt="Goodie Image" />
+                <img :src="`http://localhost:3000/${goodie.path}`" alt="Goodie Image" />
                 <div class="card-body ecommerce-card-body">
                     <h5 class="card-title" style="color:black;">{{ goodie.name }}</h5>
                     <h5 class="card-title" style="color:black;">{{ goodie.price }} €</h5>

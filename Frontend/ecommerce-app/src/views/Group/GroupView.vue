@@ -101,7 +101,17 @@
         return localStorage.getItem('authToken');
     };
 
-    // onMounted(async () => {
+    onMounted(async () => {
+        const authToken = localStorage.getItem('authToken');
+        if (!authToken)  {
+            router.push({ path : '/' });
+        } else {
+            const { payload } = useJwt(authToken);
+            const role = payload.value?.role;
+            if (role !== "admin") {
+                router.push({ path : '/' });
+            }
+        }
     //     try {
     //         const authToken = localStorage.getItem('authToken');
     //         if (!authToken)  {
@@ -124,7 +134,7 @@
     //     } catch (error) {
     //         console.error('Erreur lors de la requête :', error);
     //     }
-    // });
+    });
 
     const addMember = async () => {
         try {
@@ -132,7 +142,14 @@
             createGroup.name = groupName.value;
             createGroup.members = [];
             dynamicInputs.value.forEach((element) => createGroup.members.push(element.value));
-            const response = await ApiService.post('/create-group', createGroup, {
+            console.log(createGroup);
+            const response_group = await ApiService.post('/create-group', createGroup, {
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                },
+            });
+            const response_groupuser = await ApiService.post(`/groups/${response_group.data.newGroup.id}/users`,
+            createGroup.members, {
                 headers: {
                     Authorization: `Bearer ${authToken}`,
                 },

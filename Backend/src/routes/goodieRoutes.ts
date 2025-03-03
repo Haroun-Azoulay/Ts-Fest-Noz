@@ -8,7 +8,7 @@ const multer = require("multer");
 // Configure the multer service
 const storage = multer.diskStorage({
   destination: function (req: any, file: any, cb: any) {
-    cb(null, "uploads"); // Folder where the images will be stored
+    cb(null, "public/images"); // Folder where the images will be stored
   },
   filename: function (req: any, file: any, cb: any) {
     cb(null, file.originalname); // File name
@@ -18,12 +18,14 @@ const upload = multer({ storage: storage });
 
 router.post(
   "/create-goodie",
-  verifyTokenAdmin,
+  verifyToken,
   upload.single("image"),
   goodieController.createGoodie,
 );
 
-router.get("/me/:id", verifyTokenAdmin, goodieController.getMyGoodies);
+router.get("/get-goodie/:id", verifyToken, goodieController.getGoodie);
+
+router.get("/me/:id", verifyToken, goodieController.getMyGoodies);
 
 router.get(
   "/get-all-goodies",

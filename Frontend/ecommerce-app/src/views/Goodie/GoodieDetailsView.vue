@@ -16,22 +16,22 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-6 rounded-lg">
-          <img :src="`http://${goodieDetails.goodieImage}`" style="position:sticky;top:100px;"/>
+          <img :src="`http://localhost:3000/${goodieDetails.path}`" style="position:sticky;top:100px;"/>
         </div>
         <div class="col-lg-6 bg-white shadow-md rounded-lg">
-          <h2 class="text-2xl font-bold text-black">{{ goodieDetails.goodieName }}</h2>
-          <span class="text-xl text-black">{{ goodieDetails.goodiePrice }} €</span>
+          <h2 class="text-2xl font-bold text-black">{{ goodieDetails.name }}</h2>
+          <span class="text-xl text-black">{{ goodieDetails.price }} €</span>
           <br>
           <span class="text-xl text-black">Groupe : {{ groupName }}</span>
           <br>
           <span class="text-xl text-black">Type : {{ goodieType }}</span>
           <br>
-          <span class="text-xl text-black">Description : {{ goodieDetails.goodieDescription }}</span>
+          <!-- <span class="text-xl text-black">Description : {{ goodieDetails.goodieDescription }}</span> -->
           <div class="flex justify-center mb-6">
-            <div v-if="goodieDetails.goodieQuantity > 0" class="row ecommerce-card-button">
+            <div v-if="goodieDetails.quantity > 0" class="row ecommerce-card-button">
               <a href="" v-on:click.prevent="addToCart" class="col btn btn-secondary pl-0 pr-0"><i class="bi bi-cart"></i></a>
             </div>
-            <div v-if="goodieDetails.goodieQuantity <= 0" class="row ecommerce-card-button-disabled">
+            <div v-if="goodieDetails.quantity <= 0" class="row ecommerce-card-button-disabled">
               <button disabled class="col btn btn-secondary pl-0 pr-0">En rupture de stock</button>
             </div>
           </div>
@@ -66,13 +66,14 @@ const successMessage = ref('');
 const showSuccess = ref(false);
 const goodieId = route.params.goodieId;
 const goodieDetails = ref<Goodie>({
-  goodieName: '',
-  goodiePrice: 0,
-  goodieQuantity: 0,
-  goodieImage: undefined,
+  groupId: '',
+  userId: '',
+  name: '',
+  price: 0,
+  quantity: 0,
+  path: '',
   goodieTypeId: '',
-  goodieAvailable: false,
-  goodieDescription: ''
+  available: false
 });
 const goodieInCart = ref<GoodieInCart>({
   goodieName: '',
@@ -96,18 +97,18 @@ const confirmSuccess = () => {
 
 const addToCart = () => {
     try {
-      if (goodieDetails.value.goodieQuantity <= 0) {
+      if (goodieDetails.value.quantity <= 0) {
         throw new Error("Il n'en reste plus en stock !");
       }
       var festnozCart : Cart = JSON.parse(localStorage.getItem('festnozCart')!);
       var alreadyExists = false;
       festnozCart.content.forEach((goodie) => {
-        if (goodieId === goodieInCart.value.goodieId) {
+        if (goodieId === goodie.goodieId) {
           alreadyExists = true;
-          if (goodie.goodieQuantity < goodieDetails.value.goodieQuantity) {
+          if (goodie.goodieQuantity < goodieDetails.value.quantity) {
             goodie.goodieQuantity += goodieInCart.value.goodieQuantity;
             goodie.goodiePrice += goodieInCart.value.goodiePrice;
-            festnozCart.totalPrice += goodieDetails.value.goodiePrice;
+            festnozCart.totalPrice += goodieDetails.value.price;
           } else {
             throw new Error("Votre panier contient la quantité maximale en stock de ce goodie.");
           }
@@ -115,7 +116,7 @@ const addToCart = () => {
       });
       if (alreadyExists === false) {
         festnozCart.content.push(goodieInCart.value);
-        festnozCart.totalPrice += goodieDetails.value.goodiePrice;
+        festnozCart.totalPrice += goodieDetails.value.price;
       }
       localStorage.setItem('festnozCart', JSON.stringify(festnozCart));
       successMessage.value = "Le goodie a été ajouté au panier !";
@@ -130,20 +131,21 @@ onMounted(async () => {
   try {
       const authToken = localStorage.getItem('authToken');
       if (authToken) {
-          const getGoodieDetails = await ApiService.get(`/get-goodie-details/${goodieId}`, {
+        console.log("non");
+          const getGoodieDetails = await ApiService.get(`/get-goodie/${goodieId}`, {
               headers: {
                   Authorization: `Bearer ${authToken}`,
               },
           });
-          goodieDetails.value.goodieName = goodieInCart.value.goodieName = getGoodieDetails.data.name;
-          goodieDetails.value.goodieDescription = getGoodieDetails.data.description;
-          goodieDetails.value.goodiePrice = goodieInCart.value.goodiePrice = getGoodieDetails.data.price;
-          goodieDetails.value.goodieQuantity = getGoodieDetails.data.quantity, goodieInCart.value.goodieQuantity = 1;
+          goodieDetails.value.name = goodieInCart.value.goodieName = getGoodieDetails.data.name;
+          goodieDetails.value.price = goodieInCart.value.goodiePrice = getGoodieDetails.data.price;
+          goodieDetails.value.quantity = getGoodieDetails.data.quantity, goodieInCart.value.goodieQuantity = 1;
           goodieDetails.value.goodieTypeId = goodieInCart.value.goodieTypeId = getGoodieDetails.data.goodieTypeId;
-          goodieDetails.value.goodieImage = goodieInCart.value.goodieImage = getGoodieDetails.data.path;
-          goodieDetails.value.goodieAvailable = getGoodieDetails.data.available;
+          goodieDetails.value.path = goodieInCart.value.goodieImage = getGoodieDetails.data.path;
+          goodieDetails.value.available = getGoodieDetails.data.available;
           goodieInCart.value.goodieId = getGoodieDetails.data.id;
           goodieInCart.value.goodieGroupId = getGoodieDetails.data.groupId;
+          console.log(goodieDetails.value);
           const getAllGoodieTypes = await ApiService.get('/get-all-types', {
               headers: {
                   Authorization: `Bearer ${authToken}`,
