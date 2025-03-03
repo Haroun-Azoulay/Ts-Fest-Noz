@@ -24,9 +24,9 @@
                             <li><a href="/#section-shop">Boutique</a></li>
                             <li><a href="">Pages</a>
                                 <ul>
-                                    <li><a @click.prevent="goToGroupPage">Créer un groupe</a></li>
-                                    <li><a @click.prevent="goToDashboardPage">Vendre un produit</a></li>
-                                    <li><a @click.prevent="goToGroupPage">Voir mes produits</a></li>
+                                    <li v-if="isAdmin"><a @click.prevent="goToGroupPage">Créer un groupe</a></li>
+                                    <li><a v-if="isLoggedIn" @click.prevent="goToDashboardPage">Vendre un produit</a></li>
+                                    <li><a v-if="isLoggedIn" @click.prevent="goToGroupPage">Voir mes produits</a></li>
                                     <li><a @click.prevent="goToContactPage">Contact</a></li>
                                 </ul>
                             </li>

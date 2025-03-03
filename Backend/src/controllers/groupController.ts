@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import UserModel from "../models/User";
 import GroupModel from "../models/Group";
+import GroupUserModel from "../models/GroupUser";
 import { Sequelize } from "sequelize";
 
 const createGroup = async (
@@ -71,6 +72,32 @@ const getGroup = async (
   }
 };
 
+const getMyGroup = async (
+  req: Request,
+  res: Response,
+): Promise<Response<any, Record<string, any>>> => {
+  try {
+    const userId : string | undefined = req.userId;
+
+    console.log("======================");
+    console.log(userId);
+    const groupWithDetails: GroupUserModel | null = await GroupUserModel.findOne({
+      where: { userId: userId },
+      include: {
+        model: GroupModel
+      },
+    });
+    console.log(groupWithDetails);
+    if (!groupWithDetails) {
+      return res.status(404).json({ message: "Group not found." });
+    }
+    return res.status(200).json(groupWithDetails);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Error getting the group." });
+  }
+};
+
 const getAllGroups = async (
   req: Request,
   res: Response,
@@ -102,6 +129,7 @@ const getRandomGroups = async (
 
 export default {
   createGroup,
+  getMyGroup,
   deleteGroup,
   getGroup,
   getAllGroups,

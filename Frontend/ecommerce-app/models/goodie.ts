@@ -5,8 +5,8 @@ export interface Goodie {
     name: string,
     quantity: number,
     price: number,
-    available: boolean ,
-    image: string,
+    available: boolean,
+    path: string,
 }
 
 export interface GoodieType {
