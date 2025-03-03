@@ -23,6 +23,8 @@
     "date-fns": "^3.6.0",
     "form-wizard-vue3": "^1.1.0",
     "jest": "^29.7.0",
+    "jspdf": "^3.0.0",
+    "jspdf-autotable": "^5.0.2",
     "jwt-decode": "^3.1.2",
     "mapbox-gl": "^3.1.2",
     "pinia": "^2.1.7",

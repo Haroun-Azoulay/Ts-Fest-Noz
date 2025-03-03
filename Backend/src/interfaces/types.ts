@@ -70,6 +70,7 @@ export interface EventAttributes {
   mapId: number;
   city_id: string;
   user_id: string;
+  price: string;
 }
 // ============================================= Event Interfaces(End) =============================================
 
@@ -249,3 +250,17 @@ export interface OrderDetailInfo {
   price: number;
 }
 // ============================================= OrderDetails Interfaces(End) =============================================
+
+// ============================================= Billing Interfaces(Start) =============================================
+export interface BillingAttributes {
+  id?: string;
+  userId?: string;
+  eventId?: string;
+  lastname?: string;
+  firstname?: string;
+  address?: string;
+  city?: string;
+  postalCode?: string;
+  price?: string;
+}
+// ============================================= Billing Interfaces(End) =============================================

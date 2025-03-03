@@ -38,6 +38,7 @@ const existEvent = new Event({
   user_id: "5cbfa5dc-7999-4fb1-a443-33894fb52ccc",
   description: "PARTICIPE IN ONE OF THE BEST CONCERT OF ALL TIME",
   url: "",
+  price: "0",
   mapId: 1,
 });
 const existEventUpdated = new Event({
@@ -47,6 +48,7 @@ const existEventUpdated = new Event({
   user_id: "5cbfa5dc-7999-4fb1-a443-33894fb52ccc",
   description: "PARTICIPE IN ONE OF THE BEST CONCERT OF ALL TIME",
   url: "",
+  price: "0",
   mapId: 1,
 });
 const newPoint = {

@@ -83,7 +83,7 @@ const getEventById = async (
   try {
     const eventId: string = req.params.id;
     const event: EventModel | null = await EventModel.findByPk(eventId, {
-      attributes: ["id", "name", "description"],
+      attributes: ["id", "name", "description", "price"],
     });
     if (event) {
       return res.status(200).json(event);

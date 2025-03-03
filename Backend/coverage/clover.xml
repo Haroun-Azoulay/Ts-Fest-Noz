@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1740938613512" clover="3.2.0">
-  <project timestamp="1740938613512" name="All files">
-    <metrics statements="1986" coveredstatements="1939" conditionals="144" coveredconditionals="134" methods="27" coveredmethods="26" elements="2157" coveredelements="2099" complexity="0" loc="1986" ncloc="1986" packages="5" files="23" classes="23"/>
+<coverage generated="1740962908841" clover="3.2.0">
+  <project timestamp="1740962908841" name="All files">
+    <metrics statements="1991" coveredstatements="1944" conditionals="144" coveredconditionals="134" methods="27" coveredmethods="26" elements="2162" coveredelements="2104" complexity="0" loc="1991" ncloc="1991" packages="5" files="23" classes="23"/>
     <package name="config">
       <metrics statements="27" coveredstatements="27" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="database.ts" path="C:\Users\207544\Desktop\ETNA\Master2\group-1018807\Backend\config\database.ts">
@@ -146,18 +146,18 @@
         <line num="105" count="1" type="stmt"/>
         <line num="106" count="1" type="stmt"/>
         <line num="107" count="1" type="cond" truecount="1" falsecount="0"/>
-        <line num="108" count="12" type="stmt"/>
-        <line num="109" count="12" type="stmt"/>
-        <line num="110" count="12" type="stmt"/>
-        <line num="111" count="12" type="stmt"/>
-        <line num="112" count="12" type="stmt"/>
-        <line num="113" count="12" type="stmt"/>
-        <line num="114" count="12" type="stmt"/>
-        <line num="115" count="12" type="stmt"/>
-        <line num="116" count="12" type="stmt"/>
-        <line num="117" count="12" type="stmt"/>
-        <line num="118" count="12" type="stmt"/>
-        <line num="119" count="12" type="stmt"/>
+        <line num="108" count="11" type="stmt"/>
+        <line num="109" count="11" type="stmt"/>
+        <line num="110" count="11" type="stmt"/>
+        <line num="111" count="11" type="stmt"/>
+        <line num="112" count="11" type="stmt"/>
+        <line num="113" count="11" type="stmt"/>
+        <line num="114" count="11" type="stmt"/>
+        <line num="115" count="11" type="stmt"/>
+        <line num="116" count="11" type="stmt"/>
+        <line num="117" count="11" type="stmt"/>
+        <line num="118" count="11" type="stmt"/>
+        <line num="119" count="11" type="stmt"/>
         <line num="120" count="1" type="stmt"/>
         <line num="121" count="1" type="stmt"/>
         <line num="122" count="1" type="cond" truecount="1" falsecount="0"/>
@@ -919,7 +919,7 @@
       </file>
     </package>
     <package name="src.models">
-      <metrics statements="351" coveredstatements="351" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <metrics statements="356" coveredstatements="356" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="City.ts" path="C:\Users\207544\Desktop\ETNA\Master2\group-1018807\Backend\src\models\City.ts">
         <metrics statements="99" coveredstatements="99" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
@@ -1023,7 +1023,7 @@
         <line num="99" count="1" type="stmt"/>
       </file>
       <file name="Event.ts" path="C:\Users\207544\Desktop\ETNA\Master2\group-1018807\Backend\src\models\Event.ts">
-        <metrics statements="62" coveredstatements="62" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <metrics statements="67" coveredstatements="67" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -1086,6 +1086,11 @@
         <line num="60" count="1" type="stmt"/>
         <line num="61" count="1" type="stmt"/>
         <line num="62" count="1" type="stmt"/>
+        <line num="63" count="1" type="stmt"/>
+        <line num="64" count="1" type="stmt"/>
+        <line num="65" count="1" type="stmt"/>
+        <line num="66" count="1" type="stmt"/>
+        <line num="67" count="1" type="stmt"/>
       </file>
       <file name="GoodieType.ts" path="C:\Users\207544\Desktop\ETNA\Master2\group-1018807\Backend\src\models\GoodieType.ts">
         <metrics statements="34" coveredstatements="34" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>

@@ -14,6 +14,7 @@ import Group from "./src/models/Group";
 import GroupUser from "./src/models/GroupUser";
 import Order from "./src/models/Order";
 import OrderDetail from "./src/models/OrderDetail";
+import Billing from "./src/models/Billing";
 import userRoutes from "./src/routes/userRoutes";
 import cityRoutes from "./src/routes/cityRoutes";
 import monitoringRoutes from "./src/routes/monitoringRoutes";
@@ -25,6 +26,7 @@ import goodieRoutes from "./src/routes/goodieRoutes";
 import goodieTypeRoutes from "./src/routes/goodieTypeRoutes";
 import groupRoutes from "./src/routes/groupRoutes";
 import groupUserRoutes from "./src/routes/groupUserRoutes";
+import billingRoutes from "./src/routes/billingRoutes";
 import { organizerProfils, retryDb } from "./src/config/faker";
 
 // import orderRoutes from "./src/routes/orderRoutes";
@@ -67,6 +69,7 @@ app.use(groupRoutes);
 app.use(groupUserRoutes);
 // app.use(orderRoutes);
 // app.use(orderDetailRoutes);
+app.use(billingRoutes);
 
 async function syncModels() {
   try {
@@ -87,6 +90,7 @@ async function syncModels() {
     await Payment.sync({ force: false });
     await OrganizerProfil.sync({ force: false });
     await ArtistProfil.sync({ force: false });
+    await Billing.sync({ force: false });
 
     async function insertFakerData() {
       try {

@@ -52,6 +52,8 @@
             {{ result.city }} {{ result.country }}</p>
           <label class="text-black text-m font-medium leading-tight mb-1 text-center">Nom de l'evenement</label>
           <input class="w-full mb-4 p-2 rounded" placeholder="Saisissez le nom de l'événement" v-model="event_name" />
+          <label class="text-black text-m font-medium leading-tight mb-1 text-center">Prix du billet</label>
+          <input class="w-full mb-4 p-2 rounded" placeholder="Saisissez le prix du billet" v-model="event_price" />
           <label class="text-black text-m font-medium leading-tight text-center">Choisissez une heure pour votre rendez-vous :</label>
           <input type="datetime-local" class="mb-4 w-full h-12 p-2 rounded" name="meeting-time" v-model="meetingTime"
             min="2024-07-07T00:00" max="2025-07-14T00:00" />
@@ -114,6 +116,7 @@ import { useJwt } from '@vueuse/integrations/useJwt';
 const currentTabIndex = ref(0)
 const result = ref(null);
 const event_name = ref('');
+const event_price = ref('');
 const event_label = ref('');
 const event_txt = ref('');
 const selectedStyle = ref('');
@@ -259,6 +262,7 @@ const addPoint = async () => {
       user_id: payload.value?.userId,
       name: event_name.value,
       description: event_txt.value,
+      price: event_price.value,
       url: "",
     };
 

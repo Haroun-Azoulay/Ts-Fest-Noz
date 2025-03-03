@@ -26,17 +26,25 @@
             <span class="text-gray-500 font-semibold">Description:</span>
             <span class="ml-2 text-black">{{ event.description }}</span>
           </div>
+          <div class="flex items-center">
+            <span class="text-gray-500 font-semibold">Prix :</span>
+            <span class="ml-2 text-black">{{ event.price }}</span>
+          </div>
           <hr>
           <div>
             <h2 class="text-3xl font-bold text-black">Paiement</h2>
             <form id="eventPaymentForm" action="">
               <h2 class="text-2xl font-bold text-black">Adresse de facturation</h2>
+              <span class="text-gray-500 font-semibold">Nom :</span>
+              <input type="text" class="form-control" style="width:20em;" v-model="billing.lastname" id="inputBillingAddressLastname" placeholder="">
+              <span class="text-gray-500 font-semibold">Prénom :</span>
+              <input type="text" class="form-control" style="width:20em;" v-model="billing.firstname" id="inputBillingAddressFirstname" placeholder="">
               <span class="text-gray-500 font-semibold">Adresse :</span>
-              <input type="text" class="form-control" style="width:20em;" id="inputBillingAddressLocation" placeholder="">
+              <input type="text" class="form-control" style="width:20em;" v-model="billing.address" id="inputBillingAddressLocation" placeholder="">
               <span class="text-gray-500 font-semibold">Code postal :</span>
-              <input type="number" class="form-control" style="width:20em;" id="inputBillingAddressPostalCode" placeholder="">
+              <input type="text" class="form-control" style="width:20em;" v-model="billing.postalCode" id="inputBillingAddressPostalCode" placeholder="">
               <span class="text-gray-500 font-semibold">Ville :</span>
-              <input type="text" class="form-control" style="width:20em;" id="inputBillingAddressCity" placeholder="">
+              <input type="text" class="form-control" style="width:20em;" v-model="billing.city" id="inputBillingAddressCity" placeholder="">
               <br>
               <h2 class="text-2xl font-bold text-black">Méthode de paiement</h2>
               <select class="form-control" id="eventPaymentMethods" style="width:20em;">
@@ -118,8 +126,17 @@ import ApiService from "@/services/ApiService";
 import { useJwt } from '@vueuse/integrations/useJwt';
 import { provide } from 'vue'
 import FooterPage from '../../composables/Footer/FooterPage.vue';
+import { jsPDF } from "jspdf";
+import { applyPlugin } from 'jspdf-autotable'
+
+applyPlugin(jsPDF);
 const router = useRouter();
 const route = useRoute();
+const inputBillingAddressLastname = ref('');
+const inputBillingAddressFirstname = ref('');
+const inputBillingAddressLocation = ref('');
+const inputBillingAddressPostalCode = ref('');
+const inputBillingAddressCity = ref('');
 
 interface Eve {
   id: number;
@@ -132,6 +149,16 @@ interface Eve {
   color: string;
   region_name: string;
 }
+
+const billing = ref<Billing>({
+  eventId: '',
+  lastname: '',
+  firstname: '',
+  address: '',
+  city: '',
+  postalCode: '',
+  price: ''
+});
 
 const QRCODE = {
   payment: true,
@@ -161,25 +188,58 @@ onMounted(async () => {
   }
 });
 
-const goToPaymentPage = async (event: Event) => {
-  event.preventDefault();
+const generateInvoicePDF = async (config) => {
+  const response_my_billing = await ApiService.get(`/get-my-billing`, config);
+  const my_billing = response_my_billing.data.billings[response_my_billing.data.billings.length - 1];
+  const doc = new jsPDF();
+  doc.addImage("/src/assets/images/logo.png", "PNG", 80, 10, 50, 30);
+  doc.setFontSize(20);
+  doc.text("FACTURE", 105, 45, { align: "center" });
+  doc.setFontSize(12);
+  doc.text("ID : " + my_billing.id, 105, 53, { align: "center" });
+  doc.text(`Date : ${new Date().toLocaleDateString()}`, 105, 61, { align: "center" });
+  doc.text("Client :", 15, 70);
+  doc.text(my_billing.lastname + " " + my_billing.firstname, 15, 78);
+  doc.text(my_billing.address, 15, 85);
+  doc.text(my_billing.postalCode + " " + my_billing.city, 15, 92);
+  const produits = [
+    [my_billing.Event.name, "1", my_billing.price, my_billing.price],
+  ];
+  doc.autoTable({
+    startY: 100,
+    head: [["Nom", "Quantité", "Prix Unitaire", "Total"]],
+    body: produits,
+  });
+  doc.setFontSize(14);
+  doc.text(`Total : ${my_billing.price} €`, 140, doc.lastAutoTable.finalY + 10); // Position après le tableau
+  doc.setFontSize(12);
+  doc.text("Merci pour votre achat !", 15, doc.lastAutoTable.finalY + 20);
+  doc.save("festnoz-facture.pdf");
+};
+
+const goToPaymentPage = async (e: Event) => {
+  e.preventDefault();
   try {
     const authToken = localStorage.getItem("authToken");
     if (!authToken) {
       console.error("L'utilisateur n'est pas authentifié.");
       return;
     }
-
     const config = {
       headers: {
         Authorization: `Bearer ${authToken}`,
         "Content-Type": "application/json",
       },
     };
-
     const eventId = route.params.id;
-    const response = await ApiService.post(`/get-event/${event.value?.id}/payment`, QRCODE, config);
-    const token = response.data.token;
+    console.log(billing.value);
+    billing.value.eventId = eventId;
+    console.log(event.value);
+    billing.value.price = event.value.price;
+    const response_billing = await ApiService.post(`/create-billing`, billing.value, config);
+    await generateInvoicePDF(config);
+    const response_payment = await ApiService.post(`/get-event/${event.value?.id}/payment`, QRCODE, config);
+    const token = response_payment.data.token;
     localStorage.setItem('QRCODE', token);
     console.log("ca marche");
     provide('eventId', eventId);
