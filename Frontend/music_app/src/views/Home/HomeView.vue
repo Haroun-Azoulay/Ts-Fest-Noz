@@ -350,25 +350,30 @@
           </div>
           <HomePage></HomePage>
           <div style="display: flex">
-            <div class="text-center md:text-left flex-1">
-              <h2 class="font-inter text-2xl md:text-4xl font-extrabold mb-6">
+            <div class="md:text-left flex-1">
+              <h2 class="text-center font-inter text-2xl md:text-4xl font-extrabold mb-6">
                 Laisser une <span class="id-color text-color:#371990 bold">annonce</span>
               </h2>
               <p class="text-gray-600 mb-6 text-white">
                 Commentez, Partagez, Parlez tout simplement, exprimez vous sur les événements et
-                faites des rencontres qui dureront peut-être <br>toute votre vie !
+                faites des rencontres qui dureront peut-être toute votre vie !
               </p>
-              <a
-                v-if="!isUser && !isArtist && !isOrganizer"
+              <div style="display:flex;justify-content:center;">
+                <a
+                v-if="!isUser && !isArtist && !isOrganizer && !isFullAuthorized"
                 style="background-color: #cdff6b; color: black"
                 class="btn-main"
                 @click="goToLoginPage"
+                >
+                  <span>Connectez vous</span>
+                </a>
+                <a v-if="isArtist || isOrganizer || isFullAuthorized" class="btn-main" @click="goForumPage">
+                <span>Accéder au Forum</span></a
               >
-                <span>Connectez vous</span>
-              </a>
-              <a v-if="isUser || isArtist || isOrganizer" class="btn-main" @click="goForumPage">
-                <span>Acceder au Forum</span></a
+              <a disabled v-if="isUser" class="btn-main" style="background:gray;">
+                <span><i class="fa fa-lock"></i> Inaccessible</span></a
               >
+              </div>
             </div>
             <div class="flex-1 mt-8 md:mt-0 md:ml-8">
               <img

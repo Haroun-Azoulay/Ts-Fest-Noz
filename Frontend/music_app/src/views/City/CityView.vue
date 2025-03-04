@@ -75,6 +75,7 @@ import SearchCityPage from '../../composables/Map/SearchCity.vue';
 
 interface Maps {
   id: number;
+  user_id: string;
   longitude: number;
   latitude: number;
   text: string;
@@ -200,16 +201,21 @@ const addMarkers = () => {
         .addTo(map);
       const formatedDate = format(new Date(point.date), "dd/MM/yyyy HH:mm");
 
-      const popupContent = `
+      let popupContent = `
         <section style="font-family: Arial, sans-serif; padding: 10px;">
           <h1 style="font-size: 16px; font-weight: bold; margin-bottom: 5px;">${point.text}</h1>
           <p style="margin: 5px 0;">Adresse: ${point.address}</p>
           <p style="margin: 5px 0;">Région: ${point.region_name}</p>
           <p style="margin: 5px 0;">Date: ${formatedDate}</p>
           <a href="${point.url_point}" style="display: inline-block; margin: 12px 12px; color: #fffff; text-decoration: none;">Cliquer ici</a>
-          <button onclick="window.deletePoint('${point.id}', '${point.url_point}')" style="padding: 5px 10px; border: none; border-radius: 4px; background-color: #9333ea; color: white; cursor: pointer; transition: background-color 0.3s ease;">Supprimer</button>
-        </section>
       `;
+      console.log("=============" + point.user_id + "===========" + userId);
+      if (point.user_id === userId || userRole === "admin") {
+        popupContent += `<button onclick="window.deletePoint('${point.id}', '${point.url_point}')" style="padding: 5px 10px; border: none; border-radius: 4px; background-color: #9333ea; color: white; cursor: pointer; transition: background-color 0.3s ease;">Supprimer</button>
+        </section>`;
+      } else {
+        popupContent += `</section>`;
+      }
 
       const popup = new mapboxgl.Popup({ offset: 25 })
         .setHTML(popupContent);
