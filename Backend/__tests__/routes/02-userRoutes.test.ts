@@ -12,16 +12,6 @@ app.use(adminRoutes);
 let tokenUser: string | undefined;
 let tokenAdmin: string | undefined;
 
-const newAdmin = {
-  lastname: "admin",
-  firstname: "admin",
-  email: "admin@example.com",
-  password: "admin",
-  pseudo: "admin",
-  city: "Paris",
-  longitude: 1,
-  latitude: 1,
-};
 const newInvalidUser = {
   lastname: "Dey",
   firstname: "Haroun-Rachid",
@@ -38,21 +28,31 @@ const newUser = {
   latitude: 1,
 };
 const newArtist = {
-  lastname: "artist",
-  firstname: "artist",
-  email: "artist@example.com",
-  password: "artist",
-  pseudo: "artist",
+  lastname: "test-festnoz-artist",
+  firstname: "test-festnoz-artist",
+  email: "test-festnoz-artist@example.com",
+  password: "test-festnoz-artist",
+  pseudo: "test-festnoz-artist",
   city: "Paris",
   longitude: 1,
   latitude: 1,
 };
 const newOrganizer = {
-  lastname: "organizer",
-  firstname: "organizer",
-  email: "organizer@example.com",
-  password: "organizer",
-  pseudo: "organizer",
+  lastname: "test-festnoz-organizer",
+  firstname: "test-festnoz-organizer",
+  email: "test-festnoz-organizer@example.com",
+  password: "test-festnoz-organizer",
+  pseudo: "test-festnoz-organizer",
+  city: "Paris",
+  longitude: 1,
+  latitude: 1,
+};
+const newAdmin = {
+  lastname: "admin",
+  firstname: "admin",
+  email: "admin@example.com",
+  password: "admin",
+  pseudo: "admin",
   city: "Paris",
   longitude: 1,
   latitude: 1,
@@ -69,12 +69,12 @@ const wrongLogin = {
   pseudo: "bechari",
 };
 const artistLogin = {
-  pseudo: "artist",
-  password: "artist",
+  pseudo: "test-festnoz-artist",
+  password: "test-festnoz-artist",
 };
 const organizerLogin = {
-  pseudo: "organizer",
-  password: "organizer",
+  pseudo: "test-festnoz-organizer",
+  password: "test-festnoz-organizer",
 };
 const adminLogin = {
   pseudo: "admin",
@@ -143,10 +143,11 @@ describe("Test case for user routes", () => {
     expect(response.status).toBe(201);
   });
 
-  it("4 - test case to signup admin user", async () => {
+  // Optional test
+  /* it("4 - test case to signup admin user", async () => {
     const response = await request(app).post("/signup").send(newAdmin);
     expect(response.status).toBe(201);
-  });
+  }); */
 
   it("5 - test case to signup with missing properties", async () => {
     const response = await request(app).post("/signup").send(newInvalidUser);

@@ -647,6 +647,11 @@ const goToEventPage = () => {
   router.push({ path: '/event' })
 }
 
+const goToContactPage = (event: Event) => {
+  event.preventDefault()
+  router.push({ path: '/contact' })
+}
+
 const goToSpecificEventPage = (eventUrl) => {
   router.push({ redirect: window.location.href = eventUrl })
 }

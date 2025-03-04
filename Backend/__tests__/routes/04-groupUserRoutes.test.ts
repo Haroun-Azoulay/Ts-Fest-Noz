@@ -48,8 +48,8 @@ const userLogin = {
   password: "test",
 };
 const artistLogin = {
-  pseudo: "artist",
-  password: "artist",
+  pseudo: "test-festnoz-artist",
+  password: "test-festnoz-artist",
 };
 const adminLogin = {
   pseudo: "admin",
@@ -85,14 +85,14 @@ describe("Test case for group routes", () => {
   it("5 - test case to add artist user in group", async () => {
     const response = await request(app)
       .post(`/groups/${existGroup.id}/users`)
-      .send({ userId: existArtist.id })
+      .send([existArtist.email])
       .set("Authorization", `Bearer ${tokenAdmin}`);
     expect(response.status).toBe(201);
   });
   it("6 - test case to add user in group", async () => {
     const response = await request(app)
       .post(`/groups/${existGroup.id}/users`)
-      .send({ userId: existUser.id })
+      .send([existUser.email])
       .set("Authorization", `Bearer ${tokenAdmin}`);
     expect(response.status).toBe(401);
   });
@@ -124,10 +124,10 @@ describe("Test case for group routes", () => {
       .set("Authorization", `Bearer ${tokenAdmin}`);
     expect(response.status).toBe(500);
   });
-  it("11 - test case to read artist user in group", async () => {
+  it("11 - test case to readd artist user in group", async () => {
     const response = await request(app)
       .post(`/groups/${existGroup.id}/users`)
-      .send({ userId: existArtist.id })
+      .send([existArtist.email])
       .set("Authorization", `Bearer ${tokenAdmin}`);
     expect(response.status).toBe(201);
   });

@@ -153,6 +153,7 @@ const submitAddGoodie = async () => {
 
     if (response.status === 201) {
       console.log("✅ Goodie ajouté avec succès !");
+      window.location.reload()
     } else {
       console.error("❌ Erreur :", response);
     }

@@ -2,7 +2,6 @@ import request from "supertest";
 import express from "express";
 import userRoutes from "../../src/routes/userRoutes";
 import goodieTypeRoutes from "../../src/routes/goodieTypeRoutes";
-import User from "../../src/models/User";
 import GoodieType from "../../src/models/GoodieType";
 
 const app = express();

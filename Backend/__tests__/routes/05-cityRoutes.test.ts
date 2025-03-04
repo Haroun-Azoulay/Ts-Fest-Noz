@@ -91,8 +91,8 @@ const userLogin = {
   password: "test",
 };
 const organizerLogin = {
-  pseudo: "organizer",
-  password: "organizer",
+  pseudo: "test-festnoz-organizer",
+  password: "test-festnoz-organizer",
 };
 const adminLogin = {
   pseudo: "admin",
