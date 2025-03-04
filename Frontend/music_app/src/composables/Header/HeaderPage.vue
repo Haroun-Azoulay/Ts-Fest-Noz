@@ -70,6 +70,7 @@
                   style="background-color: green; margin-right: 10px"
                   ><span>Admin</span></a
                 >
+                <a href="https://festnoz-ecommerce-b44c669ba0bc.herokuapp.com/" class="btn-main">E-Commerce</a>
                 <span id="menu-btn"></span>
               </div>
             </div>

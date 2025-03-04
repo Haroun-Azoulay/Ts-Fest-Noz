@@ -46,11 +46,11 @@
 <h5 class="flex justify-center items-center m-0 flex-col " v-if="currentTabIndex === 1">
         <div
           class="col-lg-6 w-full text-black lg:w-1/5 flex justify-center items-center flex-col"
-          v-if="result" style="height: 600px;">
+          v-if="result">
           <label class="text-black text-m font-medium leading-tight text-center">Adresse complète</label>
           <p class="text-m text-black mb-4 text-center">Nom de l'emplacement : {{ result.place }} {{ result.postalCode }}
             {{ result.city }} {{ result.country }}</p>
-          <label class="text-black text-m font-medium leading-tight mb-1 text-center">Nom de l'evenement</label>
+          <label class="text-black text-m font-medium leading-tight mb-1 text-center">Nom de l'évènement</label>
           <input class="w-full mb-4 p-2 rounded" placeholder="Saisissez le nom de l'événement" v-model="event_name" />
           <label class="text-black text-m font-medium leading-tight mb-1 text-center">Prix du billet</label>
           <input class="w-full mb-4 p-2 rounded" placeholder="Saisissez le prix du billet" v-model="event_price" />
@@ -73,7 +73,7 @@
             l'artiste</label>
           <input class="mb-4 w-full p-2 rounded" v-model="event_label" type="text"
             placeholder="Entrez le nom du groupe ou de l'artiste" required>
-          <label class="text-black text-m font-medium leading-tight mb-1 text-center">Description de l'événement</label>
+          <label class="text-black text-m font-medium leading-tight mb-1 text-center">Description de l'évènement</label>
           <textarea class="mb-1 w-full h-24 p-2 rounded" v-model="event_txt" type="text"
             placeholder="Entrez la description" required></textarea>
       </div>

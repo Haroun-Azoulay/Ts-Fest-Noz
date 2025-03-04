@@ -88,9 +88,10 @@ const geocodeAndSubmit = async () => {
     } = await geocodeAddress(fullAddress.value);
     result.value = { latitude, longitude, streetAddress, postalCode, city, country, place };
     console.log(result.value);
+    alert("L'adresse est valide !");
     emit("geocodeResult", result.value, latitude, longitude);
   } catch (error) {
-    console.error("Error with geocod address :", error.message);
+    console.error("L'adresse est invalide !");
   }
 };
 </script>

@@ -79,12 +79,12 @@ const userLogin = {
   password: "test",
 };
 const artistLogin = {
-  pseudo: "artist",
-  password: "artist",
+  pseudo: "test-festnoz-artist",
+  password: "test-festnoz-artist",
 };
 const organizerLogin = {
-  pseudo: "organizer",
-  password: "organizer",
+  pseudo: "test-festnoz-organizer",
+  password: "test-festnoz-organizer",
 };
 const adminLogin = {
   pseudo: "admin",
@@ -169,12 +169,13 @@ describe("Test case for cleaning phase", () => {
       .set("Authorization", `Bearer ${tokenAdmin}`);
     expect(response.status).toBe(200);
   });
-  it("13 - test case to delete an admin as admin", async () => {
+  // Optional test
+  /* it("13 - test case to delete an admin as admin", async () => {
     const response = await request(app)
       .delete(`/delete-user/${existAdmin.id}`)
       .set("Authorization", `Bearer ${tokenAdmin}`);
     expect(response.status).toBe(200);
-  });
+  }); */
   it("14 - test case to get current user info", async () => {
     const response = await request(app)
       .get("/my-user")

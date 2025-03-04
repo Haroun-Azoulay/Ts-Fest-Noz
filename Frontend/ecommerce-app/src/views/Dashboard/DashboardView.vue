@@ -33,9 +33,8 @@
             <div v-if="myGoodies.length > 0">
               <div v-for="goodie in myGoodies" :key="goodie">
                 <div class="row" style="display:flex;align-items:center;">
-                  {{ goodie }}
                   <div class="col goodieSmallImage">
-                    <img :src="`http://${goodie.path}`"/>
+                    <img :src="`http://localhost:3000/${goodie.path}`"/>
                   </div>
                   <div class="col">
                     <span>Nom : {{ goodie.name }}</span>
@@ -177,6 +176,7 @@
             router.push({ path : '/' });
         } else {
             const { payload } = useJwt(authToken);
+            const userId = payload.value?.userId;
             const role = payload.value?.role;
             // if (role !== "artist") {
             //   router.push({ path : '/' });
@@ -207,7 +207,7 @@
             });
             allGoodieTypes.value = getAllGoodieTypes.data;
             allGroups.value = getAllGroups.data;
-            const getMyGoodies = await ApiService.get('/goodie/me', {
+            const getMyGoodies = await ApiService.get(`/me/${userId}`, {
                 headers: {
                     Authorization: `Bearer ${authToken}`,
                 },
