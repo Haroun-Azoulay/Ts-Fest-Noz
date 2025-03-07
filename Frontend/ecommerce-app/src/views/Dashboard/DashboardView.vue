@@ -34,7 +34,7 @@
               <div v-for="goodie in myGoodies" :key="goodie">
                 <div class="row" style="display:flex;align-items:center;">
                   <div class="col goodieSmallImage">
-                    <img :src="`http://localhost:3000/${goodie.path}`"/>
+                    <img :src="`http://0.0.0.0:3000/${goodie.path}`"/>
                   </div>
                   <div class="col">
                     <span>Nom : {{ goodie.name }}</span>
@@ -103,7 +103,7 @@
   import HeaderPage from '../../composables/Header/HeaderPage.vue'
   import { useRouter, useRoute } from 'vue-router'
   import ApiService from '@/services/ApiService'
-  import { useJwt } from '@vueuse/integrations/useJwt'
+  import { useJwt } from '@vueuse/integrations/useJwt.mjs'
   import ModalConfirm from '../../components/pModal/ModalConfirm.vue';
   import ModalAddGoodie from '../../components/pModal/ModalAddGoodie.vue';
   import FooterPage from '../../composables/Footer/FooterPage.vue'

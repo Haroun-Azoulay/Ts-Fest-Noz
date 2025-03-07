@@ -47,7 +47,7 @@ onMounted(() => {
 });
 
 const qrValue = computed(() => {
-  const baseUrl = "http://localhost:3001/form";
+  const baseUrl = "http://0.0.0.0:3001/form";
   if (token.value) {
     return `${baseUrl}?token=${token.value}`;
   }
@@ -58,7 +58,7 @@ const qrValue = computed(() => {
 const goToIdentificationPage = async () => {
   try {
 
-    window.location.href = "http://localhost:3001/form"; 
+    window.location.href = "http://0.0.0.0:3001/form"; 
 
   } catch (error) {
     console.error(error);

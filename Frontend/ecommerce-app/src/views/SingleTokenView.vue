@@ -49,7 +49,7 @@ const checkToken = async () => {
   const config = {
     headers: {
       "Content-Type": "application/json",
-      Origin: "http://localhost:5174",
+      Origin: "http://0.0.0.0:5174",
     },
   };
 
@@ -74,7 +74,7 @@ const deletetoken = async () => {
   const config = {
     headers: {
       "Content-Type": "application/json",
-      Origin: "http://localhost:5174",
+      Origin: "http://0.0.0.0:5174",
     },
   };
 

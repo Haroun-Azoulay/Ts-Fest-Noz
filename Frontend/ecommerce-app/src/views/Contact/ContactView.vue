@@ -145,10 +145,11 @@ import { ref, onMounted } from 'vue'
 import HeaderPage from '../../composables/Header/HeaderPage.vue'
 import { useRouter, useRoute } from 'vue-router'
 import ApiService from '@/services/ApiService'
-import { useJwt } from '@vueuse/integrations/useJwt'
+import { useJwt } from '@vueuse/integrations/useJwt.mjs'
 import { provide } from 'vue'
 import FooterPage from '../../composables/Footer/FooterPage.vue'
 import Email from '../../assets/smtp/smtp.js'
+
 
 const name = ref('')
 const email = ref('')
@@ -156,15 +157,19 @@ const subjects = ref('')
 const message = ref('')
 const phone = ref('')
 const selected = ref('')
+const smtpUsername: string | undefined = import.meta.env.VITE_SMTP_USERNAME as string;
+const smtpPort: number = Number(import.meta.env.VITE_SMTP_PORT);
+const smtpPassword: string | undefined = import.meta.env.VITE_SMTP_PASSWORD as string;
+const smtpFrom: string | undefined = import.meta.env.VITE_SMTP_FROM as string;
 
 const sendEmail = (): void => {
   Email.send({
     Host: 'smtp.elasticemail.com',
-    Username: "ha.azoulay93@gmail.com",
-    Port: 587,
-    Password: "56863FC72EFBABFEEFCE7700874DCB3E428F",
+    Username: smtpUsername,
+    Port: smtpPort,
+    Password: smtpPassword,
     To: email.value,
-    From: "ha.azoulay93@gmail.com",
+    From: smtpFrom,
     Name: name.value,
     Subject: subjects.value,
     Body: `

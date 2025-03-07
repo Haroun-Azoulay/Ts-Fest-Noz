@@ -1,8 +1,11 @@
 import { Request, Response } from "express";
 import UserModel from "../models/User";
 import { UserInfo } from "../interfaces/types";
+import dotenv from "dotenv";
+
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+dotenv.config();
 
 const signup = async (
   req: Request,
@@ -33,8 +36,11 @@ const signup = async (
         message: "A required field is missing.",
       });
     }
+
+    const adminEmail: string | undefined = process.env.ADMIN as string;
+
     const defaultRole: string = "user";
-    const isAdmin: boolean = email === "admin@example.com";
+    const isAdmin: boolean = email === adminEmail;
     const assignedRole: string = isAdmin ? "admin" : defaultRole;
     const hashedPassword: string = await bcrypt.hash(password, 10);
 

@@ -16,7 +16,7 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-6 rounded-lg">
-          <img :src="`http://localhost:3000/${goodieDetails.path}`" style="position:sticky;top:100px;"/>
+          <img :src="`http://0.0.0.0:3000/${goodieDetails.path}`" style="position:sticky;top:100px;"/>
         </div>
         <div class="col-lg-6 bg-white shadow-md rounded-lg">
           <h2 class="text-2xl font-bold text-black">{{ goodieDetails.name }}</h2>
@@ -26,7 +26,6 @@
           <br>
           <span class="text-xl text-black">Type : {{ goodieType }}</span>
           <br>
-          <!-- <span class="text-xl text-black">Description : {{ goodieDetails.goodieDescription }}</span> -->
           <div class="flex justify-center mb-6">
             <div v-if="goodieDetails.quantity > 0" class="row ecommerce-card-button">
               <a href="" v-on:click.prevent="addToCart" class="col btn btn-secondary pl-0 pr-0"><i class="bi bi-cart"></i></a>

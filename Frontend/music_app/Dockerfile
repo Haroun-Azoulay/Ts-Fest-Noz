@@ -7,6 +7,8 @@ RUN apt update && apt upgrade -y \
     && apt clean \
     && rm -rf /var/lib/apt/lists/*
 
+COPY .env ./
+
 COPY . .
 
 RUN rm -rf node_modules package-lock.json \

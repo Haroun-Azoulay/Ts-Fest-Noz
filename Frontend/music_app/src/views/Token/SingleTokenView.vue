@@ -50,7 +50,7 @@ const checkToken = async () => {
   const config = {
     headers: {
       "Content-Type": "application/json",
-      Origin: "http://localhost:5173",
+      Origin: "http://0.0.0.0:5173",
     },
   };
 
@@ -75,7 +75,7 @@ const deletetoken = async () => {
   const config = {
     headers: {
       "Content-Type": "application/json",
-      Origin: "http://localhost:5173",
+      Origin: "http://0.0.0.0:5173",
     },
   };
 
@@ -114,7 +114,7 @@ const backgroundClass = computed(() => {
 const addPost = async () => {
   try {
 
-    const response = await ApiService.get('http://localhost:3001\ ', {
+    const response = await ApiService.get('http://0.0.0.0:3001\ ', {
       headers: {
         Authorization: `Bearer ${test.value}`,
       },

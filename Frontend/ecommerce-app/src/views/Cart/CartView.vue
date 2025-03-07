@@ -20,7 +20,7 @@
             <i class="bi bi-x-lg" @click="removeGoodieFromCart(goodie.goodieId)" style="color:red;cursor:pointer;"></i>
           </div>
           <div class="col-lg-4 rounded-lg">
-            <img :src="`http://localhost:3000/${goodie.goodieImage}`" style="position:sticky;top:100px;"/>
+            <img :src="`http://0.0.0.0:3000/${goodie.goodieImage}`" style="position:sticky;top:100px;"/>
           </div>
           <div class="col-lg-4 bg-white shadow-md rounded-lg">
             <h2 class="text-2xl font-bold text-black">{{ goodie.goodieName }}</h2>
@@ -100,11 +100,6 @@ const removeGoodieFromCart = (goodieId : string) => {
 const checkout = async () => {
   try {
     const authToken = localStorage.getItem('authToken');
-    // const checkoutRequest = await ApiService.post('/order/checkout', festnozCart.value, {
-    //     headers: {
-    //         Authorization: `Bearer ${authToken}`,
-    //     },
-    // });
     festnozCart.value.totalPrice = 0;
     festnozCart.value.content = [];
     localStorage.setItem('festnozCart', JSON.stringify(festnozCart.value));

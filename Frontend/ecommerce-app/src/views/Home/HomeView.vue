@@ -152,7 +152,7 @@
     import ShopPage from '../../composables/Shop/ShopPage.vue';
     import { useRouter } from 'vue-router';
     import { ref, onMounted } from 'vue';
-    import { useJwt } from '@vueuse/integrations/useJwt';
+    import { useJwt } from '@vueuse/integrations/useJwt.mjs';
 
     const isAuthorized = ref(false);
     const isFullAuthorized = ref(false);

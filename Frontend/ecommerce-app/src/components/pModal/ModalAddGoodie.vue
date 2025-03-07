@@ -51,7 +51,7 @@
 
 <script setup lang="ts">
 import ApiService from '@/services/ApiService';
-import { useJwt } from '@vueuse/integrations/useJwt';
+import { useJwt } from '@vueuse/integrations/useJwt.mjs';
 import { ref, onMounted } from 'vue';
 import { VueFinalModal } from 'vue-final-modal';
 import { useRouter } from 'vue-router';

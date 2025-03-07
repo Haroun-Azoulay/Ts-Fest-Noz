@@ -244,7 +244,7 @@ const goToPaymentPage = async (e: Event) => {
     console.log("ca marche");
     provide('eventId', eventId);
     router.push({ path: `/event/${eventId}/${userId}` });
-    // const externalUrl = 'http://localhost:5000/login';
+    // const externalUrl = 'http://0.0.0.0:5000/login';
     // window.location.href = externalUrl;
     // router.push({ path: `/event/token/3AGZEYG&1386SFAFTFDA` });
   } catch (error: any) {

@@ -60,7 +60,7 @@
     import HeaderPage from '../../composables/Header/HeaderPage.vue';
     import ModalConfirm from '../../components/pModal/ModalConfirm.vue';
     import FooterPage from '../../composables/Footer/FooterPage.vue';
-    import { useJwt } from '@vueuse/integrations/useJwt';
+    import { useJwt } from '@vueuse/integrations/useJwt.mjs';
     
     const router = useRouter();
     const route = useRoute();
@@ -112,28 +112,6 @@
                 router.push({ path : '/' });
             }
         }
-    //     try {
-    //         const authToken = localStorage.getItem('authToken');
-    //         if (!authToken)  {
-    //             router.push({ path : '/' });
-    //         } else {
-    //             const { payload } = useJwt(authToken);
-    //             const roleId = payload.value?.role;
-    //             if (roleId !== "artist") {
-    //                 router.push({ path : '/' });
-    //             }
-    //             const response = await ApiService.get('/get-all-groups', {
-    //                 headers: {
-    //                     Authorization: `Bearer ${authToken}`,
-    //                 },
-    //             });
-    //             if ('message' in response.data === false) {
-    //                 router.push({ path : '/' });
-    //             }
-    //         }
-    //     } catch (error) {
-    //         console.error('Erreur lors de la requête :', error);
-    //     }
     });
 
     const addMember = async () => {

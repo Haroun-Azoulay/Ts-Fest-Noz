@@ -22,7 +22,7 @@
     <div class="ecommerce-shop">
         <div class="ecommerce-cards" v-for="goodie in allGoodies">
             <div class="ecommerce-card card">
-                <img :src="`http://localhost:3000/${goodie.path}`" alt="Goodie Image" />
+                <img :src="`http://0.0.0.0:3000/${goodie.path}`" alt="Goodie Image" />
                 <div class="card-body ecommerce-card-body">
                     <h5 class="card-title" style="color:black;">{{ goodie.name }}</h5>
                     <h5 class="card-title" style="color:black;">{{ goodie.price }} €</h5>
@@ -38,7 +38,7 @@
 
 <script setup lang="ts">
     import { ref, onMounted } from 'vue';
-    import { useJwt } from '@vueuse/integrations/useJwt';
+    import { useJwt } from '@vueuse/integrations/useJwt.mjs';
     import ApiService from '@/services/ApiService';
     import type { Group } from '../../../models/goup';
     import type { Goodie, GoodieType } from '../../../models/goodie';

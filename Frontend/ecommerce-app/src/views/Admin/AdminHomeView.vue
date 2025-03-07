@@ -104,7 +104,7 @@ onMounted(async () => {
     headers: {
       Authorization: `Bearer ${authToken}`,
       "Content-Type": "application/json",
-      Origin: "http://localhost:5174",
+      Origin: "http://0.0.0.0:5174",
     },
   };
 
@@ -134,7 +134,7 @@ const updateRole = async (userId: number) => {
       headers: {
         Authorization: `Bearer ${authToken}`,
         'Content-Type': 'application/json',
-        Origin: "http://localhost:5174",
+        Origin: "http://0.0.0.0:5174",
       },
     };
 

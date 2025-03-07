@@ -46,7 +46,7 @@ onMounted(() => {
 });
 
 const qrValue = computed(() => {
-  const baseUrl = "http://localhost:5000/login";
+  const baseUrl = "http://0.0.0.0:5000/login";
   if (token.value) {
     return `${baseUrl}?token=${token.value}`;
   }
@@ -54,7 +54,7 @@ const qrValue = computed(() => {
 });
 
 const goToIdentificationPage = () => {
-  const externalUrl = 'http://localhost:5000/login';
+  const externalUrl = 'http://0.0.0.0:5000/login';
   window.location.href = externalUrl;
 };
 </script>

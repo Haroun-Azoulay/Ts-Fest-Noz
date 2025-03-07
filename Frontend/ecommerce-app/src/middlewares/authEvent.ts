@@ -1,4 +1,4 @@
-import { useJwt } from '@vueuse/integrations/useJwt';
+import { useJwt } from '@vueuse/integrations/useJwt.mjs';
 
 export default function authEvent({ next, router }) {
   const authToken = localStorage.getItem('authToken');

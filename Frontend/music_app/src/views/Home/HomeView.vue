@@ -602,7 +602,7 @@ const handleChangeAllPoints = async () => {
     headers: {
       Authorization: `Bearer ${authToken}`,
       'Content-Type': 'application/json',
-      Origin: 'http://localhost:5173'
+      Origin: 'http://0.0.0.0:5173'
     }
   }
 
@@ -689,7 +689,7 @@ onMounted(async () => {
         headers: {
           Authorization: `Bearer ${authToken}`,
           'Content-Type': 'application/json',
-          Origin: 'http://localhost:5173'
+          Origin: 'http://0.0.0.0:5173'
         }
       }
 

@@ -29,11 +29,14 @@ services:
     depends_on:
       music-db:
         condition: service_healthy
+      networks:
+      - app-network
 
   oauthserver1:
     build: ./oauthServer
     ports:
       - "3001:3001"
-
+    networks:
+      - app-network
 volumes:
   pg_music_data:

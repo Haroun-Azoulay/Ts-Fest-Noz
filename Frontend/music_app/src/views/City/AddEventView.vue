@@ -273,7 +273,7 @@ const addPoint = async () => {
     });
 
     const eventId = response_event.data.id;
-    const event_url = `http://localhost:5173/event/${eventId}`;
+    const event_url = `http://0.0.0.0:5173/event/${eventId}`;
     Point.url_point = event_url;
     Point.event_id = eventId;
 

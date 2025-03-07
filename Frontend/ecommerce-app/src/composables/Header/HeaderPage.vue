@@ -58,7 +58,7 @@
 <script setup lang="ts">
 import { useRouter, useRoute } from 'vue-router';
 import { ref, computed, onMounted } from 'vue';
-import { useJwt } from '@vueuse/integrations/useJwt';
+import { useJwt } from '@vueuse/integrations/useJwt.mjs';
 import ApiService from '@/services/ApiService';
 
 const router = useRouter();
@@ -79,7 +79,7 @@ const goToAdminHomePage = () => {
 };
 
 const goToFestNozOfficialWebsite = () => {
-  window.location.href = 'http://localhost:5173'
+  window.location.href = 'http://0.0.0.0:5173'
 };
 
 const goToGroupPage = () => {

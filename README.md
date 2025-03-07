@@ -24,6 +24,7 @@ Due to time constraints and parallel coursework, the code has not been fully opt
 - [MapBox](https://www.mapbox.com/)
 - [Swagger](https://editor.swagger.io/)
 - [Faker](https://fakerjs.dev/guide/)
+- [Haversine](https://www.npmjs.com/package/formula-haversine)
 - [Express](https://expressjs.com/)
 - [Axios](https://axios-http.com/docs/intro)
 - [NodeJs](https://nodejs.org)
@@ -41,14 +42,16 @@ Due to time constraints and parallel coursework, the code has not been fully opt
 - Use the provided examples:
     - ``` .env.exampleBACK ``` for the backend.
     - ```.env.exampleOAUTHSERVER``` for the OAuth server.
+    - *2 ``` .env.exampleFRONTEND ``` for the frontend.
 3. Run the following command to start both the backend and frontend: 
 ```bash
 bash script.sh 
 ```
-4. Open https://localhost:5173 in your favorite web browser
+4. Open https://localhost:5173 /  https://localhost:5174 in your favorite web browser
 5. Access the API documentation and lock all routes via Swagger: https://localhost:3000/docs
 
-    
+## 📷  Screen DB
+
 ## ❤️ Support  
 A simple star to this project repo is enough to keep me motivated on this project for days. If you find your self very much excited with this project let me know with a tweet.
 
@@ -56,7 +59,7 @@ A simple star to this project repo is enough to keep me motivated on this projec
 ## 🙇 Author
 #### Bertrand LEGARREC
 Project Manager - Thanks a lot for your work on our scolarity
-- Github: No github :/
+- Github: No github 😕
 #### Haroun Azoulay
 Software Engineer
 - Github: [@Haroun-Azoulay](https://github.com/Haroun-Azoulay)

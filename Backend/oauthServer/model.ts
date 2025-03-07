@@ -13,8 +13,8 @@ const config = {
   ],
   users: [
     {
-      username: process.env.USERNAME || "user",
-      password: process.env.PASSWORD || "password",
+      username: process.env.USERNAME,
+      password: process.env.PASSWORD,
     },
   ],
   tokens: [] as any[],

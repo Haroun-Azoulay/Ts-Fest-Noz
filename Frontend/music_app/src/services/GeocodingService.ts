@@ -2,7 +2,7 @@ import axios from 'axios';
 
 
 const BASE_URL = 'https://api.mapbox.com/geocoding/v5/mapbox.places/';
-const ACCESS_TOKEN: string = "pk.eyJ1IjoiYmVjaGFyaTkzIiwiYSI6ImNtNjgwYTgwdzA4em0ycnFyczM2bXR2ZXgifQ.NNk_nOdxatVzztXUH1yIKA";
+const ACCESS_TOKEN: string = import.meta.env.MAPBOX_ACCESS_TOKEN;
 
 
 interface GeocodeResult {
