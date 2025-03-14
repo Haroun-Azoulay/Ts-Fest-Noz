@@ -6,45 +6,53 @@
       {{ title }}
     </h1>
     <form @submit.prevent="submitAddGoodie" class="w-full">
-        <div class="mb-4">
-            <label class="block text-m font-medium leading-tight text-light">Nom</label>
-            <input class="text-center w-full p-2 border rounded shadow-md text-dark" type="text" v-model="request.name" placeholder="Entrez le nom" required />
-        </div>
-        <div class="mb-4">
-            <label class="block text-m font-medium leading-tight text-light">Description</label>
-            <input class="text-center w-full p-2 border rounded shadow-md text-dark" type="text" v-model="request.description" placeholder="Entrez une description" required />
-        </div>
-        <div class="mb-4">
-            <label class="block text-m font-medium leading-tight text-light">Type</label>
-            <select class="form-select" v-model="request.goodieTypeId" aria-label="">
-                <option selected value="none">Sélectionnez le type</option>
-                <slot name="goodieTypes"/>
-            </select>
-        </div>
-        <div class="mb-4">
-            <label class="block text-m font-medium leading-tight text-light">Prix / Unité</label>
-            <input class="text-center w-full p-2 border rounded shadow-md text-dark" type="number" v-model="request.price" placeholder="Entrez le prix" required />
-        </div>
-        <div class="mb-4">
-            <label class="block text-m font-medium leading-tight text-light">Quantité</label>
-            <input class="text-center w-full p-2 border rounded shadow-md text-dark" type="text" v-model="request.quantity" placeholder="Entrez la quantité" required />
-        </div>
-        <div class="mb-4">
-            <label class="block text-m font-medium leading-tight text-light">Disponible</label>
-            <select class="form-select" v-model="request.available" aria-label="">
-                <option selected value="none">Exposer le produit ?</option>
-                <option value="true">Oui</option>
-                <option value="false">Non</option>
-            </select>
-        </div>
-        <div class="mb-4">
-            <label class="block text-m font-medium leading-tight text-light">Image</label>
-            <input ref="fileInput" class="text-center w-full p-2 border rounded shadow-md text-dark" 
-            type="file" accept="image/*" @change="goodieChangeImage" required />
-        </div>
-        <button type="submit" class="mt-1 ml-auto px-2 border border-white rounded-lg text-white hover:text-violet-600 bg-violet-600 hover:bg-white">
-          Ajouter
-        </button>
+      <div class="mb-4">
+        <label class="block text-m font-medium leading-tight text-light">Nom</label>
+        <input class="text-center w-full p-2 border rounded shadow-md text-dark" type="text" v-model="request.name"
+          placeholder="Entrez le nom" required />
+      </div>
+      <div class="mb-4">
+        <label class="block text-m font-medium leading-tight text-light">Description</label>
+        <input class="text-center w-full p-2 border rounded shadow-md text-dark" type="text"
+          v-model="request.description" placeholder="Entrez une description" required />
+      </div>
+      <div class="mb-4">
+        <label class="block text-m font-medium leading-tight text-light">Type</label>
+        <select v-model="request.goodieTypeId" class="form-select">
+          <option value="none" disabled selected>Sélectionnez le type</option>
+          <option v-for="goodie in goodies" :key="goodie.id" :value="goodie.id">
+            {{ goodie.name }}
+          </option>
+        </select>
+
+      </div>
+      <div class="mb-4">
+        <label class="block text-m font-medium leading-tight text-light">Prix / Unité</label>
+        <input class="text-center w-full p-2 border rounded shadow-md text-dark" type="number" v-model="request.price"
+          placeholder="Entrez le prix" required />
+      </div>
+      <div class="mb-4">
+        <label class="block text-m font-medium leading-tight text-light">Quantité</label>
+        <input class="text-center w-full p-2 border rounded shadow-md text-dark" type="text" v-model="request.quantity"
+          placeholder="Entrez la quantité" required />
+      </div>
+      <div class="mb-4">
+        <label class="block text-m font-medium leading-tight text-light">Disponible</label>
+        <select class="form-select" v-model="request.available" aria-label="">
+          <option selected value="none">Exposer le produit ?</option>
+          <option value="true">Oui</option>
+          <option value="false">Non</option>
+        </select>
+      </div>
+      <div class="mb-4">
+        <label class="block text-m font-medium leading-tight text-light">Image</label>
+        <input ref="fileInput" class="text-center w-full p-2 border rounded shadow-md text-dark" type="file"
+          accept="image/*" @change="goodieChangeImage" required />
+      </div>
+      <button type="submit"
+        class="mt-1 ml-auto px-2 border border-white rounded-lg text-white hover:text-violet-600 bg-violet-600 hover:bg-white">
+        Ajouter
+      </button>
     </form>
   </VueFinalModal>
 </template>
@@ -58,6 +66,8 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter();
 const authToken = localStorage.getItem('authToken');
+const goodies = ref([]);
+const requestGoodies = ref({ goodieTypeId: 'none' });
 
 const request = ref({
   groupId: "",
@@ -70,7 +80,7 @@ const request = ref({
   available: true,
 });
 
-// Variable pour stocker le fichier sélectionné
+
 const selectedFile = ref<File | null>(null);
 
 defineProps<{
@@ -82,14 +92,26 @@ const emit = defineEmits<{
   (e: 'confirm'): void;
 }>();
 
-// Fonction pour gérer la sélection d'image
 const goodieChangeImage = (event: Event) => {
   const target = event.target as HTMLInputElement;
   if (target.files && target.files.length > 0) {
-    selectedFile.value = target.files[0]; // Stocker le fichier directement
-    console.log("✅ Fichier sélectionné :", selectedFile.value.name);
+    selectedFile.value = target.files[0];
+    console.log("Fichier sélectionné :", selectedFile.value.name);
   } else {
-    console.error("❌ Aucun fichier sélectionné !");
+    console.error("Aucun fichier sélectionné !");
+  }
+};
+
+const fetchGoodies = async () => {
+  try {
+    const response = await ApiService.get('/get-all-types', {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+    goodies.value = response.data;
+  } catch (error) {
+    console.error('Error fetching goodies:', error);
   }
 };
 
@@ -99,8 +121,9 @@ onMounted(async () => {
       const { payload } = useJwt(authToken);
       if (payload.value?.userId) {
         request.value.userId = payload.value.userId;
+        fetchGoodies()
       } else {
-        console.error("❌ Impossible de récupérer l'ID utilisateur.");
+        console.error("Impossible de récupérer l'ID utilisateur.");
       }
     }
   } catch (error) {
@@ -111,17 +134,22 @@ onMounted(async () => {
 const submitAddGoodie = async () => {
   try {
     if (!authToken) {
-      console.error("❌ Utilisateur non authentifié.");
+      console.error("Utilisateur non authentifié.");
       return;
     }
 
-    // Création de l'objet FormData
+
     const formData = new FormData();
     const getMyGroupDetails = await ApiService.get('/get-my-group', {
-        headers: {
-            Authorization: `Bearer ${authToken}`,
-        },
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
     });
+
+
+
+
+
     request.value.groupId = getMyGroupDetails.data.group.id;
     formData.append("groupId", request.value.groupId);
     formData.append("userId", request.value.userId);
@@ -134,16 +162,14 @@ const submitAddGoodie = async () => {
 
     console.log(request.value);
 
-    // Vérification et ajout de l'image
     const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
     if (fileInput.files && fileInput.files.length > 0) {
-      formData.append("image", fileInput.files[0]); // ⚠️ Doit être "file" pour Multer
+      formData.append("image", fileInput.files[0]);
     } else {
       console.error("❌ Aucune image sélectionnée !");
       return;
     }
 
-    // Envoi des données à l'API
     const response = await ApiService.post("/create-goodie", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -169,4 +195,3 @@ const submitAddGoodie = async () => {
 @tailwind components;
 @tailwind utilities;
 </style>
-

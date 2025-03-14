@@ -29,7 +29,7 @@ const addEvent = async (
   }
 };
 
-const deleteEvent = async(
+const deleteEvent = async (
   req: Request,
   res: Response,
 ): Promise<Response<any, Record<string, any>>> => {
@@ -41,13 +41,15 @@ const deleteEvent = async(
       const event: EventModel | null = await EventModel.findOne({
         where: {
           user_id: userId,
-          id: eventId
-        }
+          id: eventId,
+        },
       });
       await event?.destroy();
-      return res.status(201).json({message: "This event has been deleted."});
+      return res.status(201).json({ message: "This event has been deleted." });
     }
-    return res.status(401).json({message: "Not allowed to delete this event."});
+    return res
+      .status(401)
+      .json({ message: "Not allowed to delete this event." });
   } catch (error) {
     console.error("Error deleting an event:", error);
     return res.status(500).send("Error deleting event");
@@ -103,8 +105,8 @@ const getAllEvents = async (
     const events: EventModel[] = await EventModel.findAll({
       include: {
         model: CityModel,
-        attributes: ["address", "city_name", "style", "color"]
-      }
+        attributes: ["address", "city_name", "style", "color"],
+      },
     });
     return res.status(200).json(events);
   } catch (error) {

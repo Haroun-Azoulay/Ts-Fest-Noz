@@ -65,7 +65,7 @@ const newPoint = {
   style: "green",
   region_name: "Île-de-France",
   url_point: "",
-  event_id: "5cbfa5dc-7999-4fb1-a443-33894fb56ccb"
+  event_id: "5cbfa5dc-7999-4fb1-a443-33894fb56ccb",
 };
 const existOrganizer = new User({
   id: "5cbfa5dc-7999-4fb1-a443-33894fb52ccc",

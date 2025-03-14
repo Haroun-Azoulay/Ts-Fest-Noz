@@ -1,25 +1,25 @@
-import axios from 'axios';
+    import axios from 'axios';
 
-const axiosInstance = axios.create({
-    baseURL: 'http://0.0.0.0:3000',
-});
+    const axiosInstance = axios.create({
+        baseURL: 'http://0.0.0.0:3000',
+    });
 
-const ApiService = {
-    get(endpoint: string, config = {}) {
-        return axiosInstance.get(endpoint, config);
-    },
+    const ApiService = {
+        get(endpoint: string, config = {}) {
+            return axiosInstance.get(endpoint, config);
+        },
 
-    post(endpoint: string, data = {}, config = {}) {
-        return axiosInstance.post(endpoint, data, config);
-    },
+        post(endpoint: string, data = {}, config = {}) {
+            return axiosInstance.post(endpoint, data, config);
+        },
 
-    put(endpoint: string, data = {}, config = {}) {
-        return axiosInstance.put(endpoint, data, config);
-    },
+        put(endpoint: string, data = {}, config = {}) {
+            return axiosInstance.put(endpoint, data, config);
+        },
 
-    delete(endpoint: string, config = {}) {
-        return axiosInstance.delete(endpoint, config);
-    }
-};
+        delete(endpoint: string, config = {}) {
+            return axiosInstance.delete(endpoint, config);
+        }
+    };
 
-export default ApiService;
+    export default ApiService;

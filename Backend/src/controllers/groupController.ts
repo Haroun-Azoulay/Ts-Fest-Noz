@@ -77,16 +77,17 @@ const getMyGroup = async (
   res: Response,
 ): Promise<Response<any, Record<string, any>>> => {
   try {
-    const userId : string | undefined = req.userId;
+    const userId: string | undefined = req.userId;
 
     console.log("======================");
     console.log(userId);
-    const groupWithDetails: GroupUserModel | null = await GroupUserModel.findOne({
-      where: { userId: userId },
-      include: {
-        model: GroupModel
-      },
-    });
+    const groupWithDetails: GroupUserModel | null =
+      await GroupUserModel.findOne({
+        where: { userId: userId },
+        include: {
+          model: GroupModel,
+        },
+      });
     console.log(groupWithDetails);
     if (!groupWithDetails) {
       return res.status(404).json({ message: "Group not found." });

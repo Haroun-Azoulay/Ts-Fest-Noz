@@ -48,7 +48,6 @@ Group.hasMany(GroupUser, {
 });
 GroupUser.belongsTo(Group, { foreignKey: "groupId" });
 
-
 User.hasMany(Post, { foreignKey: "userId" });
 Post.belongsTo(User, { foreignKey: "userId" });
 
@@ -83,7 +82,7 @@ Event.belongsTo(City, { foreignKey: "city_id" });
 Event.hasMany(Payment, { foreignKey: "event_id" });
 Payment.belongsTo(Event, { foreignKey: "event_id" });
 
-User.hasMany(Billing, { foreignKey: "userId", onDelete: "CASCADE", });
+User.hasMany(Billing, { foreignKey: "userId", onDelete: "CASCADE" });
 Billing.belongsTo(User, { foreignKey: "userId" });
 
 Event.hasMany(Billing, { foreignKey: "eventId", onDelete: "CASCADE" });

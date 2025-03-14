@@ -5,7 +5,7 @@ import EventModel from "../models/Event";
 import UserModel from "../models/User";
 import { Request, Response } from "express";
 import axios from "axios";
-import haversine from 'formula-haversine'
+import haversine from "formula-haversine";
 
 const addPoint = async (
   req: Request,
@@ -25,12 +25,12 @@ const addPoint = async (
     });
     const event: EventModel | null = await EventModel.findOne({
       where: {
-        id: eventId
-      }
+        id: eventId,
+      },
     });
     if (event) {
       await event?.update({
-        city_id: point.id
+        city_id: point.id,
       });
     }
     const formattedPoint: CityAttributes = {
@@ -64,17 +64,6 @@ const getAllPoints = async (
   try {
     const points: CityModel[] = await CityModel.findAll();
 
-    // const pointsWithUserDetails = await Promise.all(points.map(async (point) => {
-    //   //const user = await UserModel.findByPk(point.userId, { attributes: ["id", "pseudo"] });
-    //   return {
-    //     id: point.id,
-    //     address: point.address,
-    //     longitude: point.longitude, // Assurez-vous d'ajouter ces propriétés si elles existent
-    //     latitude: point.latitude,
-    //     text: point.text,
-    // };
-    // }));
-
     return res.status(200).json(points);
   } catch (error) {
     console.error(error);
@@ -99,9 +88,6 @@ const getPointNearUser = async (
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    // if (!user.latitude || !user.longitude) {
-    //   return res.status(400).json({ message: "User location is incomplete" });
-    // }
 
     if (points) {
       let result: CoordinateAttributes[] = points.map((point) => {
@@ -219,7 +205,7 @@ const getPointById = async (
 //             return res.status(404).json({ message: "Point mis à jour non trouvé." });
 //         }
 
-//         res.status(200).json(updatedPoint); // Renvoyer l'instance mise à jour
+//         res.status(200).json(updatedPoint);
 //     } catch (error) {
 //         console.error("Erreur lors de la mise à jour du point :", error);
 //         res.status(500).send("Erreur lors de la mise à jour du point.");
@@ -242,11 +228,7 @@ const deletePoint = async (
     if (!point) {
       return res.status(404).json({ message: "The point does not exist" });
     }
-    // if (point.userId !== userId) {
-    //   return res
-    //     .status(403)
-    //     .json({ message: "You do not have permission to delete this item" });
-    // }
+
     CityModel.beforeDestroy(async (city, options) => {
       await EventModel.destroy({
         where: { id: point.id },

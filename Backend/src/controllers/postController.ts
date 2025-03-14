@@ -37,7 +37,7 @@ const getPostById = async (req: Request, res: Response): Promise<void> => {
     where: { id: postId },
     include: {
       model: UserModel,
-      attributes: ['pseudo', 'city']
+      attributes: ["pseudo", "city"],
     },
   })
     .then((result) => {
@@ -52,16 +52,19 @@ const getPostById = async (req: Request, res: Response): Promise<void> => {
     });
 };
 
-const getClosePosts = async (req: Request, res: Response): Promise<Response<any, Record<string, any>>> => {
+const getClosePosts = async (
+  req: Request,
+  res: Response,
+): Promise<Response<any, Record<string, any>>> => {
   try {
     const userId: string | undefined = req.userId;
     const role: string | undefined = req.role;
     var targetRole = "";
-    const user: UserModel | null = await UserModel.findOne({ 
+    const user: UserModel | null = await UserModel.findOne({
       where: {
         id: userId,
-        role: role
-      }
+        role: role,
+      },
     });
     if (!user) {
       return res.status(404).json({ message: "The user don't exist." });
@@ -71,21 +74,23 @@ const getClosePosts = async (req: Request, res: Response): Promise<Response<any,
     } else if (role == "organizer") {
       targetRole = "artist";
     }
-    const allClosePosts: PostModel[] | null = await PostModel.findAll({ 
+    const allClosePosts: PostModel[] | null = await PostModel.findAll({
       include: {
         model: UserModel,
         where: {
           city: user.city,
-          role: targetRole
+          role: targetRole,
         },
-        attributes: ['pseudo', 'city']
-      }
+        attributes: ["pseudo", "city"],
+      },
     });
     console.log("oui");
     return res.status(200).json(allClosePosts);
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: "Error during get request of close posts." });
+    return res
+      .status(500)
+      .json({ message: "Error during get request of close posts." });
   }
 };
 

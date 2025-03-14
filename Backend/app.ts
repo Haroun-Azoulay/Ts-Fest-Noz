@@ -51,7 +51,7 @@ const app = express();
 app.use(cors());
 
 app.use(express.json());
-app.use(express.static('public'));
+app.use(express.static("public"));
 // Endpoint swagger
 app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 const port: number = process.env.PORT ? Number(process.env.PORT) : 3000;

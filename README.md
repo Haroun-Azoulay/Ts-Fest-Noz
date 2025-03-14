@@ -39,6 +39,8 @@ Due to time constraints and parallel coursework, the code has not been fully opt
 2. Create two environment files:
     - ```.env``` at the root of the backend.
     - ```.env``` inside the ```oauthServer``` directory.
+    - ```.env``` inside the ```music_app``` directory.
+    - ```.env``` inside the ```ecommerce-app``` directory.
 - Use the provided examples:
     - ``` .env.exampleBACK ``` for the backend.
     - ```.env.exampleOAUTHSERVER``` for the OAuth server.
@@ -50,7 +52,11 @@ bash script.sh
 4. Open https://localhost:5173 /  https://localhost:5174 in your favorite web browser
 5. Access the API documentation and lock all routes via Swagger: https://localhost:3000/docs
 
-## 📷  Screen DB
+## 📷  Screens
+
+![Cover](https://github.com/Haroun-Azoulay/Ts_Fest-Noz/blob/main/img/img-database.png)
+
+![Cover](https://github.com/Haroun-Azoulay/Ts_Fest-Noz/blob/main/img/img-swagger.png)
 
 ## ❤️ Support  
 A simple star to this project repo is enough to keep me motivated on this project for days. If you find your self very much excited with this project let me know with a tweet.

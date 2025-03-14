@@ -79,11 +79,11 @@ const getGoodie = async (
 ): Promise<Response<any, Record<string, any>>> => {
   try {
     const goodieId: string = req.params.id;
-    const goodie : GoodieModel | null = await GoodieModel.findOne({
+    const goodie: GoodieModel | null = await GoodieModel.findOne({
       where: { id: goodieId },
     });
     if (!goodie) {
-      return res.status(404).json({ message: "Goodie does not exist."});
+      return res.status(404).json({ message: "Goodie does not exist." });
     }
     return res.status(200).json(goodie);
   } catch (error) {

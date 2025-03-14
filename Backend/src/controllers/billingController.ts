@@ -11,7 +11,7 @@ const createBilling = async (
     const userId: string | undefined = req.userId;
     const newBilling: BillingModel | null = await BillingModel.create({
       ...req.body,
-      userId: userId
+      userId: userId,
     });
     return res.status(201).json({ newBilling });
   } catch (error) {
@@ -28,12 +28,12 @@ const getMyBilling = async (
     const userId: string | undefined = req.userId;
     const billings: BillingModel[] | null = await BillingModel.findAll({
       where: {
-        userId: userId
+        userId: userId,
       },
       include: {
         model: EventModel,
-        attributes: ["name"]
-      }
+        attributes: ["name"],
+      },
     });
     return res.status(201).json({ billings });
   } catch (error) {
@@ -44,5 +44,5 @@ const getMyBilling = async (
 
 export default {
   createBilling,
-  getMyBilling
+  getMyBilling,
 };

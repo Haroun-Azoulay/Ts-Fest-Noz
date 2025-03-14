@@ -1,3 +1,7 @@
+networks:
+  app-network:
+    driver: bridge
+
 services:
   music-db:
     image: postgres:13
@@ -11,10 +15,13 @@ services:
       POSTGRES_PASSWORD: music
       POSTGRES_DB: music
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U music"]
+      test: [ "CMD-SHELL", "pg_isready -U music" ]
       interval: 1s
       timeout: 5s
       retries: 5
+    networks:
+      - app-network
+
   api:
     build: .
     ports:
@@ -29,7 +36,7 @@ services:
     depends_on:
       music-db:
         condition: service_healthy
-      networks:
+    networks:
       - app-network
 
   oauthserver1:
@@ -38,5 +45,6 @@ services:
       - "3001:3001"
     networks:
       - app-network
+      
 volumes:
   pg_music_data:

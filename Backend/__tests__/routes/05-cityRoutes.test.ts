@@ -69,7 +69,7 @@ const newPoint = {
   style: "green",
   region_name: "Île-de-France",
   url_point: "",
-  event_id: null
+  event_id: null,
 };
 const newInvalidPoint = {
   longitude: null,
