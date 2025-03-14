@@ -54,9 +54,18 @@ bash script.sh
 
 ## 📷  Screens
 
-![Cover](https://github.com/Haroun-Azoulay/Ts_Fest-Noz/blob/main/img/img-database.png)
+### Architecture project
 
-![Cover](https://github.com/Haroun-Azoulay/Ts_Fest-Noz/blob/main/img/img-swagger.png)
+![Cover](https://github.com/Haroun-Azoulay/Ts-Fest-Noz/blob/main/img/img-architecture_project.png)
+
+### Database
+
+![Cover](https://github.com/Haroun-Azoulay/Ts-Fest-Noz/blob/main/img/img-database.png)
+
+### Swagger
+
+![Cover](https://github.com/Haroun-Azoulay/Ts-Fest-Noz/blob/main/img/img-swagger.png)
+
 
 ## ❤️ Support  
 A simple star to this project repo is enough to keep me motivated on this project for days. If you find your self very much excited with this project let me know with a tweet.
